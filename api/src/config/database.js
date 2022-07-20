@@ -1,10 +1,5 @@
-const {
-  DB_USERNAME,
-  DB_PASSWORD,
-  DB_DATABASE,
-  DB_HOST,
-  DB_DIALECT,
-} = process.env;
+const { DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_HOST, DB_DIALECT } =
+  process.env;
 
 module.exports = {
   development: {
@@ -20,7 +15,7 @@ module.exports = {
     },
   },
   production: {
-    use_env_variable: 'DATABASE_URL',
+    use_env_variable: "DATABASE_URL",
     logging: false,
     dialect: DB_DIALECT,
     dialectOptions: {
