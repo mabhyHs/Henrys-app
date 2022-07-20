@@ -3,12 +3,13 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Burger extends Model {
     static associate(models) {
-      // define association here
-
-      //   Burger.belongsToMany(models.Ingredient, { as: "ingredient" });
+      Burger.belongsToMany(models.Ingredient, {
+        as: "ingredient",
+        through: "burgers_ingredients",
+      });
       Burger.belongsToMany(models.Combo, {
         as: "combo",
-        through: "Combos_Burgers",
+        through: "combos_burgers",
       });
     }
   }

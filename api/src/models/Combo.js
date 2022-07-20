@@ -3,13 +3,18 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Combo extends Model {
     static associate(models) {
-      // define association here
       Combo.belongsToMany(models.Burger, {
         as: "burger",
-        through: "Combos_Burgers",
+        through: "combos_burgers",
       });
-      //   Combo.belongsToMany(models.Beverage, { as: "beverage" });
-      //   Combo.belongsToMany(models.Fries, { as: "fries" });
+      Combo.belongsToMany(models.Beverage, {
+        as: "beverage",
+        through: "combos_beverages",
+      });
+      Combo.belongsToMany(models.Fries, {
+        as: "fries",
+        through: "combos_fries",
+      });
     }
   }
   Combo.init(
@@ -26,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       price: {
-        type: DataTypes.FLOAT(),
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       img: {
