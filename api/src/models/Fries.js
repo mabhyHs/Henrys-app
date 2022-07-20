@@ -2,13 +2,11 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Fries extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Fries.belongsToMany(models.Combo, {
+        as: "combo",
+        through: "combos_fries",
+      });
     }
   }
   Fries.init(
