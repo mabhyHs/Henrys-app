@@ -10,6 +10,12 @@ async function create(data) {
   return withRelation;
 }
 
+async function getAll() {
+    const burgers = await Burger.findAll();
+    return burgers;
+}
+
 module.exports = {
     create,
+    getAll
 };
