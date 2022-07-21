@@ -5,6 +5,12 @@ async function create(data) {
   return ingredients;
 }
 
+async function getById(id) {
+    const ingredient = await Ingredient.findByPk(id);
+    return ingredient;
+}
+
 module.exports = {
     create,
+    getById
 };
