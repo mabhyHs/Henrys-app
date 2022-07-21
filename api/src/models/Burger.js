@@ -16,9 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   Burger.init(
     {
       id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
       },
       name: {
