@@ -10,7 +10,13 @@ async function getById(id) {
     return ingredient;
 }
 
+async function getAll() {
+    const ingredient = await Ingredient.findAll();
+    return ingredient;
+}
+
 module.exports = {
     create,
-    getById
+    getById,
+    getAll
 };

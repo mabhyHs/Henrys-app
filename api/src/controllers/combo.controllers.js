@@ -4,7 +4,7 @@ async function create(req, res, next) {
   try {
     const data = req.body;
     const newCombo = await comboRepository.create(data);
-    res.status(201).json(newCombo);
+    return res.status(201).json(newCombo);
   } catch (error) {
     next(error);
   }

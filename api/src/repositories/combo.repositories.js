@@ -32,6 +32,23 @@ async function create(data) {
   });
 }
 
+async function getAll() {
+    const combos = await Combo.findAll();
+    return combos;
+}
+
+async function getByName(name) {    
+    
+    if(!name){
+        return await getAll();
+    }
+    
+    const combos = await Combo.findAll();
+    return combos;
+}
+
 module.exports = {
   create,
+  getAll,
+  getByName
 };
