@@ -3,7 +3,6 @@ const comboRepository = require("../repositories/combo.repositories");
 const friesRepository = require("../repositories/fries.repositories");
 const beverageRepository = require("../repositories/beverage.repositories");
 
-
 async function getByQuery(req, res, next) {
   try {
     const order = req.query.order.toLowerCase();
