@@ -34,8 +34,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
-      img: {
-        type: DataTypes.STRING(500),
+      imgUri: {
+        type: DataTypes.TEXT,
         validate: {
           isUrl: true,
         },

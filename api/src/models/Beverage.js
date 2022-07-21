@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       size: {
-        type: DataTypes.ENUM(["chico", "mediano", "grande"]),
+        type: DataTypes.ENUM(["Chico", "Mediano", "Grande"]),
         allowNull: false,
       },
       isCarbonated: {
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       imgUri: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
       },
     },

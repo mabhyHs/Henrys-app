@@ -27,11 +27,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       price: {
-        type: DataTypes.FLOAT(),
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
-      img: {
-        type: DataTypes.STRING(500),
+      imgUri: {
+        type: DataTypes.TEXT,
         validate: {
           isUrl: true,
         },
