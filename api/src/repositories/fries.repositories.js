@@ -10,7 +10,18 @@ async function getAll() {
     return fries;
 }
 
+async function getByName(name) {
+
+    if(!name){
+        return await getAll();
+    }
+
+    const fries = await Fries.findAll();
+    return fries;
+}
+
 module.exports = {
   createFries,
-  getAll
+  getAll,
+  getByName
 };

@@ -37,7 +37,18 @@ async function getAll() {
     return combos;
 }
 
+async function getByName(name) {    
+    
+    if(!name){
+        return await getAll();
+    }
+    
+    const combos = await Combo.findAll();
+    return combos;
+}
+
 module.exports = {
   create,
-  getAll
+  getAll,
+  getByName
 };

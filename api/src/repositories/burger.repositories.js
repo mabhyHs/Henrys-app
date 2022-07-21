@@ -15,7 +15,18 @@ async function getAll() {
     return burgers;
 }
 
+async function getByName(name) {
+
+    if(!name){
+        return await getAll();
+    }
+    
+    const burgers = await Burger.findAll();
+    return burgers;
+}
+
 module.exports = {
     create,
-    getAll
+    getAll,
+    getByName
 };

@@ -10,7 +10,18 @@ async function getAll() {
     return beverages;
 }
 
+async function getByName(name) {
+
+    if(!name){
+        return await getAll();
+    }
+    
+    const beverages = await Beverage.findAll();
+    return beverages;
+}
+
 module.exports = {
   create,
-  getAll
+  getAll,
+  getByName
 };

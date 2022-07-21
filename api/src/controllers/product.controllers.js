@@ -5,33 +5,34 @@ const beverageRepository = require("../repositories/beverage.repositories");
 
 async function getByQuery(req, res, next) {
   try {
-    const order = req.query.order.toLowerCase();
-    const filter = req.query.filter.toLowerCase();
+    const order = req.query.order ? req.query.order.toLowerCase() : req.query.order;
+    const filter = req.query.filter ? req.query.filter.toLowerCase() : req.query.filter;
+    const search = req.query.search ? req.query.search.toLowerCase() : req.query.search;
     
     let products = [];
 
     if(!filter){
-        const burgers = await burgerRepository.getAll();
-        const combos = await comboRepository.getAll();
-        const fries = await friesRepository.getAll();
-        const beverages = await beverageRepository.getAll();
+        const burgers = await burgerRepository.getByName(search);
+        const combos = await comboRepository.getByName(search);
+        const fries = await friesRepository.getByName(search);
+        const beverages = await beverageRepository.getByName(search);
         
         products = [...burgers, ...combos, ...fries, ...beverages];
     }    
     else if(filter === "burgers"){
-        const burgers = await burgerRepository.getAll();
+        const burgers = await burgerRepository.getByName(search);
         products = [...burgers]; 
     }
     else if(filter === "combos"){
-        const combos = await comboRepository.getAll();
+        const combos = await comboRepository.getByName(search);
         products = [...combos]; 
     }
     else if(filter === "fries"){
-        const fries = await friesRepository.getAll();
+        const fries = await friesRepository.getByName(search);
         products = [...fries]; 
     }
     else if(filter === "beverages"){
-        const beverages = await beverageRepository.getAll();
+        const beverages = await beverageRepository.getByName(search);
         products = [...beverages];
     }
 
@@ -62,9 +63,7 @@ function sortMinor(a, b){
 
 function sortMajor(a, b){  
     return sortMinor(b, a);
-} 
-
-
+}
 
 module.exports = {
     getByQuery,
