@@ -3,17 +3,19 @@ import { Routes, Route } from 'react-router-dom';
 import NavBar from './Components/NavBar/NavBar';
 import ContactoForm from './Components/ContactForm/ContactoForm';
 import Footer from './Components/Footer/Footer';
+import Home from './Components/Home/Home';
+import Menu from './Components/Menu/Menu';
 
 import './App.css';
-import MainHome from './Components/MainHome/MainHome';
 
 function App() {
   return (
     <div className="App">
       <NavBar />
-      <MainHome />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/contacto" element={<ContactoForm />} />
+        <Route path="/menu" element={<Menu />} />
       </Routes>
       <Footer />
     </div>

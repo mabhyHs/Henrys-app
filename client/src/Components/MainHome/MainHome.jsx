@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import hamburguesa from '../../Assets/Images/hero-bg.jpg';
 import './MainHome.css';
 
-export default function MainHome() {
+function MainHome() {
   return (
     <div>
       <main>
@@ -23,3 +23,4 @@ export default function MainHome() {
     </div>
   );
 }
+export default MainHome;
