@@ -1,4 +1,5 @@
 const { Burger } = require("../models");
+const { Op } = require("sequelize");
 
 async function create(data) {
   const burger = await Burger.create(data);
@@ -17,14 +18,28 @@ async function getAll() {
 
 async function getByName(name) {
 
-    if(!name){
+    /* if(!name){
         return await getAll();
-    }
+    } */
 
     //recorro de alguna forma para crear condiciones /?
     // ahora que pienso tengo que tenes isVeggie en true solo si no es nulo y la busqueda puede estar o no
         
-    const burgers = await Burger.findAll({ where: { name: {[Op.iLike]: `%${name}%`} }});
+    //const burgers = await Burger.findAll({ where: { name: {[Op.iLike]: `%${name}%`} } });
+
+
+    const burgers = await Burger.findAll({ 
+
+        where: {
+            [Op.and]: [
+                { 
+                    name: { [Op.iLike]: `%${name}%` }                    
+                },
+                {"isVeggie": false} 
+            ]          
+        }     
+    });
+
     return burgers;
 }
 
