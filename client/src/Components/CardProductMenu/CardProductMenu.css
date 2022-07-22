@@ -1,0 +1,36 @@
+.card__menu {
+  background-color: var(--main-color-dark);
+  color: var(--text-color-light);
+  border-radius: 20px;
+  margin: 1.5rem;
+  border-color: var(--main-color-light);
+}
+
+.card__menu p {
+  text-align: left;
+}
+
+.card__img__menu {
+  background-color: var(--main-color-light);
+  border-radius: 18px 18px 0px 45px;
+  border-color: var(--main-color-light);
+}
+.card__menu:hover {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.card__menu__cart {
+  background-color: var(--brand-color);
+  padding: 5px;
+  border-radius: 90px;
+}
+
+.card__cart__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
