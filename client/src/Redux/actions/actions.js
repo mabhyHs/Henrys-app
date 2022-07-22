@@ -16,10 +16,10 @@ export const GET_VEGGIE = 'GET_VEGGIE';
 
 // https://vimeo.com/510792531/20d64d4a98
 
-export function getProduct(id) {
+export function getProduct() {
   // eslint-disable-next-line func-names, consistent-return
   return async function (dispatch) {
-    const json = await axios(`http://pending...${id}`);
+    const json = await axios(`http://localhost:3001/products`);
     try {
       return dispatch({
         type: GET_PRODUCT,
