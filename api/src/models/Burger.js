@@ -35,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
           isUrl: true,
         },
       },
+      isVeggie: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
     },
     {
       sequelize,
