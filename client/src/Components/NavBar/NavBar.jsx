@@ -15,7 +15,7 @@ import './NavBar.css';
 
 function NavBar() {
   return (
-    <Navbar className="navBar" expand="lg" variant="dark">
+    <Navbar className="navBar" expand="lg" variant="dark" sticky="top">
       <Container>
         <Navbar.Brand as={Link} to="/">
           <img src={imgNav} className="nav-img" alt="Henrys burguer logo" />
