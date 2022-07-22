@@ -10,6 +10,10 @@
   text-align: left;
 }
 
+.card__menu__body {
+  box-shadow: var(--bs-card);
+  border-radius: 20px;
+}
 .card__img__menu {
   background-color: var(--main-color-light);
   border-radius: 18px 18px 0px 45px;

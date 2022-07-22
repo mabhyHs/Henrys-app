@@ -9,7 +9,7 @@ function CardProductMenu() {
   return (
     <Card className="card__menu" style={{ width: '18rem' }}>
       <Card.Img variant="top" src={imgCard} className="card__img__menu" />
-      <Card.Body>
+      <Card.Body className="card__menu__body">
         <Card.Title>
           <p>Henry´s Clásica</p>
         </Card.Title>
