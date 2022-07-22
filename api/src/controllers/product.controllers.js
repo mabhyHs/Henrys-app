@@ -2,22 +2,20 @@ const burgerRepository = require("../repositories/burger.repositories");
 const comboRepository = require("../repositories/combo.repositories");
 const friesRepository = require("../repositories/fries.repositories");
 const beverageRepository = require("../repositories/beverage.repositories");
+const productRepository = require("../repositories/product.repositories");
 
 async function getByQuery(req, res, next) {
+    
   try {
-    const order = req.query.order ? req.query.order.toLowerCase() : req.query.order;
     const filter = req.query.filter ? req.query.filter.toLowerCase() : req.query.filter;
     const search = req.query.search ? req.query.search.toLowerCase() : req.query.search;
+    const order = req.query.order ? req.query.order.toLowerCase() : req.query.order;
     
     let products = [];
 
     if(!filter){
-        const burgers = await burgerRepository.getByName(search);
-        const combos = await comboRepository.getByName(search);
-        const fries = await friesRepository.getByName(search);
-        const beverages = await beverageRepository.getByName(search);
-        
-        products = [...burgers, ...combos, ...fries, ...beverages];
+        const all = await productRepository.getByName(search);        
+        products = [...all];
     }    
     else if(filter === "burgers"){
         const burgers = await burgerRepository.getByName(search);
@@ -34,6 +32,10 @@ async function getByQuery(req, res, next) {
     else if(filter === "beverages"){
         const beverages = await beverageRepository.getByName(search);
         products = [...beverages];
+    }
+    else if(filter === "veggie"){
+        const all = await productRepository.getByName(search);
+        products = [...all];
     }
 
         if(order){
