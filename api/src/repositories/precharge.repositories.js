@@ -14,34 +14,34 @@ async function precharge() {
     try {       
         
         const data = addDataDB();
-
+        
         if(!data) return;
     
-        if(data.ingredients){
+        if(data.ingredients.length){
             await Ingredient.bulkCreate(data.ingredients, {
                 ignoreDuplicates: true
             });
         }
 
-        if(data.burgers){
+        if(data.burgers.length){
             await Burger.bulkCreate(data.burgers, {
                 ignoreDuplicates: true
             });
         }    
         
-        if(data.fries){
+        if(data.fries.length){
             await Fries.bulkCreate(data.fries, {
                 ignoreDuplicates: true
             });
         }
 
-        if(data.beverages){
+        if(data.beverages.length){
             await Beverage.bulkCreate(data.beverages, {
                 ignoreDuplicates: true
             });
         }
 
-        if(data.combos){
+        if(data.combos.length){
             await Combo.bulkCreate(data.combos, {
                 ignoreDuplicates: true
             });

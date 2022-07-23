@@ -218,9 +218,9 @@ function addDataDB() {
       },
       {
         id: "e0d6d870-8209-4e02-9e8c-08c8b9f3a7de",
-        name: "Agua Villavicencio Chica",
+        name: "Agua VillaManaos",
         price: 70,
-        size: "Chica",
+        size: "Chico",
         isCarbonated: false,
         isSugar: false,
         imgUri:
@@ -323,23 +323,13 @@ function addDataDB() {
         },
     ];
   
-    const data = {};
-  
-    if (data.ingredients) {
-      data.ingredients = ingredients;
-    }
-    if (data.burgers) {
-      data.burgers = burgers;
-    }
-    if (data.fries) {
-      data.fries = fries;
-    }
-    if (data.beverages) {
-      data.beverages = beverages;
-    }
-    if (data.combos) {
-      data.combos = combos;
-    }
+    const data = {
+        ingredients,
+        burgers,
+        fries,
+        beverages,
+        combos
+    };
   
     return data;
   }
