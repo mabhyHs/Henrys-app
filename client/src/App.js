@@ -7,6 +7,7 @@ import Home from './Components/Home/Home';
 import Menu from './Components/Menu/Menu';
 import AddBurger from './Components/AddBurger/AddBurger';
 import AboutUs from './Components/AboutUs/AboutUs';
+import ProductDetail from './Components/ProductDetail/ProductDetail';
 
 import './App.css';
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/menu" element={<Menu />} />
         <Route path="/addBurger" element={<AddBurger />} />
         <Route path="/nosotros" element={<AboutUs />} />
+        <Route path="/detalle" element={<ProductDetail />} />
       </Routes>
       <Footer />
     </div>
