@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useSelector } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import FiltersMenu from '../FiltersMenu/FiltersMenu';
 import ProductsContainerMenu from '../ProductsContainerMenu/ProductsContainerMenu';
 import SearchBar from '../SearchBar/SearchBar';
