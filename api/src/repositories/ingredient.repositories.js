@@ -1,4 +1,5 @@
 const { Ingredient } = require("../models");
+const { Op } = require("sequelize");
 
 async function create(data) {
   const ingredients = await Ingredient.create(data);
@@ -16,7 +17,7 @@ async function getAll() {
 }
 
 async function getByName(name) {
-  const ingredient = await Ingredient.findAll({
+  const ingredient = await Ingredient.findOne({
     where: { name: { [Op.iLike]: `${name}` } },
   });
   return ingredient;

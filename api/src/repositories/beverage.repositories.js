@@ -1,5 +1,5 @@
-const { Op } = require("sequelize");
 const { Beverage } = require("../models");
+const { Op } = require("sequelize");
 
 async function create(data) {
   const beverage = await Beverage.create(data);
@@ -26,7 +26,7 @@ async function getByQuery(queries) {
 }
 
 async function getByName(name) {
-  const beverage = await Beverage.findAll({
+  const beverage = await Beverage.findOne({
     where: { name: { [Op.iLike]: `${name}` } },
   });
   return beverage;

@@ -24,7 +24,6 @@ const beverageValid = body("beverages")
   .custom(async (beverages) => {
     for (let beverage of beverages) {
       const res = await beverageRepository.getById(beverage);
-      console.log(res);
       if (!res) {
         throw new Error(`beverage with id ${id} not exists!`);
       }
@@ -38,7 +37,6 @@ const friesValid = body("fries")
   .custom(async (fries) => {
     for (let fry of fries) {
       const res = await friesRepository.getById(fry);
-      console.log(res);
       if (!res) {
         throw new Error(`fries with id ${id} not exists!`);
       }
@@ -51,11 +49,11 @@ const nameValid = body("name")
   .withMessage("name is required")
   .isLength({ min: 2 })
   .withMessage("min lenght 2")
-  .isLength({ max: 20 })
-  .withMessage("max lenght 20")
+  .isLength({ max: 40 })
+  .withMessage("max lenght 40")
   .custom(async (name) => {
     const result = await comboRepository.getByName(name);
-    if (result.length) {
+    if (result) {
       throw new Error("combo already exists");
     }
   })
