@@ -6,28 +6,33 @@ async function createFries(data) {
 }
 
 async function getById(id) {
-    const fries = await Fries.findByPk(id);
-    return fries;
+  const fries = await Fries.findByPk(id);
+  return fries;
 }
 
 async function getAll() {
-    const fries = await Fries.findAll();
-    return fries;
+  const fries = await Fries.findAll();
+  return fries;
 }
 
 async function getByQuery(queries) {
+  if (!queries) {
+    return await getAll();
+  }
 
-    if(!queries){
-        return await getAll();
-    }
+  const fries = await Fries.findAll({ where: queries });
+  return fries;
+}
 
-    const fries = await Fries.findAll({ where: queries });
-    return fries;
+async function getByName(name) {
+  const fries = await Fries.findAll({ where: { name: name } });
+  return fries;
 }
 
 module.exports = {
   createFries,
   getById,
   getAll,
-  getByQuery
+  getByQuery,
+  getByName,
 };
