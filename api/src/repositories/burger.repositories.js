@@ -1,14 +1,28 @@
 const { Burger } = require("../models");
-const { Op } = require("sequelize");
 
 async function create(data) {
   const burger = await Burger.create(data);
-  await burger.addIngredient(data.ingredients);     
-  const withRelation = await Burger.findByPk(burger.id, { include: [{ association: "ingredient", attributes: ["name"], through: {
-    attributes: [],
-  }, }] });        
+  await burger.addIngredient(data.ingredients);
+  const withRelation = await getById(burger.id);
   
   return withRelation;
+}
+
+async function getById(id) {
+    
+    const burger = await Burger.findByPk(id, { 
+        include: [
+            { 
+                association: "ingredient", 
+                attributes: ["name"], 
+                through: {
+                    attributes: [],
+                },
+            }
+        ]
+    }); 
+
+    return burger;
 }
 
 async function getAll() {
@@ -16,35 +30,19 @@ async function getAll() {
     return burgers;
 }
 
-async function getByName(name) {
+async function getByQuery(queries) {
 
-    /* if(!name){
+    if(!queries){
         return await getAll();
-    } */
+    }
 
-    //recorro de alguna forma para crear condiciones /?
-    // ahora que pienso tengo que tenes isVeggie en true solo si no es nulo y la busqueda puede estar o no
-        
-    //const burgers = await Burger.findAll({ where: { name: {[Op.iLike]: `%${name}%`} } });
-
-
-    const burgers = await Burger.findAll({ 
-
-        where: {
-            [Op.and]: [
-                { 
-                    name: { [Op.iLike]: `%${name}%` }                    
-                },
-                {"isVeggie": false} 
-            ]          
-        }     
-    });
-
+    const burgers = await Burger.findAll({ where: queries });
     return burgers;
 }
 
 module.exports = {
     create,
+    getById,
     getAll,
-    getByName
+    getByQuery
 };
