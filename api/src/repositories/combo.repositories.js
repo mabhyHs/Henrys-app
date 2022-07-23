@@ -1,4 +1,5 @@
 const { Combo } = require("../models");
+const { Op } = require("sequelize");
 
 async function create(data) {
   const combo = await Combo.create(data);
@@ -55,10 +56,10 @@ async function getByQuery(queries) {
 }
 
 async function getByName(name) {
-  const combos = await Combo.findAll({
+  const combo = await Combo.findOne({
     where: { name: { [Op.iLike]: `${name}` } },
   });
-  return combos;
+  return combo;
 }
 
 module.exports = {

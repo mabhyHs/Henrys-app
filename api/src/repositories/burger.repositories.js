@@ -1,4 +1,5 @@
 const { Burger } = require("../models");
+const { Op } = require("sequelize");
 
 async function create(data) {
   const burger = await Burger.create(data);
@@ -39,10 +40,10 @@ async function getByQuery(queries) {
 }
 
 async function getByName(name) {
-  const burgers = await Burger.findAll({
+  const burger = await Burger.findOne({
     where: { name: { [Op.iLike]: `${name}` } },
   });
-  return burgers;
+  return burger;
 }
 
 module.exports = {
