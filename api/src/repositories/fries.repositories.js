@@ -25,7 +25,9 @@ async function getByQuery(queries) {
 }
 
 async function getByName(name) {
-  const fries = await Fries.findAll({ where: { name: name } });
+  const fries = await Fries.findAll({
+    where: { name: { [Op.iLike]: `${name}` } },
+  });
   return fries;
 }
 

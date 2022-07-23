@@ -55,7 +55,9 @@ async function getByQuery(queries) {
 }
 
 async function getByName(name) {
-  const combos = await Combo.findAll({ where: { name: name } });
+  const combos = await Combo.findAll({
+    where: { name: { [Op.iLike]: `${name}` } },
+  });
   return combos;
 }
 

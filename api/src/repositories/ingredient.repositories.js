@@ -16,7 +16,9 @@ async function getAll() {
 }
 
 async function getByName(name) {
-  const ingredient = await Ingredient.findAll({ where: { name: name } });
+  const ingredient = await Ingredient.findAll({
+    where: { name: { [Op.iLike]: `${name}` } },
+  });
   return ingredient;
 }
 

@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { Beverage } = require("../models");
 
 async function create(data) {
@@ -25,7 +26,9 @@ async function getByQuery(queries) {
 }
 
 async function getByName(name) {
-  const beverage = await Beverage.findAll({ where: { name: name } });
+  const beverage = await Beverage.findAll({
+    where: { name: { [Op.iLike]: `${name}` } },
+  });
   return beverage;
 }
 
