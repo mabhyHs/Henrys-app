@@ -4,12 +4,15 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 import './FiltersMenu.css';
+import { Link } from 'react-router-dom';
 
 function FiltersMenu() {
   return (
     <Container>
       <div className="m-3 order__container">
-        <Button className="createBurger__btn">Creá tu Hamburguesa</Button>
+        <Button as={Link} to="/addBurger" className="createBurger__btn">
+          Creá tu Hamburguesa
+        </Button>
 
         <select className="select__order">
           <option value="0">Ordenar por precio</option>

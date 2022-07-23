@@ -46,15 +46,15 @@ function Footer() {
           </Col>
           <Col sm={12} lg={4} className="p-3">
             <p>Seguinos:</p>
-            <Link to="/facebook.com">
+            <a href="https://facebook.com" target="_blank" rel="noreferrer">
               <Facebook />
-            </Link>
-            <Link to="/instagram.com">
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noreferrer">
               <Instagram />
-            </Link>
-            <Link to="/linkedin.com">
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noreferrer">
               <Linkedin />
-            </Link>
+            </a>
             <Link className="footer__mail__link" to="/enviarmail">
               <p>henrys@gmail.com</p>
             </Link>
