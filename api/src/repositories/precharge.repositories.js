@@ -7,10 +7,14 @@ const {
 
 } = require("../models");
 
-async function precharge(data) {
+const {addDataDB} = require("../utils/addDataDB");
+
+async function precharge() {
 
     try {       
         
+        const data = addDataDB();
+
         if(!data) return;
     
         if(data.ingredients){
@@ -25,7 +29,7 @@ async function precharge(data) {
             });
         }    
         
-        if(data.burgers){
+        if(data.fries){
             await Fries.bulkCreate(data.fries, {
                 ignoreDuplicates: true
             });
@@ -42,7 +46,9 @@ async function precharge(data) {
                 ignoreDuplicates: true
             });
         } 
-        
+
+        console.log("models precharged successfully!");
+
     } catch (error) {
         console.log(error);
     }    
