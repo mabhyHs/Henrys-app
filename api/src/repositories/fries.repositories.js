@@ -1,4 +1,5 @@
 const { Fries } = require("../models");
+const { Op } = require("sequelize");
 
 async function createFries(data) {
   const fries = await Fries.create(data);
@@ -25,7 +26,7 @@ async function getByQuery(queries) {
 }
 
 async function getByName(name) {
-  const fries = await Fries.findAll({
+  const fries = await Fries.findOne({
     where: { name: { [Op.iLike]: `${name}` } },
   });
   return fries;
