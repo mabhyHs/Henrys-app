@@ -10,55 +10,61 @@ async function create(data) {
   return withRelation;
 }
 
-async function getById(id){        
-    
-    const combo = await Combo.findByPk(id, {
-        include: [
-            {
-                association: "burger", 
-                attributes: ["name"],
-                through: {
-                    attributes: [],
-                }
-            },
-            {
-                association: "beverage", 
-                attributes: ["name"],
-                through: {
-                    attributes: [],
-                }
-            },
-            {
-                association: "fries", 
-                attributes: ["name"],
-                through: {
-                    attributes: [],
-                }
-            }
-        ],
-    });
+async function getById(id) {
+  const combo = await Combo.findByPk(id, {
+    include: [
+      {
+        association: "burger",
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        },
+      },
+      {
+        association: "beverage",
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        },
+      },
+      {
+        association: "fries",
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+  });
 
-    return combo;
+  return combo;
 }
 
 async function getAll() {
-    const combos = await Combo.findAll();
-    return combos;
+  const combos = await Combo.findAll();
+  return combos;
 }
 
-async function getByQuery(queries) {    
-    
-    if(!queries){
-        return await getAll();
-    }
-    
-    const combos = await Combo.findAll({ where: queries });
-    return combos;
+async function getByQuery(queries) {
+  if (!queries) {
+    return await getAll();
+  }
+
+  const combos = await Combo.findAll({ where: queries });
+  return combos;
+}
+
+async function getByName(name) {
+  const combos = await Combo.findAll({
+    where: { name: { [Op.iLike]: `${name}` } },
+  });
+  return combos;
 }
 
 module.exports = {
   create,
   getById,
   getAll,
-  getByQuery
+  getByQuery,
+  getByName,
 };
