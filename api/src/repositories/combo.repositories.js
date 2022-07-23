@@ -1,36 +1,44 @@
 const { Combo } = require("../models");
-const { Op } = require("sequelize");
 
 async function create(data) {
   const combo = await Combo.create(data);
   await combo.addBurger(data.burgers);
   await combo.addBeverage(data.beverages);
   await combo.addFries(data.fries);
-  return await Combo.findByPk(combo.id, {
-    include: [
-      {
-        association: "burger",
-        attributes: ["name"],
-        through: {
-          attributes: [],
-        },
-      },
-      {
-        association: "beverage",
-        attributes: ["name"],
-        through: {
-          attributes: [],
-        },
-      },
-      {
-        association: "fries",
-        attributes: ["name"],
-        through: {
-          attributes: [],
-        },
-      },
-    ],
-  });
+  const withRelation = await getById(combo.id);
+
+  return withRelation;
+}
+
+async function getById(id){        
+    
+    const combo = await Combo.findByPk(id, {
+        include: [
+            {
+                association: "burger", 
+                attributes: ["name"],
+                through: {
+                    attributes: [],
+                }
+            },
+            {
+                association: "beverage", 
+                attributes: ["name"],
+                through: {
+                    attributes: [],
+                }
+            },
+            {
+                association: "fries", 
+                attributes: ["name"],
+                through: {
+                    attributes: [],
+                }
+            }
+        ],
+    });
+
+    return combo;
 }
 
 async function getAll() {
@@ -38,18 +46,19 @@ async function getAll() {
     return combos;
 }
 
-async function getByName(name) {    
+async function getByQuery(queries) {    
     
-    if(!name){
+    if(!queries){
         return await getAll();
     }
     
-    const combos = await Combo.findAll({ where: { name: {[Op.iLike]: `%${name}%`} }});
+    const combos = await Combo.findAll({ where: queries });
     return combos;
 }
 
 module.exports = {
   create,
+  getById,
   getAll,
-  getByName
+  getByQuery
 };

@@ -1,9 +1,13 @@
 const { Fries } = require("../models");
-const { Op } = require("sequelize");
 
 async function createFries(data) {
   const fries = await Fries.create(data);
   return fries;
+}
+
+async function getById(id) {
+    const fries = await Fries.findByPk(id);
+    return fries;
 }
 
 async function getAll() {
@@ -11,18 +15,19 @@ async function getAll() {
     return fries;
 }
 
-async function getByName(name) {
+async function getByQuery(queries) {
 
-    if(!name){
+    if(!queries){
         return await getAll();
     }
 
-    const fries = await Fries.findAll({ where: { name: {[Op.iLike]: `%${name}%`} }});
+    const fries = await Fries.findAll({ where: queries });
     return fries;
 }
 
 module.exports = {
   createFries,
+  getById,
   getAll,
-  getByName
+  getByQuery
 };
