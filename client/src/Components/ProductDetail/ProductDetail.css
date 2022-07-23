@@ -1,0 +1,16 @@
+.productDetail__container {
+  margin-top: 2rem;
+}
+
+.productDetail__img {
+  max-width: 50%;
+}
+
+.productDetail__tittle {
+  color: var(--main-color-dar);
+  text-shadow: var(--bs-card);
+}
+
+.productDetail__text {
+  font-size: 1rem;
+}

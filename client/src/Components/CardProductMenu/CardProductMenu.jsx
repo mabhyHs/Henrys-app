@@ -13,12 +13,12 @@ function CardProductMenu() {
         <Card.Title>
           <p>Henry´s Clásica</p>
         </Card.Title>
-        <Link className="footer__mail__link" to="/detail">
+        <Link className="footer__mail__link" to="/detalle">
           <p>Ver Más</p>
         </Link>
         <div className="card__cart__container">
           <span>$950</span>
-          <Card.Link className="card__menu__cart" as={Link} to="/detalle">
+          <Card.Link className="card__menu__cart" as={Link} to="/carrito">
             <CartFill />
           </Card.Link>
         </div>
