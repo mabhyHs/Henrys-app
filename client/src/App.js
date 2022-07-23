@@ -5,6 +5,8 @@ import ContactoForm from './Components/ContactForm/ContactoForm';
 import Footer from './Components/Footer/Footer';
 import Home from './Components/Home/Home';
 import Menu from './Components/Menu/Menu';
+import AddBurger from './Components/AddBurger/AddBurger';
+import AboutUs from './Components/AboutUs/AboutUs';
 
 import './App.css';
 
@@ -16,6 +18,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/contacto" element={<ContactoForm />} />
         <Route path="/menu" element={<Menu />} />
+        <Route path="/addBurger" element={<AddBurger />} />
+        <Route path="/nosotros" element={<AboutUs />} />
       </Routes>
       <Footer />
     </div>

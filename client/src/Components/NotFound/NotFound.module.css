@@ -1,0 +1,33 @@
+.page_404 {
+  padding: 40px 0;
+}
+
+.page_404 img {
+  width: 100%;
+}
+
+.four_zero_four_bg {
+  background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+  height: 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center;
+}
+h1,
+h3 {
+  color: var(--main-color-dark);
+}
+h1 {
+  font-size: 5rem;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+.contant_box_404 {
+  margin-top: -50px;
+}
