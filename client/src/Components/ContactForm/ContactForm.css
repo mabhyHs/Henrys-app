@@ -1,0 +1,19 @@
+.contact__form__container {
+  align-items: center;
+  justify-content: center;
+}
+
+.contactForm__img {
+  height: 65vh;
+  background: url('../../Assets/Images/Hamburguesas/Stacker-Triple.png');
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center;
+  background-size: cover;
+}
+.contactForm__input {
+  border-radius: 20px;
+  margin: 7px;
+  border: var(--bc-inputs);
+  padding: 0.5rem;
+}
