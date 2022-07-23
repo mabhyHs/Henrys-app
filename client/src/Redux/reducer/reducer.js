@@ -14,7 +14,32 @@ const initialState = {
   products: [],
   combos: [],
   beverages: [],
-  ingredients: [],
+  ingredients: [
+    {
+      id: 1,
+      name: 'tomate',
+      price: 0.5,
+      isVeggie: true
+      },
+      {
+        id: 2,
+        name: 'carne',
+        price: 2.5,
+        isVeggie: false
+      },
+      {
+        id: 3,
+        name: 'queso',
+        price: 1.3,
+        isVeggie: true
+      },
+      {
+        id: 4,
+        name: 'lechuga',
+        price: 0.8,
+        isVeggie: true
+        },
+  ],
   potatoes: [],
   veggie: [],
 };
