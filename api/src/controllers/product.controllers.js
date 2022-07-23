@@ -3,43 +3,56 @@ const comboRepository = require("../repositories/combo.repositories");
 const friesRepository = require("../repositories/fries.repositories");
 const beverageRepository = require("../repositories/beverage.repositories");
 const productRepository = require("../repositories/product.repositories");
+const utils = require("../utils/utils");
+
+async function getById(req, res, next) {
+    
+    try {
+        const {id} = req.params;
+        const find = await productRepository.getById(id);        
+        return res.status(200).json(find);
+    } catch (error) {
+      next(error);
+    }
+}
 
 async function getByQuery(req, res, next) {
     
   try {
-    const filter = req.query.filter ? req.query.filter.toLowerCase() : req.query.filter;
-    const search = req.query.search ? req.query.search.toLowerCase() : req.query.search;
+    const category = req.query.category ? req.query.category.toLowerCase() : req.query.category;
+    const name = req.query.name ? req.query.name.toLowerCase() : req.query.name;
+    const isVeggie = req.query.isVeggie ? req.query.isVeggie.toLowerCase() : req.query.isVeggie;
     const order = req.query.order ? req.query.order.toLowerCase() : req.query.order;
-    
+    const filters = utils.setFilters({isVeggie, name});
     let products = [];
 
-    if(!filter){
-        const all = await productRepository.getByName(search);        
+    if(!category){
+        const all = await productRepository.getByQuery(filters);     
         products = [...all];
     }    
-    else if(filter === "burgers"){
-        const burgers = await burgerRepository.getByName(search);
+    else if(category === "burgers"){
+        const burgers = await burgerRepository.getByQuery(filters);
         products = [...burgers]; 
     }
-    else if(filter === "combos"){
-        const combos = await comboRepository.getByName(search);
+    else if(category === "combos"){
+        const combos = await comboRepository.getByQuery(filters);
         products = [...combos]; 
     }
-    else if(filter === "fries"){
-        const fries = await friesRepository.getByName(search);
+    else if(category === "fries"){
+        const fries = await friesRepository.getByQuery(filters);
         products = [...fries]; 
     }
-    else if(filter === "beverages"){
-        const beverages = await beverageRepository.getByName(search);
+    else if(category === "beverages"){
+        const beverages = await beverageRepository.getByQuery(filters);
         products = [...beverages];
     }
-    else if(filter === "veggie"){
-        const all = await productRepository.getByName(search);
+    else if(category === "veggie"){
+        const all = await productRepository.getByQuery(filters);
         products = [...all];
     }
 
         if(order){
-            products = sort(order, products);
+            products = utils.sort(order, products, "price");
         }
        
     return res.status(200).json(products);
@@ -49,24 +62,7 @@ async function getByQuery(req, res, next) {
   }
 }
 
-function sort(order, array){
-  
-    if(order === "desc"){
-        return array.sort((a, b) => sortMajor(a.price, b.price));
-    }
-    else{
-        return array.sort((a, b) => sortMinor(a.price, b.price));
-    }  
-}
-
-function sortMinor(a, b){  
-    return a - b;
-} 
-
-function sortMajor(a, b){  
-    return sortMinor(b, a);
-}
-
 module.exports = {
     getByQuery,
+    getById
 };
