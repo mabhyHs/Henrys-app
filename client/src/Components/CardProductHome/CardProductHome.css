@@ -48,10 +48,7 @@
 }
 
 .productCard__content__box h2:hover {
-  /* color: var(--text-color-light); */
-  box-shadow: 0 10px 20px var(--main-color-light),
-    0 6px 6px var(--main-color-light);
-  border-radius: 50%;
+  transform: scale(1.5);
 }
 
 .productCard__content__box a:link {
