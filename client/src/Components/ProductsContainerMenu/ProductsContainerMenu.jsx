@@ -2,13 +2,18 @@ import React from 'react';
 import CardProductMenu from '../CardProductMenu/CardProductMenu';
 import Container from 'react-bootstrap/Container';
 
-import './ProductsContainerMenu.css';
-
-function ProductsContainerMenu() {
+function ProductsContainerMenu({ currentProduct }) {
   return (
     <div>
       <Container className="products__container__menu mt-3">
-        <CardProductMenu />
+        {currentProduct.map((item) => (
+          <CardProductMenu
+            name={item.name}
+            price={item.price}
+            imgUri={item.imgUri}
+            key={item.name}
+          />
+        ))}
       </Container>
     </div>
   );

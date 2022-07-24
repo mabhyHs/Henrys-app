@@ -20,7 +20,7 @@
 }
 .productCard__image img {
   width: 250px;
-  height: auto;
+  height: 200px;
   transition: 0.7s;
 }
 
