@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
+import Button from 'react-bootstrap/Button';
 import FiltersMenu from '../FiltersMenu/FiltersMenu';
 import ProductsContainerMenu from '../ProductsContainerMenu/ProductsContainerMenu';
 import SearchBar from '../SearchBar/SearchBar';
@@ -43,20 +45,18 @@ function Menu() {
       <FiltersMenu />
       <ProductsContainerMenu />
 
-      <div>
-        <button type="button" onClick={prevPage}>
-          {' '}
-          prev{' '}
-        </button>
+      <div className="menu__pagination__container mb-3 mt-3">
+        <Button className="btn__round__effect" type="button" onClick={prevPage}>
+          <CaretLeftFill />
+        </Button>
         <Pagination
           burgersPerPage={burgersPerPage}
           burgersTotal={copyBurgers.length}
           onSetPage={pageHandler}
         />
-        <button type="button" onClick={nextPage}>
-          {' '}
-          next{' '}
-        </button>
+        <Button className="btn__round__effect" type="button" onClick={nextPage}>
+          <CaretRightFill />
+        </Button>
       </div>
     </div>
   );

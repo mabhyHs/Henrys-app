@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import Button from 'react-bootstrap/esm/Button';
 import { Link } from 'react-router-dom';
+import imgAboutUs from '../../Assets/Images/about-img.png';
 
 import './AboutUs.css';
 
@@ -38,7 +39,11 @@ function AboutUs() {
             </Button>
           </Col>
           <Col lg={6} sm={12}>
-            <div className="aboutUs__img__container" />
+            <img
+              src={imgAboutUs}
+              alt="imagen de un dibujo de una hamburguesa"
+              className="img-fluid"
+            />
           </Col>
         </Row>
       </Container>
