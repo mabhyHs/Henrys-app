@@ -9,6 +9,7 @@ function ProductsContainerMenu({ currentProduct }) {
           name={item.name}
           price={item.price}
           imgUri={item.imgUri}
+          key={item.name}
         />
       ))}
     </div>
