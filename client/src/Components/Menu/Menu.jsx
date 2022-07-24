@@ -16,8 +16,8 @@ function Menu() {
   const [burgersPerPage, setBurgersPerPage] = useState(9);
   const lastBurgerIndex = currentPage * burgersPerPage;
   const firstBurgerIndex = lastBurgerIndex - burgersPerPage;
-  const { copyBurgers } = useSelector((store) => store);
-  const currentBurger = copyBurgers.slice(firstBurgerIndex, lastBurgerIndex);
+  const allProducts = useSelector((state) => state.products);
+  const currentProduct = allProducts.slice(firstBurgerIndex, lastBurgerIndex);
 
   const pageHandler = (page) => {
     setCurrentPage(page);
@@ -29,7 +29,7 @@ function Menu() {
 
   /* next y prev */
   const nextPage = () => {
-    if (currentPage < Math.ceil(copyBurgers.length / burgersPerPage)) {
+    if (currentPage < Math.ceil(allProducts.length / burgersPerPage)) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -43,7 +43,7 @@ function Menu() {
     <div className="menu__container">
       <SearchBar />
       <FiltersMenu />
-      <ProductsContainerMenu />
+      <ProductsContainerMenu currentProduct={currentProduct} />
 
       <div className="menu__pagination__container mb-3 mt-3">
         <Button className="btn__round__effect" type="button" onClick={prevPage}>
@@ -51,7 +51,7 @@ function Menu() {
         </Button>
         <Pagination
           burgersPerPage={burgersPerPage}
-          burgersTotal={copyBurgers.length}
+          allProducts={allProducts.length}
           onSetPage={pageHandler}
         />
         <Button className="btn__round__effect" type="button" onClick={nextPage}>
