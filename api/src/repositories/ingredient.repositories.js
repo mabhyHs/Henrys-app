@@ -23,9 +23,27 @@ async function getByName(name) {
   return ingredient;
 }
 
+async function remove(id) {
+  await Ingredient.destroy({
+    where: { id: id },
+  });
+}
+
+async function getAssociations(id) {
+  const ingredient = await Ingredient.findByPk(id, {
+    include: {
+      association: "burger",
+    },
+  });
+  console.log(ingredient);
+  return ingredient;
+}
+
 module.exports = {
   create,
   getById,
   getAll,
   getByName,
+  remove,
+  getAssociations,
 };

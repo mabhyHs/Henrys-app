@@ -28,8 +28,30 @@ const isVeggieValid = body("isVeggie")
   .isBoolean()
   .withMessage("invalid value");
 
+const idValid = param("id")
+  .notEmpty()
+  .withMessage("id required")
+  .custom(async (id) => {
+    const result = await ingredientRepository.getById(id);
+    if (!result) {
+      throw new Error("id invalid");
+    }
+  })
+  .withMessage("id invalid")
+  .custom(async (id) => {
+    const result = await ingredientRepository.getAssociations(id);
+    // console.log(result.burger.length);
+    if (result.burger.length) {
+      throw new Error("ingredient has burgers associated");
+    }
+  })
+  .withMessage("ingredient has burgers associated");
+
 const postValidator = [nameValid, priceValid, isVeggieValid];
+
+const deleteValidator = [idValid];
 
 module.exports = {
   postValidator,
+  deleteValidator,
 };
