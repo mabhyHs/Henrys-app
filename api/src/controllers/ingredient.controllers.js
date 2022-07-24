@@ -10,7 +10,7 @@ async function create(req, res, next) {
   }
 }
 
-async function getAll(req, res, next) {
+async function get(req, res, next) {
   try {
     const ingredients = await ingredientRepository.getAll();
     return res.status(200).json(ingredients);
@@ -21,5 +21,5 @@ async function getAll(req, res, next) {
 
 module.exports = {
   create,
-  getAll,
+  get,
 };
