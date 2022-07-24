@@ -8,6 +8,7 @@ import Menu from './Components/Menu/Menu';
 import AddBurger from './Components/AddBurger/AddBurger';
 import AboutUs from './Components/AboutUs/AboutUs';
 import ProductDetail from './Components/ProductDetail/ProductDetail';
+import NotFound from './Components/NotFound/NotFound';
 
 import './App.css';
 
@@ -16,6 +17,7 @@ function App() {
     <div className="App">
       <NavBar />
       <Routes>
+        <Route path="*" exact element={<NotFound />} />
         <Route path="/" element={<Home />} />
         <Route path="/contacto" element={<ContactoForm />} />
         <Route path="/menu" element={<Menu />} />

@@ -38,7 +38,7 @@ function ControlledCarousel() {
           <h3>Compartí en familia</h3>
           <p>Lorem ipsum dolor</p>
 
-          <Link to="/">
+          <Link to="/nosotros">
             <Button>Conocenos</Button>
           </Link>
         </Carousel.Caption>

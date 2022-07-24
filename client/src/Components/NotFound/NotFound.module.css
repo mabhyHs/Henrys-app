@@ -14,17 +14,14 @@
   background-attachment: scroll;
   background-position: center;
 }
-h1,
-h3 {
+.page__404__h1 {
   color: var(--main-color-dark);
-}
-h1 {
   font-size: 5rem;
   font-family: 'Open Sans', sans-serif;
   font-weight: 700;
 }
 
-h3 {
+.page__404__h3 {
   font-size: 2rem;
 }
 
