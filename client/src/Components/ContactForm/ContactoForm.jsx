@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Swal from 'sweetalert2';
+import contactImg from '../../Assets/Images/Hamburguesas/Stacker-Triple.png';
 
 import './ContactForm.css';
 
@@ -19,18 +20,12 @@ function ContactoForm() {
     <div>
       <h2 className="pt-3">¡Nos encanta saber de vos!</h2>
       <Row className="contact__form__container">
-        <Col lg={6} sm={12}>
-          <p>
+        <Col lg={6} sm={12} className="p-5">
+          <p className="contact__text__left">
             Compartí tus consultas, comentarios ó sugerencias a través del
             formulario y te responderemos a la brevedad
           </p>
-          <form
-            ref={form}
-            onSubmit={handleSubmit}
-            action="#"
-            id="contact_form"
-            className="m-5"
-          >
+          <form ref={form} onSubmit={handleSubmit} action="#" id="contact_form">
             <Row>
               <input
                 className="contactForm__input"
@@ -110,7 +105,11 @@ function ContactoForm() {
           </form>
         </Col>
         <Col sm={12} lg={5}>
-          <div className="contactForm__img" />
+          <img
+            src={contactImg}
+            alt="Imagen de una hamburguesa triple con bacon"
+            className="img-fluid"
+          />
         </Col>
       </Row>
     </div>
