@@ -3,10 +3,8 @@ const ingredientRepository = require("../repositories/ingredient.repositories");
 const burgerRepository = require("../repositories/burger.repositories");
 
 const ingredientsValid = body("ingredients")
-  .notEmpty()
-  .withMessage("ingredients array is required")
   .custom(async (ingredients) => {
-    for (let i = 0; i < ingredients.length; i++) {
+    for (let i = 0; i < ingredients?.length; i++) {
       const id = ingredients[i];
       const res = await ingredientRepository.getById(id);
 
