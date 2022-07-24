@@ -5,42 +5,41 @@ const beverageRepository = require("../repositories/beverage.repositories");
 const friesRepository = require("../repositories/fries.repositories");
 
 const burgerValid = body("burgers")
-  .notEmpty()
-  .withMessage("burgers array is required")
   .custom(async (burgers) => {
-    for (let burger of burgers) {
-      const res = await burgerRepository.getById(burger);
-      console.log(res);
-      if (!res) {
-        throw new Error(`burger with id ${id} not exists!`);
+    for (let i = 0; i < burgers?.length; i++) {
+        const id = burgers[i];
+        const res = await burgerRepository.getById(id);
+  
+        if (!res) {
+          throw new Error(`Burger with id ${id} not exists!`);
+        }
       }
-    }
   })
   .withMessage("burgers invalid!");
 
 const beverageValid = body("beverages")
-  .notEmpty()
-  .withMessage("beverages array is required")
   .custom(async (beverages) => {
-    for (let beverage of beverages) {
-      const res = await beverageRepository.getById(beverage);
-      if (!res) {
-        throw new Error(`beverage with id ${id} not exists!`);
+    for (let i = 0; i < beverages?.length; i++) {
+        const id = beverages[i];
+        const res = await beverageRepository.getById(id);
+  
+        if (!res) {
+          throw new Error(`Beverage with id ${id} not exists!`);
+        }
       }
-    }
   })
   .withMessage("beverages invalid!");
 
 const friesValid = body("fries")
-  .notEmpty()
-  .withMessage("fries array is required")
   .custom(async (fries) => {
-    for (let fry of fries) {
-      const res = await friesRepository.getById(fry);
-      if (!res) {
-        throw new Error(`fries with id ${id} not exists!`);
+    for (let i = 0; i < fries?.length; i++) {
+        const id = fries[i];
+        const res = await friesRepository.getById(id);
+  
+        if (!res) {
+          throw new Error(`Fries with id ${id} not exists!`);
+        }
       }
-    }
   })
   .withMessage("fries invalid!");
 
