@@ -85,7 +85,7 @@ export function getBeverages() {
 export function getIngredients() {
   // eslint-disable-next-line func-names, consistent-return
   return async function (dispatch) {
-    const json = await axios('http://pending...');
+    const json = await axios('http://localhost:3001/ingredients');
 
     try {
       return dispatch({
