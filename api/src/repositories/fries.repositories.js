@@ -1,7 +1,7 @@
 const { Fries } = require("../models");
 const { Op } = require("sequelize");
 
-async function createFries(data) {
+async function create(data) {
   const fries = await Fries.create(data);
   return fries;
 }
@@ -33,7 +33,7 @@ async function getByName(name) {
 }
 
 module.exports = {
-  createFries,
+  create,
   getById,
   getAll,
   getByQuery,
