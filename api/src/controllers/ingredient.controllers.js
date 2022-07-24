@@ -10,6 +10,16 @@ async function create(req, res, next) {
   }
 }
 
+async function get(req, res, next) {
+  try {
+    const ingredients = await ingredientRepository.getAll();
+    return res.status(200).json(ingredients);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
-    create,
+  create,
+  get,
 };
