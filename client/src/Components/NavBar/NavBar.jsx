@@ -54,13 +54,13 @@ function NavBar() {
 
             <Dropdown.Menu>
               <Dropdown.ItemText className="dropdown__link-btn">
-                <Link to="/Ingresar">Iniciá Sesión</Link>
+                <Link to="/userlogin">Iniciá Sesión</Link>
               </Dropdown.ItemText>
 
               <Dropdown.ItemText>
                 <Dropdown.Divider />
                 <span>¿No tenés cuenta?</span>
-                <Link to="/Registrate" className="navBar__registrate">
+                <Link to="/registeruser" className="navBar__registrate">
                   Registrate
                 </Link>
               </Dropdown.ItemText>
