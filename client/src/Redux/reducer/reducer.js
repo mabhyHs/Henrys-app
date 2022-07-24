@@ -6,6 +6,7 @@ import {
   GET_INGREDIENTS,
   GET_POTATOES,
   GET_VEGGIE,
+  SET_CATEGORY,
 } from '../actions/actions';
 
 const initialState = {
@@ -14,34 +15,10 @@ const initialState = {
   products: [],
   combos: [],
   beverages: [],
-  ingredients: [
-    {
-      id: 1,
-      name: 'tomate',
-      price: 0.5,
-      isVeggie: true
-      },
-      {
-        id: 2,
-        name: 'carne',
-        price: 2.5,
-        isVeggie: false
-      },
-      {
-        id: 3,
-        name: 'queso',
-        price: 1.3,
-        isVeggie: true
-      },
-      {
-        id: 4,
-        name: 'lechuga',
-        price: 0.8,
-        isVeggie: true
-        },
-  ],
+  ingredients: [],
   potatoes: [],
   veggie: [],
+  category: '',
 };
 
 const rootReducer = (state = initialState, action = {}) => {
@@ -81,6 +58,11 @@ const rootReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         veggie: action.payload,
+      };
+    case SET_CATEGORY:
+      return {
+        ...state,
+        category: action.payload,
       };
     default:
       return state;

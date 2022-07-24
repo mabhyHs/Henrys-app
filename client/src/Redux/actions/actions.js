@@ -10,16 +10,24 @@ export const GET_BEVERAGES = 'GET_BEVERAGES';
 export const GET_INGREDIENTS = 'GET_INGREDIENTS';
 export const GET_POTATOES = 'GET_POTATOES';
 export const GET_VEGGIE = 'GET_VEGGIE';
+export const SET_CATEGORY = 'SET_CATEGORY';
 // export const CREATE_BURGER = "CREATE_BURGER"
 // export const CREATE_COMBO = "CREATE_ COMBO"
 // export const CREATE_BEVERAGE = "CREATE_BEVERAGE"
 
 // https://vimeo.com/510792531/20d64d4a98
 
-export function getProduct() {
+export function getProduct(
+  category = '',
+  order = '',
+  name = '',
+  isVeggie = ''
+) {
   // eslint-disable-next-line func-names, consistent-return
   return async function (dispatch) {
-    const json = await axios(`http://localhost:3001/products`);
+    const json = await axios(
+      `/products?category=${category}&order=${order}&name=${name}&isVeggie=${isVeggie}`
+    );
     try {
       return dispatch({
         type: GET_PRODUCT,
@@ -32,7 +40,14 @@ export function getProduct() {
   };
 }
 
-export function getBurgers() {
+export function setCategory(category) {
+  return {
+    type: SET_CATEGORY,
+    payload: category,
+  };
+}
+
+/* export function getBurgers() {
   // eslint-disable-next-line func-names, consistent-return
   return async function (dispatch) {
     const json = await axios('http://pending...');
@@ -81,12 +96,12 @@ export function getBeverages() {
       console.log(error);
     }
   };
-}
-export function getIngredients() {
+} */
+
+export function getIngredients(name) {
   // eslint-disable-next-line func-names, consistent-return
   return async function (dispatch) {
-    const json = await axios('http://pending...');
-
+    const json = await axios(`/products?ingredients&name=${name}`);
     try {
       return dispatch({
         type: GET_INGREDIENTS,
@@ -98,7 +113,7 @@ export function getIngredients() {
   };
 }
 
-export function getPotatoes() {
+/* export function getPotatoes() {
   return async function (dispatch) {
     const json = await axios('http://pending...');
 
@@ -126,7 +141,7 @@ export function getVeggie() {
       console.log(error);
     }
   };
-}
+} */
 
 // ACCIONES POST
 

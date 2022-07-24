@@ -1,10 +1,16 @@
 import React from 'react';
 import CardProductMenu from '../CardProductMenu/CardProductMenu';
 
-function ProductsContainerMenu() {
+function ProductsContainerMenu({ currentProduct }) {
   return (
     <div>
-      <CardProductMenu />
+      {currentProduct.map((item) => (
+        <CardProductMenu
+          name={item.name}
+          price={item.price}
+          imgUri={item.imgUri}
+        />
+      ))}
     </div>
   );
 }
