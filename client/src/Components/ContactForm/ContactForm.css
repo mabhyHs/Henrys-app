@@ -1,0 +1,13 @@
+.contact__form__container {
+  align-items: center;
+  justify-content: center;
+}
+.contact__text__left {
+  text-align: left;
+}
+.contactForm__input {
+  border-radius: 20px;
+  margin: 7px;
+  border: var(--bc-inputs);
+  padding: 0.5rem;
+}
