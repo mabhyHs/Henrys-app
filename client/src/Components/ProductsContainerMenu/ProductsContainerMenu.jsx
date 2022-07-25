@@ -1,6 +1,7 @@
 import React from 'react';
 import CardProductMenu from '../CardProductMenu/CardProductMenu';
 import Container from 'react-bootstrap/Container';
+import './ProductsContainerMenu.css';
 
 function ProductsContainerMenu({ currentProduct }) {
   return (
