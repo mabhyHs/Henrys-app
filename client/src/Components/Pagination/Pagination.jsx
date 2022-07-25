@@ -2,6 +2,7 @@
 /* eslint-disable radix */
 /* eslint-disable no-restricted-syntax */
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 function Pagination({ burgersPerPage, allProducts, onSetPage }) {
   const pages = [];
@@ -24,15 +25,16 @@ function Pagination({ burgersPerPage, allProducts, onSetPage }) {
     <div>
       {pages &&
         pages.map((page) => (
-          <button
+          <Button
             type="button"
             id={page}
             value={page}
             key={page}
             onClick={handleClick}
+            className="btn__round__effect"
           >
             {page}
-          </button>
+          </Button>
         ))}
     </div>
   );
