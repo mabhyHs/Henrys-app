@@ -24,7 +24,7 @@ function Menu() {
     if (allProducts.length === 0) {
       dispatch(getProduct());
     }
-  });
+  }, [dispatch]);
 
   const pageHandler = (page) => {
     setCurrentPage(page);
