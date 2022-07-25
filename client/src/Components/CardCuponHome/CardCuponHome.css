@@ -65,8 +65,9 @@
     grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 20px;
-    position: relative;
-    left: 25vw;
+    /* position: relative;
+    left: 25vw; */
+    justify-items: center;
   }
   .cupponCardHome {
     width: 50%;
@@ -88,9 +89,9 @@
 }
 
 @media (max-width: 769px) {
-  .sectionCupponsHome {
+  /* .sectionCupponsHome {
     left: 18vw;
-  }
+  } */
   .cupponCardHome__cardBody {
     bottom: 17vw;
     left: 4rem;
@@ -105,9 +106,9 @@
 }
 
 @media (max-width: 481px) {
-  .sectionCupponsHome {
+  /* .sectionCupponsHome {
     left: 7vw;
-  }
+  } */
   .cupponCardHome__cardBody {
     bottom: 25vw;
     left: 4rem;
