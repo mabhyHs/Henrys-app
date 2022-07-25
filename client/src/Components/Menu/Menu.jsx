@@ -1,16 +1,17 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { React, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
 import Button from 'react-bootstrap/Button';
 import FiltersMenu from '../FiltersMenu/FiltersMenu';
 import ProductsContainerMenu from '../ProductsContainerMenu/ProductsContainerMenu';
 import SearchBar from '../SearchBar/SearchBar';
 import Pagination from '../Pagination/Pagination';
-
 import './Menu.css';
+import { getProduct } from '../../Redux/actions/actions';
 
 function Menu() {
+  const dispatch = useDispatch();
   /* paginas */
   const [currentPage, setCurrentPage] = useState(1);
   const [burgersPerPage, setBurgersPerPage] = useState(9);
@@ -18,6 +19,12 @@ function Menu() {
   const firstBurgerIndex = lastBurgerIndex - burgersPerPage;
   const allProducts = useSelector((state) => state.products);
   const currentProduct = allProducts.slice(firstBurgerIndex, lastBurgerIndex);
+
+  useEffect(() => {
+    if (allProducts.length === 0) {
+      dispatch(getProduct());
+    }
+  });
 
   const pageHandler = (page) => {
     setCurrentPage(page);
