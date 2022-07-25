@@ -3,9 +3,9 @@
 /* eslint-disable no-restricted-syntax */
 import React from 'react';
 
-function Pagination({ burgersPerPage, burgersTotal, onSetPage }) {
+function Pagination({ burgersPerPage, allProducts, onSetPage }) {
   const pages = [];
-  for (let i = 1; i <= Math.ceil(burgersTotal / burgersPerPage); i += 1) {
+  for (let i = 1; i <= Math.ceil(allProducts / burgersPerPage); i += 1) {
     pages.push(i);
   }
 
