@@ -2,11 +2,10 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-
-import './FiltersMenu.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProduct, setCategory } from '../../Redux/actions/actions';
+import './FiltersMenu.css';
 
 function FiltersMenu({ setPageOne }) {
   const navigate = useNavigate();
