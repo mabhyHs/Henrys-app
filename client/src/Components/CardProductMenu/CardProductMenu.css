@@ -15,6 +15,7 @@
   border-radius: 20px;
 }
 .card__img__menu {
+  height: 200px;
   background-color: var(--main-color-light);
   border-radius: 18px 18px 0px 45px;
   border-color: var(--main-color-light);
