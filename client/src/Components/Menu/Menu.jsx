@@ -7,8 +7,8 @@ import FiltersMenu from '../FiltersMenu/FiltersMenu';
 import ProductsContainerMenu from '../ProductsContainerMenu/ProductsContainerMenu';
 import SearchBar from '../SearchBar/SearchBar';
 import Pagination from '../Pagination/Pagination';
-import './Menu.css';
 import { getProduct } from '../../Redux/actions/actions';
+import './Menu.css';
 
 function Menu() {
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ function Menu() {
   return (
     <div className="menu__container">
       <SearchBar />
-      <FiltersMenu />
+      <FiltersMenu setPageOne={setPageOne} />
       <ProductsContainerMenu currentProduct={currentProduct} />
 
       <div className="menu__pagination__container mb-3 mt-3">
