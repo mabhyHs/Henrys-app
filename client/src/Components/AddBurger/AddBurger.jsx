@@ -1,5 +1,6 @@
-import React, {useState} from "react";
-import {connect} from 'react-redux'
+import React, {useState, useEffect} from "react";
+import {connect, useDispatch, useSelector} from 'react-redux'
+import { getIngredients } from "../../Redux/actions/actions";
 
 
 const mapStateToProps = function(state){
@@ -53,6 +54,11 @@ function AddBurger(estado){
     const {ingredients} = estado
     const [ingredientsAdd, setIngredientsAdd] = useState([{id: 10000, name:'pan', price: 0.5, cantidad: 2}])
     const [precio, setPrecio] = useState(0.0)
+    const dispatch = useDispatch()
+    useEffect(() => {
+     dispatch(getIngredients())
+    })
+
     return(
         <div>
             <h1>Arma tu Hamburguesa</h1>
@@ -76,7 +82,7 @@ function AddBurger(estado){
                         ))}
                 </ul>
             </div>
-            <h4>Precio Total ${precio}</h4>
+            
             <button onClick={() => crearBurguer(precio, setPrecio, ingredientsAdd, setIngredientsAdd)}>Crear Hamburguesa</button>
 
         </div>
