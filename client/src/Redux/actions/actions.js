@@ -98,10 +98,10 @@ export function getBeverages() {
   };
 } */
 
-export function getIngredients(name) {
+export function getIngredients() {
   // eslint-disable-next-line func-names, consistent-return
   return async function (dispatch) {
-    const json = await axios(`/products?ingredients&name=${name}`);
+    const json = await axios(`/ingredients`);
     try {
       return dispatch({
         type: GET_INGREDIENTS,
