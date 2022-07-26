@@ -6,11 +6,17 @@ import { getIngredients } from "../../Redux/actions/actions";
 const mapStateToProps = function(state){
     return {ingredients: state.ingredients}
 }
-const modificarIngredientes = function(id, ingredientes, cb){
+const modificarIngredientes = function(id, ingredientes, cb, precio, setPrecio){
     cb(ingredientes = ingredientes.filter((i) => i.id !== id))
+    let sumaTotal = 0
+    for(const ele of ingredientes){
+        let {cantidad} = ele
+        sumaTotal += (ele.price * cantidad) 
+    }
+    setPrecio(precio = sumaTotal.toFixed(2))
 }
 
-const añadirIngredientes = function(e, ingredientes, cb, igrGlobal){
+const añadirIngredientes = function(e, ingredientes, cb, igrGlobal, precio, setPrecio){
     const ingredienteSelect = igrGlobal.find((i) => i.name === e.target.value)
     let prueba = []
     for(const ele of ingredientes){
@@ -25,34 +31,51 @@ const añadirIngredientes = function(e, ingredientes, cb, igrGlobal){
     }else{
         ingredienteSelect.cantidad = 1
         cb(ingredientes = [...ingredientes, ingredienteSelect])
+        const copiaIngredientes = [...ingredientes]
+        precioPrimeraVez(precio, setPrecio, copiaIngredientes)
     }
 }
-
-const cambiarCantidad = function(e, id, ingredientes, cb){
-    const ingredienteSelect = ingredientes.find((i) => i.id === id)
-    ingredienteSelect.cantidad = e.target.value
-    let copiaIngredientes = [...ingredientes]
-    copiaIngredientes = copiaIngredientes.filter((i) => i.id !== id)
-    copiaIngredientes = [...copiaIngredientes , ingredienteSelect]
-    
-    cb(ingredientes = [...copiaIngredientes])
-    
-    
-}
-const crearBurguer = function(precio, cb, ingredientes, setIngredientsAdd){
+const precioPrimeraVez = function(precio, setPrecio, ingredientes){
     let sumaTotal = 0
     for(const ele of ingredientes){
         let {cantidad} = ele
         sumaTotal += (ele.price * cantidad) 
     }
-    cb(precio = sumaTotal)
-    setIngredientsAdd(ingredientes = [{id: 10000, name:'pan', price: 0.5, cantidad: 2}])
-    alert(`su hamburguesa tiene un precio de: ${  sumaTotal}`)
+    setPrecio(precio = sumaTotal.toFixed(2))
+}
+
+const cambiarCantidad = function(e, id, ingredientes, cb, precio, setPrecio){
+    const ingredienteSelect = ingredientes.find((i) => i.id === id)
+    const index = ingredientes.indexOf(ingredienteSelect)
+    if(e.target.name === 'mas' && ingredienteSelect.cantidad < 10){
+        ingredienteSelect.cantidad += 1
+    }
+    else if(e.target.name === 'menos' && ingredienteSelect.cantidad > 1){
+        ingredienteSelect.cantidad -= 1
+    }
+    let copiaIngredientes = [...ingredientes]
+    copiaIngredientes[index] = ingredienteSelect
+    
+    cb(ingredientes = [...copiaIngredientes])
+    let sumaTotal = 0
+    for(const ele of ingredientes){
+        let {cantidad} = ele
+        sumaTotal += (ele.price * cantidad) 
+    }
+    if(ingredienteSelect.cantidad > 0){
+        setPrecio(precio = sumaTotal.toFixed(2))
+    }
+    
+}
+const crearBurguer = function(precio, ingredientes, setIngredientsAdd){
+
+    setIngredientsAdd(ingredientes = [])
+    alert(`su hamburguesa tiene un precio de: ${  precio}`)
 }   
 
 function AddBurger(estado){
     const {ingredients} = estado
-    const [ingredientsAdd, setIngredientsAdd] = useState([{id: 10000, name:'pan', price: 0.5, cantidad: 2}])
+    const [ingredientsAdd, setIngredientsAdd] = useState([])
     const [precio, setPrecio] = useState(0.0)
     const dispatch = useDispatch()
     useEffect(() => {
@@ -63,7 +86,7 @@ function AddBurger(estado){
         <div>
             <h1>Arma tu Hamburguesa</h1>
 
-            <select name="ingredientes" onChange={(e) => añadirIngredientes(e, ingredientsAdd, setIngredientsAdd, ingredients)}>
+            <select name="ingredientes" onChange={(e) => añadirIngredientes(e, ingredientsAdd, setIngredientsAdd, ingredients, precio, setPrecio)}>
             <option key={1000} disabled="">Escoge tus ingredientes</option>
             {ingredients.map((i) => (
                     <option key={i.id} value={i.name}>{i.name}</option>
@@ -75,15 +98,17 @@ function AddBurger(estado){
                     {ingredientsAdd.map((i) => (
                         <div key={i.id}>
                             <li key={i.id}>{i.name}</li>
-                            <button key={i.id} onClick={() => modificarIngredientes(i.id, ingredientsAdd, setIngredientsAdd)} disabled={i.id === 10000}>X</button>
+                            <button key={i.id} onClick={() => modificarIngredientes(i.id, ingredientsAdd, setIngredientsAdd, precio, setPrecio)}>X</button>
                             <span>Cantidad</span>
-                            <input type="number" min={1} max={10} disabled={i.id === 10000} onChange={(e) => cambiarCantidad(e, i.id, ingredientsAdd, setIngredientsAdd)}/>
+                            <span> {i.cantidad}</span>
+                            <button name='mas'onClick={(e) => cambiarCantidad(e, i.id, ingredientsAdd, setIngredientsAdd, precio, setPrecio)}>+</button>
+                            <button name='menos' onClick={(e) => cambiarCantidad(e, i.id, ingredientsAdd, setIngredientsAdd, precio, setPrecio)}>-</button>
                         </div>
                         ))}
                 </ul>
             </div>
-            
-            <button onClick={() => crearBurguer(precio, setPrecio, ingredientsAdd, setIngredientsAdd)}>Crear Hamburguesa</button>
+            <h4>Precio Neto ${precio}</h4>
+            <button onClick={() => crearBurguer(precio, ingredientsAdd, setIngredientsAdd)}>Crear Hamburguesa</button>
 
         </div>
     )
