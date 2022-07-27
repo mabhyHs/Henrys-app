@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Swal from 'sweetalert2';
 import contactImg from '../../Assets/Images/Hamburguesas/Stacker-Triple.png';
+import emailjs from '@emailjs/browser';
 
 import './ContactForm.css';
 
@@ -13,9 +14,27 @@ function ContactoForm() {
   // eslint-disable-next-line no-unused-vars
   const [done, setDone] = useState(false);
 
-  function handleSubmit(e) {
+  const sendEmail = (e) => {
     e.preventDefault();
-  }
+    // eslint-disable-next-line import/no-named-as-default-member
+    emailjs
+      .sendForm(
+        'service_xu5vfs3',
+        'template_as17onx',
+        form.current,
+        '-zW9oJ2EERInnxlyT'
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          setDone(true);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+    e.target.reset();
+  };
 
   return (
     <div>
@@ -27,18 +46,13 @@ function ContactoForm() {
               Compartí tus consultas, comentarios ó sugerencias a través del
               formulario y te responderemos a la brevedad
             </p>
-            <form
-              ref={form}
-              onSubmit={handleSubmit}
-              action="#"
-              id="contact_form"
-            >
+            <form ref={form} onSubmit={sendEmail} action="#" id="contact_form">
               <Row>
                 <input
                   className="contactForm__input"
                   type="text"
                   placeholder="Nombre*"
-                  name="name"
+                  name="user_name"
                   id="name_input"
                   required
                 />
@@ -47,7 +61,7 @@ function ContactoForm() {
                   className="contactForm__input"
                   type="text"
                   placeholder="Apellido*"
-                  name="name"
+                  name="user_surname"
                   id="surname_input"
                   required
                 />
