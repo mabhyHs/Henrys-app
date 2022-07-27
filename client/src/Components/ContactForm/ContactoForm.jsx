@@ -122,11 +122,10 @@ function ContactoForm() {
               </Button>
               {done &&
                 Swal.fire({
-                  text: 'Gracias por comunicarte, en breve nos contactaremos!',
-                  imageUrl: '../../Assets/Images/logo-henrys300px.png',
-                  imageWidth: 300,
-                  imageHeight: 100,
-                  imageAlt: 'logo henrys',
+                  icon: 'success',
+                  text: 'Mensaje enviado con éxito, en breve estaremos comunicándonos',
+                  showConfirmButton: false,
+                  timer: 2000,
                 })}
             </form>
           </Col>
