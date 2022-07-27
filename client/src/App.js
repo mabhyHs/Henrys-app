@@ -13,6 +13,7 @@ import NotFound from './Components/NotFound/NotFound';
 import './App.css';
 import UserLogin from './Components/UserLogin/UserLogin';
 import UserRegister from './Components/UserRegister/UserRegister';
+import UserFavorites from './Components/UserFavorites/UserFavorites';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/detalle" element={<ProductDetail />} />
         <Route path="/userlogin" element={<UserLogin />} />
         <Route path="/registeruser" element={<UserRegister />} />
+        <Route path="/userfavorites" element={<UserFavorites />} />
       </Routes>
       <Footer />
     </div>
