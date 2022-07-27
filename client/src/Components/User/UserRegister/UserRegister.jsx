@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import imgLogin from '../../Assets/Images/Hamburguesas/PAPAS-KING.png';
+import imgLogin from '../../../Assets/Images/Hamburguesas/PAPAS-KING.png';
 import Form from 'react-bootstrap/Form';
 import { FcGoogle } from 'react-icons/fc';
 import Button from 'react-bootstrap/Button';

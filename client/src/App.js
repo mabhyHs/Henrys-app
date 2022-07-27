@@ -9,11 +9,11 @@ import AddBurger from './Components/AddBurger/AddBurger';
 import AboutUs from './Components/AboutUs/AboutUs';
 import ProductDetail from './Components/ProductDetail/ProductDetail';
 import NotFound from './Components/NotFound/NotFound';
-import UserLogin from './Components/UserLogin/UserLogin';
-import UserRegister from './Components/UserRegister/UserRegister';
-import UserFavorites from './Components/UserFavorites/UserFavorites';
-import UserPersonalInfo from './Components/UserPersonalInfo/UserPersonalInfo';
-import UserProfileDashboard from './Components/UserProfileDashboard/UserProfile';
+import UserLogin from './Components/User/UserLogin/UserLogin';
+import UserRegister from './Components/User/UserRegister/UserRegister';
+import UserFavorites from './Components/User/UserFavorites/UserFavorites';
+import UserPersonalInfo from './Components/User/UserPersonalInfo/UserPersonalInfo';
+import UserProfileDashboard from './Components/User/UserProfileDashboard/UserProfile';
 
 import './App.css';
 
