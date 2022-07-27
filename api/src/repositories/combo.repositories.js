@@ -16,21 +16,21 @@ async function getById(id) {
     include: [
       {
         association: "burger",
-        attributes: ["name"],
+        attributes: ["name", "id"],
         through: {
           attributes: [],
         },
       },
       {
         association: "beverage",
-        attributes: ["name"],
+        attributes: ["name", "id"],
         through: {
           attributes: [],
         },
       },
       {
         association: "fries",
-        attributes: ["name"],
+        attributes: ["name", "id"],
         through: {
           attributes: [],
         },
