@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import imgCard from '../../Assets/Images/Hamburguesas/hamburguesa-clasica.png';
 import './CardProductMenu.css';
 
-function CardProductMenu({ name, price, imgUri }) {
+function CardProductMenu({ id, name, price, imgUri }) {
   return (
     <Card className="card__menu" style={{ width: '18rem' }}>
       <Card.Img variant="top" src={imgUri} className="card__img__menu" />
@@ -13,7 +13,7 @@ function CardProductMenu({ name, price, imgUri }) {
         <Card.Title>
           <p>{name}</p>
         </Card.Title>
-        <Link className="footer__mail__link" to="/detalle">
+        <Link className="footer__mail__link" to={`/detalle/${id}`}>
           <p>Ver Más</p>
         </Link>
         <div className="card__cart__container">
