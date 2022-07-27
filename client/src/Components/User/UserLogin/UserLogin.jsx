@@ -40,7 +40,12 @@ function UserLogin() {
             <FormText className="mb-3" as={Link} to="/">
               Olvidé mi contraseña
             </FormText>
-            <Button variant="primary" type="submit">
+            <Button
+              as={Link}
+              to="/userprofiledashboard"
+              variant="primary"
+              type="submit"
+            >
               Ingresar
             </Button>
           </Form>
