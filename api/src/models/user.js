@@ -45,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
       imgUri: {
         type: DataTypes.TEXT,
       },
+      isGoogle: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       sequelize,
