@@ -9,10 +9,11 @@ import AddBurger from './Components/AddBurger/AddBurger';
 import AboutUs from './Components/AboutUs/AboutUs';
 import ProductDetail from './Components/ProductDetail/ProductDetail';
 import NotFound from './Components/NotFound/NotFound';
-
-import './App.css';
 import UserLogin from './Components/UserLogin/UserLogin';
 import UserRegister from './Components/UserRegister/UserRegister';
+import UserPersonalInfo from './Components/UserPersonalInfo/UserPersonalInfo';
+
+import './App.css';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/detalle" element={<ProductDetail />} />
         <Route path="/userlogin" element={<UserLogin />} />
         <Route path="/registeruser" element={<UserRegister />} />
+        <Route path="/userpersonalinfo" element={<UserPersonalInfo />} />
       </Routes>
       <Footer />
     </div>
