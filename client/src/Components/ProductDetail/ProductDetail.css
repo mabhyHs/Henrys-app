@@ -7,10 +7,19 @@
 }
 
 .productDetail__tittle {
-  color: var(--main-color-dar);
+  color: var(--main-color-dark);
   text-shadow: var(--bs-card);
 }
 
 .productDetail__text {
   font-size: 1rem;
+}
+
+.productDetail__link {
+  text-decoration: none;
+  color: var(--main-color-dark);
+}
+
+.productDetail__link__Svg {
+  color: var(--brand-color);
 }
