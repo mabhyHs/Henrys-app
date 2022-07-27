@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import './UserProfile.css';
 import { ArrowRightCircleFill, EmojiSunglasses } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
@@ -44,9 +44,9 @@ function UserProfileDashboard(userName, userPicture) {
             </Card.Text>
           </Card.Body>
           <Card.Footer className="profile__infoCard__footer">
-            <Card.Link to="/">
+            <Link to="/userfavorites">
               <ArrowRightCircleFill className="profile__infoCard__arrow" />
-            </Card.Link>
+            </Link>
           </Card.Footer>
         </Card>
 
@@ -62,9 +62,9 @@ function UserProfileDashboard(userName, userPicture) {
             </Card.Text>
           </Card.Body>
           <Card.Footer className="profile__infoCard__footer">
-            <Card.Link to="/">
+            <Link to="/userpersonalinfo">
               <ArrowRightCircleFill className="profile__infoCard__arrow" />
-            </Card.Link>
+            </Link>
           </Card.Footer>
         </Card>
 
@@ -78,9 +78,9 @@ function UserProfileDashboard(userName, userPicture) {
             <Card.Text>Contactanos ante cualquier duda</Card.Text>
           </Card.Body>
           <Card.Footer className="profile__infoCard__footer">
-            <Card.Link to="/">
+            <Link to="/contacto">
               <ArrowRightCircleFill className="profile__infoCard__arrow" />
-            </Card.Link>
+            </Link>
           </Card.Footer>
         </Card>
       </div>
