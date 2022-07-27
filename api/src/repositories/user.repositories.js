@@ -24,9 +24,17 @@ async function activateAccount(id) {
   );
 }
 
+async function createGoogleAccount(data) {
+  data.isConfirmed = true;
+  data.isGoogle = true;
+  data.password = "contraseña?";
+  return await User.create(data);
+}
+
 module.exports = {
   create,
   getByEmail,
   getById,
   activateAccount,
+  createGoogleAccount,
 };
