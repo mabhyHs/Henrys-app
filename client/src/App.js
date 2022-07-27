@@ -25,7 +25,7 @@ function App() {
         <Route path="/menu" element={<Menu />} />
         <Route path="/addBurger" element={<AddBurger />} />
         <Route path="/nosotros" element={<AboutUs />} />
-        <Route path="/detalle" element={<ProductDetail />} />
+        <Route path="/detalle/:id" element={<ProductDetail />} />
         <Route path="/userlogin" element={<UserLogin />} />
         <Route path="/registeruser" element={<UserRegister />} />
       </Routes>

@@ -7,6 +7,7 @@ import {
   GET_POTATOES,
   GET_VEGGIE,
   SET_CATEGORY,
+  GET_PRODUCT_BY_ID,
 } from '../actions/actions';
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
   potatoes: [],
   veggie: [],
   category: '',
+  productDetail: [],
 };
 
 const rootReducer = (state = initialState, action = {}) => {
@@ -64,6 +66,11 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
         category: action.payload,
       };
+    case GET_PRODUCT_BY_ID:
+      return {
+        ...state,
+        productDetail: action.payload,
+      }
     default:
       return state;
   }

@@ -11,6 +11,7 @@ export const GET_INGREDIENTS = 'GET_INGREDIENTS';
 export const GET_POTATOES = 'GET_POTATOES';
 export const GET_VEGGIE = 'GET_VEGGIE';
 export const SET_CATEGORY = 'SET_CATEGORY';
+export const GET_PRODUCT_BY_ID = 'GET_PRODUCT_BY_ID';
 // export const CREATE_BURGER = "CREATE_BURGER"
 // export const CREATE_COMBO = "CREATE_ COMBO"
 // export const CREATE_BEVERAGE = "CREATE_BEVERAGE"
@@ -111,6 +112,19 @@ export function getIngredients() {
       console.log(error);
     }
   };
+}
+export function getProductById(id){
+  return async function(dispatch){
+    const json = await axios('https://henrys-pf.herokuapp.com/products/' + id)
+    try{
+      return dispatch({
+        type: GET_PRODUCT_BY_ID,
+        payload: json.data
+      })
+    } catch(error){
+      console.log(error)
+    }
+  }
 }
 
 /* export function getPotatoes() {
