@@ -13,6 +13,7 @@ import UserLogin from './Components/UserLogin/UserLogin';
 import UserRegister from './Components/UserRegister/UserRegister';
 import UserFavorites from './Components/UserFavorites/UserFavorites';
 import UserPersonalInfo from './Components/UserPersonalInfo/UserPersonalInfo';
+import UserProfileDashboard from './Components/UserProfileDashboard/UserProfile';
 
 import './App.css';
 
@@ -32,6 +33,10 @@ function App() {
         <Route path="/registeruser" element={<UserRegister />} />
         <Route path="/userfavorites" element={<UserFavorites />} />
         <Route path="/userpersonalinfo" element={<UserPersonalInfo />} />
+        <Route
+          path="/userprofiledashboard"
+          element={<UserProfileDashboard />}
+        />
       </Routes>
       <Footer />
     </div>
