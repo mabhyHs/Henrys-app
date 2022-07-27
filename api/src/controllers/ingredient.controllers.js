@@ -19,7 +19,18 @@ async function get(req, res, next) {
   }
 }
 
+async function remove(req, res, next) {
+  try {
+    await ingredientRepository.remove(req.params.id);
+
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   create,
   get,
+  remove,
 };
