@@ -18,11 +18,6 @@ function ControlledCarousel() {
     <Carousel activeIndex={index} onSelect={handleSelect}>
       <Carousel.Item>
         <img className="d-block w-100" src={slider1} alt="First slide" />
-        <Carousel.Caption className="carousel-caption-last">
-          <Link to="/nosotros">
-            <Button>Conocenos</Button>
-          </Link>
-        </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
         <img className="d-block w-100" src={slider2} alt="Second slide" />
