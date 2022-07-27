@@ -10,7 +10,23 @@ async function getByEmail(email) {
   return user;
 }
 
+async function getById(id) {
+  const user = await User.findByPk(id);
+  return user;
+}
+
+async function activateAccount(id) {
+  return await User.update(
+    {
+      isConfirmed: true,
+    },
+    { where: { id: id } }
+  );
+}
+
 module.exports = {
   create,
   getByEmail,
+  getById,
+  activateAccount,
 };
