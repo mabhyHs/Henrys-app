@@ -9,6 +9,7 @@ function ProductsContainerMenu({ currentProduct }) {
       <Container className="products__container__menu mt-3">
         {currentProduct.map((item) => (
           <CardProductMenu
+            id={item.id}
             name={item.name}
             price={item.price}
             imgUri={item.imgUri}
