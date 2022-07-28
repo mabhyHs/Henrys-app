@@ -1,6 +1,112 @@
+.userReview__mainContainer {
+  text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
 
-  
-  div p {
+.userReview__mainTitle {
+  margin: 2rem auto;
+}
+
+.userReview__opinionContainer {
+  margin: 2rem auto 1rem auto;
+}
+
+.userReview__opinionContainer__title {
+  margin-bottom: 2rem;
+}
+
+.userReview__opinionContainer__textArea {
+  width: 40vw;
+  height: 200px;
+  border-radius: 18px;
+  border: 1px solid black;
+  padding: 0.4rem;
+}
+
+.userReview__opinionContainer__textArea:focus {
+  outline: none;
+  border: 2px solid #ffbe33;
+}
+
+.userReview__opinionContainer__textArea:active {
+  outline: none;
+  border: none;
+}
+
+.userReview__submitButton {
+  margin: 3rem auto 5rem auto;
+  padding: 0.5rem;
+  background-color: #ffbe33;
+  color: white;
+  border-radius: 18px;
+  border: none;
+  box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.userReview__submitButton:hover {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+input[type='radio'] {
+  display: none;
+}
+
+.userReview__starsContainer {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+  color: grey;
+}
+
+.userReview__starsContainer__star {
+  font-size: 2rem;
+}
+
+.userReview__starsContainer__star:hover {
+  cursor: pointer;
+  color: #ffbe33;
+}
+
+.userReview__starsContainer__star:hover ~ label {
+  color: #ffbe33;
+}
+
+.userReview__starsContainer__input:checked ~ label {
+  color: #ffbe33;
+}
+
+.userReview__starsContainer__input:checked ~ label:hover {
+  color: orange;
+}
+
+@media (max-width: 1200px) {
+  .userReview__opinionContainer__textArea {
+    width: 60vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .userReview__opinionContainer__textArea {
+    width: 90vw;
+  }
+
+  .userReview__mainTitle {
+    width: 90%;
+  }
+  .userReview__opinionContainer__title {
+    width: 90%;
+  }
+}
+
+/* div p {
     text-align: center;
   }
   
@@ -28,4 +134,4 @@
   
   input[type="radio"]:checked ~ label {
     color: orange;
-  }
+  } */
