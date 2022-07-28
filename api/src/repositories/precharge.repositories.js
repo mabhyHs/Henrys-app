@@ -1,4 +1,4 @@
-const { Ingredient, Burger, Fries, Beverage, Combo, User } = require("../models");
+const { Ingredient, Burger, Fries, Beverage, Combo, User, BurgerBase } = require("../models");
 const bcrypt = require("bcrypt");
 
 const { addDataDB } = require("../utils/addDataDB");
@@ -49,13 +49,21 @@ async function precharge() {
       }
     }
 
-    await User.create({
-        firstName: "Henry",
-        lastName: "Burger",
-        email: "henrysburgers@gmail.com",
-        password: await bcrypt.hash("admin@", 10),
-        role: "admin",
-        isConfirmed: true
+    await User.bulkCreate([{
+            firstName: "Henry",
+            lastName: "Burger",
+            email: "henrysburgers@gmail.com",
+            password: await bcrypt.hash("admin@", 10),
+            role: "admin",
+            isConfirmed: true
+        }], {
+        ignoreDuplicates: true,
+    });
+
+    await BurgerBase.bulkCreate([{            
+            price: 250
+        }], {
+        ignoreDuplicates: true,
     });
 
     console.log("models precharged successfully!");
