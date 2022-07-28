@@ -1,5 +1,4 @@
 const userRepositories = require("../repositories/user.repositories");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 async function auth(req, res, next) {
