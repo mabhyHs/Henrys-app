@@ -11,6 +11,16 @@ import imgFooter from '../../Assets/Images/logo-henrys300px.png';
 import './Footer.css';
 
 function Footer() {
+  function Mailto({ email, subject, body, ...props }) {
+    return (
+      <a
+        className="footer__mail__link"
+        href={`mailto:${email}?subject=${subject || ''}&body=${body || ''}`}
+      >
+        {props.children}
+      </a>
+    );
+  }
   return (
     <Container fluid fixed="bottom" className="footer__container">
       <Nav className="footer__nav">
@@ -55,9 +65,13 @@ function Footer() {
             <a href="https://facebook.com" target="_blank" rel="noreferrer">
               <Linkedin />
             </a>
-            <Link className="footer__mail__link" to="/enviarmail">
-              <p>henrys@gmail.com</p>
-            </Link>
+            <Mailto
+              email="henrysburgers2022@gmail.com"
+              subject="Contacto via Email"
+              body="Hola! Quisiera recbir información con respecto a"
+            >
+              <p>henrysburgers2022@gmail.com</p>
+            </Mailto>
           </Col>
         </Row>
       </Nav>
