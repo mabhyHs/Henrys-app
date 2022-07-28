@@ -72,6 +72,7 @@ export function getProductById(id){
 }
 
 export function getBurgerBase(){
+    
     return async function (dispatch) {
         const json = await axios(`/burgerBase`);
         try {

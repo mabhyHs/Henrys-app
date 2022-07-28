@@ -101,7 +101,7 @@ function AddBurger(){
     useEffect(() => {
      dispatch(getIngredients());
      dispatch(getBurgerBase());
-    }, [dispatch])
+    }, [dispatch]);
 
 function getTotal(priceBase, priceIngredients){
     return (parseFloat(priceBase) + parseFloat(priceIngredients));
