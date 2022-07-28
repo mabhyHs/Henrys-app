@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { getIngredients } from '../../Redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredients, getBurgerBase } from '../../Redux/actions/actions';
 import './AddBurger.css';
 
-const mapStateToProps = function (state) {
-  return { ingredients: state.ingredients };
-};
 const modificarIngredientes = function (
   id,
   ingredientes,
@@ -93,14 +90,17 @@ const crearBurguer = function (setPrecio, ingredientes, setIngredientsAdd) {
   alert(`Su hamburguesa personalizada fue creada con éxito!`);
 };
 
-function AddBurger(estado){
-    const {ingredients} = estado
-    const [ingredientsAdd, setIngredientsAdd] = useState([])
-    const [precioBase] = useState(200) /* aca hay que poner el valor del modelo burgerbase  */
-    const [precio, setPrecio] = useState(0)
-    const dispatch = useDispatch()
+function AddBurger(){
+
+    const dispatch = useDispatch();
+    const ingredients = useSelector(state => state.ingredients);
+    const precioBase = useSelector(state => state.burgerBase.price);
+    const [ingredientsAdd, setIngredientsAdd] = useState([]);
+    const [precio, setPrecio] = useState(0);
+
     useEffect(() => {
-     dispatch(getIngredients())
+     dispatch(getIngredients());
+     dispatch(getBurgerBase());
     }, [dispatch])
 
 function getTotal(priceBase, priceIngredients){
@@ -242,4 +242,4 @@ function ingredientsNotSelect(){
   );
 }
 
-export default connect(mapStateToProps)(AddBurger);
+export default AddBurger;
