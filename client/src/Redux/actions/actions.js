@@ -127,6 +127,13 @@ export function getProductById(id){
   }
 }
 
+export function agregarCalificacion(payload){
+  return async function(){
+    const json = await axios.post('pending...', payload)
+    return json
+  }
+}
+
 /* export function getPotatoes() {
   return async function (dispatch) {
     const json = await axios('http://pending...');
