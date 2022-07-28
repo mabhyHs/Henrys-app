@@ -46,10 +46,38 @@ async function getByName(name) {
   return burger;
 }
 
+async function destroy(id) {
+  const deletedBurger = await Burger.destroy({
+    where: {
+      id: id,
+    },
+  });
+
+  return deletedBurger;
+}
+
+async function restore(id) {
+  const restoredBurger = await Burger.restore({
+    where: {
+      id: id,
+    },
+  });
+
+  return restoredBurger;
+}
+
+async function update(data) {
+  const updatedBurger = await Burger.update(data, { where: { id: data.id } });
+  return updatedBurger;
+}
+
 module.exports = {
   create,
   getById,
   getAll,
   getByQuery,
   getByName,
+  destroy,
+  restore,
+  update,
 };

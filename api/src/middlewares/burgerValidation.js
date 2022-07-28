@@ -22,10 +22,14 @@ const nameValid = body("name")
   .withMessage("min lenght 2")
   .isLength({ max: 40 })
   .withMessage("max lenght 40")
-  .custom(async (name) => {
+  .custom(async (name, { req }) => {
     const result = await burgerRepository.getByName(name);
 
-    if (result) {        
+    if (req.body.id && result && req.body.id !== result.id) {
+      throw new Error("burger already exists");
+    }
+
+    if (!req.body.id && result) {
       throw new Error("burger already exists");
     }
   })
