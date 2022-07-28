@@ -55,6 +55,20 @@ const sizeValid = body("size")
     }
   });
 
+const namePutValid = body("name")
+  .custom(async (name, { req }) => {
+    const result = await beverageRepository.getByName(name);
+
+    if (req.body.id && result && req.body.id !== result.id) {
+      throw new Error("beverage already exists");
+    }
+
+    if (!req.body.id && result) {
+      throw new Error("beverage already exists");
+    }
+  })
+  .withMessage("beverage already exists");
+
 const postValidator = [
   nameValid,
   priceValid,
@@ -65,6 +79,17 @@ const postValidator = [
   isSugar,
 ];
 
+const putValidator = [
+  namePutValid,
+  priceValid,
+  isVeggieValid,
+  imgUrlValid,
+  sizeValid,
+  isCarbonatedValid,
+  isSugar,
+];
+
 module.exports = {
   postValidator,
+  putValidator,
 };
