@@ -22,7 +22,7 @@ async function destroy(req, res, next) {
 
 async function update(req, res, next) {
   try {
-    const { id } = req.params;
+    const id = req.body.id;
     const data = req.body;
     const fries = await friesRepository.update(id, data);
     res.status(201).json(fries);
