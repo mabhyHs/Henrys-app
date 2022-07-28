@@ -1,6 +1,21 @@
 const { body, param } = require("express-validator");
 const friesRepository = require("../repositories/fries.repositories");
 
+// const nameValid = body("name")
+//   .notEmpty()
+//   .withMessage("name is required")
+//   .isLength({ min: 2 })
+//   .withMessage("min lenght 2")
+//   .isLength({ max: 40 })
+//   .withMessage("max lenght 40")
+//   .custom(async (name) => {
+//     const result = await friesRepository.getByName(name);
+//     if (result) {
+//       throw new Error("fries already exists");
+//     }
+//   })
+//   .withMessage("fries already exists");
+
 const nameValid = body("name")
   .notEmpty()
   .withMessage("name is required")
@@ -8,9 +23,14 @@ const nameValid = body("name")
   .withMessage("min lenght 2")
   .isLength({ max: 40 })
   .withMessage("max lenght 40")
-  .custom(async (name) => {
+  .custom(async (name, { req }) => {
     const result = await friesRepository.getByName(name);
-    if (result) {
+
+    if (req.body.id && result && req.body.id !== result.id) {
+      throw new Error("fries already exists");
+    }
+
+    if (!req.body.id && result) {
       throw new Error("fries already exists");
     }
   })
@@ -51,6 +71,15 @@ const postValidator = [
   sizeValid,
 ];
 
+const putValidator = [
+  nameValid,
+  priceValid,
+  isVeggieValid,
+  imgUrlValid,
+  sizeValid,
+];
+
 module.exports = {
   postValidator,
+  putValidator,
 };
