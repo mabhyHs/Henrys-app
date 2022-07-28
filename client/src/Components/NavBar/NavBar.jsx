@@ -6,9 +6,8 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { PersonCircle, CartFill } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
-
 import imgNav from '../../Assets/Images/logo-henrys300px.png';
-
+import UserLoggedInDropdown from '../User/UserLoggedIn/UserLoggedInDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './NavBar.css';
@@ -73,7 +72,7 @@ function NavBar() {
               <CartFill />
             </Nav.Link>
           </Nav>
-
+          {/* <UserLoggedInDropdown /> */}
           <Dropdown>
             <Dropdown.Toggle className="nav__btn" id="dropdown-basic">
               <PersonCircle className="m-1" />
