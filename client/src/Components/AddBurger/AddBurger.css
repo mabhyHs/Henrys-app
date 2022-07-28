@@ -63,7 +63,7 @@
 }
 
 .addBurger__ul__liContainer {
-  margin: 1rem;
+  margin: 0.5rem;
   /* border: 1px solid black; */
   background-color: var(--main-color-dark);
   color: var(--text-color-light);
@@ -84,7 +84,7 @@
 
 .addBurger__ul__closeButton {
   background-color: transparent;
-  float: inline-end;
+  float: right;
   /* border-radius: 19px; */
   border: none;
   position: relative;
@@ -123,9 +123,10 @@
 }
 
 .addBurger__bottom__button {
-  color: var(--main-color-dark);
+  color: var(--text-color-light);
   background-color: var(--brand-color);
   border-radius: 18px;
+  border: none;
   padding: 0.5rem;
   box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
   -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
