@@ -89,7 +89,7 @@ function AddBurger(estado) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getIngredients());
-  });
+  }, [dispatch]);
 
   return (
     <div className="addBurger__motherContainer">
