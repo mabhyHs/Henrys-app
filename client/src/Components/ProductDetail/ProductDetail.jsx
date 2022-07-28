@@ -15,6 +15,7 @@ function ProductDetail() {
   const producto = useSelector((state) => state.productDetail);
   useEffect(() => {
     dispatch(getProductById(id));
+    
   });
 
   return (
@@ -31,8 +32,15 @@ function ProductDetail() {
           alt="imagen del producto"
         />
         <h2>Descripción:</h2>
-        <p className="productDetail__text">Tomate</p>
-        <p>{producto.price}</p>
+        {producto.ingredient ?(
+
+          producto.ingredient.map((p) => {
+            return(
+            <p key={p.name.length}className="productDetail__text">{p.name}</p>
+            )
+          })
+        ):<div></div>}
+        <p>Precio: {producto.price}</p>
 
         <Button as={Link} to="/menu" className="mt-3 mb-5">
           Volver al Menú
