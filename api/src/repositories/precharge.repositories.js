@@ -1,4 +1,5 @@
-const { Ingredient, Burger, Fries, Beverage, Combo } = require("../models");
+const { Ingredient, Burger, Fries, Beverage, Combo, User } = require("../models");
+const bcrypt = require("bcrypt");
 
 const { addDataDB } = require("../utils/addDataDB");
 
@@ -47,6 +48,15 @@ async function precharge() {
         }
       }
     }
+
+    await User.create({
+        firstName: "Henry",
+        lastName: "Burger",
+        email: "henrysburgers@gmail.com",
+        password: await bcrypt.hash("admin@", 10),
+        role: "admin",
+        isConfirmed: true
+    });
 
     console.log("models precharged successfully!");
   } catch (error) {

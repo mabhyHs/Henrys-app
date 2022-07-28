@@ -1,12 +1,8 @@
-// const express = require('express');
-// const { sayHello } = require('../controllers/users.controllers');
+const express = require("express");
+const { create } = require("../controllers/users.controllers");
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.get('/', sayHello);
-// router.get('/:id');
-// router.post('/');
-// router.put('/:id');
-// router.delete('/:id');
+router.post("/", create);
 
-// module.exports = router;
+module.exports = router;
