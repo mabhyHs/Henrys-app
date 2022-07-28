@@ -6,8 +6,10 @@ import {
   GET_INGREDIENTS,
   GET_POTATOES,
   GET_VEGGIE,
-  SET_CATEGORY,
   GET_PRODUCT_BY_ID,
+  GET_BURGER_BASE,
+  SET_CATEGORY,
+  
 } from '../actions/actions';
 
 const initialState = {
@@ -21,6 +23,7 @@ const initialState = {
   veggie: [],
   category: '',
   productDetail: [],
+  burgerBase: {},
 };
 
 const rootReducer = (state = initialState, action = {}) => {
@@ -61,16 +64,21 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
         veggie: action.payload,
       };
+      case GET_PRODUCT_BY_ID:
+        return {
+          ...state,
+          productDetail: action.payload,
+        }
+      case GET_BURGER_BASE:
+        return {
+          ...state,
+          burgerBase: action.payload,
+        }
     case SET_CATEGORY:
       return {
         ...state,
         category: action.payload,
       };
-    case GET_PRODUCT_BY_ID:
-      return {
-        ...state,
-        productDetail: action.payload,
-      }
     default:
       return state;
   }
