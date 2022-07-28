@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
@@ -13,6 +14,17 @@ function ContactoForm() {
   const form = useRef();
   // eslint-disable-next-line no-unused-vars
   const [done, setDone] = useState(false);
+  const navigate = useNavigate();
+
+  function handleSubmit() {
+    Swal.fire({
+      icon: 'success',
+      text: 'Mensaje enviado con éxito, en breve estaremos comunicándonos',
+      showConfirmButton: false,
+      timer: 2000,
+    });
+    navigate('/');
+  }
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -46,7 +58,15 @@ function ContactoForm() {
               Compartí tus consultas, comentarios ó sugerencias a través del
               formulario y te responderemos a la brevedad
             </p>
-            <form ref={form} onSubmit={sendEmail} action="#" id="contact_form">
+            <form
+              ref={form}
+              onSubmit={(e) => {
+                handleSubmit(e);
+                sendEmail(e);
+              }}
+              action="#"
+              id="contact_form"
+            >
               <Row>
                 <input
                   className="contactForm__input"
@@ -120,13 +140,6 @@ function ContactoForm() {
               >
                 Enviar
               </Button>
-              {done &&
-                Swal.fire({
-                  icon: 'success',
-                  text: 'Mensaje enviado con éxito, en breve estaremos comunicándonos',
-                  showConfirmButton: false,
-                  timer: 2000,
-                })}
             </form>
           </Col>
           <Col sm={12} lg={5}>
