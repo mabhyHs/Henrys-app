@@ -16,7 +16,7 @@ function ProductDetail() {
   useEffect(() => {
     dispatch(getProductById(id));
     
-  });
+  }, [dispatch, id]);
 
   return (
     <div>
