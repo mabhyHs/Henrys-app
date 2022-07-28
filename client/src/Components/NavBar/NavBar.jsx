@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 /* import Button from 'react-bootstrap/Button'; */
 import Container from 'react-bootstrap/Container';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -14,6 +14,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './NavBar.css';
 
 function NavBar() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
   return (
     <Navbar className="navBar" expand="lg" variant="dark" sticky="top">
       <Container>
@@ -29,19 +32,44 @@ function NavBar() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link as={Link} to="/">
+            <Nav.Link
+              as={Link}
+              to="/"
+              onClick={() => {
+                window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+              }}
+            >
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/menu">
+            <Nav.Link
+              as={Link}
+              to="/menu"
+              onClick={() => {
+                window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+              }}
+            >
               Menú
             </Nav.Link>
-            <Nav.Link as={Link} to="/nosotros">
+            <Nav.Link
+              as={Link}
+              to="/nosotros"
+              onClick={() => {
+                window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+              }}
+            >
               Nosotros
             </Nav.Link>
             <Nav.Link as={Link} to="/contacto">
               Contacto
             </Nav.Link>
-            <Nav.Link className="ms-5 me-5" as={Link} to="/cart">
+            <Nav.Link
+              className="ms-5 me-5"
+              as={Link}
+              to="/cart"
+              onClick={() => {
+                window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+              }}
+            >
               <CartFill />
             </Nav.Link>
           </Nav>
