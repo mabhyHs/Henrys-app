@@ -82,14 +82,14 @@ const crearBurguer = function (precio, ingredientes, setIngredientsAdd) {
   alert(`su hamburguesa tiene un precio de: ${precio}`);
 };
 
-function AddBurger(estado) {
-  const { ingredients } = estado;
-  const [ingredientsAdd, setIngredientsAdd] = useState([]);
-  const [precio, setPrecio] = useState(0.0);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
+function AddBurger(estado){
+    const {ingredients} = estado
+    const [ingredientsAdd, setIngredientsAdd] = useState([])
+    const [precio, setPrecio] = useState(0.0)
+    const dispatch = useDispatch()
+    useEffect(() => {
+     dispatch(getIngredients())
+    }, [dispatch])
 
   return (
     <div className="addBurger__motherContainer">
