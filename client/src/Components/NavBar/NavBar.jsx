@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 /* import Button from 'react-bootstrap/Button'; */
 import Container from 'react-bootstrap/Container';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { PersonCircle, CartFill } from 'react-bootstrap-icons';
+import { PersonCircle, CartFill, CartCheckFill } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import imgNav from '../../Assets/Images/logo-henrys300px.png';
 import UserLoggedInDropdown from '../User/UserLoggedIn/UserLoggedInDropdown';
@@ -13,6 +14,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './NavBar.css';
 
 function NavBar() {
+  let itemsToCart = useSelector((state) => state.cart);
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
@@ -69,7 +72,11 @@ function NavBar() {
                 window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
               }}
             >
-              <CartFill />
+              {itemsToCart && itemsToCart?.length === 0 ? (
+                <CartFill />
+              ) : (
+                <CartCheckFill className="CartCheckFill" />
+              )}
             </Nav.Link>
           </Nav>
           {/* <UserLoggedInDropdown /> */}
