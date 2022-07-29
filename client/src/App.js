@@ -17,6 +17,8 @@ import UserProfileDashboard from './Components/User/UserProfileDashboard/UserPro
 
 import './App.css';
 
+import ShoppingCart from './Components/ShoppingCart/ShoppingCart';
+
 function App() {
   return (
     <div className="App">
@@ -32,6 +34,7 @@ function App() {
         <Route path="/userlogin" element={<UserLogin />} />
         <Route path="/registeruser" element={<UserRegister />} />
         <Route path="/userfavorites" element={<UserFavorites />} />
+        <Route path="/cart" element={<ShoppingCart />} />
         <Route path="/userpersonalinfo" element={<UserPersonalInfo />} />
         <Route
           path="/userprofiledashboard"

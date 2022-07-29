@@ -12,6 +12,11 @@ export const GET_POTATOES = 'GET_POTATOES';
 export const GET_VEGGIE = 'GET_VEGGIE';
 export const SET_CATEGORY = 'SET_CATEGORY';
 export const GET_PRODUCT_BY_ID = 'GET_PRODUCT_BY_ID';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const CLEAR_CART = 'CLEAR_CART';
+export const DELETE_ONE_PRODUCT_CART = 'DELETE_ONE_PRODUCT_CART';
+export const DELETE_PRODUCT_CART = 'DELETE_PRODUCT_CART';
+export const LOCAL_STORAGE = 'LOCAL_STORAGE';
 // export const CREATE_BURGER = "CREATE_BURGER"
 // export const CREATE_COMBO = "CREATE_ COMBO"
 // export const CREATE_BEVERAGE = "CREATE_BEVERAGE"
@@ -27,7 +32,8 @@ export function getProduct(
   // eslint-disable-next-line func-names, consistent-return
   return async function (dispatch) {
     const json = await axios(
-      `/products?category=${category}&order=${order}&name=${name}&isVeggie=${isVeggie}`
+      `https://henrys-pf.herokuapp.com/products?category=${category}&order=${order}&name=${name}&isVeggie=${isVeggie}`
+      /* `/products?category=${category}&order=${order}&name=${name}&isVeggie=${isVeggie}` */
     );
     try {
       return dispatch({
@@ -46,6 +52,40 @@ export function setCategory(category) {
     type: SET_CATEGORY,
     payload: category,
   };
+}
+
+export function addCartProduct(id) {
+  return {
+    type: ADD_TO_CART,
+    payload: id,
+  };
+}
+
+export function deleteCart() {
+  return {
+    type: CLEAR_CART,
+  };
+}
+
+export function productDelete(id) {
+  return{
+    type: DELETE_ONE_PRODUCT_CART,
+    payload: id,
+  }
+}
+
+export function allProductsDelete(id){
+  return {
+    type: DELETE_PRODUCT_CART,
+    payload: id,
+  }
+}
+
+export function setLocalStorage (payload){
+  return{
+    type: LOCAL_STORAGE,
+    payload
+  }
 }
 
 /* export function getBurgers() {
@@ -102,7 +142,7 @@ export function getBeverages() {
 export function getIngredients() {
   // eslint-disable-next-line func-names, consistent-return
   return async function (dispatch) {
-    const json = await axios(`/ingredients`);
+    const json = await axios('/ingredients');
     try {
       return dispatch({
         type: GET_INGREDIENTS,
@@ -113,18 +153,18 @@ export function getIngredients() {
     }
   };
 }
-export function getProductById(id){
-  return async function(dispatch){
-    const json = await axios('https://henrys-pf.herokuapp.com/products/' + id)
-    try{
+export function getProductById(id) {
+  return async function (dispatch) {
+    const json = await axios('https://henrys-pf.herokuapp.com/products/' + id);
+    try {
       return dispatch({
         type: GET_PRODUCT_BY_ID,
-        payload: json.data
-      })
-    } catch(error){
-      console.log(error)
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 }
 
 /* export function getPotatoes() {
