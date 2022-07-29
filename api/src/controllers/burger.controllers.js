@@ -16,7 +16,7 @@ async function destroy(req, res, next) {
     const deletedBurger = await burgerRepository.destroy(id);
 
     if (deletedBurger)
-      return res.status(200).json("Product deleted successfully");
+      return res.status(200).json({ message: "Product deleted successfully" });
 
     return res
       .status(404)
