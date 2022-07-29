@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Search } from 'react-bootstrap-icons';
-import { getIngredients } from '../../Redux/actions/actions';
+import { getProduct } from '../../Redux/actions/actions';
 import './SearchBar.css';
-// eslint-disable-next-line no-unused-vars, react/prop-types
+
 function SearchBar({ onSearch }) {
   const dispatch = useDispatch();
-  const [ingredients, setIngredients] = useState('');
+  const [name, setName] = useState('');
 
   function handleInput(e) {
     e.preventDefault();
-    setIngredients(e.target.value);
+    setName(e.target.value);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(getIngredients(ingredients));
-    setIngredients('');
+    if (!name) {
+      return alert('escribe el nombre de tu hamburguesa!');
+    } else {
+      dispatch(getProduct(name));
+      setName('');
+    }
   }
 
   //   lo que retorna
@@ -25,9 +29,9 @@ function SearchBar({ onSearch }) {
     <div className="pt-4">
       <input
         className="search__input ps-2"
-        value={ingredients}
+        value={name}
         type="text"
-        placeholder="Buscar por Ingrediente"
+        placeholder="Busca tu hamburguesa"
         onChange={(e) => handleInput(e)}
       />
 
