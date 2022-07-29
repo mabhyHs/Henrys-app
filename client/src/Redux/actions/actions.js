@@ -139,7 +139,7 @@ export function getIngredients(name) {
   return async function (dispatch) {
     const json = await axios(
       // eslint-disable-next-line no-template-curly-in-string
-      'https://henrys-pf.herokuapp.com/ingredients?name=${name}'
+      '/ingredients?name=${name}'
     );
     try {
       return dispatch({
@@ -153,7 +153,7 @@ export function getIngredients(name) {
 }
 export function getProductById(id) {
   return async function (dispatch) {
-    const json = await axios('https://henrys-pf.herokuapp.com/products/' + id);
+    const json = await axios('/products/' + id);
     try {
       return dispatch({
         type: GET_PRODUCT_BY_ID,
