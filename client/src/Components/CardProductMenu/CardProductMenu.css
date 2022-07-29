@@ -30,8 +30,11 @@
 
 .card__menu__cart {
   background-color: var(--brand-color);
-  padding: 5px;
   border-radius: 90px;
+}
+
+.card__menu__cart svg {
+  font-size: 1.2rem;
 }
 
 .card__cart__container {
