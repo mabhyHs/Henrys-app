@@ -1,9 +1,9 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Newsletter extends Model {
   }
-  User.init(
+  Newsletter.init(
     {
       id: {
         type: DataTypes.UUID,
@@ -23,5 +23,5 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
     }
   );
-  return User;
+  return Newsletter;
 };
