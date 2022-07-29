@@ -1,14 +1,14 @@
-const userRepositories = require("../repositories/user.repositories");
+const newsletterRepositories = require("../repositories/newsletter.repositories");
 const bcrypt = require("bcrypt");
 const { transporter } = require("../config/emailTransporter");
 
-async function getAllSecure(req, res, next) {
+async function get(req, res, next) {
     try {
       /* hay que validar que tenga el rol de admin */
-      const all = await userRepositories.getAllSecure();
+      const all = await newsletterRepositories.get();
   
-      if (!all){
-        return res.status(404).json("There are no users loaded!");
+      if (!all || !all.length){
+        return res.status(404).json({error: "There are no users loaded in newsletter!"});
       }   
 
       return res.status(200).json(all);
@@ -23,41 +23,47 @@ async function create(req, res, next) {
   try {
     /* hay que validar que tenga el rol de admin */
     const data = req.body;
-    const findUser = await userRepositories.getByEmail(data.email);
 
-    if(findUser){
-        return res.status(400).json({ error: "A user with this email already exists" });
+    if(!req.body.email){
+        return res.status(400).json({ error: "The email cannot be empty!" });
     }
 
-    data.password = await bcrypt.hash(data.password, 10);
-    const newUser = await userRepositories.create(data);
+    const find = await newsletterRepositories.getByEmail(data.email);
 
-    return res.status(201).json(newUser);
+    if(find){
+        return res.status(400).json({ error: "The email already exists in the newsletter" });
+    }
+
+    const add = await newsletterRepositories.create(data);
+
+    return res.status(201).json(add);
   } catch (error) {
     next(error);
   }
 }
 
 /* registro */
-async function register(req, res, next) {
+async function sendEmails(req, res, next) {
   try {
-    const data = req.body;
-    const findUser = await userRepositories.getByEmail(data.email);
 
-    if (findUser)
-      return res
-        .status(400)
-        .json({ error: "A user with this email already exists" });
+    const {title, subtitle, btnTxt} = req.body;
 
-    data.password = await bcrypt.hash(data.password, 10);
-    const newUser = await userRepositories.create(data);
+    if (!subtitle){
+        return res.status(400).json({ error: "The body subtitle cannot be empty!" });
+    }
 
-    console.log(process.env.ACTIVATE_ACCOUNT);
+    const all = await newsletterRepositories.get();
+
+    if (!all || !all.length){
+        return res.status(404).json({ error: "There are no users loaded in newsletter!" });
+    }
+
+    const emails = all.map(e => e.email);
 
     await transporter.sendMail({
-      from: '"Confirm account" <henrysBurger2022@gmail.com',
-      to: data.email,
-      subject: "Confirm account",
+      from: '"Newsletter" <henrysBurger2022@gmail.com',
+      to: emails, /* le pasamos el array de emails y se le envia a todos */
+      subject: "Newsletter",
       html: `
         <html lang="en-US">
         <head>
@@ -154,7 +160,7 @@ async function register(req, res, next) {
                                 font-family: 'Rubik', sans-serif;
                               "
                             >
-                              Ya casi terminamos...
+                              ${title ? title : "Tenemos novedades para vos!"}
                             </h1>
                             <p
                               style="
@@ -164,13 +170,11 @@ async function register(req, res, next) {
                                 line-height: 24px;
                               "
                             >
-                              Tu cuenta fué creada correctamente, <br /><strong
-                                >Actívala haciendo click en el siguiente botón</strong
-                              >:
+                                <strong>${subtitle}</strong>                              
                             </p>
       
                             <a
-                              href="${process.env.ACTIVATE_ACCOUNT}/activateAcount/${newUser.id}"
+                              href="${process.env.HOST}/"
                               style="
                                 background: #ffbe33;
                                 text-decoration: none !important;
@@ -184,7 +188,7 @@ async function register(req, res, next) {
                                 display: inline-block;
                                 border-radius: 50px;
                               "
-                              >Activar cuenta</a
+                              >${btnTxt ? btnTxt : "VER MÁS"}</a
                             >
                           </td>
                         </tr>
@@ -222,8 +226,8 @@ async function register(req, res, next) {
         </body>
       </html>`,
     });
+    return res.status(201).json(emails);
 
-    return res.status(201).json(newUser);
   } catch (error) {
     next(error);
   }
@@ -231,10 +235,10 @@ async function register(req, res, next) {
 
 async function destroy(req, res, next) {
   try {
-    const { id } = req.params;
-    const deletedUser = await userRepositories.destroy(id);
+    const {id} = req.params;
+    const deleted = await newsletterRepositories.destroy(id);
 
-    if (deletedUser)
+    if(deleted)
       return res.status(200).json({ message: "User deleted successfully" });
 
     return res
@@ -247,10 +251,10 @@ async function destroy(req, res, next) {
 
 async function restore(req, res, next) {
   try {
-    const { id } = req.params;
-    const restoredUser = await userRepositories.restore(id);
+    const {id} = req.params;
+    const restore = await newsletterRepositories.restore(id);
 
-    if (restoredUser)
+    if (restore)
       return res.status(200).json({ message: "User restored successfully" });
 
     return res
@@ -261,21 +265,10 @@ async function restore(req, res, next) {
   }
 }
 
-async function update(req, res, next) {
-  try {
-    const data = req.body;
-    const updatedUser = await userRepositories.update(data);
-    return res.status(200).json({ message: "User updated" });
-  } catch (error) {
-    next(error);
-  }
-}
-
 module.exports = {
-  getAllSecure,
+  get,
+  sendEmails,
   create,
-  register,
   destroy,
   restore,
-  update,
 };

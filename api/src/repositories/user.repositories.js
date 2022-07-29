@@ -10,6 +10,15 @@ async function getByEmail(email) {
   return user;
 }
 
+async function getAllSecure() {
+    let user = await User.findAll();
+    user = user.map(e => {
+        e.password = undefined
+        return e;        
+    });
+    return user;
+}
+
 async function getById(id) {
   const user = await User.findByPk(id);
   return user;
@@ -73,4 +82,5 @@ module.exports = {
   destroy,
   restore,
   update,
+  getAllSecure
 };

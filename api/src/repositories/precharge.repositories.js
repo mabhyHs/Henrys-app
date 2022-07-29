@@ -52,7 +52,7 @@ async function precharge() {
     await User.bulkCreate([{
             firstName: "Henry",
             lastName: "Burger",
-            email: "henrysburgers@gmail.com",
+            email: "henrysburgers@admin.com",
             password: await bcrypt.hash("admin@", 10),
             role: "admin",
             isConfirmed: true
