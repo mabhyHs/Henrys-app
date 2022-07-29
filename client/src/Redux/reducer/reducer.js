@@ -9,8 +9,15 @@ import {
   GET_PRODUCT_BY_ID,
   GET_BURGER_BASE,
   SET_CATEGORY,
+  ADD_TO_CART,
+  CLEAR_CART,
+  DELETE_ONE_PRODUCT_CART,
+  DELETE_PRODUCT_CART,
+  LOCAL_STORAGE,
   
 } from '../actions/actions';
+
+import { addItem, deleteAllItem, deleteItem } from './utils';
 
 const initialState = {
   burgers: [],
@@ -24,6 +31,8 @@ const initialState = {
   category: '',
   productDetail: [],
   burgerBase: {},
+  cart: [],
+  copyCart: [],
 };
 
 const rootReducer = (state = initialState, action = {}) => {
@@ -79,6 +88,34 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
         category: action.payload,
       };
+
+      case ADD_TO_CART:
+  
+        return {
+          ...state,
+          cart: addItem(action.payload, state.products, state.cart),
+        };
+      case DELETE_ONE_PRODUCT_CART:
+        return {
+          ...state,
+          cart: deleteItem(state.cart, action.payload),
+        };
+      case DELETE_PRODUCT_CART:
+        return {
+          ...state,
+          cart: deleteAllItem(state.cart, action.payload),
+        };
+      case CLEAR_CART:
+        return {
+          ...state,
+          cart: state.copyCart,
+        };
+      case LOCAL_STORAGE:
+        return{
+          ...state,
+          cart: action.payload
+        }
+
     default:
       return state;
   }

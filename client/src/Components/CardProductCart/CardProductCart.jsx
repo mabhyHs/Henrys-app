@@ -2,18 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { CartFill } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
-import './CardProductMenu.css';
+import './CardProductCart.css';
 
+function CardProductCart({ id, name, price, imgUri, addToCart, cantidad}) {
 
-function CardProductMenu({ id, name, price, imgUri, addToCart}) {
   return (
     <Card className="card__menu" style={{ width: '18rem' }}>
       <Card.Img variant="top" src={imgUri} className="card__img__menu" />
       <Card.Body className="card__menu__body">
         <Card.Title>
           <p>{name}</p>
+          <p>x{" " + cantidad}</p>
         </Card.Title>
-        <Link className="footer__mail__link" to={`/detalle/${id}`}>
+        <Link className="footer__mail__link" to="/detalle">
           <p>Ver Más</p>
         </Link>
         <div className="card__cart__container">
@@ -27,4 +28,4 @@ function CardProductMenu({ id, name, price, imgUri, addToCart}) {
   );
 }
 
-export default CardProductMenu;
+export default CardProductCart;
