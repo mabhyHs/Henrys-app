@@ -4,6 +4,7 @@ const authRouter = require("./auth.routes");
 const loginRouter = require("./login.routes");
 const activateAccount = require("./activateAccount.routes");
 const authGoogle = require("./authGoogle.routes");
+const passwordRecovery = require("./passwordRecovery.routes");
 
 const usersRouter = require("./users.routes");
 
@@ -22,6 +23,7 @@ router.use("/register", authRouter);
 router.use("/login", loginRouter);
 router.use("/google", authGoogle);
 router.use("/activateAccount", activateAccount);
+router.use("/passwordRecovery", passwordRecovery);
 
 router.use("/fries", friesRouter);
 router.use("/ingredients", ingredientRouter);
