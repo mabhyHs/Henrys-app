@@ -14,6 +14,8 @@ function ContactoForm() {
   const form = useRef();
   // eslint-disable-next-line no-unused-vars
   const [done, setDone] = useState(false);
+  const [error, setError] = useState({})
+  const [input, setInput] = useState({})
   const navigate = useNavigate();
 
   function handleSubmit() {
@@ -47,6 +49,38 @@ function ContactoForm() {
       );
     e.target.reset();
   };
+  function handleChange(e){
+    setInput({...input, [e.target.name]: e.target.value})
+    setError(validate({...input, [e.target.name]: e.target.value}))
+  }
+  function validate(input){
+   let error = {}
+   if(!input.user_surname){
+    error.user_surname = 'este campo no debe quedar vacio'
+   }
+   if(!isNaN(input.user_surname) && input.user_surname.length > 0){
+    error.user_surname = 'no es un apellido valido valido'
+   }
+   if(!input.user_name){
+      error.user_name = 'este campo no debe quedar vacio'
+   }
+   if(!isNaN(input.user_name) && input.user_name.length > 0){
+    error.user_name = 'no es un nombre valido'
+   }
+   // eslint-disable-next-line no-useless-escape
+   if(!(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(input.email))){
+    error.email = 'este correo es invalido'
+    
+   }
+   if(isNaN(input.telephone)){
+      error.telephone = 'escribe un numero valido'
+   }
+   if(!input.message){
+    error.message = 'por favor escribe el motivo de tu consulta'
+   }
+
+   return error
+  }
 
   return (
     <div>
@@ -75,8 +109,11 @@ function ContactoForm() {
                   name="user_name"
                   id="name_input"
                   required
+                  onChange={(e) => handleChange(e)}
                 />
-
+                {error.user_name &&(
+                  <p>{error.user_name}</p>
+                )}
                 <input
                   className="contactForm__input"
                   type="text"
@@ -84,7 +121,11 @@ function ContactoForm() {
                   name="user_surname"
                   id="surname_input"
                   required
+                  onChange={(e) => handleChange(e)}
                 />
+                {error.user_surname &&(
+                  <p>{error.user_surname}</p>
+                )}
               </Row>
               <Row>
                 <input
@@ -94,8 +135,11 @@ function ContactoForm() {
                   name="email"
                   id="email_input"
                   required
+                  onChange={(e) => handleChange(e)}
                 />
-
+                {error.email &&(
+                  <p>{error.email}</p>
+                )}
                 <input
                   className="contactForm__input"
                   type="text"
@@ -103,7 +147,11 @@ function ContactoForm() {
                   name="telephone"
                   id="telephone_input"
                   required
+                  onChange={(e) => handleChange(e)}
                 />
+                {error.telephone &&(
+                  <p>{error.telephone}</p>
+                )}
               </Row>
               <Row>
                 <select
@@ -112,6 +160,7 @@ function ContactoForm() {
                   name="subject"
                   id="subject_input"
                   required
+                  onChange={(e) => handleChange(e)}
                 >
                   <option value="default" hidden>
                     Tipo de consulta
@@ -121,7 +170,9 @@ function ContactoForm() {
                   <option value="3">Felicitaciones</option>
                   <option value="4">Reclamos</option>
                 </select>
-
+                  {!input.subject && (
+                    <p>Por favor seleccione una opción</p>
+                  )}
                 <textarea
                   className="contactForm__input"
                   name="message"
@@ -130,13 +181,18 @@ function ContactoForm() {
                   cols="20"
                   rows="3"
                   required
+                  onChange={(e) => handleChange(e)}
                 />
+                {error.message &&(
+                  <p>{error.message}</p>
+                )}
               </Row>
               <Button
                 type="submit"
                 key="submit"
                 value="submit"
                 id="form_button"
+                disabled={(Object.keys(error).length !== 0) || !input.subject}
               >
                 Enviar
               </Button>
