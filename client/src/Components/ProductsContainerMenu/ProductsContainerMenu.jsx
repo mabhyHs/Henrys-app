@@ -10,11 +10,6 @@ function ProductsContainerMenu({ currentProduct }) {
   let itemsToCart = useSelector((state) => state.cart);
   const [mount, setMount] = useState(true);
 
-  /* useEffect(() => {
-    if (itemsToCart && itemsToCart.length) {
-      window.localStorage.setItem('carrito', JSON.stringify(itemsToCart));
-    } else window.localStorage.removeItem('carrito');
-  }, [itemsToCart]); */
   useEffect(() => {
     if (!mount) {
       if (itemsToCart && itemsToCart.length) {
@@ -34,7 +29,6 @@ function ProductsContainerMenu({ currentProduct }) {
 
   const addToCart = (id) => {
     dispatch(addCartProduct(id));
-    window.localStorage.setItem('carrito', JSON.stringify(itemsToCart));
   };
 
   return (
