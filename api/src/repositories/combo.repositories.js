@@ -62,10 +62,38 @@ async function getByName(name) {
   return combo;
 }
 
+async function destroy(id) {
+  const deletedCombo = await Combo.destroy({
+    where: {
+      id: id,
+    },
+  });
+
+  return deletedCombo;
+}
+
+async function restore(id) {
+  const restoredCombo = await Combo.restore({
+    where: {
+      id: id,
+    },
+  });
+
+  return restoredCombo;
+}
+
+async function update(data) {
+  const updatedCombo = await Combo.update(data, { where: { id: data.id } });
+  return updatedCombo;
+}
+
 module.exports = {
   create,
   getById,
   getAll,
   getByQuery,
   getByName,
+  destroy,
+  restore,
+  update,
 };

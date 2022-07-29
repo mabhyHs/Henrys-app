@@ -20,20 +20,22 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: {
         type: DataTypes.TEXT,
-        allowNull: false, // require  *
+        allowNull: false,
       },
       price: {
         type: DataTypes.FLOAT,
-        allowNull: false, // require  *
+        allowNull: false,
       },
       isVeggie: {
         type: DataTypes.BOOLEAN,
-        allowNull: false, // require  *
+        allowNull: false,
       },
     },
     {
       sequelize,
       modelName: "Ingredient",
+      paranoid: true,
+      timestamps: true,
     }
   );
   return Ingredient;

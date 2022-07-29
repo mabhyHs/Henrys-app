@@ -48,6 +48,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Combo",
+      paranoid: true,
+      timestamps: true,
     }
   );
   return Combo;
