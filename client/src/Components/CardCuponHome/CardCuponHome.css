@@ -14,18 +14,17 @@
 }
 
 .card__img__top {
-  width: 34%;
-  border: 3px solid var(--brand-color);
-  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  border: 2px solid var(--brand-color);
   background-color: var(--heading-color);
-  bottom: 0.8rem;
   position: relative;
 }
 
 .cupponCardHome__cardBody {
   margin: 0 auto;
   left: 2.5rem;
-  bottom: 9vw;
+  bottom: 9.5rem;
   position: relative;
 }
 
