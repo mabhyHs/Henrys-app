@@ -22,3 +22,8 @@
   background: var(--btn-hover);
   color: #fff;
 }
+.btn__round__effect:focus {
+  text-decoration: none;
+  background: var(--btn-hover);
+  color: #fff;
+}

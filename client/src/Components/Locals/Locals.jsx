@@ -6,18 +6,13 @@ function Locals() {
     <section className="localesContainer">
       <div className="localesContainer__text">
         <div>
-          <h2>Locales</h2>
-          <p>Todos nuestros locales son únicos. ¡Conocelos!</p>
+          <h2>Local</h2>
+          <p>Nuestro Local es único, te invitamos a conocerlo!</p>
         </div>
 
         <div>
           <h2>Devoto</h2>
           <p>Gualeyguaychú 3895, C1419 CABA</p>
-        </div>
-
-        <div>
-          <h2>Chascomús</h2>
-          <p>Ruta 2km. 116,300, Chascomús, Provincia de Buenos Aires</p>
         </div>
       </div>
 
