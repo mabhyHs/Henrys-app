@@ -19,8 +19,8 @@ function CardProductMenu({ id, name, price, imgUri, addToCart }) {
         </Link>
         <div className="card__cart__container">
           <span>${price}</span>
-          <Button className="card__menu__cart">
-            <CartPlus onClick={() => addToCart(id)} />
+          <Button onClick={() => addToCart(id)} className="card__menu__cart">
+            <CartPlus />
           </Button>
         </div>
       </Card.Body>
