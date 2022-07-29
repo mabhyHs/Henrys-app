@@ -51,17 +51,18 @@ const nameValid = body("name")
   .isLength({ max: 40 })
   .withMessage("max lenght 40")
   .custom(async (name, { req }) => {
-    const result = await burgerRepository.getByName(name);
+    const result = await comboRepository.getByName(name);
 
     if (req.body.id && result && req.body.id !== result.id) {
-      throw new Error("burger already exists");
+      throw new Error("Combo already exists");
     }
 
     if (!req.body.id && result) {
-      throw new Error("burger already exists");
+      throw new Error("Combo already exists");
     }
   })
-  .withMessage("combo already exists");
+  .withMessage("Combo already exists");
+
 // .custom(async (name) => {
 //   const result = await comboRepository.getByName(name);
 //   if (result) {

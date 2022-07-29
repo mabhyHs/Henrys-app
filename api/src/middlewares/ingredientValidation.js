@@ -8,13 +8,26 @@ const nameValid = body("name")
   .withMessage("min lenght 2")
   .isLength({ max: 40 })
   .withMessage("max lenght 40")
-  .custom(async (name) => {
+  .custom(async (name, { req }) => {
     const result = await ingredientRepository.getByName(name);
-    if (result) {
-      throw new Error("ingredient already exists");
+
+    if (req.body.id && result && req.body.id !== result.id) {
+      throw new Error("Ingredient already exists");
+    }
+
+    if (!req.body.id && result) {
+      throw new Error("Ingredient already exists");
     }
   })
   .withMessage("ingredient already exists");
+
+// .custom(async (name) => {
+//   const result = await ingredientRepository.getByName(name);
+//   if (result) {
+//     throw new Error("ingredient already exists");
+//   }
+// })
+// .withMessage("ingredient already exists");
 
 const priceValid = body("price")
   .notEmpty()
