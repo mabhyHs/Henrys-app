@@ -11,14 +11,7 @@ function Pagination({ burgersPerPage, allProducts, onSetPage }) {
   }
 
   const handleClick = (e) => {
-    for (const page of pages) {
-      if (page === parseInt(e.target.value)) {
-        document.getElementById(page);
-      } else {
-        document.getElementById(page);
-      }
-    }
-    onSetPage(e.target.value);
+    onSetPage(parseInt(e.target.value));
   };
 
   return (
