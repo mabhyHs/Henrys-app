@@ -29,11 +29,14 @@ async function login(req, res, next) {
       process.env.TOKEN_SECRET
     );
 
+    user.password = undefined;
+
     res.header("auth-token", token).json({
       error: null,
-      name: user.firstName,
+      user: user,
       data: { token },
     });
+    
   } catch (error) {
     next(error);
   }

@@ -7,8 +7,8 @@ async function get(req, res, next) {
       /* hay que validar que tenga el rol de admin */
       const all = await newsletterRepositories.get();
   
-      if (!all){
-        return res.status(404).json("There are no users loaded in newsletter!");
+      if (!all || !all.length){
+        return res.status(404).json({error: "There are no users loaded in newsletter!"});
       }   
 
       return res.status(200).json(all);
@@ -23,6 +23,11 @@ async function create(req, res, next) {
   try {
     /* hay que validar que tenga el rol de admin */
     const data = req.body;
+
+    if(!req.body.email){
+        return res.status(400).json({ error: "The email cannot be empty!" });
+    }
+
     const find = await newsletterRepositories.getByEmail(data.email);
 
     if(find){
@@ -49,7 +54,7 @@ async function sendEmails(req, res, next) {
 
     const all = await newsletterRepositories.get();
 
-    if (!all){
+    if (!all || !all.length){
         return res.status(404).json({ error: "There are no users loaded in newsletter!" });
     }
 
@@ -165,8 +170,7 @@ async function sendEmails(req, res, next) {
                                 line-height: 24px;
                               "
                             >
-                              ${subtitle}><strong
-                              >:
+                                <strong>${subtitle}</strong>                              
                             </p>
       
                             <a
@@ -222,7 +226,7 @@ async function sendEmails(req, res, next) {
         </body>
       </html>`,
     });
-    return res.status(201).json(newUser);
+    return res.status(201).json(emails);
 
   } catch (error) {
     next(error);

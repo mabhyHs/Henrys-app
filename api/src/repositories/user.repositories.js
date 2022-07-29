@@ -11,8 +11,11 @@ async function getByEmail(email) {
 }
 
 async function getAllSecure() {
-    const user = await User.findAll();
-    delete user.password;
+    let user = await User.findAll();
+    user = user.map(e => {
+        e.password = undefined
+        return e;        
+    });
     return user;
 }
 

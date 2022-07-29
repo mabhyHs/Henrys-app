@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/", get);
 router.post("/", create);
-router.post("/", sendEmails);
+router.post("/send", sendEmails);
 router.delete("/:id", destroy);
 router.post("/:id", restore);
 
