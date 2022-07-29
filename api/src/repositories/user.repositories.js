@@ -31,10 +31,18 @@ async function createGoogleAccount(data) {
   return await User.create(data);
 }
 
+async function updatePassword(email, newPassword) {
+  return await User.update(
+    { password: newPassword },
+    { where: { email: email } }
+  );
+}
+
 module.exports = {
   create,
   getByEmail,
   getById,
   activateAccount,
   createGoogleAccount,
+  updatePassword,
 };
