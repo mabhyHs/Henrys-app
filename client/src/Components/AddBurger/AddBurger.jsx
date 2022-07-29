@@ -167,7 +167,7 @@ function AddBurger() {
             {ingredientsNotSelect().length > 0 &&
               ingredientsNotSelect()?.map((i) => (
                 <option key={i.id} value={i.name}>
-                  {i.name + " - $" + i.price + " c/u"}
+                  {i.name + " - $" + i.price}
                 </option>
               ))}
           </select>
