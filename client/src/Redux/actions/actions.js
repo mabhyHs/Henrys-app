@@ -30,8 +30,7 @@ export function getProduct(
 ) {
   return async function (dispatch) {
     const json = await axios(
-      `https://henrys-pf.herokuapp.com/products?category=${category}&order=${order}&name=${name}&isVeggie=${isVeggie}`
-      /* `/products?category=${category}&order=${order}&name=${name}&isVeggie=${isVeggie}` */
+      `/products?category=${category}&order=${order}&name=${name}&isVeggie=${isVeggie}`
     );
     try {
       return dispatch({
