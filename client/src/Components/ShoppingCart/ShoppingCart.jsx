@@ -62,7 +62,7 @@ function ShoppingCart() {
 
   return (
     <Container className="py-4 shoppinCart__container">
-      {itemsToCart?.length === 0 ? (
+      {itemsToCart && itemsToCart?.length === 0 ? (
         <div>
           <h2>El carrito se encuentra vacío</h2>
           <p>

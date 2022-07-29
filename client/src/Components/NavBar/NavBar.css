@@ -80,3 +80,7 @@
   color: transparent;
   background-color: transparent;
 }
+
+.CartCheckFill {
+  color: var(--brand-color);
+}
