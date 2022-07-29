@@ -32,10 +32,34 @@ async function getByName(name) {
   return fries;
 }
 
+async function destroy(id) {
+  return await Fries.destroy({
+    where: {
+      id: id,
+    },
+  });
+}
+
+async function update(id, data) {
+  return await Fries.update(data, { where: { id: id } });
+}
+
+async function restore(id) {
+  const fries = await Fries.restore({
+    where: {
+      id: id,
+    },
+  });
+  return fries;
+}
+
 module.exports = {
   create,
   getById,
   getAll,
   getByQuery,
   getByName,
+  destroy,
+  update,
+  restore,
 };

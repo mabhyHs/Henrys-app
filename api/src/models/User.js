@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         validate: { isEmail: true },
+        unique: true
       },
       password: {
         type: DataTypes.STRING,
@@ -44,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       imgUri: {
         type: DataTypes.TEXT,
+      },
+      isGoogle: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     {

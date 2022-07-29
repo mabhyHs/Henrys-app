@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 
 try {
   transporter.verify().then(() => {
-    console.log("se pueden mandar emails");
+    console.log("Se pueden mandar emails!");
   });
 } catch (error) {
   console.log(error);

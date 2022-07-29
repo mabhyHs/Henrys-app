@@ -23,12 +23,6 @@ async function getByName(name) {
   return ingredient;
 }
 
-async function remove(id) {
-  await Ingredient.destroy({
-    where: { id: id },
-  });
-}
-
 async function getAssociations(id) {
   const ingredient = await Ingredient.findByPk(id, {
     include: {
@@ -39,11 +33,40 @@ async function getAssociations(id) {
   return ingredient;
 }
 
+async function destroy(id) {
+  const deletedIngredient = await Ingredient.destroy({
+    where: {
+      id: id,
+    },
+  });
+
+  return deletedIngredient;
+}
+
+async function restore(id) {
+  const restoredIngredient = await Ingredient.restore({
+    where: {
+      id: id,
+    },
+  });
+
+  return restoredIngredient;
+}
+
+async function update(data) {
+  const updatedIngredient = await Ingredient.update(data, {
+    where: { id: data.id },
+  });
+  return updatedIngredient;
+}
+
 module.exports = {
   create,
   getById,
   getAll,
   getByName,
-  remove,
   getAssociations,
+  destroy,
+  restore,
+  update,
 };
