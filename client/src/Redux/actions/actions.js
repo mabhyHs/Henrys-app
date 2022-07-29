@@ -137,10 +137,7 @@ export function getBeverages() {
 
 export function getIngredients(name) {
   return async function (dispatch) {
-    const json = await axios(
-      // eslint-disable-next-line no-template-curly-in-string
-      'https://henrys-pf.herokuapp.com/ingredients?name=${name}'
-    );
+    let json = await axios.get(`http://localhost:3001/products?name=${name}`);
     try {
       return dispatch({
         type: GET_INGREDIENTS,
