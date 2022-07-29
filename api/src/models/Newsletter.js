@@ -3,7 +3,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Newsletter extends Model {
   }
-  User.init(
+  Newsletter.init(
     {
       id: {
         type: DataTypes.UUID,
