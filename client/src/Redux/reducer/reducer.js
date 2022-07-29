@@ -91,6 +91,7 @@ const rootReducer = (state = initialState, action = {}) => {
 
       case ADD_TO_CART:
   
+      /* payload es el id, array de products, y el array de carrito */
         return {
           ...state,
           cart: addItem(action.payload, state.products, state.cart),

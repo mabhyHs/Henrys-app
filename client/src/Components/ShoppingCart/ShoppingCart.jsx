@@ -22,15 +22,6 @@ function ShoppingCart() {
   let itemsToCart = useSelector((state) => state.cart);
   const [mount, setMount] = useState(true);
 
-  /* useEffect(() => {
-    
-    if (!itemsToCart.length && window.localStorage.getItem('carrito')) {
-      dispatch(
-        setLocalStorage(JSON.parse(window.localStorage.getItem('carrito')))
-      );
-    }
-  }, [dispatch]); */
-
   useEffect(() => {
     if (!mount) {
       if (itemsToCart && itemsToCart.length) {
@@ -54,7 +45,6 @@ function ShoppingCart() {
 
   const handleDeleteCart = () => {
     dispatch(deleteCart());
-    window.localStorage.removeItem('carrito');
   };
 
   const handleDelete = (id, all = false) => {
@@ -93,7 +83,7 @@ function ShoppingCart() {
           </div>
           <hr />
           {itemsToCart.map((item) => (
-            <div>
+            <div key={item.name}>
               {
                 <CardProductCart
                   id={item.id}
@@ -101,7 +91,6 @@ function ShoppingCart() {
                   cantidad={item.cantidad}
                   price={item.price}
                   imgUri={item.imgUri}
-                  key={item.name}
                 />
               }
               <div>
