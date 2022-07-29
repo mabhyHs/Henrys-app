@@ -167,7 +167,7 @@ function AddBurger() {
             {ingredientsNotSelect().length > 0 &&
               ingredientsNotSelect()?.map((i) => (
                 <option key={i.id} value={i.name}>
-                  {i.name}
+                  {i.name + " - $" + i.price}
                 </option>
               ))}
           </select>
@@ -192,7 +192,7 @@ function AddBurger() {
                   </button>
 
                   <li className="addBurger__ul__li" key={i.id}>
-                    {i.name}
+                    {i.name + " - $" + i.price + " c/u"}
                   </li>
 
                   <button
@@ -243,7 +243,7 @@ function AddBurger() {
           {precioBase}
         </p>
         <p className="addBurger__bottom__p">
-          <span className="addBurger__bottom__span">Ingredientes:</span> + $
+          <span className="addBurger__bottom__span">Ingredientes:</span> $
           {precio}
         </p>
         <p className="addBurger__bottom__p">
