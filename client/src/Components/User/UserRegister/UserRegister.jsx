@@ -1,15 +1,55 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import imgLogin from '../../../Assets/Images/Hamburguesas/PAPAS-KING.png';
+import { createUser } from '../../../Redux/actions/actions';
 import Form from 'react-bootstrap/Form';
 import { FcGoogle } from 'react-icons/fc';
 import Button from 'react-bootstrap/Button';
+import { useDispatch } from 'react-redux';
 
 import './UserRegister.css';
 
 function UserRegister() {
+  const [input, setInput] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    passwordConfirm: '',
+  });
+
+  const [error, setError] = useState({});
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  /* Funcion que modifica el estado local con los valores de los input */
+  const handleChange = (e) => {
+    console.log(e.target.name);
+    setInput((state) => {
+      const newState = {
+        ...state,
+        [e.target.name]: e.target.value,
+      };
+      return newState;
+    });
+  };
+
+  /* al submitear */
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(createUser(input));
+    setInput({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      passwordConfirm: '',
+    });
+  };
+
   return (
     <div>
       <Row className="userRegister__container m-3">
@@ -20,28 +60,65 @@ function UserRegister() {
             <FcGoogle className="me-2" />
             Registrate con Google
           </Button>
+
           <p className="userRegister__divider">──────── Ó ────────</p>
-          <Form className="mb-5">
+          <Form
+            className="mb-5"
+            onSubmit={(e) => {
+              handleSubmit(e);
+            }}
+          >
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridNombre">
-                <Form.Control placeholder="Nombre*" />
+                <Form.Control
+                  type="input"
+                  value={input.firstName}
+                  name="firstName"
+                  autoComplete="off"
+                  placeholder="Nombre*"
+                  onChange={handleChange}
+                />
               </Form.Group>
 
               <Form.Group as={Col} controlId="formGridApellido">
-                <Form.Control placeholder="Apellido*" />
+                <Form.Control
+                  type="text"
+                  value={input.lastName}
+                  name="lastName"
+                  placeholder="Apellido*"
+                  onChange={handleChange}
+                />
               </Form.Group>
             </Row>
 
             <Form.Group className="mb-3" controlId="formGridEmail">
-              <Form.Control type="email" placeholder="Email*" />
+              <Form.Control
+                type="text"
+                value={input.email}
+                name="email"
+                placeholder="Email*"
+                onChange={handleChange}
+              />
             </Form.Group>
             <Row className="mb-5">
               <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Control type="password" placeholder="Contraseña*" />
+                <Form.Control
+                  value={input.password}
+                  name="password"
+                  type="password"
+                  placeholder="Contraseña*"
+                  onChange={handleChange}
+                />
               </Form.Group>
 
               <Form.Group as={Col} controlId="formGridConfirPassword">
-                <Form.Control type="password" placeholder="Confirmar*" />
+                <Form.Control
+                  value={input.passwordConfirm}
+                  name="passwordConfirm"
+                  type="password"
+                  placeholder="Confirmar*"
+                  onChange={handleChange}
+                />
               </Form.Group>
             </Row>
             <Button variant="primary" type="submit">

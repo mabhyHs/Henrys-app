@@ -51,7 +51,6 @@ export function setCategory(category) {
   };
 }
 
-
 export function addCartProduct(id) {
   return {
     type: ADD_TO_CART,
@@ -66,24 +65,24 @@ export function deleteCart() {
 }
 
 export function productDelete(id) {
-  return{
+  return {
     type: DELETE_ONE_PRODUCT_CART,
     payload: id,
-  }
+  };
 }
 
-export function allProductsDelete(id){
+export function allProductsDelete(id) {
   return {
     type: DELETE_PRODUCT_CART,
     payload: id,
-  }
+  };
 }
 
-export function setLocalStorage (payload){
-  return{
+export function setLocalStorage(payload) {
+  return {
     type: LOCAL_STORAGE,
-    payload
-  }
+    payload,
+  };
 }
 
 /* export function getBurgers() {
@@ -137,10 +136,12 @@ export function getBeverages() {
   };
 } */
 
-
-export function getIngredients() {
+export function getIngredients(name) {
   return async function (dispatch) {
-    const json = await axios('/ingredients');
+    const json = await axios(
+      // eslint-disable-next-line no-template-curly-in-string
+      'https://henrys-pf.herokuapp.com/ingredients?name=${name}'
+    );
     try {
       return dispatch({
         type: GET_INGREDIENTS,
@@ -165,26 +166,25 @@ export function getProductById(id) {
   };
 }
 
-export function getBurgerBase(){
-    
-    return async function (dispatch) {
-        const json = await axios(`/burgerBase`);
-        try {
-          return dispatch({
-            type: GET_BURGER_BASE,
-            payload: json.data,
-          });
-        } catch (error) {
-          console.log(error);
-        }
-      };
+export function getBurgerBase() {
+  return async function (dispatch) {
+    const json = await axios(`/burgerBase`);
+    try {
+      return dispatch({
+        type: GET_BURGER_BASE,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
-export function agregarCalificacion(payload){
-  return async function(){
-    const json = await axios.post('pending...', payload)
-    return json
-  }
+export function agregarCalificacion(payload) {
+  return async function () {
+    const json = await axios.post('pending...', payload);
+    return json;
+  };
 }
 
 // ACCIONES POST
@@ -206,5 +206,13 @@ export function createBeverage(payload) {
   return async function () {
     const json = await axios.post('https://pending...', payload);
     return json;
+  };
+}
+
+export function createUser(payload) {
+  return async function () {
+    const json = await axios.post(`/register`, payload);
+    console.log(json.data);
+    return { json };
   };
 }
