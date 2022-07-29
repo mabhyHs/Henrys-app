@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients, getBurgerBase } from '../../Redux/actions/actions';
+import Button from 'react-bootstrap/Button';
+import Swal from 'sweetalert2';
+
 import './AddBurger.css';
 
 const modificarIngredientes = function (
@@ -27,10 +30,9 @@ const añadirIngredientes = function (
   precio,
   setPrecio
 ) {
-    
   const ingredienteSelect = igrGlobal.find((i) => i.name === e.target.value);
 
-  if(!ingredienteSelect) return;
+  if (!ingredienteSelect) return;
 
   let prueba = [];
 
@@ -45,12 +47,16 @@ const añadirIngredientes = function (
   } else {
     ingredienteSelect.cantidad = 1;
 
-    if([...ingredientes, ingredienteSelect].length <= 6){
-        cb((ingredientes = [...ingredientes, ingredienteSelect]));
-        const copiaIngredientes = [...ingredientes];
-        precioPrimeraVez(precio, setPrecio, copiaIngredientes);
+    if ([...ingredientes, ingredienteSelect].length <= 6) {
+      cb((ingredientes = [...ingredientes, ingredienteSelect]));
+      const copiaIngredientes = [...ingredientes];
+      precioPrimeraVez(precio, setPrecio, copiaIngredientes);
     } else {
-        alert(`Su hamburguesa alcanzó el limite máximo de 6 de ingredientes!`);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Sólo puedes seleccionar hasta 6 Ingredientes',
+      });
     }
   }
 };
@@ -87,48 +93,53 @@ const cambiarCantidad = function (e, id, ingredientes, cb, precio, setPrecio) {
 const crearBurguer = function (setPrecio, ingredientes, setIngredientsAdd) {
   setIngredientsAdd((ingredientes = []));
   setPrecio(0.0);
-  alert(`Su hamburguesa personalizada fue creada con éxito!`);
+  Swal.fire({
+    title: 'Hamburguesa creada exitosamente',
+    text: 'Pronto estarás disfrutando tu pedido',
+    imageUrl: 'https://i.postimg.cc/Y0T86N5w/logo-henrys300px.png',
+    imageWidth: 150,
+    imageHeight: 150,
+    imageAlt: 'Logo henrys',
+  });
 };
 
-function AddBurger(){
+function AddBurger() {
+  const dispatch = useDispatch();
+  const ingredients = useSelector((state) => state.ingredients);
+  const precioBase = useSelector((state) => state.burgerBase.price);
+  const [ingredientsAdd, setIngredientsAdd] = useState([]);
+  const [precio, setPrecio] = useState(0);
 
-    const dispatch = useDispatch();
-    const ingredients = useSelector(state => state.ingredients);
-    const precioBase = useSelector(state => state.burgerBase.price);
-    const [ingredientsAdd, setIngredientsAdd] = useState([]);
-    const [precio, setPrecio] = useState(0);
+  useEffect(() => {
+    dispatch(getIngredients());
+    dispatch(getBurgerBase());
+  }, [dispatch]);
 
-    useEffect(() => {
-     dispatch(getIngredients());
-     dispatch(getBurgerBase());
-    }, [dispatch]);
+  function getTotal(priceBase, priceIngredients) {
+    return parseFloat(priceBase) + parseFloat(priceIngredients);
+  }
 
-function getTotal(priceBase, priceIngredients){
-    return (parseFloat(priceBase) + parseFloat(priceIngredients));
-}
-
-function ingredientsNotSelect(){
-
-    if(!ingredientsAdd || !ingredientsAdd.length){
-        return ingredients;
+  function ingredientsNotSelect() {
+    if (!ingredientsAdd || !ingredientsAdd.length) {
+      return ingredients;
     }
 
-    const notSelect = ingredients.map(e => e);       
+    const notSelect = ingredients.map((e) => e);
 
-    for(let j=0; j<notSelect.length; j++){
-        const all = notSelect[j];
+    for (let j = 0; j < notSelect.length; j++) {
+      const all = notSelect[j];
 
-            for(let i=0; i<ingredientsAdd.length; i++){
-                const add = ingredientsAdd[i];   
+      for (let i = 0; i < ingredientsAdd.length; i++) {
+        const add = ingredientsAdd[i];
 
-                if(all === add){                    
-                    notSelect.splice(j, 1);
-                    j--;
-                }
-            }
+        if (all === add) {
+          notSelect.splice(j, 1);
+          j--;
+        }
+      }
     }
     return notSelect;
-}
+  }
 
   return (
     <div className="addBurger__motherContainer">
@@ -148,16 +159,17 @@ function ingredientsNotSelect(){
                 setPrecio
               )
             }
-            value={"default"}
+            value={'default'}
           >
             <option key={1000} disabled="" defaultValue>
               Escoge tus ingredientes
             </option>
-            {ingredientsNotSelect().length > 0 && ingredientsNotSelect()?.map((i) => (
-              <option key={i.id} value={i.name}>
-                {i.name}
-              </option>
-            ))}
+            {ingredientsNotSelect().length > 0 &&
+              ingredientsNotSelect()?.map((i) => (
+                <option key={i.id} value={i.name}>
+                  {i.name}
+                </option>
+              ))}
           </select>
 
           <div>
@@ -226,17 +238,25 @@ function ingredientsNotSelect(){
       </div>
 
       <div className="addBurger__bottom">
-        <h4>Hamburguesa base: ${precioBase}</h4>
-        <h4>Ingredientes: ${precio}</h4>
-        <h4>Costo total: ${getTotal(precioBase, precio)}</h4>
-        <button
-          className="addBurger__bottom__button"
+        <p className="addBurger__bottom__p">
+          <span className="addBurger__bottom__span">Hamburguesa base:</span> $
+          {precioBase}
+        </p>
+        <p className="addBurger__bottom__p">
+          <span className="addBurger__bottom__span">Ingredientes:</span> + $
+          {precio}
+        </p>
+        <p className="addBurger__bottom__p">
+          <span className="addBurger__bottom__span">Costo total:</span> $
+          {getTotal(precioBase, precio)}
+        </p>
+        <Button
           onClick={() =>
             crearBurguer(setPrecio, ingredientsAdd, setIngredientsAdd)
           }
         >
           Crear Hamburguesa
-        </button>
+        </Button>
       </div>
     </div>
   );
