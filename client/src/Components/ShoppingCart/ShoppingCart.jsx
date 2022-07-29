@@ -10,6 +10,12 @@ import {
   setLocalStorage,
 } from '../../Redux/actions/actions';
 import CardProductCart from '../CardProductCart/CardProductCart';
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import { PlusLg, DashLg } from 'react-bootstrap-icons';
+import { Link } from 'react-router-dom';
+
+import './ShoppingCart.css';
 
 function ShoppingCart() {
   const dispatch = useDispatch();
@@ -65,41 +71,74 @@ function ShoppingCart() {
   );
 
   return (
-    <div>
-      <h1>Mi Carrito</h1>
-      <button onClick={handleDeleteCart} type="button">
-        Limpia tu Carrito
-      </button>
-      {itemsToCart.map((item) => (
+    <Container className="py-4 shoppinCart__container">
+      {itemsToCart?.length === 0 ? (
         <div>
-          {
-            <CardProductCart
-              id={item.id}
-              name={item.name}
-              cantidad={item.cantidad}
-              price={item.price}
-              imgUri={item.imgUri}
-              key={item.name}
-            />
-          }
-          <div>
-            <button type="button" onClick={() => addToCart(item.id)}>
-              Agregar
-            </button>
-            <button type="button" onClick={() => handleDelete(item.id)}>
-              Quitar
-            </button>
-            <button type="button" onClick={() => handleDelete(item.id, true)}>
-              Quitar Producto
-            </button>
-          </div>
+          <h2>El carrito se encuentra vacío</h2>
+          <p>
+            Entrá a nuestro menú y tentate con las hamburguesas más deliciosas
+            del condado.
+          </p>
+          <Link to="/menu">
+            <Button>Ir al Menú</Button>
+          </Link>
         </div>
-      ))}
-      <div>
-        <h2>Total de mi compra ={`$${' ' + total}`}</h2>
-        <button>Pagar</button>
-      </div>
-    </div>
+      ) : (
+        <>
+          <div className="mb-5">
+            <h1>Mi Carrito</h1>
+            <Button onClick={handleDeleteCart} type="button">
+              Limpia tu Carrito
+            </Button>
+          </div>
+          <hr />
+          {itemsToCart.map((item) => (
+            <div>
+              {
+                <CardProductCart
+                  id={item.id}
+                  name={item.name}
+                  cantidad={item.cantidad}
+                  price={item.price}
+                  imgUri={item.imgUri}
+                  key={item.name}
+                />
+              }
+              <div>
+                <Button
+                  className="productCart__btn"
+                  type="button"
+                  onClick={() => addToCart(item.id)}
+                >
+                  <PlusLg />
+                </Button>
+                <Button
+                  className="productCart__btn"
+                  type="button"
+                  onClick={() => handleDelete(item.id)}
+                >
+                  <DashLg />
+                </Button>
+                <Button
+                  className="productCart__btn"
+                  type="button"
+                  onClick={() => handleDelete(item.id, true)}
+                >
+                  Quitar Producto
+                </Button>
+              </div>
+              <hr />
+            </div>
+          ))}
+          <div className="shoppingCart__total__container">
+            <h2 className="shoppingCart__h2 mb-4">
+              Total de mi compra: <span>{`$${' ' + total}`}</span>
+            </h2>
+            <Button>Confirmar Pago</Button>
+          </div>
+        </>
+      )}
+    </Container>
   );
 }
 

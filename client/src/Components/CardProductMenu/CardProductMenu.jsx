@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CartFill } from 'react-bootstrap-icons';
+import { CartPlus } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+
 import './CardProductMenu.css';
 
-
-function CardProductMenu({ id, name, price, imgUri, addToCart}) {
+function CardProductMenu({ id, name, price, imgUri, addToCart }) {
   return (
     <Card className="card__menu" style={{ width: '18rem' }}>
       <Card.Img variant="top" src={imgUri} className="card__img__menu" />
@@ -18,9 +19,9 @@ function CardProductMenu({ id, name, price, imgUri, addToCart}) {
         </Link>
         <div className="card__cart__container">
           <span>${price}</span>
-          <Card.Link className="card__menu__cart">
-            <CartFill onClick={()=>addToCart(id)} />
-          </Card.Link>
+          <Button className="card__menu__cart">
+            <CartPlus onClick={() => addToCart(id)} />
+          </Button>
         </div>
       </Card.Body>
     </Card>

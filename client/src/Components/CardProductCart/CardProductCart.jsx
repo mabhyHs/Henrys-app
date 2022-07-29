@@ -1,30 +1,31 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { CartFill } from 'react-bootstrap-icons';
-import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+
 import './CardProductCart.css';
 
-function CardProductCart({ id, name, price, imgUri, addToCart, cantidad}) {
-
+function CardProductCart({ name, price, imgUri, cantidad }) {
   return (
-    <Card className="card__menu" style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={imgUri} className="card__img__menu" />
-      <Card.Body className="card__menu__body">
-        <Card.Title>
-          <p>{name}</p>
-          <p>x{" " + cantidad}</p>
-        </Card.Title>
-        <Link className="footer__mail__link" to="/detalle">
-          <p>Ver Más</p>
-        </Link>
-        <div className="card__cart__container">
-          <span>${price}</span>
-          <Card.Link className="card__menu__cart">
-            <CartFill onClick={()=>addToCart(id)} />
-          </Card.Link>
-        </div>
-      </Card.Body>
-    </Card>
+    <Container>
+      <Row className="cardProductCart__Container py-2">
+        <Col lg={4} sx={4}>
+          <img
+            src={imgUri}
+            alt="foto del producto"
+            className="CardProductCart__img img-fluid"
+          />
+        </Col>
+        <Col lg={4} sx={4}>
+          <h3>{name}</h3>
+          <p>Cantidad: {' ' + cantidad}</p>
+        </Col>
+        <Col lg={4} sx={4}>
+          <span>Precio Unitario:</span>
+          <p className="cardProductCart__price">${price}</p>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
