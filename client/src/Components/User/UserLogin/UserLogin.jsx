@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -6,11 +6,18 @@ import imgLogin from '../../../Assets/Images/combos/Combo1.png';
 import Form from 'react-bootstrap/Form';
 import { FcGoogle } from 'react-icons/fc';
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import FormText from 'react-bootstrap/esm/FormText';
+import imgLogo from '../../../Assets/Images/logo-henrys300px.png';
 
 import './UserLogin.css';
-import FormText from 'react-bootstrap/esm/FormText';
 
 function UserLogin() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <div>
       <Row className="userLogin__container m-3">
@@ -37,10 +44,45 @@ function UserLogin() {
             <Form.Group className="mb-3" id="formGridCheckbox">
               <Form.Check type="checkbox" label="Recordarme" />
             </Form.Group>
-            <FormText className="mb-3" as={Link} to="/">
+            <FormText
+              className="mb-3 userLogin__forgotPass"
+              as={Button}
+              onClick={handleShow}
+            >
               Olvidé mi contraseña
             </FormText>
-            <Button variant="primary" type="submit">
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <img
+                  src={imgLogo}
+                  alt="logo de henrys"
+                  className="img-fluid userLogin__imgLogo"
+                ></img>
+                <Modal.Title>Recuperar Contraseña</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <p>
+                  Ingresá el E-mail con el que te registraste para recuperar tu
+                  acceso.
+                </p>
+                <Form.Control
+                  type="email"
+                  placeholder="Ingresar mail"
+                  className="mb-3"
+                />
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="primary" onClick={handleClose}>
+                  Enviar
+                </Button>
+              </Modal.Footer>
+            </Modal>
+            <Button
+              as={Link}
+              to="/userprofiledashboard"
+              variant="primary"
+              type="submit"
+            >
               Ingresar
             </Button>
           </Form>

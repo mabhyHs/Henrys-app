@@ -14,6 +14,8 @@ import UserRegister from './Components/User/UserRegister/UserRegister';
 import UserFavorites from './Components/User/UserFavorites/UserFavorites';
 import UserPersonalInfo from './Components/User/UserPersonalInfo/UserPersonalInfo';
 import UserProfileDashboard from './Components/User/UserProfileDashboard/UserProfile';
+import UserActivateAccount from './Components/User/UserActivateAccount/UserActivateAccount';
+import UserReview from './Components/User/UserReview/UserReview';
 
 import './App.css';
 
@@ -40,6 +42,8 @@ function App() {
           path="/userprofiledashboard"
           element={<UserProfileDashboard />}
         />
+        <Route path="/useractivateaccount" element={<UserActivateAccount />} />
+        <Route path='/calificanos' element={<UserReview/>}/>
       </Routes>
       <Footer />
     </div>

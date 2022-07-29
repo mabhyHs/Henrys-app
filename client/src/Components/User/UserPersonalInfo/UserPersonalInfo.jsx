@@ -46,7 +46,7 @@ function UserPersonalInfo() {
             </Form.Group>
           </Row>
           <hr />
-          <Button as={Link} to="/" variant="primary">
+          <Button as={Link} to="/userprofiledashboard" variant="primary">
             Volver
           </Button>
         </Form>

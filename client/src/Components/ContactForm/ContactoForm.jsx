@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Swal from 'sweetalert2';
 import contactImg from '../../Assets/Images/Hamburguesas/Stacker-Triple.png';
+import emailjs from '@emailjs/browser';
 
 import './ContactForm.css';
 
@@ -12,10 +14,39 @@ function ContactoForm() {
   const form = useRef();
   // eslint-disable-next-line no-unused-vars
   const [done, setDone] = useState(false);
+  const navigate = useNavigate();
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleSubmit() {
+    Swal.fire({
+      icon: 'success',
+      text: 'Mensaje enviado con éxito, en breve estaremos comunicándonos',
+      showConfirmButton: false,
+      timer: 2000,
+    });
+    navigate('/');
   }
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+    // eslint-disable-next-line import/no-named-as-default-member
+    emailjs
+      .sendForm(
+        'service_xu5vfs3',
+        'template_as17onx',
+        form.current,
+        '-zW9oJ2EERInnxlyT'
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          setDone(true);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+    e.target.reset();
+  };
 
   return (
     <div>
@@ -29,7 +60,10 @@ function ContactoForm() {
             </p>
             <form
               ref={form}
-              onSubmit={handleSubmit}
+              onSubmit={(e) => {
+                handleSubmit(e);
+                sendEmail(e);
+              }}
               action="#"
               id="contact_form"
             >
@@ -38,7 +72,7 @@ function ContactoForm() {
                   className="contactForm__input"
                   type="text"
                   placeholder="Nombre*"
-                  name="name"
+                  name="user_name"
                   id="name_input"
                   required
                 />
@@ -47,7 +81,7 @@ function ContactoForm() {
                   className="contactForm__input"
                   type="text"
                   placeholder="Apellido*"
-                  name="name"
+                  name="user_surname"
                   id="surname_input"
                   required
                 />
@@ -106,14 +140,6 @@ function ContactoForm() {
               >
                 Enviar
               </Button>
-              {done &&
-                Swal.fire({
-                  text: 'Gracias por comunicarte, en breve nos contactaremos!',
-                  imageUrl: '../../Assets/Images/logo-henrys300px.png',
-                  imageWidth: 300,
-                  imageHeight: 100,
-                  imageAlt: 'logo henrys',
-                })}
             </form>
           </Col>
           <Col sm={12} lg={5}>
