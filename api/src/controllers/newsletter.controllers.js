@@ -40,6 +40,13 @@ async function create(req, res, next) {
 /* registro */
 async function sendEmails(req, res, next) {
   try {
+
+    const {title, subtitle, btnTxt} = req.body;
+
+    if (!subtitle){
+        return res.status(400).json({ error: "The body subtitle cannot be empty!" });
+    }
+
     const all = await newsletterRepositories.get();
 
     if (!all){
@@ -148,7 +155,7 @@ async function sendEmails(req, res, next) {
                                 font-family: 'Rubik', sans-serif;
                               "
                             >
-                              Tenemos novedades para vos!
+                              ${title ? title : "Tenemos novedades para vos!"}
                             </h1>
                             <p
                               style="
@@ -158,13 +165,12 @@ async function sendEmails(req, res, next) {
                                 line-height: 24px;
                               "
                             >
-                              aaaaaaaaaaaaaaaaaaaaa, <br /><strong
-                                >bbbbbbbbbbbbbbbbbbbbbbbb</strong
+                              ${subtitle}><strong
                               >:
                             </p>
       
                             <a
-                              href="${process.env.ACTIVATE_ACCOUNT}/"
+                              href="${process.env.HOST}/"
                               style="
                                 background: #ffbe33;
                                 text-decoration: none !important;
@@ -178,7 +184,7 @@ async function sendEmails(req, res, next) {
                                 display: inline-block;
                                 border-radius: 50px;
                               "
-                              >News</a
+                              >${btnTxt ? btnTxt : "VER MÁS"}</a
                             >
                           </td>
                         </tr>
