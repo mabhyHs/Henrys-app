@@ -35,9 +35,7 @@ function UserLogin() {
     e.preventDefault();
     try {
       const res = await axios.post(`/login`, { ...input });
-      console.log(res);
       if (res.status === 200) {
-        // redirigir a /userprofiledashboard
         window.localStorage.setItem(
           'user',
           JSON.stringify({ ...res.data.user, token: res.data.data.token })
