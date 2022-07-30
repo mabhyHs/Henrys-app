@@ -127,6 +127,39 @@
   cursor: pointer;
 }
 
+.profile__form {
+  width: 20rem;
+  text-align: center;
+  margin: 0 auto;
+  color: white;
+}
+
+.profile__form__label {
+  color: #ffbe33;
+}
+
+.profile__form__input {
+  background-color: #f1f2f3;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
+}
+
+.profile__form__input:hover {
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  -o-transform: scale(1.05);
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.profile__loader {
+  color: #ffbe33;
+}
+
 @media (max-width: 1024px) {
   .profile__infoCard {
     width: 14rem;
@@ -146,6 +179,9 @@
     width: 18rem;
   }
 
+  .profile__form {
+    width: 16rem;
+  }
   .profile__mainCard:hover {
     transform: none;
   }
