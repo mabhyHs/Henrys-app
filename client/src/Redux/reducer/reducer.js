@@ -66,7 +66,7 @@ import {
       case GET_INGREDIENTS:
         return {
           ...state,
-          products: action.payload,
+          ingredients: action.payload,
         };
       case GET_POTATOES:
         return {

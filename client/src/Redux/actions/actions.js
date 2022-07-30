@@ -160,11 +160,10 @@ export function getBeverages() {
   };
 } */
 
-export function getIngredients(name) {
+export function getIngredients() {
   return async function (dispatch) {
     const json = await axios(
-      // eslint-disable-next-line no-template-curly-in-string
-      '/ingredients?name=${name}'
+      '/ingredients'
     );
     try {
       return dispatch({
@@ -244,23 +243,6 @@ export function createUser(payload) {
     const json = await axios.post(`/register`, payload);
     console.log(json.data);
     return { json };
-  };
-}
-
-export function authGoogle(payload) {
-  return async function () {
-    try {
-      const json = await axios.post(`/google`, payload);
-      if (json.status === 200) {
-        window.localStorage.setItem(
-          'user',
-          JSON.stringify({ ...json.data.user, token: json.data.data.token })
-        );
-      }
-    } catch (error) {
-      console.log(error);
-      window.alert('Error al iniciar sesión');
-    }
   };
 }
 
