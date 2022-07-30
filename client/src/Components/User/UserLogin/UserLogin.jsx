@@ -102,9 +102,7 @@ function UserLogin() {
                   onChange={(e) => handleChange(e)}
                 />
               </Form.Group>
-              <Form.Group className="mb-3" id="formGridCheckbox">
-                <Form.Check type="checkbox" label="Recordarme" />
-              </Form.Group>
+
               <FormText
                 className="mb-3 userLogin__forgotPass"
                 as={Button}
