@@ -47,7 +47,6 @@ function Menu() {
         mount.current = true;
     } else if(filters){
         setPage(1);        
-        console.log(filters.order)
         dispatch(getProduct(filters.category, filters.order, filters.search, filters.isVeggie));
     }
 
