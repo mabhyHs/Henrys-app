@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -14,10 +14,15 @@ import FormText from 'react-bootstrap/esm/FormText';
 import imgLogo from '../../../Assets/Images/logo-henrys300px.png';
 
 import './UserLogin.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoginState } from '../../../Redux/actions/actions';
 
 function UserLogin() {
+
+  const dispatch = useDispatch();
+  const isSession = useSelector((state) => state.loginState);
   const navigate = useNavigate();
-  const { loginWithRedirect, logout } = useAuth0();
+  const { loginWithRedirect } = useAuth0();
 
   const [show, setShow] = useState(false);
   const [input, setInput] = useState({
@@ -33,25 +38,43 @@ function UserLogin() {
       [e.target.name]: e.target.value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const res = await axios.post(`/login`, { ...input });
+
       if (res.status === 200) {
-        window.localStorage.setItem(
-          'user',
-          JSON.stringify({ ...res.data.user, token: res.data.data.token })
-        );
-        navigate('/');
+        if(!isSession){
+            window.localStorage.setItem('user', JSON.stringify({ ...res.data.user, token: res.data.data.token }));
+            dispatch(setLoginState(true));
+            navigate('/');
+        }
       }
+
     } catch (error) {
-      window.alert('email o contraseña incorrecta');
+      window.alert('Email o contraseña incorrecta');
     }
+
   };
+  
+  if(isSession){
+    setInterval(() => {
+        navigate("/");
+    }, 500);
+  }
 
   return (
     <div>
-      <Row className="userLogin__container m-3">
+        {isSession &&
+            <div>
+            </div>
+        }
+
+        
+    {!isSession &&
+        <Row className="userLogin__container m-3">
         <Col lg={6} sm={12}>
           <h1 className="userLogin__tittle">Ingresá a tu cuenta</h1>
           <p>Bienvenido de nuevo, por favor ingrese sus datos.</p>
@@ -61,10 +84,7 @@ function UserLogin() {
             onClick={() => loginWithRedirect()}
           >
             <FcGoogle /> Continuar con Google
-          </Button>
-          <button onClick={() => logout({ returnTo: window.location.origin })}>
-            Log Out
-          </button>
+          </Button>          
           <p className="userLogin__divider">──────── Ó ────────</p>
           <Form
             className="userLogin__form mb-5"
@@ -142,6 +162,7 @@ function UserLogin() {
           <img className="img-fluid" src={imgLogin} alt="imagen de un combo" />
         </Col>
       </Row>
+    }    
     </div>
   );
 }

@@ -18,6 +18,7 @@ export const GET_BURGER_BASE = 'GET_BURGER_BASE';
 export const ADD_FAVORITES = 'ADD_FAVORITES';
 export const DELETE_ON_FAVORITES = 'DELETE_ON_FAVORITES';
 export const ADD_TO_LOCAL = 'ADD_TO_LOCAL';
+export const SET_LOGIN_STATE = 'SET_LOGIN_STATE';
 
 // export const CREATE_BURGER = "CREATE_BURGER"
 // export const CREATE_COMBO = "CREATE_ COMBO"
@@ -258,7 +259,19 @@ export function authGoogle(payload) {
       }
     } catch (error) {
       console.log(error);
-      window.alert('error al iniciar sesión');
+      window.alert('Error al iniciar sesión');
     }
   };
+}
+
+export function setLoginState(payload) {
+
+    return async function (dispatch) {
+      
+        return dispatch({
+          type: SET_LOGIN_STATE,
+          payload,
+        });
+      
+    };
 }

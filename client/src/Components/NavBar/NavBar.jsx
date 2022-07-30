@@ -1,24 +1,59 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 /* import Button from 'react-bootstrap/Button'; */
 import Container from 'react-bootstrap/Container';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { PersonCircle, CartFill, CartCheckFill } from 'react-bootstrap-icons';
+import { CartFill, CartCheckFill } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import imgNav from '../../Assets/Images/logo-henrys300px.png';
 import UserLoggedInDropdown from '../User/UserLoggedIn/UserLoggedInDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import './NavBar.css';
+import { setLoginState } from '../../Redux/actions/actions';
 
 function NavBar() {
-  let itemsToCart = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
+  const itemsToCart = useSelector((state) => state.cart);
+  const isSession = useSelector((state) => state.loginState);
+  const mount = useRef(true);
+  const { isAuthenticated, logout } = useAuth0();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, []);
+
+    if(mount.current){
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        mount.current = false;
+    } else {
+        if(isLogged()){
+            dispatch(setLoginState(true));
+        }
+    } 
+    
+  }, [dispatch, isAuthenticated, logout]);
+
+    function logoutSession(){
+        window.localStorage.removeItem("user");
+
+        if(isAuthenticated){
+            logout();
+        }
+
+        dispatch(setLoginState(false));
+    }
+
+    function isLogged(){
+        return (!!window.localStorage.getItem("user"));
+    }
+
+    function getUserData(){
+        return (JSON.parse(window.localStorage.getItem("user")));
+    }
+
   return (
     <Navbar className="navBar" expand="lg" variant="dark" sticky="top">
       <Container>
@@ -78,28 +113,36 @@ function NavBar() {
                 <CartCheckFill className="CartCheckFill" />
               )}
             </Nav.Link>
-          </Nav>
-          {/* <UserLoggedInDropdown /> */}
-          <Dropdown>
+          </Nav>          
+
+          {isSession && 
+            <UserLoggedInDropdown userData={getUserData()} logoutSession={logoutSession} />
+          }
+
+          {!isSession && 
+            <Dropdown>
             <Dropdown.Toggle className="nav__btn" id="dropdown-basic">
-              <PersonCircle className="m-1" />
-              Ingresar
+                Ingresar
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.ItemText className="dropdown__link-btn">
+                <Dropdown.ItemText className="dropdown__link-btn">
                 <Link to="/userlogin">Iniciá Sesión</Link>
-              </Dropdown.ItemText>
+                </Dropdown.ItemText>
 
-              <Dropdown.ItemText>
+                <Dropdown.ItemText>
                 <Dropdown.Divider />
                 <span>¿No tenés cuenta?</span>
                 <Link to="/registeruser" className="navBar__registrate">
-                  Registrate
+                    Registrate
                 </Link>
-              </Dropdown.ItemText>
+                </Dropdown.ItemText>
             </Dropdown.Menu>
-          </Dropdown>
+            </Dropdown>          
+          }
+
+          
+
         </Navbar.Collapse>
       </Container>
     </Navbar>
