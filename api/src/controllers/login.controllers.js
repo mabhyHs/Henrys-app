@@ -36,7 +36,6 @@ async function login(req, res, next) {
       user: user,
       data: { token },
     });
-    
   } catch (error) {
     next(error);
   }

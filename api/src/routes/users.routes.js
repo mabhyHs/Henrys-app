@@ -6,13 +6,34 @@ const {
   restore,
   update,
 } = require("../controllers/users.controllers");
+const { roleValidator } = require("../middlewares/usersValidation");
+const validationResultHandler = require("../middlewares/validationResultHandler");
+const verifyToken = require("../middlewares/tokenValidation");
 
 const router = express.Router();
 
-router.get("/", getAllSecure);
-router.post("/", create);
-router.delete("/:id", destroy);
-router.post("/:id", restore);
-router.put("/", update);
+router.get(
+  "/",
+  verifyToken,
+  roleValidator,
+  validationResultHandler,
+  getAllSecure
+);
+router.post("/", verifyToken, roleValidator, validationResultHandler, create);
+router.delete(
+  "/:id",
+  verifyToken,
+  roleValidator,
+  validationResultHandler,
+  destroy
+);
+router.post(
+  "/:id",
+  verifyToken,
+  roleValidator,
+  validationResultHandler,
+  restore
+);
+router.put("/", verifyToken, roleValidator, validationResultHandler, update);
 
 module.exports = router;

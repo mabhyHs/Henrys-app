@@ -7,7 +7,7 @@ const {
 } = require("../middlewares/passwordRecoveryValidation");
 const validationResultHandler = require("../middlewares/validationResultHandler");
 
-// router.post("/", emailValidation, validationResultHandler, recovery); // validar email
-router.post("/", recovery); // validar email
+router.post("/", emailValidation, validationResultHandler, recovery); // validar email
+// router.post("/", recovery); // validar email
 
 module.exports = router;

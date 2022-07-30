@@ -10,14 +10,37 @@ const validationResultHandler = require("../middlewares/validationResultHandler"
 const {
   postValidator,
   deleteValidator,
+  roleValidator,
 } = require("../middlewares/ingredientValidation");
+const verifyToken = require("../middlewares/tokenValidation");
 
 const router = express.Router();
 
-router.post("/", postValidator, validationResultHandler, create);
+router.post(
+  "/",
+  verifyToken,
+  roleValidator,
+  postValidator,
+  validationResultHandler,
+  create
+);
 router.get("/", get);
-router.delete("/:id", deleteValidator, validationResultHandler, destroy);
-router.post("/:id", restore);
-router.put("/", postValidator, validationResultHandler, update);
+router.delete(
+  "/:id",
+  verifyToken,
+  roleValidator,
+  deleteValidator,
+  validationResultHandler,
+  destroy
+);
+router.post("/:id", verifyToken, roleValidator, restore);
+router.put(
+  "/",
+  verifyToken,
+  roleValidator,
+  postValidator,
+  validationResultHandler,
+  update
+);
 
 module.exports = router;

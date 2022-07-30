@@ -1,6 +1,8 @@
 const { body, param } = require("express-validator");
 const ingredientRepository = require("../repositories/ingredient.repositories");
 const burgerRepository = require("../repositories/burger.repositories");
+const userRepositories = require("../repositories/user.repositories");
+const { burgerRoles, authRoute } = require("../utils/routesRoles");
 
 const ingredientsValid = body("ingredients")
   .custom(async (ingredients) => {
@@ -53,6 +55,17 @@ const imgUriValid = body("imgUri")
   .isURL()
   .withMessage("img invalid");
 
+const roleValid = body("user")
+  .custom(async (user) => {
+    const myUser = await userRepositories.getById(user.id);
+    const hasRole = authRoute(burgerRoles, myUser.role);
+
+    if (!hasRole) {
+      throw new Error("This user is unauthorized");
+    }
+  })
+  .withMessage("This user is unauthorized");
+
 const postValidator = [
   ingredientsValid,
   nameValid,
@@ -61,6 +74,9 @@ const postValidator = [
   imgUriValid,
 ];
 
+const roleValidator = [roleValid];
+
 module.exports = {
   postValidator,
+  roleValidator,
 };
