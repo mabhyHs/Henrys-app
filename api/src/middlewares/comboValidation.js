@@ -3,6 +3,8 @@ const burgerRepository = require("../repositories/burger.repositories");
 const comboRepository = require("../repositories/combo.repositories");
 const beverageRepository = require("../repositories/beverage.repositories");
 const friesRepository = require("../repositories/fries.repositories");
+const userRepositories = require("../repositories/user.repositories");
+const { comboRoles, authRoute } = require("../utils/routesRoles");
 
 const burgerValid = body("burgers")
   .custom(async (burgers) => {
@@ -89,6 +91,17 @@ const imgUriValid = body("imgUri")
   .isURL()
   .withMessage("img invalid");
 
+const roleValid = body("user")
+  .custom(async (user) => {
+    const myUser = await userRepositories.getById(user.id);
+    const hasRole = authRoute(comboRoles, myUser.role);
+
+    if (!hasRole) {
+      throw new Error("This user is unauthorized");
+    }
+  })
+  .withMessage("This user is unauthorized");
+
 const postValidator = [
   burgerValid,
   beverageValid,
@@ -99,6 +112,9 @@ const postValidator = [
   imgUriValid,
 ];
 
+const roleValidator = [roleValid];
+
 module.exports = {
   postValidator,
+  roleValidator,
 };

@@ -1,5 +1,7 @@
 const { body, param } = require("express-validator");
 const friesRepository = require("../repositories/fries.repositories");
+const userRepositories = require("../repositories/user.repositories");
+const { friesRoles, authRoute } = require("../utils/routesRoles");
 
 // const nameValid = body("name")
 //   .notEmpty()
@@ -63,6 +65,17 @@ const sizeValid = body("size")
     }
   });
 
+const roleValid = body("user")
+  .custom(async (user) => {
+    const myUser = await userRepositories.getById(user.id);
+    const hasRole = authRoute(friesRoles, myUser.role);
+
+    if (!hasRole) {
+      throw new Error("This user is unauthorized");
+    }
+  })
+  .withMessage("This user is unauthorized");
+
 const postValidator = [
   nameValid,
   priceValid,
@@ -79,7 +92,10 @@ const putValidator = [
   sizeValid,
 ];
 
+const roleValidator = [roleValid];
+
 module.exports = {
   postValidator,
   putValidator,
+  roleValidator,
 };

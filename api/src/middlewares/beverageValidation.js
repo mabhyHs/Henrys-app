@@ -1,5 +1,7 @@
-const { body, param } = require("express-validator");
+const { body, header } = require("express-validator");
 const beverageRepository = require("../repositories/beverage.repositories");
+const userRepositories = require("../repositories/user.repositories");
+const { beverageRoles, authRoute } = require("../utils/routesRoles");
 
 const nameValid = body("name")
   .notEmpty()
@@ -69,6 +71,17 @@ const namePutValid = body("name")
   })
   .withMessage("beverage already exists");
 
+const roleValid = body("user")
+  .custom(async (user) => {
+    const myUser = await userRepositories.getById(user.id);
+    const hasRole = authRoute(beverageRoles, myUser.role);
+
+    if (!hasRole) {
+      throw new Error("This user is unauthorized");
+    }
+  })
+  .withMessage("This user is unauthorized");
+
 const postValidator = [
   nameValid,
   priceValid,
@@ -89,7 +102,10 @@ const putValidator = [
   isSugar,
 ];
 
+const roleValidator = [roleValid];
+
 module.exports = {
   postValidator,
   putValidator,
+  roleValidator,
 };
