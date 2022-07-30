@@ -14,9 +14,12 @@ import {
   DELETE_ONE_PRODUCT_CART,
   DELETE_PRODUCT_CART,
   LOCAL_STORAGE,
+  ADD_FAVORITES,
+  DELETE_ON_FAVORITES,
+  ADD_TO_LOCAL
 } from '../actions/actions';
 
-import { addItem, deleteAllItem, deleteItem } from './utils';
+import { addFav, addItem, deleteAllItem, deleteItem, subsFav } from './utils';
 
 const initialState = {
   burgers: [],
@@ -32,6 +35,7 @@ const initialState = {
   burgerBase: {},
   cart: [],
   copyCart: [],
+  favorites: [],
 };
 
 const rootReducer = (state = initialState, action = {}) => {
@@ -114,7 +118,24 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
         cart: action.payload,
       };
-
+    case ADD_FAVORITES:
+      localStorage.setItem('favoritos', JSON.stringify(addFav(action.payload, state.products, JSON.parse(localStorage.getItem('favoritos'))|| [])))
+      return{
+        ...state,
+        favorites: JSON.parse(localStorage.getItem('favoritos'))
+      }
+    case DELETE_ON_FAVORITES:
+      console.log(JSON.stringify(JSON.parse(localStorage.getItem('favoritos'))))
+      localStorage.setItem('favoritos', JSON.stringify(JSON.parse(localStorage.getItem('favoritos'))?.filter(e=>e.id !== action.payload))) 
+      return {
+        ...state,
+        favorites: JSON.parse(localStorage.getItem('favoritos')),
+      }
+    case ADD_TO_LOCAL:
+      return{
+        ...state,
+        favorites: action.payload,
+      };
     default:
       return state;
   }
