@@ -53,7 +53,7 @@ function nextPage(){
         <div>
             {pages && pages.length > 0 &&
                 <>
-                    <Button className={!isItemFirst() ? "btn__round__effect active" : "btn__round__effect disabled"} type="button" onClick={prevPage}>
+                    <Button className={!isItemFirst() ? "btn__round__effect" : "btn__round__effect disablePag"} type="button" onClick={prevPage}>
                     <CaretLeftFill />
                     </Button>
                 </>        
@@ -67,7 +67,7 @@ function nextPage(){
                     value={page}
                     key={page}
                     onClick={(e) => changePaginate(e.target.id)}
-                    className={isItemSelect(page) ? "btn__round__effect active" : "btn__round__effect "}
+                    className={isItemSelect(page) ? "btn__round__effect currentPag" : "btn__round__effect "}
                 >
                     {page}
                 </Button>
@@ -75,7 +75,7 @@ function nextPage(){
 
             {pages && pages.length > 0 &&
                 <>
-                    <Button className={!isItemLast() ? "btn__round__effect" : "btn__round__effect disabled"} type="button" onClick={nextPage}>
+                    <Button className={!isItemLast() ? "btn__round__effect" : "btn__round__effect disablePag"} type="button" onClick={nextPage}>
                     <CaretRightFill />
                     </Button>
                 </>        

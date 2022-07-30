@@ -21,13 +21,20 @@ function Menu() {
   const mount = useRef(false);
 
     const [filters, setFilters] = useState({
-        filter: "", // alguna filtro
-        search:  "", // algun string
+        category: "", // alguna filtro
         order:  "", // algun string
+        search:  "", // algun string
         isVeggie: "" // vegano
     });
 
-    function setFilter(name, value){  
+    function setFilter(name, value){ 
+
+        if(filters[name] === "true" && value === "true"){
+            setFilters({...filters, [name]: ""});
+        }
+
+        if(filters[name] === value) return;
+
         setFilters({...filters, [name]: value});
     }
 
@@ -37,12 +44,10 @@ function Menu() {
 
   useEffect(() => {
     if(!mount.current){
-        console.log("a")
         mount.current = true;
     } else if(filters){
-        setPage(1);          
-        dispatch(getProduct());
-        console.log("b")
+        setPage(1);        
+        dispatch(getProduct(filters.category, filters.order, filters.search, filters.isVeggie));
     }
 
   }, [dispatch, filters]);

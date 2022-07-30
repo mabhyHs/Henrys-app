@@ -34,41 +34,41 @@ function FiltersMenu({ setFilter, filters }) {
           size="sm"
         >
           <Button
-            name="filter"
+            name="category"
             value=""
             onClick={handleOnChange}
             className={
-                filters.filter === '' ? 'filter__btn activeBtn' : 'filter__btn'
+                filters.category === '' ? 'filter__btn activeBtn' : 'filter__btn'
             }
           >
             Todo
           </Button>
           <Button
-            name="filter"
+            name="category"
             value="burgers"
             onClick={handleOnChange}
             className={
-                filters.filter === 'burgers' ? 'filter__btn activeBtn' : 'filter__btn'
+                filters.category === 'burgers' ? 'filter__btn activeBtn' : 'filter__btn'
             }
           >
             Hamburguesas
           </Button>
           <Button
-            name="filter"
+            name="category"
             value="combos"
             onClick={handleOnChange}
             className={
-                filters.filter === 'combos' ? 'filter__btn activeBtn' : 'filter__btn'
+                filters.category === 'combos' ? 'filter__btn activeBtn' : 'filter__btn'
             }
           >
             Combos
           </Button>
           <Button
-            name="filter"
+            name="category"
             value="beverages"
             onClick={handleOnChange}
             className={
-                filters.filter === 'beverages'
+                filters.category === 'beverages'
                 ? 'filter__btn activeBtn'
                 : 'filter__btn'
             }
@@ -76,17 +76,24 @@ function FiltersMenu({ setFilter, filters }) {
             Bebidas
           </Button>          
           <Button
-            name="filter"
+            name="category"
             value="fries"
             onClick={handleOnChange}
             className={
-                filters.filter === 'fries' ? 'filter__btn activeBtn' : 'filter__btn'
+                filters.category === 'fries' ? 'filter__btn activeBtn' : 'filter__btn'
             }
           >
             Papas
           </Button>
 
-        <Button name="isVeggie" value="true" onClick={handleOnChange} className={filters.isVeggie === 'isVeggie' ? 'filter__btn activeBtn' : 'filter__btn'}>
+        <Button 
+            name="isVeggie" 
+            value="true" 
+            onClick={handleOnChange} 
+            className={
+                filters.isVeggie === 'true' ? 'filter__btn activeBtn' : 'filter__btn'
+            }
+          >
             Veggie
         </Button>
 

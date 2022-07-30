@@ -6,13 +6,16 @@
   box-shadow: none;
 }
 .filter__btn:focus {
-  background-color: var(--main-color-dark);
-  color: var(--main-color-light);
+  background-color: var(--main-color-white);
+  color: var(--main-color-dark);
 }
-.activeBtn {
+
+/* importante */
+.activeBtn, .activeBtn:focus {
   background-color: var(--main-color-dark);
-  color: var(--main-color-light);
+  color: var(--main-color-white);
 }
+
 .select__order {
   border-radius: 20px;
   height: 35px;

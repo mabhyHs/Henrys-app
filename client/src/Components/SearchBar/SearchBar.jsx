@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Search } from 'react-bootstrap-icons';
-import { getIngredients } from '../../Redux/actions/actions';
 import './SearchBar.css';
 
 function SearchBar({ setFilter }) {
 
+  const [input, setInput] = useState("");
+
   function handleInput(e) {
-    e.preventDefault();
+    setInput(e.target.value);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    setFilter(e.target.name, e.target.value);
+    setFilter("search", input);
   }
 
   return (
@@ -21,14 +21,15 @@ function SearchBar({ setFilter }) {
         className="search__input ps-2"
         type="text"
         placeholder="Busca tu hamburguesa"
-        onChange={(e) => handleInput(e)}
+        value={input}
+        onChange={handleInput}
       />
 
       <button
         className="search__btn"
-        type="submit"
         name='search'
-        onClick={(e) => handleSubmit(e)}
+        type="submit"
+        onClick={handleSubmit}
       >
         <Search />
       </button>
