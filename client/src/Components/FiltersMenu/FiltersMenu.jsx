@@ -2,59 +2,13 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProduct, setCategory } from '../../Redux/actions/actions';
+import { Link } from 'react-router-dom';
 import './FiltersMenu.css';
 
-function FiltersMenu({ setPageOne }) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const categories = useSelector((state) => state.category);
+function FiltersMenu({ setFilter, filters }) {
 
-  const handleSortByPrice = (e) => {
-    dispatch(getProduct(categories, e.target.value));
-  };
-
-  const handleBurgers = () => {
-    setPageOne();
-    dispatch(getProduct('burgers'));
-    dispatch(setCategory('burgers'));
-    navigate('/menu');
-  };
-
-  const handleCombos = () => {
-    setPageOne();
-    dispatch(getProduct('combos'));
-    dispatch(setCategory('combos'));
-    navigate('/menu');
-  };
-
-  const handleBeverages = () => {
-    setPageOne();
-    dispatch(getProduct('beverages'));
-    dispatch(setCategory('beverages'));
-    navigate('/menu');
-  };
-
-  const handleFries = () => {
-    setPageOne();
-    dispatch(getProduct('fries'));
-    dispatch(setCategory('fries'));
-    navigate('/menu');
-  };
-
-  /* const handleVeggie = () => {
-    dispatch(getProduct('isVeggie'));
-    dispatch(setCategory('veggie'));
-    navigate('/menu');
-  }; */
-
-  const handleAll = () => {
-    setPageOne();
-    dispatch(getProduct());
-    dispatch(setCategory(''));
-    navigate('/menu');
+   const handleOnChange = (e) => {
+    setFilter(e.target.name, e.target.value);
   };
 
   return (
@@ -65,7 +19,7 @@ function FiltersMenu({ setPageOne }) {
         </Button>
 
         <select
-          onChange={(e) => handleSortByPrice(e)}
+          onChange={handleOnChange}
           className="select__order"
         >
           <option value="0">Ordenar por precio</option>
@@ -80,50 +34,62 @@ function FiltersMenu({ setPageOne }) {
           size="sm"
         >
           <Button
-            onClick={handleAll}
+            name="filter"
+            value=""
+            onClick={handleOnChange}
             className={
-              categories === '' ? 'filter__btn activeBtn' : 'filter__btn'
+                filters.filter === '' ? 'filter__btn activeBtn' : 'filter__btn'
             }
           >
             Todo
           </Button>
           <Button
-            onClick={handleBurgers}
+            name="filter"
+            value="burgers"
+            onClick={handleOnChange}
             className={
-              categories === 'burgers' ? 'filter__btn activeBtn' : 'filter__btn'
+                filters.filter === 'burgers' ? 'filter__btn activeBtn' : 'filter__btn'
             }
           >
             Hamburguesas
           </Button>
           <Button
-            onClick={handleCombos}
+            name="filter"
+            value="combos"
+            onClick={handleOnChange}
             className={
-              categories === 'combos' ? 'filter__btn activeBtn' : 'filter__btn'
+                filters.filter === 'combos' ? 'filter__btn activeBtn' : 'filter__btn'
             }
           >
             Combos
           </Button>
           <Button
-            onClick={handleBeverages}
+            name="filter"
+            value="beverages"
+            onClick={handleOnChange}
             className={
-              categories === 'beverages'
+                filters.filter === 'beverages'
                 ? 'filter__btn activeBtn'
                 : 'filter__btn'
             }
           >
             Bebidas
-          </Button>
-          {/* <Button onClick={handleVeggie} className="filter__btn">
-            Veggie
-          </Button> */}
+          </Button>          
           <Button
-            onClick={handleFries}
+            name="filter"
+            value="fries"
+            onClick={handleOnChange}
             className={
-              categories === 'fries' ? 'filter__btn activeBtn' : 'filter__btn'
+                filters.filter === 'fries' ? 'filter__btn activeBtn' : 'filter__btn'
             }
           >
             Papas
           </Button>
+
+        <Button name="isVeggie" value="true" onClick={handleOnChange} className={filters.isVeggie === 'isVeggie' ? 'filter__btn activeBtn' : 'filter__btn'}>
+            Veggie
+        </Button>
+
         </ButtonGroup>
       </div>
     </Container>

@@ -22,8 +22,15 @@
   background: var(--btn-hover);
   color: #fff;
 }
-.btn__round__effect:focus {
+
+.btn__round__effect.active {
   text-decoration: none;
   background: var(--btn-hover);
   color: #fff;
 }
+
+.btn__round__effect.disabled {
+    text-decoration: none;
+    background: grey;
+    color: #fff;
+  }

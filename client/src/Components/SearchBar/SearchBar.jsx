@@ -4,32 +4,21 @@ import { Search } from 'react-bootstrap-icons';
 import { getIngredients } from '../../Redux/actions/actions';
 import './SearchBar.css';
 
-function SearchBar({ onSearch }) {
-  const dispatch = useDispatch();
-  const [name, setName] = useState('');
+function SearchBar({ setFilter }) {
 
   function handleInput(e) {
     e.preventDefault();
-    setName(e.target.value);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!name) {
-      return alert('escribe el nombre de tu hamburguesa!');
-    } else {
-      dispatch(getIngredients(name));
-      setName('');
-    }
+    setFilter(e.target.name, e.target.value);
   }
-
-  //   lo que retorna
 
   return (
     <div className="pt-4">
       <input
         className="search__input ps-2"
-        value={name}
         type="text"
         placeholder="Busca tu hamburguesa"
         onChange={(e) => handleInput(e)}
@@ -38,6 +27,7 @@ function SearchBar({ onSearch }) {
       <button
         className="search__btn"
         type="submit"
+        name='search'
         onClick={(e) => handleSubmit(e)}
       >
         <Search />
