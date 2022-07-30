@@ -10,4 +10,9 @@
   margin: 7px;
   border: var(--bc-inputs);
   padding: 0.5rem;
+  margin-bottom: 15px;
 }
+.contactForm__errContainer {
+  height: 20px;
+}
+
