@@ -1,5 +1,6 @@
 .productDetail__container {
   margin-top: 2rem;
+  min-height: 70vh;
 }
 
 .productDetail__img {
