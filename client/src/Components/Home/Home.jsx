@@ -4,27 +4,45 @@ import MainHome from '../MainHome/MainHome';
 import ProductsContainerHome from '../ProductsContainerHome/ProductsContainerHome';
 import Locals from '../Locals/Locals';
 import CuponContainerHome from '../CuponContainerHome/CuponContainerHome';
-import { authGoogle } from '../../Redux/actions/actions';
-import { useDispatch } from 'react-redux';
+import { authGoogle, setLoginState } from '../../Redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 
 function Home() {
   const dispatch = useDispatch();
-  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
-    useAuth0();
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
+  const isSession = useSelector((state) => state.loginState);
+
+
   useEffect(() => {
-    if (isAuthenticated && user && !window.localStorage.getItem('user')) {
-      console.log(user);
-      console.log(user.picture);
-      dispatch(
-        authGoogle({
-          firstName: user.family_name,
-          email: user.email,
-          lastName: user.given_name,
-          imgUri: user.picture,
-        })
-      );
+
+    const fetchData = async (payload) => {
+        try {
+        const json = await axios.post(`/google`, payload);
+        if (json.status === 200) {
+        window.localStorage.setItem(
+            'user',
+            JSON.stringify({ ...json.data.user, token: json.data.data.token })
+        );
+        dispatch(setLoginState(true));
+        }
+    } catch (error) {
+        console.log(error);
+        window.alert('Error al iniciar sesión');
     }
-  }, [dispatch, user, isAuthenticated]);
+    }
+
+    if (isAuthenticated && user && !window.localStorage.getItem('user')) {
+
+        fetchData({
+                firstName: user.family_name,
+                email: user.email,
+                lastName: user.given_name,
+                imgUri: user.picture,
+        });
+    }
+  
+  }, [dispatch, isAuthenticated, user])
 
   return (
     <div>

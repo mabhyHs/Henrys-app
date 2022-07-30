@@ -65,7 +65,7 @@ function Menu() {
       <FiltersMenu setFilter={setFilter} filters={filters} />
 
       {!currentProduct.length && <ErrorNoResults />}
-      {currentProduct.length && (
+      {currentProduct.length > 0 && (
         <ProductsContainerMenu currentProduct={currentProduct} />
       )}
 
