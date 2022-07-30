@@ -21,3 +21,13 @@
   font-size: x-small;
   font-style: italic;
 }
+
+.btn.disabled,
+.btn:disabled,
+fieldset:disabled .btn {
+  text-decoration: none;
+  background: var(--btn-hover);
+  color: gray;
+  border: var(--btn-hover);
+  cursor: default;
+}
