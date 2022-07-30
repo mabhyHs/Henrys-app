@@ -19,12 +19,13 @@ function FiltersMenu({ setFilter, filters }) {
         </Button>
 
         <select
+          name="order"
           onChange={handleOnChange}
           className="select__order"
         >
-          <option value="0">Ordenar por precio</option>
-          <option value="desc">Mayor a menor</option>
-          <option value="asc">Menor a mayor</option>
+          <option value="">Ordenar (sin criterio)</option>
+          <option value="desc">Mayor precio</option>
+          <option value="asc">Menor precio</option>
         </select>
       </div>
       <div className="filters__btn__container">
