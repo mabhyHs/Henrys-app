@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import imgLogin from '../../../Assets/Images/combos/Combo1.png';
@@ -13,10 +15,39 @@ import imgLogo from '../../../Assets/Images/logo-henrys300px.png';
 import './UserLogin.css';
 
 function UserLogin() {
+  const navigate = useNavigate();
+
   const [show, setShow] = useState(false);
+  const [input, setInput] = useState({
+    email: '',
+    password: '',
+  });
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(`/login`, { ...input });
+      console.log(res);
+      if (res.status === 200) {
+        // redirigir a /userprofiledashboard
+        window.localStorage.setItem(
+          'user',
+          JSON.stringify({ ...res.data.user, token: res.data.data.token })
+        );
+        navigate('/');
+      }
+    } catch (error) {
+      window.alert('email o contraseña incorrecta');
+    }
+  };
 
   return (
     <div>
@@ -28,17 +59,26 @@ function UserLogin() {
             <FcGoogle /> Continuar con Google
           </Button>
           <p className="userLogin__divider">──────── Ó ────────</p>
-          <Form className="userLogin__form mb-5">
+          <Form
+            className="userLogin__form mb-5"
+            onSubmit={(e) => handleSubmit(e)}
+          >
             <Form.Group controlId="formGridEmail">
               <Form.Control
                 type="email"
+                name="email"
                 placeholder="Enter email"
                 className="mb-3"
+                value={input.email}
+                onChange={(e) => handleChange(e)}
               />
               <Form.Control
                 className="mb-3"
                 type="password"
+                name="password"
                 placeholder="Password"
+                value={input.password}
+                onChange={(e) => handleChange(e)}
               />
             </Form.Group>
             <Form.Group className="mb-3" id="formGridCheckbox">
@@ -78,8 +118,8 @@ function UserLogin() {
               </Modal.Footer>
             </Modal>
             <Button
-              as={Link}
-              to="/userprofiledashboard"
+              // as={Link}
+              // to="/userprofiledashboard"
               variant="primary"
               type="submit"
             >
