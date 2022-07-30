@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Search } from 'react-bootstrap-icons';
-import { getProduct } from '../../Redux/actions/actions';
+import { getIngredients } from '../../Redux/actions/actions';
 import './SearchBar.css';
 
 function SearchBar({ onSearch }) {
@@ -18,7 +18,7 @@ function SearchBar({ onSearch }) {
     if (!name) {
       return alert('escribe el nombre de tu hamburguesa!');
     } else {
-      dispatch(getProduct(name));
+      dispatch(getIngredients(name));
       setName('');
     }
   }

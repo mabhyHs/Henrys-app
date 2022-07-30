@@ -14,7 +14,6 @@ import {
   DELETE_ONE_PRODUCT_CART,
   DELETE_PRODUCT_CART,
   LOCAL_STORAGE,
-  
 } from '../actions/actions';
 
 import { addItem, deleteAllItem, deleteItem } from './utils';
@@ -61,7 +60,7 @@ const rootReducer = (state = initialState, action = {}) => {
     case GET_INGREDIENTS:
       return {
         ...state,
-        ingredients: action.payload,
+        products: action.payload,
       };
     case GET_POTATOES:
       return {
@@ -73,49 +72,48 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
         veggie: action.payload,
       };
-      case GET_PRODUCT_BY_ID:
-        return {
-          ...state,
-          productDetail: action.payload,
-        }
-      case GET_BURGER_BASE:
-        return {
-          ...state,
-          burgerBase: action.payload,
-        }
+    case GET_PRODUCT_BY_ID:
+      return {
+        ...state,
+        productDetail: action.payload,
+      };
+    case GET_BURGER_BASE:
+      return {
+        ...state,
+        burgerBase: action.payload,
+      };
     case SET_CATEGORY:
       return {
         ...state,
         category: action.payload,
       };
 
-      case ADD_TO_CART:
-  
+    case ADD_TO_CART:
       /* payload es el id, array de products, y el array de carrito */
-        return {
-          ...state,
-          cart: addItem(action.payload, state.products, state.cart),
-        };
-      case DELETE_ONE_PRODUCT_CART:
-        return {
-          ...state,
-          cart: deleteItem(state.cart, action.payload),
-        };
-      case DELETE_PRODUCT_CART:
-        return {
-          ...state,
-          cart: deleteAllItem(state.cart, action.payload),
-        };
-      case CLEAR_CART:
-        return {
-          ...state,
-          cart: state.copyCart,
-        };
-      case LOCAL_STORAGE:
-        return{
-          ...state,
-          cart: action.payload
-        }
+      return {
+        ...state,
+        cart: addItem(action.payload, state.products, state.cart),
+      };
+    case DELETE_ONE_PRODUCT_CART:
+      return {
+        ...state,
+        cart: deleteItem(state.cart, action.payload),
+      };
+    case DELETE_PRODUCT_CART:
+      return {
+        ...state,
+        cart: deleteAllItem(state.cart, action.payload),
+      };
+    case CLEAR_CART:
+      return {
+        ...state,
+        cart: state.copyCart,
+      };
+    case LOCAL_STORAGE:
+      return {
+        ...state,
+        cart: action.payload,
+      };
 
     default:
       return state;
