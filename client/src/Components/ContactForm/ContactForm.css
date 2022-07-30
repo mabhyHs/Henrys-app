@@ -16,3 +16,8 @@
   height: 20px;
 }
 
+.contactForm__errContainer p {
+  color: red;
+  font-size: x-small;
+  font-style: italic;
+}
