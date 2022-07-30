@@ -1,4 +1,4 @@
-import swal from "sweetalert2";
+import swal from 'sweetalert2';
 
 /* payload es el id, array de products, y el array de carrito */
 export const addItem = (id, allProducts, cart) => {
@@ -36,33 +36,26 @@ export const deleteAllItem = (cart, id) => {
   return cart.filter((item) => item.id !== id);
 };
 
-export const addFav = (id, allProducts, favorites)=>{
-  const newFavorite = allProducts.find((p) => p.id === id)
+export const addFav = (id, allProducts, favorites) => {
+  const newFavorite = allProducts.find((p) => p.id === id);
 
-  if(favorites.length > 3){
-    swal.fire({
-      text: `Solo puedes tener hasta 4 favoritos`,
-      icon: 'error',
-      button: 'Aceptar',
-      timer: '3000'
-    });
-  }else if(!favorites.map(item => item.id).includes(newFavorite.id)) {
-    console.log(favorites)
+  if (!favorites.map((item) => item.id).includes(newFavorite.id)) {
+    console.log(favorites);
     return [...favorites, newFavorite];
   }
-   
-  if (favorites.map(item => item.id).includes(id)){
+
+  if (favorites.map((item) => item.id).includes(id)) {
     swal.fire({
       text: `${newFavorite.name} ya existe en tus favoritos`,
       icon: 'warning',
       button: 'Aceptar',
-      timer: '3000'
+      timer: '3000',
     });
-  };
-  
+  }
+
   return favorites;
 };
 
 export const subsFav = (id, favorites) => {
   return favorites.filter((item) => item.id !== id);
-}
+};
