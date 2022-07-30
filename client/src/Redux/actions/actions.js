@@ -15,6 +15,7 @@ export const DELETE_ONE_PRODUCT_CART = 'DELETE_ONE_PRODUCT_CART';
 export const DELETE_PRODUCT_CART = 'DELETE_PRODUCT_CART';
 export const LOCAL_STORAGE = 'LOCAL_STORAGE';
 export const GET_BURGER_BASE = 'GET_BURGER_BASE';
+export const SET_LOGIN_STATE = 'SET_LOGIN_STATE';
 
 // export const CREATE_BURGER = "CREATE_BURGER"
 // export const CREATE_COMBO = "CREATE_ COMBO"
@@ -237,4 +238,16 @@ export function authGoogle(payload) {
       window.alert('error al iniciar sesión');
     }
   };
+}
+
+export function setLoginState(payload) {
+
+    return async function (dispatch) {
+      
+        return dispatch({
+          type: SET_LOGIN_STATE,
+          payload,
+        });
+      
+    };
 }

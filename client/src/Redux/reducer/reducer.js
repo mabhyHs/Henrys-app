@@ -14,6 +14,7 @@ import {
   DELETE_ONE_PRODUCT_CART,
   DELETE_PRODUCT_CART,
   LOCAL_STORAGE,
+  SET_LOGIN_STATE,
 } from '../actions/actions';
 
 import { addItem, deleteAllItem, deleteItem } from './utils';
@@ -32,6 +33,7 @@ const initialState = {
   burgerBase: {},
   cart: [],
   copyCart: [],
+  loginState: false,
 };
 
 const rootReducer = (state = initialState, action = {}) => {
@@ -114,6 +116,12 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
         cart: action.payload,
       };
+
+      case SET_LOGIN_STATE:
+        return {
+          ...state,
+          loginState: action.payload,
+        };
 
     default:
       return state;

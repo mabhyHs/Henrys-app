@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 /* import Button from 'react-bootstrap/Button'; */
 import Container from 'react-bootstrap/Container';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -13,11 +13,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import './NavBar.css';
+import { setLoginState } from '../../Redux/actions/actions';
 
 function NavBar() {
+
+  const dispatch = useDispatch();
   const itemsToCart = useSelector((state) => state.cart);
+  const isSession = useSelector((state) => state.loginState);
   const mount = useRef(true);
-  const [isSession, setSession] = useState(false);
   const { isAuthenticated, logout } = useAuth0();
 
   useEffect(() => {
@@ -27,32 +30,27 @@ function NavBar() {
         mount.current = false;
     } else {
         if(isLogged()){
-            setSession(true);
-        } else {
-            logoutSession();
+            dispatch(setLoginState(true));
         }
-    }        
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    } 
+    
+  }, [dispatch, isAuthenticated, logout]);
 
     function logoutSession(){
-        console.log("logout");
+        window.localStorage.removeItem("user");
 
         if(isAuthenticated){
             logout();
         }
-        window.localStorage.removeItem("user");
-        setSession(false);
+
+        dispatch(setLoginState(false));
     }
 
     function isLogged(){
-        console.log("isLogged")
-        return (window.localStorage.getItem("user"));
+        return (!!window.localStorage.getItem("user"));
     }
 
     function getUserData(){
-        console.log("data")
         return (JSON.parse(window.localStorage.getItem("user")));
     }
 

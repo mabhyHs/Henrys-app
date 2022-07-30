@@ -14,8 +14,13 @@ import FormText from 'react-bootstrap/esm/FormText';
 import imgLogo from '../../../Assets/Images/logo-henrys300px.png';
 
 import './UserLogin.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoginState } from '../../../Redux/actions/actions';
 
 function UserLogin() {
+
+  const dispatch = useDispatch();
+  const isSession = useSelector((state) => state.loginState);
   const navigate = useNavigate();
   const { loginWithRedirect } = useAuth0();
 
@@ -34,45 +39,6 @@ function UserLogin() {
     });
   };
 
-  const mount = useRef(true);
-  const [isSession, setSession] = useState(false);
-  const { isAuthenticated, logout } = useAuth0();
-
-  useEffect(() => {
-
-    if(mount.current){
-        mount.current = false;
-    } else {
-        if(isLogged()){
-            setSession(true);
-        } else {
-            logoutSession();
-        }
-    }        
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-    function logoutSession(){
-        console.log("logout");
-
-        if(isAuthenticated){
-            logout();
-        }
-        window.localStorage.removeItem("user");
-        setSession(false);
-    }
-
-    function isLogged(){
-        console.log("isLogged")
-        return (window.localStorage.getItem("user"));
-    }
-
-    function getUserData(){
-        console.log("data")
-        return (JSON.parse(window.localStorage.getItem("user")));
-    }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -80,8 +46,11 @@ function UserLogin() {
       const res = await axios.post(`/login`, { ...input });
 
       if (res.status === 200) {
-        window.localStorage.setItem('user', JSON.stringify({ ...res.data.user, token: res.data.data.token }));
-        navigate('/');
+        if(!isSession){
+            window.localStorage.setItem('user', JSON.stringify({ ...res.data.user, token: res.data.data.token }));
+            dispatch(setLoginState(true));
+            navigate('/');
+        }
       }
 
     } catch (error) {
@@ -89,10 +58,23 @@ function UserLogin() {
     }
 
   };
+  
+  if(isSession){
+    setInterval(() => {
+        navigate("/");
+    }, 500);
+  }
 
   return (
     <div>
-      <Row className="userLogin__container m-3">
+        {isSession &&
+            <div>
+            </div>
+        }
+
+        
+    {!isSession &&
+        <Row className="userLogin__container m-3">
         <Col lg={6} sm={12}>
           <h1 className="userLogin__tittle">Ingresá a tu cuenta</h1>
           <p>Bienvenido de nuevo, por favor ingrese sus datos.</p>
@@ -180,6 +162,7 @@ function UserLogin() {
           <img className="img-fluid" src={imgLogin} alt="imagen de un combo" />
         </Col>
       </Row>
+    }    
     </div>
   );
 }
