@@ -12,16 +12,15 @@ function Home() {
   const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
     useAuth0();
   useEffect(() => {
-    console.log(user);
-    console.log(user.picture);
     if (isAuthenticated && user && !window.localStorage.getItem('user')) {
+      console.log(user);
+      console.log(user.picture);
       dispatch(
         authGoogle({
           firstName: user.family_name,
           email: user.email,
           lastName: user.given_name,
-          // imgUri: user.picture,
-          imgUri: user.picture.slice(1, user.picture.length - 1),
+          imgUri: user.picture,
         })
       );
     }
