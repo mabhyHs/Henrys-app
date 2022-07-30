@@ -3,8 +3,7 @@ import { Search } from 'react-bootstrap-icons';
 import './SearchBar.css';
 
 function SearchBar({ setFilter }) {
-
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
 
   function handleInput(e) {
     setInput(e.target.value);
@@ -12,7 +11,7 @@ function SearchBar({ setFilter }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setFilter("search", input);
+    setFilter('search', input);
   }
 
   return (
@@ -23,11 +22,14 @@ function SearchBar({ setFilter }) {
         placeholder="Busca tu hamburguesa"
         value={input}
         onChange={handleInput}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') handleSubmit(e);
+        }}
       />
 
       <button
         className="search__btn"
-        name='search'
+        name="search"
         type="submit"
         onClick={handleSubmit}
       >

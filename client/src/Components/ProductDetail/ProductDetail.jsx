@@ -1,7 +1,7 @@
 /* eslint-disable no-irregular-whitespace */
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getProductById } from '../../Redux/actions/actions';
+import { addFavorites, getProductById } from '../../Redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { HeartFill } from 'react-bootstrap-icons';
 import { FaHamburger } from 'react-icons/fa';
@@ -24,10 +24,19 @@ function ProductDetail() {
   useEffect(() => {
     dispatch(getProductById(id));
   }, [dispatch, id]);
+
+  const addFav = () => {
+    dispatch(addFavorites(id));
+  };
+
   return (
     <div>
       <Container className="productDetail__container">
-        <Link to="/userfavorites" className="mt-3 mb-5 productDetail__link">
+        <Link
+          onClick={() => addFav(id)}
+          to="/userfavorites"
+          className="mt-3 mb-5 productDetail__link"
+        >
           <HeartFill className="productDetail__link__Svg " />
           Agregar a Favoritos
         </Link>
