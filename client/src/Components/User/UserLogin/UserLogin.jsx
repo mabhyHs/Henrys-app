@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -17,7 +17,7 @@ import './UserLogin.css';
 
 function UserLogin() {
   const navigate = useNavigate();
-  const { loginWithRedirect, logout } = useAuth0();
+  const { loginWithRedirect } = useAuth0();
 
   const [show, setShow] = useState(false);
   const [input, setInput] = useState({
@@ -33,20 +33,61 @@ function UserLogin() {
       [e.target.name]: e.target.value,
     });
   };
+
+  const mount = useRef(true);
+  const [isSession, setSession] = useState(false);
+  const { isAuthenticated, logout } = useAuth0();
+
+  useEffect(() => {
+
+    if(mount.current){
+        mount.current = false;
+    } else {
+        if(isLogged()){
+            setSession(true);
+        } else {
+            logoutSession();
+        }
+    }        
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+    function logoutSession(){
+        console.log("logout");
+
+        if(isAuthenticated){
+            logout();
+        }
+        window.localStorage.removeItem("user");
+        setSession(false);
+    }
+
+    function isLogged(){
+        console.log("isLogged")
+        return (window.localStorage.getItem("user"));
+    }
+
+    function getUserData(){
+        console.log("data")
+        return (JSON.parse(window.localStorage.getItem("user")));
+    }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const res = await axios.post(`/login`, { ...input });
+
       if (res.status === 200) {
-        window.localStorage.setItem(
-          'user',
-          JSON.stringify({ ...res.data.user, token: res.data.data.token })
-        );
+        window.localStorage.setItem('user', JSON.stringify({ ...res.data.user, token: res.data.data.token }));
         navigate('/');
       }
+
     } catch (error) {
-      window.alert('email o contraseña incorrecta');
+      window.alert('Email o contraseña incorrecta');
     }
+
   };
 
   return (
@@ -61,10 +102,7 @@ function UserLogin() {
             onClick={() => loginWithRedirect()}
           >
             <FcGoogle /> Continuar con Google
-          </Button>
-          <button onClick={() => logout({ returnTo: window.location.origin })}>
-            Log Out
-          </button>
+          </Button>          
           <p className="userLogin__divider">──────── Ó ────────</p>
           <Form
             className="userLogin__form mb-5"
