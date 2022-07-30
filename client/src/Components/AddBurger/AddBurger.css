@@ -130,14 +130,14 @@
 .addBurger__ul__cantidad {
   margin: 0.5rem;
 }
-.swal2-styled.swal2-confirm {
+.swal2-styled.swal2-confirm.confirmBtnSwal {
   gap: 5px;
   border-color: var(--brand-color);
   background: var(--brand-color);
   box-shadow: var(--bs-btn);
   border-radius: var(--br-btn);
 }
-.swal2-styled.swal2-confirm:focus {
+.swal2-styled.swal2-confirm.confirmBtnSwal:focus {
   box-shadow: var(--bs-btn);
 }
 

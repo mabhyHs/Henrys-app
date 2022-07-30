@@ -19,8 +19,12 @@ function ContactoForm() {
 
   function handleSubmit() {
     Swal.fire({
-      icon: 'success',
-      text: 'Mensaje enviado con éxito, en breve estaremos comunicándonos',
+      title: 'Mensaje enviado con éxito',
+      text: 'Muchas gracias por contactarnos, en breve estaremos comunicandonos.',
+      imageUrl: 'https://i.postimg.cc/Y0T86N5w/logo-henrys300px.png',
+      imageWidth: 150,
+      imageHeight: 150,
+      imageAlt: 'Logo henrys',
       showConfirmButton: false,
       timer: 2000,
     });
