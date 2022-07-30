@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import UserFavoritesCard from '../UserFavoritesCard/UserFavoritesCard';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import { addLocalAState } from '../../../Redux/actions/actions';
 
 import './UserFavorites.css';
-import { addLocalAState } from '../../../Redux/actions/actions';
 
 function UserFavorites() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ function UserFavorites() {
   }, [dispatch]);
 
   return (
-    <div className="userFav__container">
+    <div className="userFav__container mb-5">
       <h1 className="mt-5">Mis favoritos</h1>
       {favoritos?.map((item) => (
         <UserFavoritesCard
