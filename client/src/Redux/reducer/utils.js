@@ -1,3 +1,5 @@
+import swal from 'sweetalert2';
+
 /* payload es el id, array de products, y el array de carrito */
 export const addItem = (id, allProducts, cart) => {
   /* busco en "todos" (que en realidad es lo filtrado)"
@@ -32,4 +34,28 @@ export const deleteItem = (cart, id) => {
 
 export const deleteAllItem = (cart, id) => {
   return cart.filter((item) => item.id !== id);
+};
+
+export const addFav = (id, allProducts, favorites) => {
+  const newFavorite = allProducts.find((p) => p.id === id);
+
+  if (!favorites.map((item) => item.id).includes(newFavorite.id)) {
+    console.log(favorites);
+    return [...favorites, newFavorite];
+  }
+
+  if (favorites.map((item) => item.id).includes(id)) {
+    swal.fire({
+      text: `${newFavorite.name} ya existe en tus favoritos`,
+      icon: 'warning',
+      button: 'Aceptar',
+      timer: '3000',
+    });
+  }
+
+  return favorites;
+};
+
+export const subsFav = (id, favorites) => {
+  return favorites.filter((item) => item.id !== id);
 };
