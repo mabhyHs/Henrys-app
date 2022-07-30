@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -16,6 +17,7 @@ import './UserLogin.css';
 
 function UserLogin() {
   const navigate = useNavigate();
+  const { loginWithRedirect, logout } = useAuth0();
 
   const [show, setShow] = useState(false);
   const [input, setInput] = useState({
@@ -53,9 +55,16 @@ function UserLogin() {
         <Col lg={6} sm={12}>
           <h1 className="userLogin__tittle">Ingresá a tu cuenta</h1>
           <p>Bienvenido de nuevo, por favor ingrese sus datos.</p>
-          <Button variant="outline-secondary" className="p-2">
+          <Button
+            variant="outline-secondary"
+            className="p-2"
+            onClick={() => loginWithRedirect()}
+          >
             <FcGoogle /> Continuar con Google
           </Button>
+          <button onClick={() => logout({ returnTo: window.location.origin })}>
+            Log Out
+          </button>
           <p className="userLogin__divider">──────── Ó ────────</p>
           <Form
             className="userLogin__form mb-5"
