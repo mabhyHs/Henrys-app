@@ -356,6 +356,7 @@ template {
   /* COLORS */
   --main-color-dark: #222831;
   --main-color-light: #f1f2f3;
+  --main-color-white: #ffffff;
   --heading-color: #000000;
   --text-color-light: #ffffff;
   --text-color-dark: #1c1c1c;

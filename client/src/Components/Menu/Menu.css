@@ -5,7 +5,7 @@
   align-items: center;
 }
 
-.btn__round__effect {
+.btn__round__effect, .btn__round__effect  {
   color: var(--main-color-light);
   cursor: pointer;
   padding-left: 10px;
@@ -22,8 +22,21 @@
   background: var(--btn-hover);
   color: #fff;
 }
-.btn__round__effect:focus {
-  text-decoration: none;
-  background: var(--btn-hover);
-  color: #fff;
+
+.currentPag, .currentPag:focus{
+    background-color: var(--main-color-dark);
+    color: var(--main-color-white);
+    border: solid 1px grey;
+}
+
+.disablePag, .disablePag:focus {
+    text-decoration: none;
+    background: grey;
+    color: #fff;
+    border: solid 1px grey;
+    cursor: default;
+}
+
+.disablePag:hover {
+    cursor: default;
 }

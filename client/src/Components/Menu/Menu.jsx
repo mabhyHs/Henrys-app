@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
-import Button from 'react-bootstrap/Button';
 import FiltersMenu from '../FiltersMenu/FiltersMenu';
 import ProductsContainerMenu from '../ProductsContainerMenu/ProductsContainerMenu';
 import SearchBar from '../SearchBar/SearchBar';
@@ -20,50 +18,53 @@ function Menu() {
   const allProducts = useSelector((state) => state.products);
   const currentProduct = allProducts.slice(firstBurgerIndex, lastBurgerIndex);
 
+  const mount = useRef(false);
+
+    const [filters, setFilters] = useState({
+        category: "", // alguna filtro
+        order:  "", // algun string
+        search:  "", // algun string
+        isVeggie: "" // vegano
+    });
+
+    function setFilter(name, value){ 
+
+        if(filters[name] === "true" && value === "true"){
+            setFilters({...filters, [name]: ""});
+        }
+
+        if(filters[name] === value) return;
+
+        setFilters({...filters, [name]: value});
+    }
+
+    const setPage = (page) => {
+      setCurrentPage(page);
+    };
+
   useEffect(() => {
-    if (allProducts.length === 0) {
-      dispatch(getProduct());
+    if(!mount.current){
+        mount.current = true;
+    } else if(filters){
+        setPage(1);        
+        dispatch(getProduct(filters.category, filters.order, filters.search, filters.isVeggie));
     }
-  }, [dispatch]);
 
-  const pageHandler = (page) => {
-    setCurrentPage(page);
-  };
-
-  const setPageOne = () => {
-    setCurrentPage(1);
-  };
-
-  /* next y prev */
-  const nextPage = () => {
-    if (currentPage < Math.ceil(allProducts.length / burgersPerPage)) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-  const prevPage = () => {
-    if (currentPage - 1 !== 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
+  }, [dispatch, filters]);
 
   return (
     <div className="menu__container">
-      <SearchBar />
-      <FiltersMenu setPageOne={setPageOne} />
+      <SearchBar setFilter={setFilter}/>
+      <FiltersMenu setFilter={setFilter} filters={filters} />
       <ProductsContainerMenu currentProduct={currentProduct} />
 
       <div className="menu__pagination__container mb-3 mt-3">
-        <Button className="btn__round__effect" type="button" onClick={prevPage}>
-          <CaretLeftFill />
-        </Button>
         <Pagination
           burgersPerPage={burgersPerPage}
           allProducts={allProducts.length}
-          onSetPage={pageHandler}
+          currentPage={currentPage}
+          setCurrentPage={setPage}
         />
-        <Button className="btn__round__effect" type="button" onClick={nextPage}>
-          <CaretRightFill />
-        </Button>
       </div>
     </div>
   );
