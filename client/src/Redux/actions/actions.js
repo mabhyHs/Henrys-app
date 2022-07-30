@@ -15,6 +15,9 @@ export const DELETE_ONE_PRODUCT_CART = 'DELETE_ONE_PRODUCT_CART';
 export const DELETE_PRODUCT_CART = 'DELETE_PRODUCT_CART';
 export const LOCAL_STORAGE = 'LOCAL_STORAGE';
 export const GET_BURGER_BASE = 'GET_BURGER_BASE';
+export const ADD_FAVORITES = 'ADD_FAVORITES';
+export const DELETE_ON_FAVORITES = 'DELETE_ON_FAVORITES';
+export const ADD_TO_LOCAL = 'ADD_TO_LOCAL';
 
 // export const CREATE_BURGER = "CREATE_BURGER"
 // export const CREATE_COMBO = "CREATE_ COMBO"
@@ -82,6 +85,27 @@ export function setLocalStorage(payload) {
     type: LOCAL_STORAGE,
     payload,
   };
+}
+
+export function addFavorites(id){
+  return{
+    type: ADD_FAVORITES,
+    payload: id,
+  }
+}
+
+export function removeFavorites(id) {
+  return {
+    type: DELETE_ON_FAVORITES,
+    payload: id,
+  };
+}
+
+export function addLocalAState(payload){
+  return{
+    type: ADD_TO_LOCAL,
+    payload,
+  }
 }
 
 /* export function getBurgers() {
