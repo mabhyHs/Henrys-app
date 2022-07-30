@@ -5,6 +5,8 @@ import FiltersMenu from '../FiltersMenu/FiltersMenu';
 import ProductsContainerMenu from '../ProductsContainerMenu/ProductsContainerMenu';
 import SearchBar from '../SearchBar/SearchBar';
 import Pagination from '../Pagination/Pagination';
+import ErrorNoResults from '../ErrorNoResults/ErrorNoResults';
+
 import { getProduct } from '../../Redux/actions/actions';
 import './Menu.css';
 
@@ -20,43 +22,52 @@ function Menu() {
 
   const mount = useRef(false);
 
-    const [filters, setFilters] = useState({
-        category: "", // alguna filtro
-        order:  "", // algun string
-        search:  "", // algun string
-        isVeggie: "" // vegano
-    });
+  const [filters, setFilters] = useState({
+    category: '', // alguna filtro
+    order: '', // algun string
+    search: '', // algun string
+    isVeggie: '', // vegano
+  });
 
-    function setFilter(name, value){ 
-
-        if(filters[name] === "true" && value === "true"){
-            setFilters({...filters, [name]: ""});
-        }
-
-        if(filters[name] === value) return;
-
-        setFilters({...filters, [name]: value});
+  function setFilter(name, value) {
+    if (filters[name] === 'true' && value === 'true') {
+      setFilters({ ...filters, [name]: '' });
     }
 
-    const setPage = (page) => {
-      setCurrentPage(page);
-    };
+    if (filters[name] === value) return;
+
+    setFilters({ ...filters, [name]: value });
+  }
+
+  const setPage = (page) => {
+    setCurrentPage(page);
+  };
 
   useEffect(() => {
-    if(!mount.current){
-        mount.current = true;
-    } else if(filters){
-        setPage(1);        
-        dispatch(getProduct(filters.category, filters.order, filters.search, filters.isVeggie));
+    if (!mount.current) {
+      mount.current = true;
+    } else if (filters) {
+      setPage(1);
+      dispatch(
+        getProduct(
+          filters.category,
+          filters.order,
+          filters.search,
+          filters.isVeggie
+        )
+      );
     }
-
   }, [dispatch, filters]);
 
   return (
     <div className="menu__container">
-      <SearchBar setFilter={setFilter}/>
+      <SearchBar setFilter={setFilter} />
       <FiltersMenu setFilter={setFilter} filters={filters} />
-      <ProductsContainerMenu currentProduct={currentProduct} />
+
+      {!currentProduct.length && <ErrorNoResults />}
+      {currentProduct.length && (
+        <ProductsContainerMenu currentProduct={currentProduct} />
+      )}
 
       <div className="menu__pagination__container mb-3 mt-3">
         <Pagination
