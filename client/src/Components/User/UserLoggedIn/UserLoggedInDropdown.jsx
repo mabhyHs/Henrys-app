@@ -2,16 +2,20 @@ import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { BoxArrowLeft, Heart } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
-import imgUserDefault from "../../../Assets/Images/user/ic_user_empty.png"
+import imgUserDefault from '../../../Assets/Images/carrousel/henrys.png';
 
 import './UserLoggedInDropdown.css';
 
-function UserLoggedInDropdown({userData, logoutSession}) {
+function UserLoggedInDropdown({ userData, logoutSession }) {
   return (
     <Dropdown>
       <Dropdown.Toggle className="nav__btn" id="dropdown-basic">
-        <img src={userData.imgUri || imgUserDefault} alt="img not found"></img>
-        {userData.firstName || "Usuario"}
+        <img
+          src={userData.imgUri || imgUserDefault}
+          alt="img not found"
+          className="loggedIn__img__profile"
+        ></img>
+        {userData.firstName || 'Usuario'}
       </Dropdown.Toggle>
 
       <Dropdown.Menu>

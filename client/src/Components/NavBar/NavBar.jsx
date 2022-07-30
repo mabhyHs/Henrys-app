@@ -16,7 +16,6 @@ import './NavBar.css';
 import { setLoginState } from '../../Redux/actions/actions';
 
 function NavBar() {
-
   const dispatch = useDispatch();
   const itemsToCart = useSelector((state) => state.cart);
   const isSession = useSelector((state) => state.loginState);
@@ -24,35 +23,35 @@ function NavBar() {
   const { isAuthenticated, logout } = useAuth0();
 
   useEffect(() => {
-
-    if(mount.current){
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-        mount.current = false;
+    if (mount.current) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      mount.current = false;
     } else {
-        if(isLogged()){
-            dispatch(setLoginState(true));
-        }
-    } 
-    
+      if (isLogged()) {
+        dispatch(setLoginState(true));
+      }
+    }
   }, [dispatch, isAuthenticated, logout]);
 
-    function logoutSession(){
-        window.localStorage.removeItem("user");
+  function logoutSession() {
+    window.localStorage.removeItem('user');
+    window.localStorage.removeItem('carrito');
+    window.localStorage.removeItem('favoritos');
 
-        if(isAuthenticated){
-            logout();
-        }
-
-        dispatch(setLoginState(false));
+    if (isAuthenticated) {
+      logout();
     }
 
-    function isLogged(){
-        return (!!window.localStorage.getItem("user"));
-    }
+    dispatch(setLoginState(false));
+  }
 
-    function getUserData(){
-        return (JSON.parse(window.localStorage.getItem("user")));
-    }
+  function isLogged() {
+    return !!window.localStorage.getItem('user');
+  }
+
+  function getUserData() {
+    return JSON.parse(window.localStorage.getItem('user'));
+  }
 
   return (
     <Navbar className="navBar" expand="lg" variant="dark" sticky="top">
@@ -113,36 +112,36 @@ function NavBar() {
                 <CartCheckFill className="CartCheckFill" />
               )}
             </Nav.Link>
-          </Nav>          
+          </Nav>
 
-          {isSession && 
-            <UserLoggedInDropdown userData={getUserData()} logoutSession={logoutSession} />
-          }
+          {isSession && (
+            <UserLoggedInDropdown
+              userData={getUserData()}
+              logoutSession={logoutSession}
+            />
+          )}
 
-          {!isSession && 
+          {!isSession && (
             <Dropdown>
-            <Dropdown.Toggle className="nav__btn" id="dropdown-basic">
+              <Dropdown.Toggle className="nav__btn" id="dropdown-basic">
                 Ingresar
-            </Dropdown.Toggle>
+              </Dropdown.Toggle>
 
-            <Dropdown.Menu>
+              <Dropdown.Menu>
                 <Dropdown.ItemText className="dropdown__link-btn">
-                <Link to="/userlogin">Iniciá Sesión</Link>
+                  <Link to="/userlogin">Iniciá Sesión</Link>
                 </Dropdown.ItemText>
 
                 <Dropdown.ItemText>
-                <Dropdown.Divider />
-                <span>¿No tenés cuenta?</span>
-                <Link to="/registeruser" className="navBar__registrate">
+                  <Dropdown.Divider />
+                  <span>¿No tenés cuenta?</span>
+                  <Link to="/registeruser" className="navBar__registrate">
                     Registrate
-                </Link>
+                  </Link>
                 </Dropdown.ItemText>
-            </Dropdown.Menu>
-            </Dropdown>          
-          }
-
-          
-
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>
