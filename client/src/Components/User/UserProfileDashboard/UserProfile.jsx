@@ -1,11 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './UserProfile.css';
 import { ArrowRightCircleFill, EmojiSunglasses } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
 
-function UserProfileDashboard(userName, userPicture) {
-  const hasUserPicture = false;
+function UserProfileDashboard(userName) {
+  const [userImage, setImage] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const uploadImage = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append('file', files[0]);
+    data.append('upload_preset', 'henryspf');
+    setLoading(true);
+
+    const res = await fetch(
+      'https://api.cloudinary.com/v1_1/henrysburgers/image/upload',
+      {
+        method: 'POST',
+        body: data,
+      }
+    );
+
+    const file = await res.json();
+    console.log(file.secure_url);
+    setImage(file.secure_url);
+    setLoading(false);
+  };
 
   return (
     <section>
@@ -16,9 +39,9 @@ function UserProfileDashboard(userName, userPicture) {
       <Card className="profile__mainCard">
         <div className="profile__mainCard__headerContainer">
           <Card.Header className="profile__mainCard__title">
-            {hasUserPicture ? (
+            {userImage ? (
               <img
-                src={userPicture}
+                src={userImage}
                 alt="foto de perfil"
                 className="profile__mainCard__userPicture"
               />
@@ -28,7 +51,26 @@ function UserProfileDashboard(userName, userPicture) {
             <h2>Usuario</h2>
           </Card.Header>
         </div>
-        <Card.Body className="profile__mainCard__body"></Card.Body>
+        <Card.Body className="profile__mainCard__body">
+          {loading ? (
+            <p className="profile__loader">Cargando...</p>
+          ) : (
+            <Form className="profile__form">
+              <Form.Group className="mb-3">
+                <Form.Label className="profile__form__label">
+                  Personalizá tu imagen
+                </Form.Label>
+                <Form.Control
+                  type="file"
+                  name="file"
+                  size="sm"
+                  className="profile__form__input"
+                  onChange={uploadImage}
+                ></Form.Control>
+              </Form.Group>
+            </Form>
+          )}
+        </Card.Body>
       </Card>
 
       <div className="profile__cardsInfo__container">
