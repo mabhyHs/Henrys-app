@@ -221,3 +221,20 @@ export function createUser(payload) {
     return { json };
   };
 }
+
+export function authGoogle(payload) {
+  return async function () {
+    try {
+      const json = await axios.post(`/google`, payload);
+      if (json.status === 200) {
+        window.localStorage.setItem(
+          'user',
+          JSON.stringify({ ...json.data.user, token: json.data.data.token })
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      window.alert('error al iniciar sesión');
+    }
+  };
+}

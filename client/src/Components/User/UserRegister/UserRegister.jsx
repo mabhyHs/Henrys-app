@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import imgLogin from '../../../Assets/Images/Hamburguesas/PAPAS-KING.png';
@@ -38,16 +39,24 @@ function UserRegister() {
   };
 
   /* al submitear */
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(createUser(input));
-    setInput({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      passwordConfirm: '',
-    });
+    try {
+      // dispatch(createUser(input));
+      const res = await axios.post(`/register`, { ...input });
+      if (res.status === 201) {
+        setInput({
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: '',
+          passwordConfirm: '',
+        });
+        window.alert('usuario creado exitosamente');
+      }
+    } catch (error) {
+      window.alert('error');
+    }
   };
 
   return (

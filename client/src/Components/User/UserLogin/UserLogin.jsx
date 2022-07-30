@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
+
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import imgLogin from '../../../Assets/Images/combos/Combo1.png';
@@ -13,10 +16,38 @@ import imgLogo from '../../../Assets/Images/logo-henrys300px.png';
 import './UserLogin.css';
 
 function UserLogin() {
+  const navigate = useNavigate();
+  const { loginWithRedirect, logout } = useAuth0();
+
   const [show, setShow] = useState(false);
+  const [input, setInput] = useState({
+    email: '',
+    password: '',
+  });
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(`/login`, { ...input });
+      if (res.status === 200) {
+        window.localStorage.setItem(
+          'user',
+          JSON.stringify({ ...res.data.user, token: res.data.data.token })
+        );
+        navigate('/');
+      }
+    } catch (error) {
+      window.alert('email o contraseña incorrecta');
+    }
+  };
 
   return (
     <div>
@@ -24,21 +55,37 @@ function UserLogin() {
         <Col lg={6} sm={12}>
           <h1 className="userLogin__tittle">Ingresá a tu cuenta</h1>
           <p>Bienvenido de nuevo, por favor ingrese sus datos.</p>
-          <Button variant="outline-secondary" className="p-2">
+          <Button
+            variant="outline-secondary"
+            className="p-2"
+            onClick={() => loginWithRedirect()}
+          >
             <FcGoogle /> Continuar con Google
           </Button>
+          <button onClick={() => logout({ returnTo: window.location.origin })}>
+            Log Out
+          </button>
           <p className="userLogin__divider">──────── Ó ────────</p>
-          <Form className="userLogin__form mb-5">
+          <Form
+            className="userLogin__form mb-5"
+            onSubmit={(e) => handleSubmit(e)}
+          >
             <Form.Group controlId="formGridEmail">
               <Form.Control
                 type="email"
+                name="email"
                 placeholder="Enter email"
                 className="mb-3"
+                value={input.email}
+                onChange={(e) => handleChange(e)}
               />
               <Form.Control
                 className="mb-3"
                 type="password"
+                name="password"
                 placeholder="Password"
+                value={input.password}
+                onChange={(e) => handleChange(e)}
               />
             </Form.Group>
             <Form.Group className="mb-3" id="formGridCheckbox">
@@ -78,8 +125,8 @@ function UserLogin() {
               </Modal.Footer>
             </Modal>
             <Button
-              as={Link}
-              to="/userprofiledashboard"
+              // as={Link}
+              // to="/userprofiledashboard"
               variant="primary"
               type="submit"
             >
