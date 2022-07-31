@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients, getBurgerBase } from '../../Redux/actions/actions';
+import { getIngredients, getBurgerBase, setLocalStorage, addCartProductCustom } from '../../Redux/actions/actions';
 import Button from 'react-bootstrap/Button';
 import Swal from 'sweetalert2';
 
@@ -90,21 +90,6 @@ const cambiarCantidad = function (e, id, ingredientes, cb, precio, setPrecio) {
     setPrecio((precio = sumaTotal));
   }
 };
-const crearBurguer = function (setPrecio, ingredientes, setIngredientsAdd) {
-  setIngredientsAdd((ingredientes = []));
-  setPrecio(0.0);
-  Swal.fire({
-    customClass: {
-      confirmButton: 'confirmBtnSwal',
-    },
-    title: 'Hamburguesa creada exitosamente',
-    text: 'Pronto estarás disfrutando tu pedido',
-    imageUrl: 'https://i.postimg.cc/Y0T86N5w/logo-henrys300px.png',
-    imageWidth: 150,
-    imageHeight: 150,
-    imageAlt: 'Logo henrys',
-  });
-};
 
 function AddBurger() {
   const dispatch = useDispatch();
@@ -113,10 +98,71 @@ function AddBurger() {
   const [ingredientsAdd, setIngredientsAdd] = useState([]);
   const [precio, setPrecio] = useState(0);
 
+  const itemsToCart = useSelector((state) => state.cart);
+  const [mount, setMount] = useState(true);
+
   useEffect(() => {
     dispatch(getIngredients());
     dispatch(getBurgerBase());
-  }, [dispatch]);
+
+    if (!mount) {
+        if (itemsToCart && itemsToCart.length) {
+          window.localStorage.setItem('carrito', JSON.stringify(itemsToCart));
+        } else {
+          window.localStorage.removeItem('carrito');
+        }
+      } else {
+        if (!itemsToCart.length && window.localStorage.getItem('carrito')) {
+          dispatch(
+            setLocalStorage(JSON.parse(window.localStorage.getItem('carrito')))
+          );
+        }
+        console.log(itemsToCart[0])
+        setMount(false);
+      }
+
+  }, [dispatch, itemsToCart, mount]);
+
+  const crearBurguer = function (setPrecio, ingredientes, setIngredientsAdd) {
+    setIngredientsAdd((ingredientes = []));
+    setPrecio(0.0);
+    Swal.fire({
+      customClass: {
+        confirmButton: 'confirmBtnSwal',
+      },
+      title: 'Hamburguesa almacenada en el carrito',
+      text: 'Pronto estarás disfrutando tu pedido',
+      imageUrl: 'https://i.postimg.cc/Y0T86N5w/logo-henrys300px.png',
+      imageWidth: 150,
+      imageHeight: 150,
+      imageAlt: 'Logo henrys',
+    });
+
+    const burgerCustom = {
+        id: uuidv4(),
+        name: "Burger custom " + randomNum(6),
+        cantidad: 1,
+        isVeggie: false,
+        price: getTotal(precioBase, precio)
+
+    }
+    
+    addToCart(burgerCustom)
+  };
+
+  function uuidv4() {
+    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    );
+  }
+
+  const addToCart = (burgerCustom) => {
+    dispatch(addCartProductCustom(burgerCustom));
+  };
+
+  const randomNum = (length) => {
+    return Math.floor(Math.pow(10, length-1) + Math.random() * (Math.pow(10, length) - Math.pow(10, length-1) - 1));
+    }
 
   function getTotal(priceBase, priceIngredients) {
     return parseFloat(priceBase) + parseFloat(priceIngredients);

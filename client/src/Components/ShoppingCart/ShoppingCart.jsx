@@ -14,6 +14,7 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { PlusLg, DashLg } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
+import imgDefault from '../../Assets/Images/Hamburguesas/Hamburguesa-con-Queso.png'
 
 import './ShoppingCart.css';
 
@@ -90,7 +91,7 @@ function ShoppingCart() {
                   name={item.name}
                   cantidad={item.cantidad}
                   price={item.price}
-                  imgUri={item.imgUri}
+                  imgUri={item.imgUri || imgDefault}
                 />
               }
               <div>
