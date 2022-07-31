@@ -4,14 +4,13 @@ import MainHome from '../MainHome/MainHome';
 import ProductsContainerHome from '../ProductsContainerHome/ProductsContainerHome';
 import Locals from '../Locals/Locals';
 import CuponContainerHome from '../CuponContainerHome/CuponContainerHome';
-import { authGoogle, setLoginState } from '../../Redux/actions/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { setLoginState } from '../../Redux/actions/actions';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 function Home() {
   const dispatch = useDispatch();
-  const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
-  const isSession = useSelector((state) => state.loginState);
+  const { user, isAuthenticated } = useAuth0();
 
 
   useEffect(() => {
@@ -33,7 +32,6 @@ function Home() {
     }
 
     if (isAuthenticated && user && !window.localStorage.getItem('user')) {
-
         fetchData({
                 firstName: user.family_name,
                 email: user.email,
