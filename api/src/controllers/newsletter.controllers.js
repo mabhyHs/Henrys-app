@@ -3,19 +3,20 @@ const bcrypt = require("bcrypt");
 const { transporter } = require("../config/emailTransporter");
 
 async function get(req, res, next) {
-    try {
-      /* hay que validar que tenga el rol de admin */
-      const all = await newsletterRepositories.get();
-  
-      if (!all || !all.length){
-        return res.status(404).json({error: "There are no users loaded in newsletter!"});
-      }   
+  try {
+    /* hay que validar que tenga el rol de admin */
+    const all = await newsletterRepositories.get();
 
-      return res.status(200).json(all);
-
-    } catch (error) {
-      next(error);
+    if (!all || !all.length) {
+      return res
+        .status(404)
+        .json({ error: "There are no users loaded in newsletter!" });
     }
+
+    return res.status(200).json(all);
+  } catch (error) {
+    next(error);
+  }
 }
 
 /* las cuentas que crea el admin */
@@ -24,14 +25,16 @@ async function create(req, res, next) {
     /* hay que validar que tenga el rol de admin */
     const data = req.body;
 
-    if(!req.body.email){
-        return res.status(400).json({ error: "The email cannot be empty!" });
+    if (!req.body.email) {
+      return res.status(400).json({ error: "The email cannot be empty!" });
     }
 
     const find = await newsletterRepositories.getByEmail(data.email);
 
-    if(find){
-        return res.status(400).json({ error: "The email already exists in the newsletter" });
+    if (find) {
+      return res
+        .status(400)
+        .json({ error: "The email already exists in the newsletter" });
     }
 
     const add = await newsletterRepositories.create(data);
@@ -45,24 +48,27 @@ async function create(req, res, next) {
 /* registro */
 async function sendEmails(req, res, next) {
   try {
+    const { title, description, btnTxt } = req.body;
 
-    const {title, subtitle, btnTxt} = req.body;
-
-    if (!subtitle){
-        return res.status(400).json({ error: "The body subtitle cannot be empty!" });
+    if (!description) {
+      return res
+        .status(400)
+        .json({ error: "The body description cannot be empty!" });
     }
 
     const all = await newsletterRepositories.get();
 
-    if (!all || !all.length){
-        return res.status(404).json({ error: "There are no users loaded in newsletter!" });
+    if (!all || !all.length) {
+      return res
+        .status(404)
+        .json({ error: "There are no users loaded in newsletter!" });
     }
 
-    const emails = all.map(e => e.email);
+    const emails = all.map((e) => e.email);
 
     await transporter.sendMail({
       from: '"Newsletter" <henrysBurger2022@gmail.com',
-      to: emails, /* le pasamos el array de emails y se le envia a todos */
+      to: emails /* le pasamos el array de emails y se le envia a todos */,
       subject: "Newsletter",
       html: `
         <html lang="en-US">
@@ -227,7 +233,6 @@ async function sendEmails(req, res, next) {
       </html>`,
     });
     return res.status(201).json(emails);
-
   } catch (error) {
     next(error);
   }
@@ -235,10 +240,10 @@ async function sendEmails(req, res, next) {
 
 async function destroy(req, res, next) {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const deleted = await newsletterRepositories.destroy(id);
 
-    if(deleted)
+    if (deleted)
       return res.status(200).json({ message: "User deleted successfully" });
 
     return res
@@ -251,7 +256,7 @@ async function destroy(req, res, next) {
 
 async function restore(req, res, next) {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const restore = await newsletterRepositories.restore(id);
 
     if (restore)
