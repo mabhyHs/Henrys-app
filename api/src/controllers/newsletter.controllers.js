@@ -176,7 +176,7 @@ async function sendEmails(req, res, next) {
                                 line-height: 24px;
                               "
                             >
-                                <strong>${subtitle}</strong>                              
+                                <strong>${description}</strong>                              
                             </p>
       
                             <a
