@@ -25,9 +25,9 @@ function SendNewsletter() {
         e.preventDefault();
 
         try {            
-            await axios.post("/newsletter/send", {subtitle: "adsdas"}, {
+            await axios.post("/newsletter/send", {...input}, {
                 headers: {
-                  "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSGVucnkiLCJpZCI6IjQ1YjcxZjQ3LWRhMzctNDUwZC05N2RkLTEyNDU4MmIxMTUxOCIsImlhdCI6MTY1OTMwMDg2OX0.oS91ftLNCVTbUh9yYB_1Kk9C0gScAEh4NT03aWoHO1M"
+                  "auth-token": JSON.parse(window.localStorage.getItem("user").token)
                 }
               });
 
@@ -35,8 +35,8 @@ function SendNewsletter() {
                 customClass: {
                   confirmButton: 'confirmBtnSwal',
                 },
-                title: 'Opss...',
-                text: "bien",
+                title: 'Newsletter',
+                text: "Novedades enviadas correctamente!",
                 imageUrl:
                   'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
                 imageWidth: 150,
@@ -49,7 +49,7 @@ function SendNewsletter() {
                   confirmButton: 'confirmBtnSwal',
                 },
                 title: 'Opss...',
-                text: error,
+                text: "No se pudo enviar el newsletter!",
                 imageUrl:
                   'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
                 imageWidth: 150,
