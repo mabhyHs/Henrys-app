@@ -13,7 +13,8 @@ const validationResultHandler = require("../middlewares/validationResultHandler"
 const router = express.Router();
 
 router.get("/", verifyToken, get);
-router.post("/", verifyToken, roleValidator, validationResultHandler, create);
+router.post("/", create);
+
 router.post(
   "/send",
   verifyToken,
@@ -21,6 +22,7 @@ router.post(
   validationResultHandler,
   sendEmails
 );
+
 router.delete(
   "/:id",
   verifyToken,
