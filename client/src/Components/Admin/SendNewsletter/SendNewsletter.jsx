@@ -25,11 +25,18 @@ function SendNewsletter() {
         e.preventDefault();
 
         try {            
-            await axios.post("/newsletter/send", {...input}, {
+            /* await axios.post("/newsletter/send", {...input}, {
                 headers: {
-                  "a": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSGVucnkiLCJpZCI6IjQ1YjcxZjQ3LWRhMzctNDUwZC05N2RkLTEyNDU4MmIxMTUxOCIsImlhdCI6MTY1OTMwMDg2OX0.oS91ftLNCVTbUh9yYB_1Kk9C0gScAEh4NT03aWoHO1M"
+                  "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSGVucnkiLCJpZCI6IjQ1YjcxZjQ3LWRhMzctNDUwZC05N2RkLTEyNDU4MmIxMTUxOCIsImlhdCI6MTY1OTMwMDg2OX0.oS91ftLNCVTbUh9yYB_1Kk9C0gScAEh4NT03aWoHO1M"
                 }
-              });
+              }); */
+
+              axios({
+                method: 'post',
+                url: '....',
+                params: {'HTTP_CONTENT_LANGUAGE': self.language},
+                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSGVucnkiLCJpZCI6IjQ1YjcxZjQ3LWRhMzctNDUwZC05N2RkLTEyNDU4MmIxMTUxOCIsImlhdCI6MTY1OTMwMDg2OX0.oS91ftLNCVTbUh9yYB_1Kk9C0gScAEh4NT03aWoHO1M"
+              })
 
             Swal.fire({
                 customClass: {
