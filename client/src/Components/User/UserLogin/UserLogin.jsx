@@ -61,7 +61,7 @@ function UserLogin() {
           confirmButton: 'confirmBtnSwal',
         },
         title: 'Opss...',
-        text: 'Email o contraseña inválida',
+        text: 'Email o contraseña inválida!',
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
         imageWidth: 150,

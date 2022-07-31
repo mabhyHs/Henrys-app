@@ -24,12 +24,20 @@ function UserLoggedInDropdown({ userData, logoutSession }) {
             Mi perfil
           </Link>
         </Dropdown.ItemText>
+        {userData.role === 'admin' && (
+          <Dropdown.ItemText className="dropdown__link-btn">
+            <Link to="/adminhome" className="navBar__registrate">
+              Panel Admin
+            </Link>
+          </Dropdown.ItemText>
+        )}
+
         <Link to="/userfavorites" className="loggedIn__Link">
           <Heart className="loggedIn__icons" />
           Favoritos
         </Link>
         <Dropdown.Divider />
-        <Link onClick={logoutSession} to={false}  className="loggedIn__Link">
+        <Link onClick={logoutSession} to={false} className="loggedIn__Link">
           <BoxArrowLeft className="loggedIn__icons" /> Salir
         </Link>
       </Dropdown.Menu>

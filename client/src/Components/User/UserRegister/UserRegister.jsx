@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import { FcGoogle } from 'react-icons/fc';
 import Button from 'react-bootstrap/Button';
 import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 
 import './UserRegister.css';
 
@@ -51,12 +52,32 @@ function UserRegister() {
           password: '',
           passwordConfirm: '',
         });
-        window.alert(
-          'Usuario creado exitosamente, revise el correo para activar su cuenta'
-        );
+        Swal.fire({
+          customClass: {
+            confirmButton: 'confirmBtnSwal',
+          },
+          title: 'Usuario creado exitosamente!',
+          text: 'Revise el correo para activar su cuenta',
+          imageUrl:
+            'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+          imageWidth: 150,
+          imageHeight: 150,
+          imageAlt: 'Logo henrys',
+        });
       }
     } catch (error) {
-      window.alert('ERROR');
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Error al registrarse',
+        text: 'Revise los datos e intente nuevamente.',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
     }
   };
 
