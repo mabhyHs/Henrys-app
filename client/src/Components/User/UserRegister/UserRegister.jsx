@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import { FcGoogle } from 'react-icons/fc';
 import Button from 'react-bootstrap/Button';
 import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 
 import './UserRegister.css';
 
@@ -36,7 +37,63 @@ function UserRegister() {
       };
       return newState;
     });
+    setError(validate({ ...input, [e.target.name]: e.target.value }));
   };
+
+  /* validaciones */
+  function validate(input) {
+    let error = {};
+    /* del nombre */
+
+    if (!input.firstName) {
+      error.firstName = 'Este campo es requerido';
+    } else if (
+      !/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u.test(
+        input.firstName
+      )
+    ) {
+      error.firstName = 'Nombre inválido sólo admite letras';
+    }
+
+    /* del apellido */
+
+    if (!input.lastName) {
+      error.lastName = 'Este campo es requerido';
+    } else if (
+      !/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u.test(
+        input.lastName
+      )
+    ) {
+      error.lastName = 'Este apellido es inválido';
+    }
+
+    /* del email */
+
+    if (!input.email) {
+      error.email = 'Este campo es requerido';
+    } else if (
+      // eslint-disable-next-line no-useless-escape
+      !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
+        input.email
+      )
+    ) {
+      error.email = 'Este correo es invalido';
+    }
+
+    /* del pass */
+
+    if (!input.password) {
+      error.password = 'Este campo es requerido';
+    }
+
+    /* del confirm */
+    if (input.passwordConfirm !== input.password) {
+      error.passwordConfirm =
+        'Ingrese correctamente la confirmacion de la contraseña';
+    }
+
+    return error;
+  }
 
   /* al submitear */
   const handleSubmit = async (e) => {
@@ -79,6 +136,9 @@ function UserRegister() {
           >
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridNombre">
+                <div className="contactForm__errContainer">
+                  {error.firstName && <p>{error.firstName}</p>}
+                </div>
                 <Form.Control
                   type="input"
                   value={input.firstName}
@@ -90,6 +150,9 @@ function UserRegister() {
               </Form.Group>
 
               <Form.Group as={Col} controlId="formGridApellido">
+                <div className="contactForm__errContainer">
+                  {error.lastName && <p>{error.lastName}</p>}
+                </div>
                 <Form.Control
                   type="text"
                   value={input.lastName}
@@ -101,6 +164,9 @@ function UserRegister() {
             </Row>
 
             <Form.Group className="mb-3" controlId="formGridEmail">
+              <div className="contactForm__errContainer">
+                {error.email && <p>{error.email}</p>}
+              </div>
               <Form.Control
                 type="text"
                 value={input.email}
@@ -111,6 +177,9 @@ function UserRegister() {
             </Form.Group>
             <Row className="mb-5">
               <Form.Group as={Col} controlId="formGridPassword">
+                <div className="contactForm__errContainer">
+                  {error.password && <p>{error.password}</p>}
+                </div>
                 <Form.Control
                   value={input.password}
                   name="password"
@@ -121,6 +190,9 @@ function UserRegister() {
               </Form.Group>
 
               <Form.Group as={Col} controlId="formGridConfirPassword">
+                <div className="contactForm__errContainer">
+                  {error.passwordConfirm && <p>{error.passwordConfirm}</p>}
+                </div>
                 <Form.Control
                   value={input.passwordConfirm}
                   name="passwordConfirm"
