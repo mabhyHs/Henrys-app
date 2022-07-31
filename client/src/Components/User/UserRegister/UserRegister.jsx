@@ -28,7 +28,6 @@ function UserRegister() {
 
   /* Funcion que modifica el estado local con los valores de los input */
   const handleChange = (e) => {
-    console.log(e.target.name);
     setInput((state) => {
       const newState = {
         ...state,
@@ -52,10 +51,12 @@ function UserRegister() {
           password: '',
           passwordConfirm: '',
         });
-        window.alert('usuario creado exitosamente');
+        window.alert(
+          'Usuario creado exitosamente, revise el correo para activar su cuenta'
+        );
       }
     } catch (error) {
-      window.alert('error');
+      window.alert('ERROR');
     }
   };
 
