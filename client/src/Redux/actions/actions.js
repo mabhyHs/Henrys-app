@@ -88,11 +88,11 @@ export function setLocalStorage(payload) {
   };
 }
 
-export function addFavorites(id){
-  return{
+export function addFavorites(id) {
+  return {
     type: ADD_FAVORITES,
     payload: id,
-  }
+  };
 }
 
 export function removeFavorites(id) {
@@ -102,11 +102,11 @@ export function removeFavorites(id) {
   };
 }
 
-export function addLocalAState(payload){
-  return{
+export function addLocalAState(payload) {
+  return {
     type: ADD_TO_LOCAL,
     payload,
-  }
+  };
 }
 
 /* export function getBurgers() {
@@ -162,9 +162,7 @@ export function getBeverages() {
 
 export function getIngredients() {
   return async function (dispatch) {
-    const json = await axios(
-      '/ingredients'
-    );
+    const json = await axios('/ingredients');
     try {
       return dispatch({
         type: GET_INGREDIENTS,
@@ -209,11 +207,11 @@ export function agregarCalificacion(payload) {
     return json;
   };
 }
-export function actualizarDatosUsuario(payload){
-  return async function(){
-    const json = await axios.put('http://pending...', payload)
-    return json
-  }
+export function actualizarDatosUsuario(payload) {
+  return async function () {
+    const json = await axios.put('http://pending...', payload);
+    return json;
+  };
 }
 
 // ACCIONES POST
@@ -246,14 +244,18 @@ export function createUser(payload) {
   };
 }
 
-export function setLoginState(payload) {
+export function suscriptionNewsLetterEmail(payload) {
+  return async function () {
+    const json = await axios.post(`/newsletter`, payload);
+    return json;
+  };
+}
 
-    return async function (dispatch) {
-      
-        return dispatch({
-          type: SET_LOGIN_STATE,
-          payload,
-        });
-      
-    };
+export function setLoginState(payload) {
+  return async function (dispatch) {
+    return dispatch({
+      type: SET_LOGIN_STATE,
+      payload,
+    });
+  };
 }
