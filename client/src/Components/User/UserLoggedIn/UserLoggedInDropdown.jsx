@@ -29,8 +29,7 @@ function UserLoggedInDropdown({ userData, logoutSession }) {
           Favoritos
         </Link>
         <Dropdown.Divider />
-
-        <Link to="" onClick={logoutSession} className="loggedIn__Link">
+        <Link onClick={logoutSession} to={false}  className="loggedIn__Link">
           <BoxArrowLeft className="loggedIn__icons" /> Salir
         </Link>
       </Dropdown.Menu>

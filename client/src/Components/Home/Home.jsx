@@ -5,12 +5,13 @@ import ProductsContainerHome from '../ProductsContainerHome/ProductsContainerHom
 import Locals from '../Locals/Locals';
 import CuponContainerHome from '../CuponContainerHome/CuponContainerHome';
 import { setLoginState } from '../../Redux/actions/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
 function Home() {
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useAuth0();
+  const isSession = useSelector((state) => state.loginState);
 
 
   useEffect(() => {
@@ -31,16 +32,17 @@ function Home() {
     }
     }
 
-    if (isAuthenticated && user && !window.localStorage.getItem('user')) {
+    if (!isSession && isAuthenticated && user && !window.localStorage.getItem('user')) {
+        
         fetchData({
-                firstName: user.family_name,
-                email: user.email,
-                lastName: user.given_name,
-                imgUri: user.picture,
+            firstName: user.family_name,
+            email: user.email,
+            lastName: user.given_name,
+            imgUri: user.picture,
         });
     }
   
-  }, [dispatch, isAuthenticated, user])
+  }, [dispatch, isAuthenticated, user, isSession])
 
   return (
     <div>
