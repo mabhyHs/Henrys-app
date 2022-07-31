@@ -1,4 +1,4 @@
-import { React, useEffect } from 'react';
+import { React } from 'react';
 import hamburguesasMini from '../../Assets/Images/Hamburguesas/hamburguesa-clasica.png';
 import combitos from '../../Assets/Images/combos/Combo1.png';
 import bebidas from '../../Assets/Images/bebidas/bebidas-transparentes-copia.png';
@@ -10,40 +10,32 @@ import logo from '../../Assets/Images/logo-henrys300px.png';
 import './CardProductHome.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getProduct, setCategory } from '../../Redux/actions/actions';
+import { setCategory } from '../../Redux/actions/actions';
 
 function CardProductHome() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getProduct());
-  }, [dispatch]);
-
   const handleBurgers = () => {
-    dispatch(getProduct('burgers'));
     dispatch(setCategory('burgers'));
     navigate('/menu');
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   };
 
   const handleCombos = () => {
-    dispatch(getProduct('combos'));
     dispatch(setCategory('combos'));
     navigate('/menu');
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   };
 
   const handleBeverages = () => {
-    dispatch(getProduct('beverages'));
     dispatch(setCategory('beverages'));
     navigate('/menu');
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   };
 
   const handleAll = () => {
-    dispatch(getProduct());
-    dispatch(setCategory());
+    dispatch(setCategory(''));
     navigate('/menu');
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   };

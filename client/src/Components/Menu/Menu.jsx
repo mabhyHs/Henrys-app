@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 /* eslint-disable no-unused-vars */
 import { React, useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,12 +19,13 @@ function Menu() {
   const lastBurgerIndex = currentPage * burgersPerPage;
   const firstBurgerIndex = lastBurgerIndex - burgersPerPage;
   const allProducts = useSelector((state) => state.products);
+  const category = useSelector((state) => state.category);
   const currentProduct = allProducts.slice(firstBurgerIndex, lastBurgerIndex);
 
   const mount = useRef(false);
 
   const [filters, setFilters] = useState({
-    category: '', // alguna filtro
+    category: category, // alguna filtro
     order: '', // algun string
     search: '', // algun string
     isVeggie: '', // vegano
