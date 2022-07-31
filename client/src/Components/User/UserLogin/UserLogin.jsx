@@ -30,6 +30,8 @@ function UserLogin() {
     password: '',
   });
 
+  const [recoveryInput, setRecoveryInput] = useState('');
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleChange = (e) => {
@@ -69,6 +71,44 @@ function UserLogin() {
         imageAlt: 'Logo henrys',
       });
     }
+  };
+
+  const handleSubmitRecoveryPass = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post('/passwordRecovery', {
+        email: recoveryInput,
+      });
+      console.log(res.status);
+      if (res.status === 200) {
+        Swal.fire({
+          customClass: {
+            confirmButton: 'confirmBtnSwal',
+          },
+          title: 'Mensaje enviado exitosamente!',
+          text: 'Revise el correo para recuperar su cuenta',
+          imageUrl:
+            'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+          imageWidth: 150,
+          imageHeight: 150,
+          imageAlt: 'Logo henrys',
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Error',
+        text: 'Error al enviar el correo intente nuevamente.',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
+    }
+    handleClose();
   };
 
   if (isSession) {
@@ -140,10 +180,15 @@ function UserLogin() {
                     type="email"
                     placeholder="Ingresar mail"
                     className="mb-3"
+                    value={recoveryInput}
+                    onChange={(e) => setRecoveryInput(e.target.value)}
                   />
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button variant="primary" onClick={handleClose}>
+                  <Button
+                    variant="primary"
+                    onClick={(e) => handleSubmitRecoveryPass(e)}
+                  >
                     Enviar
                   </Button>
                 </Modal.Footer>
