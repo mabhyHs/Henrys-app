@@ -18,9 +18,10 @@ import {
     DELETE_ON_FAVORITES,
     ADD_TO_LOCAL,
     SET_LOGIN_STATE,
+    ADD_BURGER_CUSTOM_TO_CART,
   } from '../actions/actions';
   
-  import { addFav, addItem, deleteAllItem, deleteItem, subsFav } from './utils';
+  import { addFav, addItem, addItemCustom, deleteAllItem, deleteItem, subsFav } from './utils';
   
   const initialState = {
     burgers: [],
@@ -35,7 +36,6 @@ import {
     productDetail: [],
     burgerBase: {},
     cart: [],
-    copyCart: [],
     favorites: [],
     loginState: false,
   };
@@ -100,6 +100,15 @@ import {
           ...state,
           cart: addItem(action.payload, state.products, state.cart),
         };
+
+        case ADD_BURGER_CUSTOM_TO_CART:
+
+            return {
+              ...state,
+              cart: addItemCustom(state.cart, action.payload),
+            };
+
+
       case DELETE_ONE_PRODUCT_CART:
         return {
           ...state,
@@ -113,7 +122,7 @@ import {
       case CLEAR_CART:
         return {
           ...state,
-          cart: state.copyCart,
+          cart: [],
         };
       case LOCAL_STORAGE:
         return {

@@ -36,6 +36,15 @@ export const deleteAllItem = (cart, id) => {
   return cart.filter((item) => item.id !== id);
 };
 
+export const addItemCustom = (cart, burgerCustom) => {
+
+    if(!burgerCustom){
+        return [...cart];
+    }
+
+    return [...cart, burgerCustom];
+  };
+
 export const addFav = (id, allProducts, favorites) => {
   const newFavorite = allProducts.find((p) => p.id === id);
 

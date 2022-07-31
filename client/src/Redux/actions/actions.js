@@ -19,6 +19,7 @@ export const ADD_FAVORITES = 'ADD_FAVORITES';
 export const DELETE_ON_FAVORITES = 'DELETE_ON_FAVORITES';
 export const ADD_TO_LOCAL = 'ADD_TO_LOCAL';
 export const SET_LOGIN_STATE = 'SET_LOGIN_STATE';
+export const ADD_BURGER_CUSTOM_TO_CART = 'ADD_BURGER_CUSTOM_TO_CART';
 
 // export const CREATE_BURGER = "CREATE_BURGER"
 // export const CREATE_COMBO = "CREATE_ COMBO"
@@ -60,6 +61,13 @@ export function addCartProduct(id) {
     payload: id,
   };
 }
+
+export function addCartProductCustom(burgerCustom) {
+    return {
+      type: ADD_BURGER_CUSTOM_TO_CART,
+      payload: burgerCustom,
+    };
+  }
 
 export function deleteCart() {
   return {
