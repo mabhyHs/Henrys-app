@@ -22,6 +22,7 @@ import ShoppingCart from './Components/ShoppingCart/ShoppingCart';
 import AdminDashboard from './Components/Admin/Dashboard/AdminDashboard';
 
 import './App.css';
+import SendNewsletter from './Components/Admin/SendNewsletter/SendNewsletter';
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
         <Route path="/calificanos" element={<UserReview />} />
         {/* ADMIN ROUTES */}
         <Route path="/adminhome" element={<AdminDashboard />} />
+        <Route path="/newsletter" element={<SendNewsletter />} />
       </Routes>
       <Footer />
     </div>

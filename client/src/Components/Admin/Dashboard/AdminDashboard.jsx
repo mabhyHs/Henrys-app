@@ -3,6 +3,7 @@ import AdminNavBar from '../AdminNavBar/AdminNavBar';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import { Link } from 'react-router-dom';
 
 import './AdminDashboard.css';
 
@@ -13,7 +14,9 @@ function AdminDashboard() {
       <Container>
         <h3>Bienvenido de nuevo, Admin!</h3>
         <ButtonGroup>
-          <Button variant="secondary">Enviar Novedades</Button>
+          <Button as={Link} to="/newsletter" variant="secondary">
+            Enviar Novedades
+          </Button>
           <Button variant="secondary">opcion2</Button>
           <Button variant="secondary">opcion3</Button>
         </ButtonGroup>
