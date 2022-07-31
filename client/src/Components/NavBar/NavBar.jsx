@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 /* import Button from 'react-bootstrap/Button'; */
@@ -6,7 +7,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { CartFill, CartCheckFill } from 'react-bootstrap-icons';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import imgNav from '../../Assets/Images/logo-henrys300px.png';
 import UserLoggedInDropdown from '../User/UserLoggedIn/UserLoggedInDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,6 +22,7 @@ function NavBar() {
   const isSession = useSelector((state) => state.loginState);
   const mount = useRef(true);
   const { isAuthenticated, logout } = useAuth0();
+  const path = useLocation().pathname;
 
   useEffect(() => {
     if (mount.current) {
@@ -69,6 +71,7 @@ function NavBar() {
             navbarScroll
           >
             <Nav.Link
+              className={path === "/home" ? "linkActive" : ""}
               as={Link}
               to="/"
               onClick={() => {
@@ -78,6 +81,7 @@ function NavBar() {
               Home
             </Nav.Link>
             <Nav.Link
+              className={path === "/menu" ? "linkActive" : ""}
               as={Link}
               to="/menu"
               onClick={() => {
@@ -87,6 +91,7 @@ function NavBar() {
               Menú
             </Nav.Link>
             <Nav.Link
+              className={path === "/nosotros" ? "linkActive" : ""}
               as={Link}
               to="/nosotros"
               onClick={() => {
@@ -95,7 +100,10 @@ function NavBar() {
             >
               Nosotros
             </Nav.Link>
-            <Nav.Link as={Link} to="/contacto">
+            <Nav.Link               
+              className={path === "/contacto" ? "linkActive" : ""}
+              as={Link}
+              to="/contacto">
               Contacto
             </Nav.Link>
             <Nav.Link

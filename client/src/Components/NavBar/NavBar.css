@@ -23,6 +23,10 @@
   text-transform: uppercase;
 }
 
+.linkActive {
+    color: var(--brand-color);
+}
+
 .nav-link:hover {
   color: var(--brand-color);
 }
