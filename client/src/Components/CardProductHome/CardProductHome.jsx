@@ -16,34 +16,26 @@ function CardProductHome() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getProduct());
-  }, [dispatch]);
-
   const handleBurgers = () => {
-    dispatch(getProduct('burgers'));
     dispatch(setCategory('burgers'));
     navigate('/menu');
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   };
 
   const handleCombos = () => {
-    dispatch(getProduct('combos'));
     dispatch(setCategory('combos'));
     navigate('/menu');
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   };
 
   const handleBeverages = () => {
-    dispatch(getProduct('beverages'));
     dispatch(setCategory('beverages'));
     navigate('/menu');
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   };
 
   const handleAll = () => {
-    dispatch(getProduct());
-    dispatch(setCategory());
+    dispatch(setCategory(''));
     navigate('/menu');
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   };
