@@ -1,3 +1,6 @@
+/*eslint-disable 
+no-useless-escape*/
+
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
@@ -40,9 +43,7 @@ function Footer() {
 
     if (!input.email) {
       errors.email = 'Correo requerido';
-    }
-    // eslint-disable-next-line no-useless-escape
-    else if (
+    } else if (
       !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
         input.email
       )
