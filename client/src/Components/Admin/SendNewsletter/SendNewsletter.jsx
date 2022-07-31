@@ -17,6 +17,8 @@ function SendNewsletter() {
         btnTxt: 'VER MÁS'
     })
 
+    const [isSubmited, setSubmited] = useState(false);
+
     function handleOnChange(e){
         setInput({...input, [e.target.name]: e.target.value});
     }
@@ -24,10 +26,11 @@ function SendNewsletter() {
     async function onSubmit(e){
         e.preventDefault();
 
-        try {            
+        try {   
+            setSubmited(true);         
             await axios.post("/newsletter/send", {...input}, {
                 headers: {
-                  "auth-token": JSON.parse(window.localStorage.getItem("user").token)
+                  "auth-token": JSON.parse(window.localStorage.getItem("user")).token
                 }
               });
 
@@ -56,6 +59,8 @@ function SendNewsletter() {
                 imageHeight: 150,
                 imageAlt: 'Logo henrys',
               });
+        } finally{
+            setSubmited(false);  
         }
 
     }
@@ -80,7 +85,7 @@ function SendNewsletter() {
             <Form.Control name="btnTxt" onChange={handleOnChange} value={input.btnTxt} type="text" placeholder="Texto del botón" />
           </Form.Group>
 
-          <Button variant="primary" type="submit" disabled={!input.title.length || !input.description.length || !input.btnTxt.length}>
+          <Button variant="primary" type="submit" disabled={!input.title.length || !input.description.length || !input.btnTxt.length || isSubmited}>
             Enviar
           </Button>
         </Form>
