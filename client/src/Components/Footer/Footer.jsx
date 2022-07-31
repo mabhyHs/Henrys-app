@@ -1,16 +1,59 @@
-import React from 'react';
+/* eslint-disable import/named */
+/* eslint-disable no-useless-escape */
+
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
-
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import { suscriptionNewsLetterEmail } from '../../Redux/actions/actions';
 import { Facebook, Instagram, Linkedin } from 'react-bootstrap-icons';
 import imgFooter from '../../Assets/Images/logo-henrys300px.png';
 
 import './Footer.css';
 
 function Footer() {
+  const [errors, setErrors] = useState({});
+  const [input, setInput] = useState({});
+  const dispatch = useDispatch();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    dispatch(suscriptionNewsLetterEmail(input));
+    Swal.fire({
+      icon: 'success',
+      text: 'Suscripción exitosa, ¡Muchas gracias!',
+      showConfirmButton: false,
+      timer: 2000,
+    });
+    setInput({ email: '' });
+    window.scrollTo(0, 0);
+  }
+
+  function handleChange(e) {
+    setInput({ ...input, [e.target.name]: e.target.value });
+    setErrors(validate({ ...input, [e.target.name]: e.target.value }));
+  }
+
+  function validate(input) {
+    let errors = {};
+
+    if (!input.email) {
+      errors.email = 'Correo requerido';
+    } else if (
+      !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
+        input.email
+      )
+    ) {
+      errors.email = 'Direccion de correo invalida';
+    }
+
+    return errors;
+  }
+
   function Mailto({ email, subject, body, ...props }) {
     return (
       <a
@@ -30,17 +73,25 @@ function Footer() {
               Suscribite a nuestro newsletter y recibí las últimas novedades,
               promociones y descuentos:
             </p>
-            <form className="pb-3">
+            <form
+              className="pb-3"
+              onSubmit={(e) => {
+                handleSubmit(e);
+              }}
+            >
+              <div>{errors.email && <p>{errors.email}</p>}</div>
               <input
-                type="text"
-                value=""
-                change=""
+                name="email"
+                type="email"
+                value={input.email}
+                onChange={(e) => handleChange(e)}
                 placeholder="ejemplo@ejemplo.com"
               />
               <input
                 type="submit"
                 value="Suscribirme"
                 className="footer__btn__suscribe"
+                disabled={Object.keys(errors).length > 0 || !input.email}
               />
             </form>
           </Col>
