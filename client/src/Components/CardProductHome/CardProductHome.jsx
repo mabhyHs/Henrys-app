@@ -1,4 +1,4 @@
-import { React, useEffect } from 'react';
+import { React } from 'react';
 import hamburguesasMini from '../../Assets/Images/Hamburguesas/hamburguesa-clasica.png';
 import combitos from '../../Assets/Images/combos/Combo1.png';
 import bebidas from '../../Assets/Images/bebidas/bebidas-transparentes-copia.png';
@@ -10,7 +10,7 @@ import logo from '../../Assets/Images/logo-henrys300px.png';
 import './CardProductHome.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getProduct, setCategory } from '../../Redux/actions/actions';
+import { setCategory } from '../../Redux/actions/actions';
 
 function CardProductHome() {
   const navigate = useNavigate();
