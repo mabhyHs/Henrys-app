@@ -43,7 +43,7 @@ function NavBar() {
     dispatch(setLoginState(false));
 
     if (isAuthenticated) {
-        logout()
+      logout();
     }
   }
 
@@ -71,7 +71,7 @@ function NavBar() {
             navbarScroll
           >
             <Nav.Link
-              className={path === "/home" ? "linkActive" : ""}
+              className={path === '/' ? 'linkActive' : ''}
               as={Link}
               to="/"
               onClick={() => {
@@ -81,7 +81,7 @@ function NavBar() {
               Home
             </Nav.Link>
             <Nav.Link
-              className={path === "/menu" ? "linkActive" : ""}
+              className={path === '/menu' ? 'linkActive' : ''}
               as={Link}
               to="/menu"
               onClick={() => {
@@ -91,7 +91,7 @@ function NavBar() {
               Menú
             </Nav.Link>
             <Nav.Link
-              className={path === "/nosotros" ? "linkActive" : ""}
+              className={path === '/nosotros' ? 'linkActive' : ''}
               as={Link}
               to="/nosotros"
               onClick={() => {
@@ -100,10 +100,11 @@ function NavBar() {
             >
               Nosotros
             </Nav.Link>
-            <Nav.Link               
-              className={path === "/contacto" ? "linkActive" : ""}
+            <Nav.Link
+              className={path === '/contacto' ? 'linkActive' : ''}
               as={Link}
-              to="/contacto">
+              to="/contacto"
+            >
               Contacto
             </Nav.Link>
             <Nav.Link
