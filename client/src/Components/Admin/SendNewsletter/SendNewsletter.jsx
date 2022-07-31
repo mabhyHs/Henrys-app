@@ -25,25 +25,18 @@ function SendNewsletter() {
         e.preventDefault();
 
         try {            
-            /* await axios.post("/newsletter/send", {...input}, {
+            await axios.post("/newsletter/send", {subtitle: "adsdas"}, {
                 headers: {
                   "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSGVucnkiLCJpZCI6IjQ1YjcxZjQ3LWRhMzctNDUwZC05N2RkLTEyNDU4MmIxMTUxOCIsImlhdCI6MTY1OTMwMDg2OX0.oS91ftLNCVTbUh9yYB_1Kk9C0gScAEh4NT03aWoHO1M"
                 }
-              }); */
-
-              axios({
-                method: 'post',
-                url: '....',
-                params: {'HTTP_CONTENT_LANGUAGE': self.language},
-                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSGVucnkiLCJpZCI6IjQ1YjcxZjQ3LWRhMzctNDUwZC05N2RkLTEyNDU4MmIxMTUxOCIsImlhdCI6MTY1OTMwMDg2OX0.oS91ftLNCVTbUh9yYB_1Kk9C0gScAEh4NT03aWoHO1M"
-              })
+              });
 
             Swal.fire({
                 customClass: {
                   confirmButton: 'confirmBtnSwal',
                 },
                 title: 'Opss...',
-                text: 'Email o contraseña inválida!',
+                text: "bien",
                 imageUrl:
                   'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
                 imageWidth: 150,
@@ -55,8 +48,8 @@ function SendNewsletter() {
                 customClass: {
                   confirmButton: 'confirmBtnSwal',
                 },
-                title: error,
-                text: 'No se pudo enviar el newsletter!',
+                title: 'Opss...',
+                text: error,
                 imageUrl:
                   'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
                 imageWidth: 150,
