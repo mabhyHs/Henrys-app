@@ -16,7 +16,7 @@ import imgFooter from '../../Assets/Images/logo-henrys300px.png';
 import './Footer.css';
 
 function Footer() {
-  const [errors, setError] = useState({});
+  const [errors, setErrors] = useState({});
   const [input, setInput] = useState({});
   const dispatch = useDispatch();
 
@@ -35,7 +35,7 @@ function Footer() {
 
   function handleChange(e) {
     setInput({ ...input, [e.target.name]: e.target.value });
-    setError(validate({ ...input, [e.target.name]: e.target.value }));
+    setErrors(validate({ ...input, [e.target.name]: e.target.value }));
   }
 
   function validate(input) {
