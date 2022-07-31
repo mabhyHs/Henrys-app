@@ -22,9 +22,9 @@ function ContactoForm() {
       title: 'Mensaje enviado con éxito',
       text: 'Muchas gracias por contactarnos, en breve estaremos comunicandonos.',
       imageUrl:
-        'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
-      imageWidth: 150,
-      imageHeight: 150,
+        'https://res.cloudinary.com/henrysburgers/image/upload/v1659295876/henrys-success_ovanlx.png',
+      imageWidth: 200,
+      imageHeight: 200,
       imageAlt: 'Logo henrys',
       showConfirmButton: false,
       timer: 2500,

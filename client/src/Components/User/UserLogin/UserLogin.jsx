@@ -12,6 +12,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import FormText from 'react-bootstrap/esm/FormText';
 import imgLogo from '../../../Assets/Images/logo-henrys300px.png';
+import Swal from 'sweetalert2';
 
 import './UserLogin.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -55,7 +56,18 @@ function UserLogin() {
         }
       }
     } catch (error) {
-      window.alert('Email o contraseña incorrecta');
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Opss...',
+        text: 'Email o contraseña inválida',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
     }
   };
 
