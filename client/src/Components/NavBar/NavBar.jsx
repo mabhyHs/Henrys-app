@@ -31,18 +31,18 @@ function NavBar() {
         dispatch(setLoginState(true));
       }
     }
-  }, [dispatch, isAuthenticated, logout]);
+  }, [dispatch]);
 
   function logoutSession() {
     window.localStorage.removeItem('user');
     window.localStorage.removeItem('carrito');
     window.localStorage.removeItem('favoritos');
 
-    if (isAuthenticated) {
-      logout();
-    }
-
     dispatch(setLoginState(false));
+
+    if (isAuthenticated) {
+        logout()
+    }
   }
 
   function isLogged() {
