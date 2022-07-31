@@ -10,7 +10,7 @@ import axios from 'axios';
 
 function Home() {
   const dispatch = useDispatch();
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
 
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function Home() {
     }
     }
 
-    if (!isLoading && isAuthenticated && user && !window.localStorage.getItem('user')) {
+    if (isAuthenticated && user && !window.localStorage.getItem('user')) {
         fetchData({
                 firstName: user.family_name,
                 email: user.email,
@@ -40,7 +40,7 @@ function Home() {
         });
     }
   
-  }, [dispatch, isAuthenticated, user, isLoading])
+  }, [dispatch, isAuthenticated, user])
 
   return (
     <div>
