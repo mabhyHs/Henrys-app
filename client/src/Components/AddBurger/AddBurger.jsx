@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients, getBurgerBase, setLocalStorage, addCartProductCustom } from '../../Redux/actions/actions';
+import {
+  getIngredients,
+  getBurgerBase,
+  setLocalStorage,
+  addCartProductCustom,
+} from '../../Redux/actions/actions';
 import Button from 'react-bootstrap/Button';
 import Swal from 'sweetalert2';
 
@@ -106,21 +111,20 @@ function AddBurger() {
     dispatch(getBurgerBase());
 
     if (!mount) {
-        if (itemsToCart && itemsToCart.length) {
-          window.localStorage.setItem('carrito', JSON.stringify(itemsToCart));
-        } else {
-          window.localStorage.removeItem('carrito');
-        }
+      if (itemsToCart && itemsToCart.length) {
+        window.localStorage.setItem('carrito', JSON.stringify(itemsToCart));
       } else {
-        if (!itemsToCart.length && window.localStorage.getItem('carrito')) {
-          dispatch(
-            setLocalStorage(JSON.parse(window.localStorage.getItem('carrito')))
-          );
-        }
-        console.log(itemsToCart[0])
-        setMount(false);
+        window.localStorage.removeItem('carrito');
       }
-
+    } else {
+      if (!itemsToCart.length && window.localStorage.getItem('carrito')) {
+        dispatch(
+          setLocalStorage(JSON.parse(window.localStorage.getItem('carrito')))
+        );
+      }
+      console.log(itemsToCart[0]);
+      setMount(false);
+    }
   }, [dispatch, itemsToCart, mount]);
 
   const crearBurguer = function (setPrecio, ingredientes, setIngredientsAdd) {
@@ -130,29 +134,32 @@ function AddBurger() {
       customClass: {
         confirmButton: 'confirmBtnSwal',
       },
-      title: 'Hamburguesa almacenada en el carrito',
+      title: 'Hamburguesa añadida al carrito',
       text: 'Pronto estarás disfrutando tu pedido',
-      imageUrl: 'https://i.postimg.cc/Y0T86N5w/logo-henrys300px.png',
+      imageUrl:
+        'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
       imageWidth: 150,
       imageHeight: 150,
       imageAlt: 'Logo henrys',
     });
 
     const burgerCustom = {
-        id: uuidv4(),
-        name: "Burger custom " + randomNum(6),
-        cantidad: 1,
-        isVeggie: false,
-        price: getTotal(precioBase, precio)
+      id: uuidv4(),
+      name: 'Burger custom ' + randomNum(6),
+      cantidad: 1,
+      isVeggie: false,
+      price: getTotal(precioBase, precio),
+    };
 
-    }
-    
-    addToCart(burgerCustom)
+    addToCart(burgerCustom);
   };
 
   function uuidv4() {
-    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+      (
+        c ^
+        (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+      ).toString(16)
     );
   }
 
@@ -161,8 +168,11 @@ function AddBurger() {
   };
 
   const randomNum = (length) => {
-    return Math.floor(Math.pow(10, length-1) + Math.random() * (Math.pow(10, length) - Math.pow(10, length-1) - 1));
-    }
+    return Math.floor(
+      Math.pow(10, length - 1) +
+        Math.random() * (Math.pow(10, length) - Math.pow(10, length - 1) - 1)
+    );
+  };
 
   function getTotal(priceBase, priceIngredients) {
     return parseFloat(priceBase) + parseFloat(priceIngredients);

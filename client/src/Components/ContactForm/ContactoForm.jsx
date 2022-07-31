@@ -21,14 +21,14 @@ function ContactoForm() {
     Swal.fire({
       title: 'Mensaje enviado con éxito',
       text: 'Muchas gracias por contactarnos, en breve estaremos comunicandonos.',
-      imageUrl: 'https://i.postimg.cc/Y0T86N5w/logo-henrys300px.png',
+      imageUrl:
+        'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
       imageWidth: 150,
       imageHeight: 150,
       imageAlt: 'Logo henrys',
       showConfirmButton: false,
-      timer: 2000,
+      timer: 2500,
     });
-    window.scrollTo(0, 0);
   }
 
   const sendEmail = (e) => {

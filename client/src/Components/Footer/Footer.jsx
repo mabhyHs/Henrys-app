@@ -24,13 +24,18 @@ function Footer() {
     e.preventDefault();
     dispatch(suscriptionNewsLetterEmail(input));
     Swal.fire({
-      icon: 'success',
-      text: 'Suscripción exitosa, ¡Muchas gracias!',
-      showConfirmButton: false,
-      timer: 2000,
+      customClass: {
+        confirmButton: 'confirmBtnSwal',
+      },
+      title: 'Suscripción Exitosa',
+      text: 'A partir de ahora recibirás todas nuestras novedades',
+      imageUrl:
+        'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+      imageWidth: 150,
+      imageHeight: 150,
+      imageAlt: 'Logo henrys',
     });
     setInput({ email: '' });
-    window.scrollTo(0, 0);
   }
 
   function handleChange(e) {

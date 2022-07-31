@@ -18,7 +18,7 @@
 
 .contactForm__errContainer p {
   color: red;
-  font-size: x-small;
+  font-size: smaller;
   font-style: italic;
 }
 
