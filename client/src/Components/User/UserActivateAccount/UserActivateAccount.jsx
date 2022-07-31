@@ -1,13 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/esm/Container';
 import Button from 'react-bootstrap/esm/Button';
 import ActivateImg from '../../../Assets/Images/combos/combo2-dobles.png';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FcOk } from 'react-icons/fc';
 
 import './UserActivateAccount.css';
+import axios from 'axios';
 
 function UserActivateAccount() {
+  const [mount, setMount] = useState(false);
+
+  const { id } = useParams();
+  useEffect(() => {
+    if (!mount) {
+      setMount(true);
+    } else {
+      const fetchData = async (id) => {
+        try {
+          const json = await axios.put(`/activateAccount/${id}`);
+          // if (json.status !== 200) {
+          //   throw new Error('Error al activar la cuenta');
+          // }
+        } catch (error) {
+          window.alert('Error al activar la cuenta');
+        }
+      };
+      fetchData(id);
+    }
+  }, [mount, id]);
+
   return (
     <>
       <Container>

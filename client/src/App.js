@@ -47,7 +47,7 @@ function App() {
           path="/userprofiledashboard"
           element={<UserProfileDashboard />}
         />
-        <Route path="/useractivateaccount" element={<UserActivateAccount />} />
+        <Route path="/activateAcount/:id" element={<UserActivateAccount />} />
         <Route path="/calificanos" element={<UserReview />} />
         {/* ADMIN ROUTES */}
         <Route path="/adminhome" element={<AdminDashboard />} />
