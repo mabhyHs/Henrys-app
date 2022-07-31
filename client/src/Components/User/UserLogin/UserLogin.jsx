@@ -60,12 +60,12 @@ function UserLogin() {
         customClass: {
           confirmButton: 'confirmBtnSwal',
         },
-        title: 'Opss...',
+        title: 'Algo salió mal...',
         text: 'Email o contraseña inválida!',
         imageUrl:
-          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
-        imageWidth: 150,
-        imageHeight: 150,
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+        imageWidth: 170,
+        imageHeight: 170,
         imageAlt: 'Logo henrys',
       });
     }

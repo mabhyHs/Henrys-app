@@ -2,7 +2,7 @@ import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { BoxArrowLeft, Heart } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
-import imgUserDefault from '../../../Assets/Images/carrousel/henrys.png';
+import imgUserDefault from '../../../Assets/Images/logo-henrys.png';
 
 import './UserLoggedInDropdown.css';
 

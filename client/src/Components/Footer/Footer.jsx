@@ -30,7 +30,7 @@ function Footer() {
       title: 'Suscripción Exitosa',
       text: 'A partir de ahora recibirás todas nuestras novedades',
       imageUrl:
-        'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+        'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
       imageWidth: 150,
       imageHeight: 150,
       imageAlt: 'Logo henrys',
@@ -47,13 +47,13 @@ function Footer() {
     let errors = {};
 
     if (!input.email) {
-      errors.email = 'Correo requerido';
+      errors.email = '* El email es obligatorio.';
     } else if (
       !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
         input.email
       )
     ) {
-      errors.email = 'Direccion de correo invalida';
+      errors.email = '* Dirección de mail inválida.';
     }
 
     return errors;
@@ -84,7 +84,6 @@ function Footer() {
                 handleSubmit(e);
               }}
             >
-              <div>{errors.email && <p>{errors.email}</p>}</div>
               <input
                 name="email"
                 type="email"
@@ -98,6 +97,11 @@ function Footer() {
                 className="footer__btn__suscribe"
                 disabled={Object.keys(errors).length > 0 || !input.email}
               />
+              <div>
+                {errors.email && (
+                  <p className="footer__newsletter__error">{errors.email}</p>
+                )}
+              </div>
             </form>
           </Col>
           <Col sm={12} lg={4} className="p-3">

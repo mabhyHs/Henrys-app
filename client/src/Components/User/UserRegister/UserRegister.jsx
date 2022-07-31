@@ -59,7 +59,7 @@ function UserRegister() {
           title: 'Usuario creado exitosamente!',
           text: 'Revise el correo para activar su cuenta',
           imageUrl:
-            'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+            'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
           imageWidth: 150,
           imageHeight: 150,
           imageAlt: 'Logo henrys',
@@ -73,7 +73,7 @@ function UserRegister() {
         title: 'Error al registrarse',
         text: 'Revise los datos e intente nuevamente.',
         imageUrl:
-          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
         imageWidth: 150,
         imageHeight: 150,
         imageAlt: 'Logo henrys',
