@@ -141,14 +141,10 @@ function UserRegister() {
     <div>
       <Row className="userRegister__container m-3">
         <Col lg={6} sm={12}>
-          <h1 className="userRegister__tittle">Crear una cuenta</h1>
+          <h1 className="userRegister__tittle">Crear tu cuenta</h1>
           <p>Regístrate para poder empezar a disfrutar de Henry´s</p>
-          <Button variant="outline-secondary" className="py-2">
-            <FcGoogle className="me-2" />
-            Registrate con Google
-          </Button>
 
-          <p className="userRegister__divider">──────── Ó ────────</p>
+          <p className="userRegister__divider">────────────────────</p>
           <Form
             className="mb-5"
             onSubmit={(e) => {
