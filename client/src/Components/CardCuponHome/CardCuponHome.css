@@ -1,127 +1,37 @@
 .sectionCupponsHome {
   display: flex;
-  flex-direction: row;
   margin: 4rem auto 4rem;
-  justify-content: space-around;
-}
-.cupponCardHome {
-  background-color: var(--main-color-dark);
-  border: none;
-  width: 40%;
-  color: white;
-  height: 12rem;
-  padding: 1.5rem;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
-.card__img__top {
-  width: 200px;
-  height: 200px;
+.cardCuponHome__containerImg {
+  margin-right: 20px;
   border: 2px solid var(--brand-color);
-  background-color: var(--heading-color);
-  position: relative;
+  border-radius: 50%;
 }
-
-.cupponCardHome__cardBody {
-  margin: 0 auto;
-  left: 2.5rem;
-  bottom: 9.5rem;
-  position: relative;
+.cardCuponHome__img {
+  max-width: 130px;
+  height: 130px;
+  border-radius: 50%;
 }
-
-.cupponCardHome__cupponButton {
-  left: 0.2rem;
-  width: 9rem;
-  border-radius: 1.5rem;
-  border: none;
-  background-color: var(--brand-color);
+.cardCuponHome__cupon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-around;
+  max-height: 200px;
+  border-radius: 20px;
+  padding: 1rem;
+  margin: 1rem;
+  width: 30rem;
+  background-color: var(--main-color-dark);
+  color: var(--main-color-light);
 }
-
-.cupponCardHome__cupponButton:hover {
-  transform: scale(1.2);
-  background-color: var(--brand-color);
-}
-
-@media (max-width: 1200px) {
-  .card__img__top {
-    top: 1rem;
-  }
-}
-
-@media (max-width: 1024px) {
-  .cupponCardHome__cardBody {
-    left: 2.5rem;
-  }
-
-  .card__img__top {
-    width: 35%;
-  }
-}
-
-@media (max-width: 1024px) {
-  .sectionCupponsHome {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 20px;
-    /* position: relative;
-    left: 25vw; */
-    justify-items: center;
-  }
-  .cupponCardHome {
-    width: 50%;
-  }
-
-  .cupponCardHome__cardBody {
-    bottom: 11vh;
-    left: 3.5rem;
-  }
-
-  .cupponCardHome__cupponButton {
-    position: relative;
-    right: 1rem;
-  }
-
-  .card__img__top {
-    top: 1rem;
-  }
-}
-
-@media (max-width: 769px) {
-  /* .sectionCupponsHome {
-    left: 18vw;
-  } */
-  .cupponCardHome__cardBody {
-    bottom: 17vw;
-    left: 4rem;
-  }
-  .cupponCardHome {
-    width: 70%;
-  }
-
-  .card__img__top {
-    top: 0.7rem;
-  }
-}
-
-@media (max-width: 481px) {
-  /* .sectionCupponsHome {
-    left: 7vw;
-  } */
-  .cupponCardHome__cardBody {
-    bottom: 25vw;
-    left: 4rem;
-    /* width: 80%; */
-  }
-  .cupponCardHome {
-    width: 87%;
-    height: 10rem;
-  }
-  .card__img__top {
-    width: 42%;
-    top: 0.4rem;
-  }
-  .cupponCardHome__cupponButton:hover {
-    transform: none;
-  }
+.cardCuponHome__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  min-width: 10rem;
 }
