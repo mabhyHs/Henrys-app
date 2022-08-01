@@ -6,8 +6,14 @@
   box-shadow: none;
 }
 .filter__btn:focus {
+  background-color: var(--main-color-white);
+  color: var(--main-color-dark);
+}
+
+/* importante */
+.activeBtn, .activeBtn:focus {
   background-color: var(--main-color-dark);
-  color: var(--main-color-light);
+  color: var(--main-color-white);
 }
 .activeBtn {
   background-color: var(--main-color-dark);

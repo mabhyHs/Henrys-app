@@ -1,40 +1,37 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Search } from 'react-bootstrap-icons';
-import { getIngredients } from '../../Redux/actions/actions';
 import './SearchBar.css';
-// eslint-disable-next-line no-unused-vars, react/prop-types
-function SearchBar({ onSearch }) {
-  const dispatch = useDispatch();
-  const [ingredients, setIngredients] = useState('');
+
+function SearchBar({ setFilter }) {
+  const [input, setInput] = useState('');
 
   function handleInput(e) {
-    e.preventDefault();
-    setIngredients(e.target.value);
+    setInput(e.target.value);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(getIngredients(ingredients));
-    setIngredients('');
+    setFilter('search', input);
   }
-
-  //   lo que retorna
 
   return (
     <div className="pt-4">
       <input
         className="search__input ps-2"
-        value={ingredients}
         type="text"
-        placeholder="Buscar por Ingrediente"
-        onChange={(e) => handleInput(e)}
+        placeholder="Busca tu hamburguesa"
+        value={input}
+        onChange={handleInput}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') handleSubmit(e);
+        }}
       />
 
       <button
         className="search__btn"
+        name="search"
         type="submit"
-        onClick={(e) => handleSubmit(e)}
+        onClick={handleSubmit}
       >
         <Search />
       </button>

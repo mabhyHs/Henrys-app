@@ -2,6 +2,7 @@
   border-radius: 20px 0px 0px 20px;
   border: var(--bc-inputs);
   border-right: none;
+  outline: none;
 }
 
 .search__btn {
@@ -11,4 +12,8 @@
   border-left: none;
   color: var(--main-color-dark);
   width: 40px;
+}
+
+.search__btn svg {
+  padding-bottom: 3px;
 }

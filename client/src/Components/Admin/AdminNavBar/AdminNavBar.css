@@ -1,0 +1,7 @@
+.adminNavBar__link {
+  color: var(--main-color-dark);
+}
+
+.adminNavBar__logo {
+  max-width: 80px;
+}

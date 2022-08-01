@@ -24,3 +24,10 @@ a svg {
   align-items: center;
   flex-direction: column;
 }
+
+.footer__newsletter__error {
+  color: red;
+  font-size: smaller;
+  font-style: italic;
+  padding-top: 10px;
+}

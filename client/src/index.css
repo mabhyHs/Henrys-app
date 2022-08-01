@@ -356,6 +356,7 @@ template {
   /* COLORS */
   --main-color-dark: #222831;
   --main-color-light: #f1f2f3;
+  --main-color-white: #ffffff;
   --heading-color: #000000;
   --text-color-light: #ffffff;
   --text-color-dark: #1c1c1c;
@@ -396,4 +397,14 @@ h5 {
 p {
   font-family: 'Open Sans', sans-serif;
   font-size: 1rem;
+}
+.swal2-styled.swal2-confirm.confirmBtnSwal {
+  gap: 5px;
+  border-color: var(--brand-color);
+  background: var(--brand-color);
+  box-shadow: var(--bs-btn);
+  border-radius: var(--br-btn);
+}
+.swal2-styled.swal2-confirm.confirmBtnSwal:focus {
+  box-shadow: var(--bs-btn);
 }

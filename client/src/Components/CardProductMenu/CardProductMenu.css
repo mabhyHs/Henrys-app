@@ -20,18 +20,14 @@
   border-radius: 18px 18px 0px 45px;
   border-color: var(--main-color-light);
 }
-.card__menu:hover {
-  -webkit-transform: scale(1.1);
-  -moz-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  -o-transform: scale(1.1);
-  transform: scale(1.1);
-}
 
 .card__menu__cart {
   background-color: var(--brand-color);
-  padding: 5px;
   border-radius: 90px;
+}
+
+.card__menu__cart svg {
+  font-size: 1.2rem;
 }
 
 .card__cart__container {

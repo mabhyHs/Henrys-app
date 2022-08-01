@@ -8,35 +8,53 @@ import friesCupon from '../../Assets/Images/Hamburguesas/PAPAS-KING-copia.png';
 function CardCupponHome() {
   return (
     <section className="sectionCupponsHome">
-      <Card className="cupponCardHome">
-        <Card.Img variant="top" src={hambCupon} className="card__img__top" />
-        <Card.Body className="cupponCardHome__cardBody">
-          <Card.Title>
-            <h2>CheckPoint Day</h2>
-          </Card.Title>
-          <Card.Text>
-            <h2>20%off</h2>
-          </Card.Text>
-          <Button variant="primary" className="cupponCardHome__cupponButton">
+      <div className="cardCuponHome__cupon">
+        <div className="cardCuponHome__containerImg">
+          <img
+            className="cardCuponHome__img img-fluid"
+            src={hambCupon}
+            alt="cupon de hamburguesa"
+          />
+        </div>
+        <div className="cardCuponHome__text">
+          <h2>CheckPoint Day</h2>
+          <p>20%off</p>
+          <Button
+            onClick={() => {
+              navigator.clipboard.writeText('RTTAS87');
+              alert('Código copiado al portapapeles con éxito');
+            }}
+            variant="primary"
+            className="cupponCardHome__cupponButton"
+          >
             RTTAS87
           </Button>
-        </Card.Body>
-      </Card>
+        </div>
+      </div>
 
-      <Card className="cupponCardHome">
-        <Card.Img variant="top" src={friesCupon} className="card__img__top" />
-        <Card.Body className="cupponCardHome__cardBody">
-          <Card.Title>
-            <h2>Dia de fritas</h2>
-          </Card.Title>
-          <Card.Text>
-            <h2>15%off</h2>
-          </Card.Text>
-          <Button variant="primary" className="cupponCardHome__cupponButton">
+      <div className="cardCuponHome__cupon">
+        <div className="cardCuponHome__containerImg">
+          <img
+            src={friesCupon}
+            alt="cupon de hamburguesa"
+            className="cardCuponHome__img img-fluid"
+          />
+        </div>
+        <div className="cardCuponHome__text">
+          <h2>Fries Day</h2>
+          <p>15%off</p>
+          <Button
+            onClick={() => {
+              navigator.clipboard.writeText('XLXR567');
+              alert('Código copiado al portapapeles con éxito');
+            }}
+            variant="primary"
+            className="cupponCardHome__cupponButton"
+          >
             XLXR567
           </Button>
-        </Card.Body>
-      </Card>
+        </div>
+      </div>
     </section>
   );
 }
