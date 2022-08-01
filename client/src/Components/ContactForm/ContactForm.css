@@ -1,0 +1,33 @@
+.contact__form__container {
+  align-items: center;
+  justify-content: center;
+}
+.contact__text__left {
+  text-align: left;
+}
+.contactForm__input {
+  border-radius: 20px;
+  margin: 7px;
+  border: var(--bc-inputs);
+  padding: 0.5rem;
+  margin-bottom: 15px;
+}
+.contactForm__errContainer {
+  height: 20px;
+}
+
+.contactForm__errContainer p {
+  color: red;
+  font-size: smaller;
+  font-style: italic;
+}
+
+.btn.disabled,
+.btn:disabled,
+fieldset:disabled .btn {
+  text-decoration: none;
+  background: var(--btn-hover);
+  color: gray;
+  border: var(--btn-hover);
+  cursor: default;
+}
