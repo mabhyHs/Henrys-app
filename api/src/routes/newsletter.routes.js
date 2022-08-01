@@ -1,25 +1,28 @@
 const express = require("express");
 const {
-  getAllSecure,
+  get,
   create,
+  sendEmails,
   destroy,
   restore,
-  update,
-} = require("../controllers/users.controllers");
-const { roleValidator } = require("../middlewares/usersValidation");
-const validationResultHandler = require("../middlewares/validationResultHandler");
+} = require("../controllers/newsletter.controllers");
 const verifyToken = require("../middlewares/tokenValidation");
+const { roleValidator } = require("../middlewares/newsletterValidation");
+const validationResultHandler = require("../middlewares/validationResultHandler");
 
 const router = express.Router();
 
-router.get(
-  "/",
+router.get("/", verifyToken, get);
+router.post("/", create);
+
+router.post(
+  "/send",
   verifyToken,
   roleValidator,
   validationResultHandler,
-  getAllSecure
+  sendEmails
 );
-router.post("/", verifyToken, roleValidator, validationResultHandler, create);
+
 router.delete(
   "/:id",
   verifyToken,
@@ -34,6 +37,5 @@ router.post(
   validationResultHandler,
   restore
 );
-router.put("/", verifyToken, roleValidator, validationResultHandler, update);
 
 module.exports = router;

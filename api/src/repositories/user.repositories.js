@@ -10,6 +10,15 @@ async function getByEmail(email) {
   return user;
 }
 
+async function getAllSecure() {
+    let user = await User.findAll();
+    user = user.map(e => {
+        e.password = undefined
+        return e;        
+    });
+    return user;
+}
+
 async function getById(id) {
   const user = await User.findByPk(id);
   return user;
@@ -38,6 +47,31 @@ async function updatePassword(email, newPassword) {
   );
 }
 
+async function destroy(id) {
+  const deletedUser = await User.destroy({
+    where: {
+      id: id,
+    },
+  });
+
+  return deletedUser;
+}
+
+async function restore(id) {
+  const restoredUser = await User.restore({
+    where: {
+      id: id,
+    },
+  });
+
+  return restoredUser;
+}
+
+async function update(data) {
+  const updatedUser = await User.update(data, { where: { id: data.id } });
+  return updatedUser;
+}
+
 module.exports = {
   create,
   getByEmail,
@@ -45,4 +79,8 @@ module.exports = {
   activateAccount,
   createGoogleAccount,
   updatePassword,
+  destroy,
+  restore,
+  update,
+  getAllSecure
 };
