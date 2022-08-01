@@ -47,6 +47,7 @@ function Menu() {
 
   useEffect(() => {
     if (!mount.current) {
+      dispatch(getProduct());
       mount.current = true;
     } else if (filters) {
       setPage(1);
