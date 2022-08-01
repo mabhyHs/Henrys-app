@@ -5,44 +5,51 @@ import ProductsContainerHome from '../ProductsContainerHome/ProductsContainerHom
 import Locals from '../Locals/Locals';
 import CuponContainerHome from '../CuponContainerHome/CuponContainerHome';
 import { setLoginState } from '../../Redux/actions/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 
 function Home() {
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useAuth0();
-  const isSession = useSelector((state) => state.loginState);
 
 
   useEffect(() => {
 
-    const fetchData = async (payload) => {
-        try {
-        const json = await axios.post(`/google`, payload);
-        if (json.status === 200) {
-        window.localStorage.setItem(
-            'user',
-            JSON.stringify({ ...json.data.user, token: json.data.data.token })
-        );
-        dispatch(setLoginState(true));
-        }
-    } catch (error) {
-        console.log(error);
-        window.alert('Error al iniciar sesión');
-    }
-    }
+    if (isAuthenticated && user && !window.localStorage.getItem('user')) {
 
-    if (!isSession && isAuthenticated && user && !window.localStorage.getItem('user')) {
+        const fetchData = async (payload) => {
+            try {
+                const json = await axios.post(`/google`, payload);
+            if (json.status === 200) {
+                window.localStorage.setItem('user', JSON.stringify({ ...json.data.user, token: json.data.data.token }));
+                dispatch(setLoginState(true));
+            }
+        } catch (error) {
+                Swal.fire({
+                    customClass: {
+                        confirmButton: 'confirmBtnSwal',
+                    },
+                        title: 'Opss...',
+                        text: 'Error al intentar logearse con google!',
+                        imageUrl:
+                        'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+                        imageWidth: 150,
+                        imageHeight: 150,
+                        imageAlt: 'Logo henrys',
+                    });
+                }
+            }
         
         fetchData({
-            firstName: user.family_name,
+            firstName: user.given_name,
             email: user.email,
-            lastName: user.given_name,
+            lastName: user.family_name,
             imgUri: user.picture,
         });
     }
   
-  }, [dispatch, isAuthenticated, user, isSession])
+  }, [dispatch, isAuthenticated, user])
 
   return (
     <div>

@@ -5,13 +5,15 @@ import { Link } from 'react-router-dom';
 import imgUserDefault from '../../../Assets/Images/logo-henrys.png';
 
 import './UserLoggedInDropdown.css';
+import { setImgError } from '../../methods';
 
 function UserLoggedInDropdown({ userData, logoutSession }) {
   return (
     <Dropdown>
       <Dropdown.Toggle className="nav__btn" id="dropdown-basic">
         <img
-          src={userData.imgUri || imgUserDefault}
+          src={userData.imgUri}
+          onError={(e, imgUserDefault) => setImgError(e, imgUserDefault)}
           alt="img not found"
           className="loggedIn__img__profile"
         ></img>
