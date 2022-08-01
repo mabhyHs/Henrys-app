@@ -27,6 +27,9 @@ function NavBar() {
   useEffect(() => {
     if (mount.current) {
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      if (isLogged()) {
+        dispatch(setLoginState(true));
+      }
       mount.current = false;
     } else {
       if (isLogged()) {
