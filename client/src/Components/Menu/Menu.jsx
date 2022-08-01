@@ -22,8 +22,6 @@ function Menu() {
   const category = useSelector((state) => state.category);
   const currentProduct = allProducts.slice(firstBurgerIndex, lastBurgerIndex);
 
-  const mount = useRef(false);
-
   const [filters, setFilters] = useState({
     category: category, // alguna filtro
     order: '', // algun string
@@ -46,9 +44,7 @@ function Menu() {
   };
 
   useEffect(() => {
-    if (!mount.current) {
-      mount.current = true;
-    } else if (filters) {
+    if (filters) {
       setPage(1);
       dispatch(
         getProduct(
