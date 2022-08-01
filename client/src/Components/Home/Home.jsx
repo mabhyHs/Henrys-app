@@ -33,7 +33,7 @@ function Home() {
                         title: 'Opss...',
                         text: 'Error al intentar logearse con google!',
                         imageUrl:
-                        'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+                        'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
                         imageWidth: 150,
                         imageHeight: 150,
                         imageAlt: 'Logo henrys',
