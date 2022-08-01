@@ -34,6 +34,6 @@ router.post(
   validationResultHandler,
   restore
 );
-router.put("/", verifyToken, roleValidator, validationResultHandler, update);
+router.put("/", verifyToken, validationResultHandler, update);
 
 module.exports = router;
