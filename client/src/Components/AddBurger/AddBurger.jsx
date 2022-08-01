@@ -58,9 +58,16 @@ const añadirIngredientes = function (
       precioPrimeraVez(precio, setPrecio, copiaIngredientes);
     } else {
       Swal.fire({
-        icon: 'error',
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
         title: 'Oops...',
         text: 'Sólo puedes seleccionar hasta 6 Ingredientes',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
       });
     }
   }
