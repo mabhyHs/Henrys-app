@@ -34,7 +34,7 @@ function addDataDB() {
       id: 6,
       name: "Chedar",
       price: 35,
-      isVeggie: false,
+      isVeggie: true,
     },
     {
       id: 7,
@@ -47,6 +47,18 @@ function addDataDB() {
       name: "Bacon",
       price: 30,
       isVeggie: false,
+    },
+    {
+      id: 9,
+      name: "Medallón de carne",
+      price: 80,
+      isVeggie: false,
+    },
+    {
+      id: 10,
+      name: "Medallón vegetariano",
+      price: 50,
+      isVeggie: true,
     },
   ];
 
@@ -306,9 +318,9 @@ function addDataDB() {
       id: "a666ed45-45fd-47a8-8196-4670f4e87b60",
       name: "Combo Vegano",
       price: 1500,
-      isVeggie: false,
+      isVeggie: true,
       imgUri:
-        "https://scontent.faep7-1.fna.fbcdn.net/v/t39.30808-6/240602789_4576646515713082_7974142449783503495_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=a26aad&_nc_ohc=E5asGSVTMh8AX8lMSay&_nc_oc=AQkFf-fbCp9wSBjC0mioycr0_zcW2nU4xiVMqcFW_kRxW6fH2jUbZuua5ZviUbXSBzA&_nc_ht=scontent.faep7-1.fna&oh=00_AT8mcJKvgFrkwQGiVompZ3zfV9ftZIl_TU3U_jYHZpQ1gg&oe=62E13114",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368850/combos/Combo1_zpm4ha.png",
       burgers: [
         "ca03dd5b-9d64-42b4-81e8-fd53aa6904c6",
         // "ca03dd5b-9d64-42b4-81e8-fd53aa6904c6",
