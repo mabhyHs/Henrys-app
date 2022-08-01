@@ -46,7 +46,7 @@ function NavBar() {
     dispatch(setLoginState(false));
 
     if (isAuthenticated) {
-      logout();
+      logout({returnTo: window.location.origin});
     }
   }
 
