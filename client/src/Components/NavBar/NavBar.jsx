@@ -7,7 +7,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { CartFill, CartCheckFill } from 'react-bootstrap-icons';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, Navigate, useLocation, useParams } from 'react-router-dom';
 import imgNav from '../../Assets/Images/logo-henrys300px.png';
 import UserLoggedInDropdown from '../User/UserLoggedIn/UserLoggedInDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -39,15 +39,34 @@ function NavBar() {
   }, [dispatch]);
 
   function logoutSession() {
-    window.localStorage.removeItem('user');
-    window.localStorage.removeItem('carrito');
-    window.localStorage.removeItem('favoritos');
+
+    removeLocalStorage()
+
+    if(!isAuthenticated){
+        Navigate("/");
+    }
 
     dispatch(setLoginState(false));
 
     if (isAuthenticated) {
       logout({returnTo: window.location.origin});
     }
+  }
+
+  function removeLocalStorage(){
+
+    if(window.localStorage.getItem('user')){
+        window.localStorage.removeItem('user');
+    }
+
+    if(window.localStorage.getItem('carrito')){        
+        window.localStorage.removeItem('carrito');
+    }
+
+    if(window.localStorage.getItem('favoritos')){
+        window.localStorage.removeItem('favoritos');
+    }
+    
   }
 
   function isLogged() {
