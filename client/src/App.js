@@ -46,7 +46,7 @@ function App() {
 
         {/* USER ROUTES */}
         <Route path="/userlogin" element={isSession ? <Navigate to="/" /> : <UserLogin />} />
-        <Route path="/registeruser" element={isSession ? <UserRegister /> : <Navigate to="/" />} />
+        <Route path="/registeruser" element={isSession ? <Navigate to="/" /> : <UserRegister />} />
         <Route path="/userfavorites" element={isSession ? <UserFavorites /> : <Navigate to="/" />} />
         <Route path="/userpersonalinfo" element={isSession ? <UserPersonalInfo /> : <Navigate to="/" />} />
         <Route path="/userprofiledashboard" element={isSession ? <UserProfileDashboard /> : <Navigate to="/" />} />
