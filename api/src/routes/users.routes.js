@@ -5,6 +5,7 @@ const {
   destroy,
   restore,
   update,
+  updateProfileData,
 } = require("../controllers/users.controllers");
 const { roleValidator } = require("../middlewares/usersValidation");
 const validationResultHandler = require("../middlewares/validationResultHandler");
@@ -34,6 +35,9 @@ router.post(
   validationResultHandler,
   restore
 );
+
 router.put("/", verifyToken, roleValidator, validationResultHandler, update);
+
+router.put("/:id", verifyToken, validationResultHandler, updateProfileData);
 
 module.exports = router;
