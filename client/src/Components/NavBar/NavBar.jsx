@@ -1,23 +1,22 @@
-/* eslint-disable no-constant-condition */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-/* import Button from 'react-bootstrap/Button'; */
 import Container from 'react-bootstrap/Container';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { CartFill, CartCheckFill } from 'react-bootstrap-icons';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import imgNav from '../../Assets/Images/logo-henrys300px.png';
 import UserLoggedInDropdown from '../User/UserLoggedIn/UserLoggedInDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import './NavBar.css';
-import { setLoginState } from '../../Redux/actions/actions';
+import { deleteCart, setLoginState } from '../../Redux/actions/actions';
 
 function NavBar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const itemsToCart = useSelector((state) => state.cart);
   const isSession = useSelector((state) => state.loginState);
   const mount = useRef(true);
@@ -38,16 +37,34 @@ function NavBar() {
     }
   }, [dispatch]);
 
-  function logoutSession() {
-    window.localStorage.removeItem('user');
-    window.localStorage.removeItem('carrito');
-    window.localStorage.removeItem('favoritos');
-
+  function logoutSession(e) {
+    e.preventDefault()
+    removeLocalStorage();
     dispatch(setLoginState(false));
 
-    if (isAuthenticated) {
+    if(!isAuthenticated){
+        navigate('/');
+    }
+    else {
       logout({returnTo: window.location.origin});
     }
+  }
+
+  function removeLocalStorage(){
+
+    if(window.localStorage.getItem('user')){
+        window.localStorage.removeItem('user');
+    }
+
+    if(window.localStorage.getItem('carrito')){   
+        dispatch(deleteCart(false));   
+        window.localStorage.removeItem('carrito');
+    }
+
+    if(window.localStorage.getItem('favoritos')){
+        window.localStorage.removeItem('favoritos');
+    }
+    
   }
 
   function isLogged() {
