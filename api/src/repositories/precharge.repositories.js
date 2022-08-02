@@ -60,8 +60,14 @@ async function precharge() {
         ignoreDuplicates: true,
     });
 
-    await BurgerBase.bulkCreate([{            
-            price: 250
+    await BurgerBase.bulkCreate([{
+            name: "Base" ,          
+            price: 250,
+        },
+        {
+            name: "Base vegana" ,          
+            price: 370,
+            isVeggie: true
         }], {
         ignoreDuplicates: true,
     });
