@@ -20,6 +20,8 @@ const newsletterRouter = require("./newsletter.routes");
 
 const payRouter = require("./pay.routes");
 
+const reviewsRouter = require("./review.routes");
+
 const router = express.Router();
 
 router.use("/users", usersRouter);
@@ -40,5 +42,7 @@ router.use("/burgerBase", burgerBaseRouter);
 router.use("/newsletter", newsletterRouter);
 
 router.use("/pay", payRouter);
+
+router.use("/reviews", reviewsRouter);
 
 module.exports = router;
