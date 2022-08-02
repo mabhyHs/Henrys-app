@@ -19,6 +19,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
+      imgUri: {
+        type: DataTypes.TEXT,
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
       isVeggie: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

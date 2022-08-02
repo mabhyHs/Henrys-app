@@ -56,7 +56,7 @@ function addDataDB() {
     },
     {
       id: 10,
-      name: "Medallón vegetariano",
+      name: "Medallón vegetal",
       price: 50,
       isVeggie: true,
     },

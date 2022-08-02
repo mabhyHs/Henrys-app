@@ -63,11 +63,15 @@ async function precharge() {
     await BurgerBase.bulkCreate([{
             name: "Base" ,          
             price: 250,
+            imgUri: "https://res.cloudinary.com/henrysburgers/image/upload/v1659368855/Hamburguesas/Hamburguesa-con-Queso_nhyhcd.png",
+            description: "Incluye pan y 1 medallón de carne"
         },
         {
-            name: "Base vegana" ,          
+            name: "Base vegetariana" ,          
             price: 370,
-            isVeggie: true
+            isVeggie: true,
+            imgUri: "https://res.cloudinary.com/henrysburgers/image/upload/v1659368859/Hamburguesas/King-de-vegetal_ljh5ot.png",
+            description: "Incluye pan con sésamo y 1 medallón vegetal"
         }], {
         ignoreDuplicates: true,
     });
