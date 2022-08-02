@@ -36,8 +36,8 @@ router.post(
   restore
 );
 
-router.put("/", verifyToken, roleValidator, validationResultHandler, update);
-
 router.put("/:id", verifyToken, validationResultHandler, updateProfileData);
+
+router.put("/", verifyToken, roleValidator, validationResultHandler, update);
 
 module.exports = router;
