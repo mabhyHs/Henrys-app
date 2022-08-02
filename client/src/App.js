@@ -26,6 +26,10 @@ import './App.css';
 import { isLogged, isLoggedAdmin } from './Components/methods';
 
 function App() {
+
+  const isSession = isLogged();
+  const isSessionAdmin = isLoggedAdmin();
+
   return (
     <div className="App">
       <NavBar />
@@ -41,18 +45,18 @@ function App() {
         <Route path="/detalle/:id" element={<ProductDetail />} />
 
         {/* USER ROUTES */}
-        <Route path="/userlogin" element={isLogged() ? <Navigate to="/" /> : <UserLogin />} />
-        <Route path="/registeruser" element={isLogged() ? <UserRegister /> : <Navigate to="/" />} />
-        <Route path="/userfavorites" element={isLogged() ? <UserFavorites /> : <Navigate to="/" />} />
-        <Route path="/userpersonalinfo" element={isLogged() ? <UserPersonalInfo /> : <Navigate to="/" />} />
-        <Route path="/userprofiledashboard" element={isLogged() ? <UserProfileDashboard /> : <Navigate to="/" />} />
-        <Route path="/calificanos" element={isLogged() ? <UserReview /> : <Navigate to="/" />} />
-        <Route path="/activateAcount/:id" element={isLogged() ? <Navigate to="/" /> : <UserActivateAccount />} />
+        <Route path="/userlogin" element={isSession ? <Navigate to="/" /> : <UserLogin />} />
+        <Route path="/registeruser" element={isSession ? <UserRegister /> : <Navigate to="/" />} />
+        <Route path="/userfavorites" element={isSession ? <UserFavorites /> : <Navigate to="/" />} />
+        <Route path="/userpersonalinfo" element={isSession ? <UserPersonalInfo /> : <Navigate to="/" />} />
+        <Route path="/userprofiledashboard" element={isSession ? <UserProfileDashboard /> : <Navigate to="/" />} />
+        <Route path="/calificanos" element={isSession ? <UserReview /> : <Navigate to="/" />} />
+        <Route path="/activateAcount/:id" element={isSession ? <Navigate to="/" /> : <UserActivateAccount />} />
         <Route path="/cart" element={<ShoppingCart />} />
 
         {/* ADMIN ROUTES */}
-        <Route path="/adminhome" element={isLoggedAdmin() ? <AdminDashboard /> : <Navigate to="/" />} />
-        <Route path="/newsletter" element={isLoggedAdmin() ? <SendNewsletter /> : <Navigate to="/" />} />
+        <Route path="/adminhome" element={isSessionAdmin ? <AdminDashboard /> : <Navigate to="/" />} />
+        <Route path="/newsletter" element={isSessionAdmin ? <SendNewsletter /> : <Navigate to="/" />} />
 
       </Routes>
       <Footer />
