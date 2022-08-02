@@ -13,12 +13,16 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "Burger base 1",
         unique: true
       },
       price: {
         type: DataTypes.FLOAT,
         allowNull: false,
+      },
+      isVeggie: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
       },
     },
     {
