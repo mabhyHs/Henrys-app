@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import NavBar from './Components/NavBar/NavBar';
 import ContactoForm from './Components/ContactForm/ContactoForm';
 import Footer from './Components/Footer/Footer';
@@ -20,15 +20,17 @@ import UserReview from './Components/User/UserReview/UserReview';
 import ShoppingCart from './Components/ShoppingCart/ShoppingCart';
 
 import AdminDashboard from './Components/Admin/Dashboard/AdminDashboard';
+import SendNewsletter from './Components/Admin/SendNewsletter/SendNewsletter';
 
 import './App.css';
-import SendNewsletter from './Components/Admin/SendNewsletter/SendNewsletter';
+import { isLogged, isLoggedAdmin } from './Components/methods';
 
 function App() {
   return (
     <div className="App">
       <NavBar />
       <Routes>
+
         {/* APP ROUTES */}
         <Route path="*" exact element={<NotFound />} />
         <Route path="/" element={<Home />} />
@@ -39,20 +41,19 @@ function App() {
         <Route path="/detalle/:id" element={<ProductDetail />} />
 
         {/* USER ROUTES */}
-        <Route path="/userlogin" element={<UserLogin />} />
-        <Route path="/registeruser" element={<UserRegister />} />
-        <Route path="/userfavorites" element={<UserFavorites />} />
+        <Route path="/userlogin" element={isLogged() ? <Navigate to="/" /> : <UserLogin />} />
+        <Route path="/registeruser" element={isLogged() ? <UserRegister /> : <Navigate to="/" />} />
+        <Route path="/userfavorites" element={isLogged() ? <UserFavorites /> : <Navigate to="/" />} />
+        <Route path="/userpersonalinfo" element={isLogged() ? <UserPersonalInfo /> : <Navigate to="/" />} />
+        <Route path="/userprofiledashboard" element={isLogged() ? <UserProfileDashboard /> : <Navigate to="/" />} />
+        <Route path="/calificanos" element={isLogged() ? <UserReview /> : <Navigate to="/" />} />
+        <Route path="/activateAcount/:id" element={isLogged() ? <Navigate to="/" /> : <UserActivateAccount />} />
         <Route path="/cart" element={<ShoppingCart />} />
-        <Route path="/userpersonalinfo" element={<UserPersonalInfo />} />
-        <Route
-          path="/userprofiledashboard"
-          element={<UserProfileDashboard />}
-        />
-        <Route path="/activateAcount/:id" element={<UserActivateAccount />} />
-        <Route path="/calificanos" element={<UserReview />} />
+
         {/* ADMIN ROUTES */}
-        <Route path="/adminhome" element={<AdminDashboard />} />
-        <Route path="/newsletter" element={<SendNewsletter />} />
+        <Route path="/adminhome" element={isLoggedAdmin() ? <AdminDashboard /> : <Navigate to="/" />} />
+        <Route path="/newsletter" element={isLoggedAdmin() ? <SendNewsletter /> : <Navigate to="/" />} />
+
       </Routes>
       <Footer />
     </div>

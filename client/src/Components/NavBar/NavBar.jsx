@@ -27,12 +27,12 @@ function NavBar() {
     if (mount.current) {
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
       if (isLogged()) {
-        dispatch(setLoginState(true));
+        dispatch(setLoginState( JSON.parse(window.localStorage.getItem('user')) ));
       }
       mount.current = false;
     } else {
       if (isLogged()) {
-        dispatch(setLoginState(true));
+        dispatch(setLoginState( JSON.parse(window.localStorage.getItem('user') )));
       }
     }
   }, [dispatch]);

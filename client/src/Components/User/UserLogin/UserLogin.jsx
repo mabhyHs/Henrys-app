@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -48,12 +48,10 @@ function UserLogin() {
       const res = await axios.post(`/login`, { ...input });
 
       if (res.status === 200) {
-        if (!isSession) {
-          window.localStorage.setItem(
-            'user',
-            JSON.stringify({ ...res.data.user, token: res.data.data.token })
-          );
-          dispatch(setLoginState(true));
+        if (!isSession) {            
+          const data = { ...res.data.user, token: res.data.data.token };
+          window.localStorage.setItem('user', JSON.stringify(data));
+          dispatch(setLoginState(data));
           navigate('/');
         }
       }
@@ -111,15 +109,8 @@ function UserLogin() {
     handleClose();
   };
 
-  if (isSession) {
-    navigate('/');
-  }
-
   return (
     <div>
-      {isSession && <div></div>}
-
-      {!isSession && (
         <Row className="userLogin__container m-3">
           <Col lg={6} sm={12}>
             <h1 className="userLogin__tittle">Ingresá a tu cuenta</h1>
@@ -215,7 +206,6 @@ function UserLogin() {
             />
           </Col>
         </Row>
-      )}
     </div>
   );
 }

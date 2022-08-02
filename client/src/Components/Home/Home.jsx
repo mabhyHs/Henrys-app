@@ -20,10 +20,11 @@ function Home() {
 
         const fetchData = async (payload) => {
             try {
-                const json = await axios.post(`/google`, payload);
-            if (json.status === 200) {
-                window.localStorage.setItem('user', JSON.stringify({ ...json.data.user, token: json.data.data.token }));
-                dispatch(setLoginState(true));
+                const res = await axios.post(`/google`, payload);
+            if (res.status === 200) {
+                const data = { ...res.data.user, token: res.data.data.token };
+                window.localStorage.setItem('user', JSON.stringify(data));
+                dispatch(setLoginState(data));
             }
         } catch (error) {
                 Swal.fire({
