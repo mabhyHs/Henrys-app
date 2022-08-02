@@ -47,7 +47,14 @@ function Menu() {
 
   useEffect(() => {
     if (!mount.current) {
-      dispatch(getProduct());
+        dispatch(
+            getProduct(
+              filters.category,
+              filters.order,
+              filters.search,
+              filters.isVeggie
+            )
+          );
       mount.current = true;
     } else if (filters) {
       setPage(1);
