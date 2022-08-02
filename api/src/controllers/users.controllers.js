@@ -3,19 +3,18 @@ const bcrypt = require("bcrypt");
 const { transporter } = require("../config/emailTransporter");
 
 async function getAllSecure(req, res, next) {
-    try {
-      /* hay que validar que tenga el rol de admin */
-      const all = await userRepositories.getAllSecure();
-  
-      if (!all){
-        return res.status(404).json("There are no users loaded!");
-      }   
+  try {
+    /* hay que validar que tenga el rol de admin */
+    const all = await userRepositories.getAllSecure();
 
-      return res.status(200).json(all);
-
-    } catch (error) {
-      next(error);
+    if (!all) {
+      return res.status(404).json("There are no users loaded!");
     }
+
+    return res.status(200).json(all);
+  } catch (error) {
+    next(error);
+  }
 }
 
 /* las cuentas que crea el admin */
@@ -25,8 +24,10 @@ async function create(req, res, next) {
     const data = req.body;
     const findUser = await userRepositories.getByEmail(data.email);
 
-    if(findUser){
-        return res.status(400).json({ error: "A user with this email already exists" });
+    if (findUser) {
+      return res
+        .status(400)
+        .json({ error: "A user with this email already exists" });
     }
 
     data.password = await bcrypt.hash(data.password, 10);
@@ -271,6 +272,30 @@ async function update(req, res, next) {
   }
 }
 
+async function updateProfileData(req, res, next) {
+  const { firstName, lastName, password, imgUri } = req.body;
+  try {
+    let data = {};
+    data.id = req.params.id;
+    if (firstName) {
+      data.firstName = firstName;
+    }
+    if (lastName) {
+      data.lastName = lastName;
+    }
+    if (password) {
+      data.password = await bcrypt.hash(password, 10);
+    }
+    if (imgUri) {
+      data.imgUri = imgUri;
+    }
+    const updatedUser = await userRepositories.update(data);
+    return res.status(200).json({ message: "User updated" });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getAllSecure,
   create,
@@ -278,4 +303,5 @@ module.exports = {
   destroy,
   restore,
   update,
+  updateProfileData,
 };
