@@ -27,6 +27,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         allowNull: false,
       },
+      user_id: {
+        type: DataTypes.UUID,
+      },
       date: {
         type: DataTypes.DATEONLY,
         defaultValue: new Date(),
