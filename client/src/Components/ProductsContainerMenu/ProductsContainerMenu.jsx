@@ -33,7 +33,7 @@ function ProductsContainerMenu({ currentProduct }) {
       imageHeight: 80,
       text: 'Producto agregado exitosamente',
       showConfirmButton: false,
-      timer: 5500,
+      timer: 800,
       width: '12rem',
       height: '5rem',
       padding: '0.5rem',

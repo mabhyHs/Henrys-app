@@ -361,10 +361,11 @@ template {
   --text-color-light: #ffffff;
   --text-color-dark: #1c1c1c;
   --brand-color: #ffbe33;
-  --main-color-admin-dark: #6c757d;
+  --main-color-admin-dark: #353a3e;
 
   /* HOVERS */
   --btn-hover: #835f14;
+  --btn-hover-admin: #353a3e;
 
   /* BORDERS*/
   /* Radius */

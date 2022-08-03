@@ -11,7 +11,11 @@ import UserLoggedInDropdown from '../User/UserLoggedIn/UserLoggedInDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import AdminNavBar from '../Admin/AdminNavBar/AdminNavBar';
-import { deleteCart, setLocalStorage, setLoginState } from '../../Redux/actions/actions';
+import {
+  deleteCart,
+  setLocalStorage,
+  setLoginState,
+} from '../../Redux/actions/actions';
 
 import './NavBar.css';
 
@@ -82,7 +86,7 @@ function NavBar() {
     return JSON.parse(window.localStorage.getItem('user'));
   }
 
-  function setScrollToTop(){
+  function setScrollToTop() {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }
 
@@ -93,7 +97,7 @@ function NavBar() {
         <Navbar className="navBar" expand="lg" variant="dark" sticky="top">
           <Container>
             <Navbar.Brand as={Link} to="/">
-              <img src={imgNav} className="nav-img" alt="Henrys burguer logo" />
+              <img src={imgNav} className="nav-img" alt="Henrys burguer logo" />{' '}
             </Navbar.Brand>
 
             <Navbar.Toggle aria-controls="navbarScroll" />
@@ -105,7 +109,9 @@ function NavBar() {
                 navbarScroll
               >
                 <Nav.Link
-                  className={path === '/' ? 'linkActive' : ''}
+                  className={
+                    path === '/' ? 'linkActive' : 'navBar__users__link'
+                  }
                   as={Link}
                   to="/"
                   onClick={setScrollToTop}
@@ -113,7 +119,9 @@ function NavBar() {
                   Home
                 </Nav.Link>
                 <Nav.Link
-                  className={path === '/menu' ? 'linkActive' : ''}
+                  className={
+                    path === '/menu' ? 'linkActive' : 'navBar__users__link'
+                  }
                   as={Link}
                   to="/menu"
                   onClick={setScrollToTop}
@@ -121,7 +129,9 @@ function NavBar() {
                   Menú
                 </Nav.Link>
                 <Nav.Link
-                  className={path === '/nosotros' ? 'linkActive' : ''}
+                  className={
+                    path === '/nosotros' ? 'linkActive' : 'navBar__users__link'
+                  }
                   as={Link}
                   to="/nosotros"
                   onClick={setScrollToTop}
@@ -129,7 +139,9 @@ function NavBar() {
                   Nosotros
                 </Nav.Link>
                 <Nav.Link
-                  className={path === '/contacto' ? 'linkActive' : ''}
+                  className={
+                    path === '/contacto' ? 'linkActive' : 'navBar__users__link'
+                  }
                   as={Link}
                   to="/contacto"
                   onClick={setScrollToTop}
