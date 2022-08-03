@@ -1,4 +1,13 @@
-const { Ingredient, Burger, Fries, Beverage, Combo, User, BurgerBase } = require("../models");
+const {
+  Newsletter,
+  Ingredient,
+  Burger,
+  Fries,
+  Beverage,
+  Combo,
+  User,
+  BurgerBase,
+} = require("../models");
 const bcrypt = require("bcrypt");
 
 const { addDataDB } = require("../utils/addDataDB");
@@ -49,32 +58,50 @@ async function precharge() {
       }
     }
 
-    await User.bulkCreate([{
-            firstName: "Henry",
-            lastName: "Burger",
-            email: "henrysburgers@admin.com",
-            password: await bcrypt.hash("admin@", 10),
-            role: "admin",
-            isConfirmed: true
-        }], {
+    await User.bulkCreate(
+      [
+        {
+          firstName: "Henry",
+          lastName: "Burger",
+          email: "henrysburgers@admin.com",
+          password: await bcrypt.hash("admin@", 10),
+          role: "admin",
+          isConfirmed: true,
+        },
+      ],
+      {
         ignoreDuplicates: true,
-    });
+      }
+    );
 
-    await BurgerBase.bulkCreate([{
-            name: "Base" ,          
-            price: 250,
-            imgUri: "https://res.cloudinary.com/henrysburgers/image/upload/v1659368855/Hamburguesas/Hamburguesa-con-Queso_nhyhcd.png",
-            description: "Incluye pan y 1 medallón de carne"
+    await Newsletter.bulkCreate([
+      {
+        email: "henrysburgers@admin.com",
+      },
+    ]);
+
+    await BurgerBase.bulkCreate(
+      [
+        {
+          name: "Base",
+          price: 250,
+          imgUri:
+            "https://res.cloudinary.com/henrysburgers/image/upload/v1659368855/Hamburguesas/Hamburguesa-con-Queso_nhyhcd.png",
+          description: "Incluye pan y 1 medallón de carne",
         },
         {
-            name: "Base vegetariana" ,          
-            price: 370,
-            isVeggie: true,
-            imgUri: "https://res.cloudinary.com/henrysburgers/image/upload/v1659368859/Hamburguesas/King-de-vegetal_ljh5ot.png",
-            description: "Incluye pan con sésamo y 1 medallón vegetal"
-        }], {
+          name: "Base vegetariana",
+          price: 370,
+          isVeggie: true,
+          imgUri:
+            "https://res.cloudinary.com/henrysburgers/image/upload/v1659368859/Hamburguesas/King-de-vegetal_ljh5ot.png",
+          description: "Incluye pan con sésamo y 1 medallón vegetal",
+        },
+      ],
+      {
         ignoreDuplicates: true,
-    });
+      }
+    );
 
     console.log("models precharged successfully!");
   } catch (error) {
