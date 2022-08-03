@@ -1,8 +1,8 @@
 import React from 'react';
 import { addFavorites } from '../../Redux/actions/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Heart, CartPlus } from 'react-bootstrap-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -10,9 +10,17 @@ import Button from 'react-bootstrap/Button';
 import './CardProductMenu.css';
 
 function CardProductMenu({ id, name, price, imgUri, addToCart }) {
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const isSession = useSelector((state) => state.loginState);
+
   const addFav = () => {
+    if (!isSession) {
+      // navigate('/userlogin');
+      alert('es necesario estar logueado');
+    } else {
+    }
     dispatch(addFavorites(id));
   };
 
