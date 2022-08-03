@@ -8,7 +8,7 @@ export function setImgError(e, img){
 }
 
 export function isLogged() {
-    const isSession = useSelector((state) => state.loginState);
+    const isSession = JSON.parse(window.localStorage.getItem("user"));
     const { isAuthenticated } = useAuth0();
 
     // prevenir doble redirect (auth0)
