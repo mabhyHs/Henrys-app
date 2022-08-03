@@ -8,13 +8,14 @@ export function setImgError(e, img){
 }
 
 export function isLogged() {
-    const isSession = JSON.parse(window.localStorage.getItem("user"));
     const { isAuthenticated } = useAuth0();
 
     // prevenir doble redirect (auth0)
     if(isAuthenticated){
         return true;
     }
+    
+    const isSession = JSON.parse(window.localStorage.getItem("user"));
 
     if(!isSession || !isSession.token){
         return undefined;
