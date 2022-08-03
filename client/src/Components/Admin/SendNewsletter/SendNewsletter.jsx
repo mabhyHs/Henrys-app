@@ -1,9 +1,8 @@
 /* eslint-disable no-useless-computed-key */
-import React from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
-import { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -48,6 +47,12 @@ function SendNewsletter() {
         imageWidth: 150,
         imageHeight: 150,
         imageAlt: 'Logo henrys',
+      });
+
+      setInput({
+        title: 'Tenemos novedades para vos!',
+        description: '',
+        btnTxt: 'VER MÁS',
       });
     } catch (error) {
       Swal.fire({
@@ -124,3 +129,4 @@ function SendNewsletter() {
 }
 
 export default SendNewsletter;
+
