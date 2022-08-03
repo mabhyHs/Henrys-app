@@ -11,7 +11,7 @@ import UserLoggedInDropdown from '../User/UserLoggedIn/UserLoggedInDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import AdminNavBar from '../Admin/AdminNavBar/AdminNavBar';
-import { deleteCart, setLoginState } from '../../Redux/actions/actions';
+import { deleteCart, setLocalStorage, setLoginState } from '../../Redux/actions/actions';
 
 import './NavBar.css';
 
@@ -27,7 +27,11 @@ function NavBar() {
 
   useEffect(() => {
     if (mount.current) {
-      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      if (!itemsToCart.length && window.localStorage.getItem('carrito')) {
+        dispatch(
+          setLocalStorage(JSON.parse(window.localStorage.getItem('carrito')))
+        );
+      }
       if (isLogged()) {
         dispatch(
           setLoginState(JSON.parse(window.localStorage.getItem('user')))
@@ -41,7 +45,7 @@ function NavBar() {
         );
       }
     }
-  }, [dispatch]);
+  }, [dispatch, itemsToCart]);
 
   function logoutSession(e) {
     e.preventDefault();
@@ -78,6 +82,10 @@ function NavBar() {
     return JSON.parse(window.localStorage.getItem('user'));
   }
 
+  function setScrollToTop(){
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }
+
   return (
     <>
       {isAdmin && <AdminNavBar />}
@@ -100,9 +108,7 @@ function NavBar() {
                   className={path === '/' ? 'linkActive' : ''}
                   as={Link}
                   to="/"
-                  onClick={() => {
-                    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-                  }}
+                  onClick={setScrollToTop}
                 >
                   Home
                 </Nav.Link>
@@ -110,9 +116,7 @@ function NavBar() {
                   className={path === '/menu' ? 'linkActive' : ''}
                   as={Link}
                   to="/menu"
-                  onClick={() => {
-                    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-                  }}
+                  onClick={setScrollToTop}
                 >
                   Menú
                 </Nav.Link>
@@ -120,9 +124,7 @@ function NavBar() {
                   className={path === '/nosotros' ? 'linkActive' : ''}
                   as={Link}
                   to="/nosotros"
-                  onClick={() => {
-                    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-                  }}
+                  onClick={setScrollToTop}
                 >
                   Nosotros
                 </Nav.Link>
@@ -130,6 +132,7 @@ function NavBar() {
                   className={path === '/contacto' ? 'linkActive' : ''}
                   as={Link}
                   to="/contacto"
+                  onClick={setScrollToTop}
                 >
                   Contacto
                 </Nav.Link>
@@ -137,9 +140,7 @@ function NavBar() {
                   className="ms-5 me-5"
                   as={Link}
                   to="/cart"
-                  onClick={() => {
-                    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-                  }}
+                  onClick={setScrollToTop}
                 >
                   {itemsToCart && itemsToCart?.length === 0 ? (
                     <CartFill />
