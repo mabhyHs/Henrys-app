@@ -23,7 +23,7 @@ function ShoppingCart() {
   const dispatch = useDispatch();
   let itemsToCart = useSelector((state) => state.cart);
   const [mount, setMount] = useState(true);
-  const mercadopago = useSelector((state) => state.mercaDopago);
+  /* const mercadopago = useSelector((state) => state.mercaDopago); */
 
   useEffect(() => {
     if (!mount) {
@@ -42,7 +42,7 @@ function ShoppingCart() {
     }
   }, [dispatch, itemsToCart, mount]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (mercadopago.id) {
       montarButtonMP(mercadopago.id);
     }
@@ -59,7 +59,7 @@ function ShoppingCart() {
       const form = document.getElementById('MP');
       form.appendChild(script);
     }
-  };
+  }; */
 
   const addToCart = (id) => {
     dispatch(addCartProduct(id));
@@ -82,7 +82,7 @@ function ShoppingCart() {
     0
   );
 
-  const handleMP = () => {
+  const handleMPago = () => {
     dispatch(
       postMP(
         JSON.parse(window.localStorage.getItem('carrito')),
@@ -154,8 +154,10 @@ function ShoppingCart() {
             <h2 className="shoppingCart__h2 mb-4">
               Total de mi compra: <span>{`$${' ' + total}`}</span>
             </h2>
-            <Button onClick={handleMP}>Confirmar Pago</Button>
-            <form id="MP" method="GET"></form>
+            <Link to="/mercadoPago">
+              <Button onClick={handleMPago}>Confirmar Pago</Button>
+              {/* <form id="MP" method="GET"></form> */}
+            </Link>
           </div>
         </>
       )}

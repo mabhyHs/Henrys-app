@@ -24,6 +24,7 @@ import SendNewsletter from './Components/Admin/SendNewsletter/SendNewsletter';
 
 import './App.css';
 import { isLogged, isLoggedAdmin } from './Components/methods';
+import MercadoPago from './Components/ShoppingCart/mercadoPago/MercadoPago';
 
 function App() {
   const isSession = isLogged();
@@ -72,6 +73,11 @@ function App() {
           element={isSession ? <Navigate to="/" /> : <UserActivateAccount />}
         />
         <Route path="/cart" element={<ShoppingCart />} />
+
+        <Route
+          path="/mercadoPago"
+          element={isSession ? <MercadoPago /> : <Navigate to="/" />}
+        />
 
         {/* ADMIN ROUTES */}
         <Route
