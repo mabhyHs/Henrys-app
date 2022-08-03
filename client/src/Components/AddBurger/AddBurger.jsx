@@ -135,7 +135,6 @@ function AddBurger() {
   }, [dispatch, itemsToCart, mount]);
 
   const crearBurguer = function (setPrecio, ingredientes, setIngredientsAdd) {
-    setIngredientsAdd((ingredientes = []));
     setPrecio(0.0);
     Swal.fire({
       customClass: {
@@ -156,8 +155,9 @@ function AddBurger() {
       cantidad: 1,
       isVeggie: false,
       price: getTotal(precioBase, precio),
+      ingredients: ingredientsAdd,
     };
-
+    setIngredientsAdd((ingredientes = []));
     addToCart(burgerCustom);
   };
 
