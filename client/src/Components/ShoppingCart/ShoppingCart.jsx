@@ -146,6 +146,14 @@ function ShoppingCart() {
             </div>
           ))}
           <div className="shoppingCart__total__container">
+            <h2 className="shoppingCart__h2 mb-4">¿Necesitas algo más?</h2>
+            <textarea
+              name="message"
+              placeholder="* Me gustaria quitar o añadir..."
+              id="message_input"
+              cols="36"
+              rows="3"
+            />
             <h2 className="shoppingCart__h2 mb-4">
               Total de mi compra: <span>{`$${' ' + total}`}</span>
             </h2>
