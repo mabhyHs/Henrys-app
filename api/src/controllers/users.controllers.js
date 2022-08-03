@@ -313,10 +313,20 @@ async function setFavorites(req, res, next) {
     let favorites = [];
     for (id of req.body.favoritesList) {
       const product = await productRepositories.getById(id);
-      if (product) favorites.push(id);
+      if (product && !favorites.includes(id)) favorites.push(id);
     }
     const user = await userRepositories.setFavorites(favorites, req.params.id);
     res.status(201).json(user.favoritesList);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getFavoritesByUserId(req, res, next) {
+  try {
+    const favorites = (await userRepositories.getById(req.params.id))
+      .favoritesList;
+    res.status(200).json(favorites);
   } catch (error) {
     next(error);
   }
@@ -332,4 +342,5 @@ module.exports = {
   updateProfileData,
   getById,
   setFavorites,
+  getFavoritesByUserId,
 };
