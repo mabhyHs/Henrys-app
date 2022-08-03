@@ -79,6 +79,14 @@ async function update(data) {
   return updatedUser;
 }
 
+async function setFavorites(favoritesList, id) {
+  const user = await User.findByPk(id);
+  user.update({
+    favoritesList: favoritesList,
+  });
+  return user;
+}
+
 module.exports = {
   create,
   getByEmail,
@@ -91,4 +99,5 @@ module.exports = {
   update,
   getAllSecure,
   getById,
+  setFavorites,
 };

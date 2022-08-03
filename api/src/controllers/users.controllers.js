@@ -1,4 +1,5 @@
 const userRepositories = require("../repositories/user.repositories");
+const productRepositories = require("../repositories/product.repositories");
 const bcrypt = require("bcrypt");
 const { transporter } = require("../config/emailTransporter");
 
@@ -307,6 +308,20 @@ async function getById(req, res, next) {
   }
 }
 
+async function setFavorites(req, res, next) {
+  try {
+    let favorites = [];
+    for (id of req.body.favoritesList) {
+      const product = await productRepositories.getById(id);
+      if (product) favorites.push(id);
+    }
+    const user = await userRepositories.setFavorites(favorites, req.params.id);
+    res.status(201).json(user.favoritesList);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getAllSecure,
   create,
@@ -316,4 +331,5 @@ module.exports = {
   update,
   updateProfileData,
   getById,
+  setFavorites,
 };
