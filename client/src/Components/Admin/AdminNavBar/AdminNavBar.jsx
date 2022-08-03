@@ -35,20 +35,24 @@ function AdminNavBar() {
                 </Nav.Link>
                 <Nav.Link
                   as={Link}
-                  to={'/empleados'}
+                  to={'/adminusers'}
                   className="adminNavBar__link"
                 >
-                  Empleados
-                </Nav.Link>
-                <Nav.Link as={Link} to={'/users'} className="adminNavBar__link">
                   Usuarios
                 </Nav.Link>
                 <Nav.Link
                   as={Link}
-                  to={'/productos'}
+                  to={'/adminproducts'}
                   className="adminNavBar__link"
                 >
                   Productos
+                </Nav.Link>
+                <Nav.Link
+                  as={Link}
+                  to={'/admincupons'}
+                  className="adminNavBar__link"
+                >
+                  Cupones
                 </Nav.Link>
                 <Nav.Link
                   as={Link}
