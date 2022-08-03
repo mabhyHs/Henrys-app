@@ -6,6 +6,7 @@ const {
   restore,
   update,
   updateProfileData,
+  getById,
 } = require("../controllers/users.controllers");
 const { roleValidator } = require("../middlewares/usersValidation");
 const validationResultHandler = require("../middlewares/validationResultHandler");
@@ -20,6 +21,9 @@ router.get(
   validationResultHandler,
   getAllSecure
 );
+
+router.get("/:id", getById);
+
 router.post("/", verifyToken, roleValidator, validationResultHandler, create);
 router.delete(
   "/:id",

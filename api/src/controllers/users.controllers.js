@@ -296,6 +296,17 @@ async function updateProfileData(req, res, next) {
   }
 }
 
+async function getById(req, res, next) {
+  try {
+    const user = await userRepositories.getById(req.params.id);
+    return user
+      ? res.status(200).json(user)
+      : res.status(400).json({ message: "User not found" });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getAllSecure,
   create,
@@ -304,4 +315,5 @@ module.exports = {
   restore,
   update,
   updateProfileData,
+  getById,
 };
