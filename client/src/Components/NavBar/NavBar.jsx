@@ -38,33 +38,30 @@ function NavBar() {
   }, [dispatch]);
 
   function logoutSession(e) {
-    e.preventDefault()
+    e.preventDefault();
     removeLocalStorage();
     dispatch(setLoginState(false));
 
-    if(!isAuthenticated){
-        navigate('/');
-    }
-    else {
-      logout({returnTo: window.location.origin});
+    if (!isAuthenticated) {
+      navigate('/');
+    } else {
+      logout({ returnTo: window.location.origin });
     }
   }
 
-  function removeLocalStorage(){
-
-    if(window.localStorage.getItem('user')){
-        window.localStorage.removeItem('user');
+  function removeLocalStorage() {
+    if (window.localStorage.getItem('user')) {
+      window.localStorage.removeItem('user');
     }
 
-    if(window.localStorage.getItem('carrito')){   
-        dispatch(deleteCart(false));   
-        window.localStorage.removeItem('carrito');
+    if (window.localStorage.getItem('carrito')) {
+      dispatch(deleteCart(false));
+      window.localStorage.removeItem('carrito');
     }
 
-    if(window.localStorage.getItem('favoritos')){
-        window.localStorage.removeItem('favoritos');
+    if (window.localStorage.getItem('favoritos')) {
+      window.localStorage.removeItem('favoritos');
     }
-    
   }
 
   function isLogged() {
@@ -138,7 +135,12 @@ function NavBar() {
               {itemsToCart && itemsToCart?.length === 0 ? (
                 <CartFill />
               ) : (
-                <CartCheckFill className="CartCheckFill" />
+                <>
+                  <CartCheckFill className="CartCheckFill" />
+                  <span className="cart__fill__items">
+                    {itemsToCart.length}
+                  </span>
+                </>
               )}
             </Nav.Link>
           </Nav>

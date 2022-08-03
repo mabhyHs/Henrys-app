@@ -35,3 +35,27 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.cardMenu__favorite__link {
+  position: absolute;
+  text-decoration: none;
+  top: 7%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+.cardMenu__favorite__link:hover {
+  background-color: unset;
+  border: unset;
+}
+
+.cardMenu__favorite__link:focus {
+  background-color: unset;
+  border: unset;
+}
+
+.cardMenu__favorite__Svg {
+  color: var(--brand-color);
+  vertical-align: unset;
+  font-size: 1.5rem;
+}
