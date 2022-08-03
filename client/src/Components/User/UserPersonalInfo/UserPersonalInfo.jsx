@@ -1,47 +1,40 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { actualizarDatosUsuario, updatePassword } from '../../../Redux/actions/actions';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import './UserPersonalInfo.css';
 import axios from 'axios';
 
 function UserPersonalInfo() {
-  // const id = JSON.parse(window.localStorage.getItem("user")).id
-  // const token = JSON.parse(window.localStorage.getItem("user")).token
-  // const email = JSON.parse(window.localStorage.getItem("user")).email
-  // const firstName = JSON.parse(window.localStorage.getItem("user")).firstName
-  // const lastName = JSON.parse(window.localStorage.getItem("user")).lastName
+  const id = JSON.parse(window.localStorage.getItem("user")).id
+  const token = JSON.parse(window.localStorage.getItem("user")).token
+  const email = JSON.parse(window.localStorage.getItem("user")).email
+  const firstName = JSON.parse(window.localStorage.getItem("user")).firstName
+  const lastName = JSON.parse(window.localStorage.getItem("user")).lastName
+  const imgUri = JSON.parse(window.localStorage.getItem("user")).imgUri
 
-  const id = '123'
-  const token = '456'
-  const email = 'kevinstevenzeasuarez@gmail.com'
-  const firstName = 'Kevin'
-  const lastName = 'Zea'
+  // const id = '123'
+  // const token = '456'
+  // const email = 'kevinstevenzeasuarez@gmail.com'
+  // const firstName = 'Kevin'
+  // const lastName = 'Zea'
 
-  const [input, setInput] = useState({firstName, lastName, email})
+  const [input, setInput] = useState({firstName, lastName, imgUri})
   const [password, setPassword] = useState({})
   const [error, setError] = useState({})
   const dispatch = useDispatch()
 
   function handleChange(e){
     setInput({...input, [e.target.name]: e.target.value})
-    setError(validate({...input, [e.target.name]: e.target.value}))
   }
 
   function validate(input){
     let error = {}
-    if(input.email){
-      // eslint-disable-next-line no-useless-escape
-      if(!(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(input.email))){
-        error.email = 'por favor ingrese un correo electronico valido'
-      }
-    }
     if(input.password || input.confirm){
       if(input.confirm !== input.password){
         error.password = 'ambos espacios deben tener la misma contraseña por favor verifica que estes escribiendo la misma contraseña'
@@ -50,17 +43,51 @@ function UserPersonalInfo() {
     return error
   }
 
-  function handleSubmit(e, input){
+  async function handleSubmit(e, input){
     e.preventDefault()
     if(Object.keys(input).length === 0){
       alert('por favor llene los campos de los datos que desea actualizar')
       return
     }
+    const obj = {...input, id}
+    try {
+      const json = await axios.put('/users/', obj, {
+        headers:{
+          'auth-token': token
+        }
+      });
+        Swal.fire({
+          customClass: {
+            confirmButton: 'confirmBtnSwal',
+          },
+          title: 'Exito!',
+          text: 'Se ha podido cambiar los datos con exito!',
+          imageUrl:
+            'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
+          imageWidth: 150,
+          imageHeight: 150,
+          imageAlt: 'Logo henrys',
+        });
+      
+
+      
+    } catch (error) {
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Opss...',
+        text: 'Algo ha salido mal',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
+    }
     
-    dispatch(actualizarDatosUsuario(input, id, token))
     setInput({firstName, lastName, email})
     window.location.reload()
-    alert('sus datos se han actualizado correctamente')
   }
   function clearData(){
     console.log(input)
@@ -74,7 +101,8 @@ function UserPersonalInfo() {
     setError(validate({...password, [e.target.name]: e.target.value}))
   }
 
-  async function submitPassword(password){
+  async function submitPassword(e, password){
+    e.preventDefault()
     if(Object.keys(password).length === 0){
       alert('por favor llene los campos de los datos que desea actualizar')
       return
@@ -87,34 +115,20 @@ function UserPersonalInfo() {
           'auth-token': token
         }
       });
-      if(json.status === 201){
         Swal.fire({
           customClass: {
             confirmButton: 'confirmBtnSwal',
           },
-          title: 'Opss...',
+          title: 'Exito!',
           text: 'Se ha podido cambiar la contraseña!',
           imageUrl:
-            'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+            'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
           imageWidth: 150,
           imageHeight: 150,
           imageAlt: 'Logo henrys',
         });
-      }
-      else{
-        Swal.fire({
-          customClass: {
-            confirmButton: 'confirmBtnSwal',
-          },
-          title: 'Opss...',
-          text: 'por el else',
-          imageUrl:
-            'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
-          imageWidth: 150,
-          imageHeight: 150,
-          imageAlt: 'Logo henrys',
-        });
-      }
+      
+
       
     } catch (error) {
       Swal.fire({
@@ -122,7 +136,7 @@ function UserPersonalInfo() {
           confirmButton: 'confirmBtnSwal',
         },
         title: 'Opss...',
-        text: 'No se ha podido cambiar la contraseña!',
+        text: 'Algo ha salido mal',
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
         imageWidth: 150,
@@ -160,7 +174,7 @@ function UserPersonalInfo() {
           </Row>
 
           <Form.Group className="mb-3" controlId="formGridEmail">
-            <Form.Control type="email" placeholder="Email*" name='email' onChange={(e) => handleChange(e)} value={input.email}/>
+            <Form.Control type="text" placeholder="Imagen*" name='imgUri' onChange={(e) => handleChange(e)} value={input.imgUri}/>
           </Form.Group>
           {error.email &&(
             <p>{error.email}</p>
@@ -180,7 +194,7 @@ function UserPersonalInfo() {
             {error.password &&(
               <p>{error.password}</p>
             )}
-            <Button variant="primary" type="Submit" disable={Object.keys(error).length !== 0} onClick={() => submitPassword(password)}>
+            <Button variant="primary" type="Submit" disable={Object.keys(error).length !== 0} onClick={(e) => submitPassword(e, password)}>
               Actualizar Contraseña
             </Button>
           </Row>
