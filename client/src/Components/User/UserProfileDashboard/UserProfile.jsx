@@ -1,21 +1,29 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './UserProfile.css';
 import { ArrowRightCircleFill, EmojiSunglasses } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import axios from 'axios';
 
-function UserProfileDashboard(userName) {
+function UserProfileDashboard() {
+  function getUserData() {
+    return JSON.parse(window.localStorage.getItem('user'));
+  }
+  const userData = getUserData();
+  const id = userData.id;
+  let imgUri = userData.imgUri;
+  const token = userData.token;
+
   const [userImage, setImage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const uploadImage = async (e) => {
+  async function uploadImage(e) {
     const files = e.target.files;
     const data = new FormData();
     data.append('file', files[0]);
     data.append('upload_preset', 'henryspf');
     setLoading(true);
-
     const res = await fetch(
       'https://api.cloudinary.com/v1_1/henrysburgers/image/upload',
       {
@@ -23,12 +31,23 @@ function UserProfileDashboard(userName) {
         body: data,
       }
     );
-
-    const file = await res.json();
-    console.log(file.secure_url);
-    setImage(file.secure_url);
+    const userImage = await res.json();
+    console.log(userImage.secure_url);
+    const imgUri = userImage.secure_url;
+    console.log(imgUri);
+    setImage(
+      await axios.put(
+        `users/${id}`,
+        { imgUri: imgUri },
+        {
+          headers: {
+            'auth-token': token,
+          },
+        }
+      )
+    );
     setLoading(false);
-  };
+  }
 
   return (
     <section>
@@ -38,17 +57,21 @@ function UserProfileDashboard(userName) {
 
       <Card className="profile__mainCard">
         <div className="profile__mainCard__headerContainer">
-          <Card.Header className="profile__mainCard__title">
+          <Card.Header
+            className="profile__mainCard__title"
+            // userData={getUserData()}
+          >
             {userImage ? (
               <img
-                src={userImage}
+                src={userData.imgUri}
                 alt="foto de perfil"
                 className="profile__mainCard__userPicture"
               />
             ) : (
               <EmojiSunglasses className="profile__mainCard__userPicture" />
             )}
-            <h2>Usuario</h2>
+
+            <h2>{userData.firstName + ' ' + userData.lastName}</h2>
           </Card.Header>
         </div>
         <Card.Body className="profile__mainCard__body">
