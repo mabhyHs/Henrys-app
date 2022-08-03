@@ -1,5 +1,7 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Button from 'react-bootstrap/Button';
+
 import { BoxArrowLeft, Heart } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import imgUserDefault from '../../../Assets/Images/logo-henrys.png';
@@ -12,7 +14,7 @@ function UserLoggedInDropdown({ userData, logoutSession }) {
     <Dropdown>
       <Dropdown.Toggle className="nav__btn" id="dropdown-basic">
         <img
-          src={userData.imgUri ? userData.imgUri : "error"}
+          src={userData.imgUri ? userData.imgUri : 'error'}
           onError={(e) => setImgError(e, imgUserDefault)}
           alt="img not found"
           className="loggedIn__img__profile"
@@ -26,22 +28,28 @@ function UserLoggedInDropdown({ userData, logoutSession }) {
             Mi perfil
           </Link>
         </Dropdown.ItemText>
-        {userData.role === 'admin' && (
-          <Dropdown.ItemText className="dropdown__link-btn">
-            <Link to="/adminhome" className="navBar__registrate">
-              Panel Admin
-            </Link>
-          </Dropdown.ItemText>
-        )}
 
         <Link to="/userfavorites" className="loggedIn__Link">
           <Heart className="loggedIn__icons" />
           Favoritos
         </Link>
-        <Dropdown.Divider />
         <Link to={false} onClick={logoutSession} className="loggedIn__Link">
           <BoxArrowLeft className="loggedIn__icons" /> Salir
         </Link>
+        <Dropdown.Divider />
+
+        {userData.role === 'admin' && (
+          <Dropdown.ItemText>
+            <Button
+              as={Link}
+              to="/adminhome"
+              variant="secondary"
+              className="userLoggedIn__panelAdminBtn"
+            >
+              Panel Admin
+            </Button>
+          </Dropdown.ItemText>
+        )}
       </Dropdown.Menu>
     </Dropdown>
   );

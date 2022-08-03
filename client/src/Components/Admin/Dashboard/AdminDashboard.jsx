@@ -10,7 +10,6 @@ import './AdminDashboard.css';
 function AdminDashboard() {
   return (
     <div className="adminDashboard__container">
-      <AdminNavBar />
       <Container>
         <h3>Bienvenido de nuevo, Admin!</h3>
         <ButtonGroup>

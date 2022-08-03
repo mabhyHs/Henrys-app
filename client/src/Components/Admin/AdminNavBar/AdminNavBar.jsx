@@ -54,11 +54,7 @@ function AdminNavBar() {
                 >
                   Cupones
                 </Nav.Link>
-                <Nav.Link
-                  as={Link}
-                  to={'/logoutadmin'}
-                  className="adminNavBar__link"
-                >
+                <Nav.Link as={Link} to={'/'} className="adminNavBar__link">
                   Salir
                 </Nav.Link>
               </Nav>
