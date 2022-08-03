@@ -1,13 +1,8 @@
 /* eslint-disable no-irregular-whitespace */
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import {
-  clearState,
-  addFavorites,
-  getProductById,
-} from '../../Redux/actions/actions';
+import { clearState, getProductById } from '../../Redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { HeartFill } from 'react-bootstrap-icons';
 import { FaHamburger } from 'react-icons/fa';
 import { BsCupStraw, BsCheck2Circle } from 'react-icons/bs';
 import { GiFrenchFries } from 'react-icons/gi';
@@ -34,25 +29,9 @@ function ProductDetail() {
     };
   }, [dispatch, id]);
 
-  const addFav = () => {
-    dispatch(addFavorites(id));
-  };
-
-  if (producto && loading) {
-    setLoading(false);
-  }
-
-  return (
+ return (
     <div>
       <Container className="productDetail__container">
-        <Link
-          onClick={() => addFav(id)}
-          to="/userfavorites"
-          className="mt-3 mb-5 productDetail__link"
-        >
-          <HeartFill className="productDetail__link__Svg " />
-          Agregar a Favoritos
-        </Link>
         <hr />
         {producto.length === 0 ? (
           <Loading />

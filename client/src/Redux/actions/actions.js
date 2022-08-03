@@ -223,12 +223,6 @@ export function agregarCalificacion(payload) {
     return json;
   };
 }
-export function actualizarDatosUsuario(payload) {
-  return async function () {
-    const json = await axios.put('http://pending...', payload);
-    return json;
-  };
-}
 
 // ACCIONES POST
 export function createBurger(payload) {

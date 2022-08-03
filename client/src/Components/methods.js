@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useSelector } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export function setImgError(e, img){
     if(!img) return;
@@ -8,6 +9,12 @@ export function setImgError(e, img){
 
 export function isLogged() {
     const isSession = useSelector((state) => state.loginState);
+    const { isAuthenticated } = useAuth0();
+
+    // prevenir doble redirect (auth0)
+    if(isAuthenticated){
+        return true;
+    }
 
     if(!isSession || !isSession.token){
         return undefined;
