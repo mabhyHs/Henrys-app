@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
-
-import './SendNewsletter.css';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+
+import './SendNewsletter.css';
 
 function SendNewsletter() {
   const [input, setInput] = useState({
@@ -129,3 +129,4 @@ function SendNewsletter() {
 }
 
 export default SendNewsletter;
+

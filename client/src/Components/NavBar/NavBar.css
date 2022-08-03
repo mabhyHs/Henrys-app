@@ -17,7 +17,7 @@
   color: var(--brand-color);
 }
 
-.nav-link {
+.navBar__users__link {
   color: var(--main-color-light);
   font-family: 'Open Sans', sans-serif;
   text-transform: uppercase;
@@ -25,6 +25,8 @@
 
 .linkActive {
   color: var(--brand-color);
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
 }
 
 .nav-link:hover {
