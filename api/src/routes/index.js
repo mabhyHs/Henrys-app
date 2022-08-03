@@ -16,6 +16,7 @@ const comboRouter = require("./combo.routes");
 const beverageRouter = require("./beverage.routes");
 const productRouter = require("./product.routes");
 const burgerBaseRouter = require("./burgerBase.routes");
+const couponsRouter = require("./coupon.routes");
 
 const newsletterRouter = require("./newsletter.routes");
 
@@ -40,6 +41,7 @@ router.use("/combos", comboRouter);
 router.use("/beverages", beverageRouter);
 router.use("/products", productRouter);
 router.use("/burgerBase", burgerBaseRouter);
+router.use("/coupons", couponsRouter);
 
 router.use("/newsletter", newsletterRouter);
 
