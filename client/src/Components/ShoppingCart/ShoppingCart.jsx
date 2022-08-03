@@ -8,13 +8,14 @@ import {
   deleteCart,
   productDelete,
   setLocalStorage,
+  postMP,
 } from '../../Redux/actions/actions';
 import CardProductCart from '../CardProductCart/CardProductCart';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { PlusLg, DashLg } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
-import imgDefault from '../../Assets/Images/Hamburguesas/Hamburguesa-con-Queso.png'
+import imgDefault from '../../Assets/Images/Hamburguesas/Hamburguesa-con-Queso.png';
 
 import './ShoppingCart.css';
 
@@ -22,6 +23,7 @@ function ShoppingCart() {
   const dispatch = useDispatch();
   let itemsToCart = useSelector((state) => state.cart);
   const [mount, setMount] = useState(true);
+  const mercadopago = useSelector((state) => state.mercaDopago);
 
   useEffect(() => {
     if (!mount) {
@@ -39,6 +41,25 @@ function ShoppingCart() {
       setMount(false);
     }
   }, [dispatch, itemsToCart, mount]);
+
+  useEffect(() => {
+    if (mercadopago.id) {
+      montarButtonMP(mercadopago.id);
+    }
+  }, [mercadopago]);
+
+  const montarButtonMP = (id) => {
+    const formChilds = document.getElementById('MP').childNodes;
+    if (id && formChilds.length === 0) {
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src =
+        'https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js';
+      script.setAttribute('data-preference-id', id);
+      const form = document.getElementById('MP');
+      form.appendChild(script);
+    }
+  };
 
   const addToCart = (id) => {
     dispatch(addCartProduct(id));
@@ -60,6 +81,15 @@ function ShoppingCart() {
     (acc, { price, cantidad }) => acc + price * cantidad,
     0
   );
+
+  const handleMP = () => {
+    dispatch(
+      postMP(
+        JSON.parse(window.localStorage.getItem('carrito')),
+        JSON.parse(window.localStorage.getItem('user')).token
+      )
+    );
+  };
 
   return (
     <Container className="py-4 shoppinCart__container">
@@ -124,7 +154,8 @@ function ShoppingCart() {
             <h2 className="shoppingCart__h2 mb-4">
               Total de mi compra: <span>{`$${' ' + total}`}</span>
             </h2>
-            <Button>Confirmar Pago</Button>
+            <Button onClick={handleMP}>Confirmar Pago</Button>
+            <form id="MP" method="GET"></form>
           </div>
         </>
       )}
