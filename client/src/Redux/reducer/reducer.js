@@ -17,6 +17,7 @@ import {
   ADD_FAVORITES,
   DELETE_ON_FAVORITES,
   ADD_TO_LOCAL,
+  CLEAR_STATE,
   SET_LOGIN_STATE,
   ADD_BURGER_CUSTOM_TO_CART,
   POST_MP,
@@ -97,6 +98,12 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
         burgerBase: action.payload,
       };
+    case CLEAR_STATE:
+      return {
+        ...state,
+        productDetail: [],
+      };
+
     case SET_CATEGORY:
       return {
         ...state,
@@ -183,7 +190,6 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
         mercaDopago: action.payload,
       };
-
     default:
       return state;
   }

@@ -11,6 +11,7 @@ export const SET_CATEGORY = 'SET_CATEGORY';
 export const GET_PRODUCT_BY_ID = 'GET_PRODUCT_BY_ID';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const CLEAR_CART = 'CLEAR_CART';
+export const CLEAR_STATE = 'CLEAR_STATE';
 export const DELETE_ONE_PRODUCT_CART = 'DELETE_ONE_PRODUCT_CART';
 export const DELETE_PRODUCT_CART = 'DELETE_PRODUCT_CART';
 export const LOCAL_STORAGE = 'LOCAL_STORAGE';
@@ -54,6 +55,13 @@ export function addCartProduct(id) {
   return {
     type: ADD_TO_CART,
     payload: id,
+  };
+}
+
+export function clearState(payload) {
+  return {
+    type: 'CLEAR_STATE',
+    payload,
   };
 }
 
