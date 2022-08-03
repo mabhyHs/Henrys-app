@@ -46,7 +46,7 @@ const initialState = {
   burgerBase: {},
   cart: [],
   favorites: [],
-  loginState: false,
+  loginState: JSON.parse(window.localStorage.getItem("user")),
   mercaDopago: '',
 };
 

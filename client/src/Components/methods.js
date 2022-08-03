@@ -15,7 +15,7 @@ export function isLogged() {
         return true;
     }
     
-    const isSession = JSON.parse(window.localStorage.getItem("user"));
+    const isSession = useSelector((state) => state.loginState);
 
     if(!isSession || !isSession.token){
         return undefined;
