@@ -20,6 +20,7 @@ import {
   CLEAR_STATE,
   SET_LOGIN_STATE,
   ADD_BURGER_CUSTOM_TO_CART,
+  POST_MP,
 } from '../actions/actions';
 
 import {
@@ -46,6 +47,7 @@ const initialState = {
   cart: [],
   favorites: [],
   loginState: false,
+  mercaDopago: '',
 };
 
 const rootReducer = (state = initialState, action = {}) => {
@@ -101,6 +103,7 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
         productDetail: [],
       };
+
     case SET_CATEGORY:
       return {
         ...state,
@@ -182,7 +185,11 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
         loginState: action.payload,
       };
-
+    case POST_MP:
+      return {
+        ...state,
+        mercaDopago: action.payload,
+      };
     default:
       return state;
   }

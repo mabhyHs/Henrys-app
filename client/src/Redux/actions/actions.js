@@ -21,12 +21,7 @@ export const DELETE_ON_FAVORITES = 'DELETE_ON_FAVORITES';
 export const ADD_TO_LOCAL = 'ADD_TO_LOCAL';
 export const SET_LOGIN_STATE = 'SET_LOGIN_STATE';
 export const ADD_BURGER_CUSTOM_TO_CART = 'ADD_BURGER_CUSTOM_TO_CART';
-
-// export const CREATE_BURGER = "CREATE_BURGER"
-// export const CREATE_COMBO = "CREATE_ COMBO"
-// export const CREATE_BEVERAGE = "CREATE_BEVERAGE"
-
-// https://vimeo.com/510792531/20d64d4a98
+export const POST_MP = 'POST_MP';
 
 export function getProduct(
   category = '',
@@ -125,57 +120,6 @@ export function addLocalAState(payload) {
   };
 }
 
-/* export function getBurgers() {
-  // eslint-disable-next-line func-names, consistent-return
-  return async function (dispatch) {
-    const json = await axios('http://pending...');
-
-    try {
-      return dispatch({
-        type: GET_BURGERS,
-        payload: json.data,
-      });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
-  };
-}
-
-export function getCombos() {
-  // eslint-disable-next-line func-names, consistent-return
-  return async function (dispatch) {
-    const json = await axios('http://pending...');
-
-    try {
-      return dispatch({
-        type: GET_COMBOS,
-        payload: json.data,
-      });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
-  };
-}
-
-export function getBeverages() {
-  // eslint-disable-next-line func-names, consistent-return
-  return async function (dispatch) {
-    const json = await axios('http://pending...');
-
-    try {
-      return dispatch({
-        type: GET_BEVERAGES,
-        payload: json.data,
-      });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
-  };
-} */
-
 export function getIngredients() {
   return async function (dispatch) {
     const json = await axios('/ingredients');
@@ -266,6 +210,22 @@ export function setLoginState(payload) {
     return dispatch({
       type: SET_LOGIN_STATE,
       payload,
+    });
+  };
+}
+
+export function postMP(data, token) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      'http://localhost:3001/pay/mercadopago',
+      {
+        cart: data,
+      },
+      { headers: { 'auth-token': token } }
+    );
+    return dispatch({
+      type: POST_MP,
+      payload: json.data,
     });
   };
 }
