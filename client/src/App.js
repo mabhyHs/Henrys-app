@@ -85,7 +85,7 @@ function App() {
           element={isSessionAdmin ? <AdminDashboard /> : <Navigate to="/" />}
         />
         <Route
-          path="/newsletter"
+          path="/adminnewsletter"
           element={isSessionAdmin ? <SendNewsletter /> : <Navigate to="/" />}
         />
       </Routes>
