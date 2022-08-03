@@ -61,7 +61,7 @@ function UserProfileDashboard() {
             className="profile__mainCard__title"
             // userData={getUserData()}
           >
-            {userImage ? (
+            {userData.imgUri ? (
               <img
                 src={userData.imgUri}
                 alt="foto de perfil"
