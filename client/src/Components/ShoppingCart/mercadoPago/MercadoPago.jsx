@@ -1,16 +1,17 @@
 import { React, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 function MercadoPago() {
-  const mercadopago = useSelector((state) => state.mercaDopago);
+  const id = JSON.parse(window.localStorage.getItem("compra"))?.id;
 
   useEffect(() => {
-    if (mercadopago.id) {
-      montarButtonMP(mercadopago.id);
-    }
-  }, [mercadopago]);
+      montarButtonMP(id);
+  }, [id]);
 
   const montarButtonMP = (id) => {
+    if(!id){
+        return;
+    }
     const formChilds = document.getElementById('MP').childNodes;
     if (id && formChilds.length === 0) {
       const script = document.createElement('script');
@@ -22,6 +23,10 @@ function MercadoPago() {
       form.appendChild(script);
     }
   };
+
+  if(!id){
+    return <Navigate to="/" ></Navigate>
+  }
 
   return (
     <div>

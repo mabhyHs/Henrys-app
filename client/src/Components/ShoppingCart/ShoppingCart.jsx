@@ -7,23 +7,23 @@ import {
   allProductsDelete,
   deleteCart,
   productDelete,
-  setLocalStorage,
-  postMP,
 } from '../../Redux/actions/actions';
 import CardProductCart from '../CardProductCart/CardProductCart';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { PlusLg, DashLg } from 'react-bootstrap-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import imgDefault from '../../Assets/Images/Hamburguesas/Hamburguesa-con-Queso.png';
 
 import './ShoppingCart.css';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function ShoppingCart() {
   const dispatch = useDispatch();
   let itemsToCart = useSelector((state) => state.cart);
   const [mount, setMount] = useState(true);
-  /* const mercadopago = useSelector((state) => state.mercaDopago); */
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!mount) {
@@ -31,30 +31,12 @@ function ShoppingCart() {
         window.localStorage.setItem('carrito', JSON.stringify(itemsToCart));
       } else {
         window.localStorage.removeItem('carrito');
+        window.localStorage.removeItem("compra");
       }
     } else {
       setMount(false);
     }
   }, [dispatch, itemsToCart, mount]);
-
-  /* useEffect(() => {
-    if (mercadopago.id) {
-      montarButtonMP(mercadopago.id);
-    }
-  }, [mercadopago]);
-
-  const montarButtonMP = (id) => {
-    const formChilds = document.getElementById('MP').childNodes;
-    if (id && formChilds.length === 0) {
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src =
-        'https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js';
-      script.setAttribute('data-preference-id', id);
-      const form = document.getElementById('MP');
-      form.appendChild(script);
-    }
-  }; */
 
   const addToCart = (id) => {
     dispatch(addCartProduct(id));
@@ -76,14 +58,40 @@ function ShoppingCart() {
     (acc, { price, cantidad }) => acc + price * cantidad,
     0
   );
+  
+  const handleMPago = async () => {
 
-  const handleMPago = () => {
-    dispatch(
-      postMP(
-        JSON.parse(window.localStorage.getItem('carrito')),
-        JSON.parse(window.localStorage.getItem('user')).token
-      )
-    );
+    try {        
+
+        const json = await axios.post(
+            'http://localhost:3001/pay/mercadopago',
+            {
+              cart: JSON.parse(window.localStorage.getItem('carrito')),
+            },
+            { headers: { 'auth-token': JSON.parse(window.localStorage.getItem('user')).token } }
+          );
+    
+          window.localStorage.setItem("compra", JSON.stringify(json.data));
+
+          navigate("/mercadoPago");
+    
+        } catch (error) {
+            Swal.fire({
+                customClass: {
+                  confirmButton: 'confirmBtnSwal',
+                },
+                confirmButtonText: 'Iniciar sesión',
+                title: 'Opss...',
+                text: 'Primero debes iniciar sesión!',
+                imageUrl:
+                  'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+                imageWidth: 150,
+                imageHeight: 150,
+                imageAlt: 'Logo henrys',
+              }).then(function() {
+                navigate("/userlogin");
+            });
+        }    
   };
 
   return (
@@ -157,9 +165,8 @@ function ShoppingCart() {
             <h2 className="shoppingCart__h2 mb-4">
               Total de mi compra: <span>{`$${' ' + total}`}</span>
             </h2>
-            <Link to="/mercadoPago">
+            <Link to={false}>
               <Button onClick={handleMPago}>Confirmar Pago</Button>
-              {/* <form id="MP" method="GET"></form> */}
             </Link>
           </div>
         </>
