@@ -18,11 +18,6 @@ function ProductsContainerMenu({ currentProduct }) {
         window.localStorage.removeItem('carrito');
       }
     } else {
-      if (!itemsToCart.length && window.localStorage.getItem('carrito')) {
-        dispatch(
-          setLocalStorage(JSON.parse(window.localStorage.getItem('carrito')))
-        );
-      }
       setMount(false);
     }
   }, [dispatch, itemsToCart, mount]);
