@@ -13,9 +13,9 @@ async function check(req, res, next) {
     const preference = {
       items: req.body.items,
       back_urls: {
-        success: "www.success.com", // modificar por rutas del front
-        failure: "www.failure.com",
-        pending: "www.pending.com",
+        success: process.env.HOST + "/pay/", // modificar por rutas del front
+        failure: process.env.HOST + "/pay/",
+        pending: process.env.HOST + "/pay/",
       },
       auto_return: "approved",
       statement_descriptor: "Henry Burgers",
