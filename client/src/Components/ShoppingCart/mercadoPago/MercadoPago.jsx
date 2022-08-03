@@ -4,19 +4,22 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import imgMp from '../../../Assets/Images/combos/cajita-nuggetshamb-con-queso.png';
+import { Navigate } from 'react-router-dom';
 
 import './mercadoPago.css';
 
+
 function MercadoPago() {
-  const mercadopago = useSelector((state) => state.mercaDopago);
+  const id = JSON.parse(window.localStorage.getItem("compra"))?.id;
 
   useEffect(() => {
-    if (mercadopago.id) {
-      montarButtonMP(mercadopago.id);
-    }
-  }, [mercadopago]);
+      montarButtonMP(id);
+  }, [id]);
 
   const montarButtonMP = (id) => {
+    if(!id){
+        return;
+    }
     const formChilds = document.getElementById('MP').childNodes;
     if (id && formChilds.length === 0) {
       const script = document.createElement('script');
@@ -28,6 +31,10 @@ function MercadoPago() {
       form.appendChild(script);
     }
   };
+
+  if(!id){
+    return <Navigate to="/" ></Navigate>
+  }
 
   return (
     <Container>
