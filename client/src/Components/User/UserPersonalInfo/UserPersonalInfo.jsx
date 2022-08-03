@@ -16,15 +16,9 @@ function UserPersonalInfo() {
   const email = JSON.parse(window.localStorage.getItem("user")).email
   const firstName = JSON.parse(window.localStorage.getItem("user")).firstName
   const lastName = JSON.parse(window.localStorage.getItem("user")).lastName
-  const imgUri = JSON.parse(window.localStorage.getItem("user")).imgUri
 
-  // const id = '123'
-  // const token = '456'
-  // const email = 'kevinstevenzeasuarez@gmail.com'
-  // const firstName = 'Kevin'
-  // const lastName = 'Zea'
 
-  const [input, setInput] = useState({firstName, lastName, imgUri})
+  const [input, setInput] = useState({firstName, lastName})
   const [password, setPassword] = useState({})
   const [error, setError] = useState({})
   const dispatch = useDispatch()
@@ -103,8 +97,19 @@ function UserPersonalInfo() {
 
   async function submitPassword(e, password){
     e.preventDefault()
-    if(Object.keys(password).length === 0){
-      alert('por favor llene los campos de los datos que desea actualizar')
+    if(!password.password || !password.confirm || !password.beforePassword || Object.keys(error).length !== 0){
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'No se puede cambiar la contraseña',
+        text: 'Por favor complete todos los espacios correctamente',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
       return
     }
     const obj = {passwordOld: password.beforePassword, passwordNew: password.confirm, email }
@@ -136,7 +141,7 @@ function UserPersonalInfo() {
           confirmButton: 'confirmBtnSwal',
         },
         title: 'Opss...',
-        text: 'Algo ha salido mal',
+        text: 'Tu contraseña anterior ha sido incorrecta',
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
         imageWidth: 150,
@@ -144,7 +149,7 @@ function UserPersonalInfo() {
         imageAlt: 'Logo henrys',
       });
     }
-    
+    window.location.reload()
   }
 
   
@@ -173,12 +178,6 @@ function UserPersonalInfo() {
             </Form.Group>
           </Row>
 
-          <Form.Group className="mb-3" controlId="formGridEmail">
-            <Form.Control type="text" placeholder="Imagen*" name='imgUri' onChange={(e) => handleChange(e)} value={input.imgUri}/>
-          </Form.Group>
-          {error.email &&(
-            <p>{error.email}</p>
-          )}
           <Row className="mb-5">
           <Form.Group as={Col} controlId="formGridPassword">
               <Form.Control type="password" placeholder="Antigua Contraseña*" name='beforePassword' onChange={(e) => handlePassword(e)}/>
@@ -194,7 +193,7 @@ function UserPersonalInfo() {
             {error.password &&(
               <p>{error.password}</p>
             )}
-            <Button variant="primary" type="Submit" disable={Object.keys(error).length !== 0} onClick={(e) => submitPassword(e, password)}>
+            <Button variant="primary" type="Submit" onClick={(e) => submitPassword(e, password)}>
               Actualizar Contraseña
             </Button>
           </Row>
