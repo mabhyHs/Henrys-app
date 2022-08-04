@@ -21,6 +21,7 @@ import {
   SET_LOGIN_STATE,
   ADD_BURGER_CUSTOM_TO_CART,
   POST_MP,
+  GET_COUPONS,
 } from '../actions/actions';
 
 import {
@@ -46,8 +47,9 @@ const initialState = {
   burgerBase: {},
   cart: [],
   favorites: [],
-  loginState: JSON.parse(window.localStorage.getItem("user")),
+  loginState: JSON.parse(window.localStorage.getItem('user')),
   mercaDopago: '',
+  coupons: undefined,
 };
 
 const rootReducer = (state = initialState, action = {}) => {
@@ -189,6 +191,11 @@ const rootReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         mercaDopago: action.payload,
+      };
+    case GET_COUPONS:
+      return {
+        ...state,
+        coupons: action.payload,
       };
     default:
       return state;

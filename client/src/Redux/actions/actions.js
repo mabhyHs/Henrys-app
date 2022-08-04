@@ -22,6 +22,7 @@ export const ADD_TO_LOCAL = 'ADD_TO_LOCAL';
 export const SET_LOGIN_STATE = 'SET_LOGIN_STATE';
 export const ADD_BURGER_CUSTOM_TO_CART = 'ADD_BURGER_CUSTOM_TO_CART';
 export const POST_MP = 'POST_MP';
+export const GET_COUPONS = 'GET_COUPONS';
 
 export function getProduct(
   category = '',
@@ -161,6 +162,19 @@ export function getBurgerBase() {
   };
 }
 
+export function getCoupons(token) {
+  return async function (dispatch) {
+    try {
+      const coupons = await axios('/coupons', {
+        headers: { 'auth-token': token },
+      });
+      dispatch({ type: GET_COUPONS, payload: coupons.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export function agregarCalificacion(payload) {
   return async function () {
     const json = await axios.post('pending...', payload);
@@ -229,4 +243,3 @@ export function postMP(data, token) {
     });
   };
 }
-

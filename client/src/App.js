@@ -18,6 +18,7 @@ import UserProfileDashboard from './Components/User/UserProfileDashboard/UserPro
 import UserActivateAccount from './Components/User/UserActivateAccount/UserActivateAccount';
 import UserReview from './Components/User/UserReview/UserReview';
 import ShoppingCart from './Components/ShoppingCart/ShoppingCart';
+import CouponAdmin from './Components/CouponAdmin/CouponAdmin';
 
 import AdminDashboard from './Components/Admin/Dashboard/AdminDashboard';
 import SendNewsletter from './Components/Admin/SendNewsletter/SendNewsletter';
@@ -93,6 +94,11 @@ function App() {
         <Route
           path="/adminproducts"
           element={isSessionAdmin ? <AddProductHome /> : <Navigate to="/" />}
+        />
+
+        <Route
+          path="/admincupon"
+          element={isSessionAdmin ? <CouponAdmin /> : <Navigate to="/" />}
         />
       </Routes>
       <Footer />

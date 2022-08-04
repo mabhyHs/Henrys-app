@@ -1,14 +1,46 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+// import Card from 'react-bootstrap/Card';
 import './CardCuponHome.css';
-import hambCupon from '../../Assets/Images/Hamburguesas/whopper-doble.png';
-import friesCupon from '../../Assets/Images/Hamburguesas/PAPAS-KING-copia.png';
+// import hambCupon from '../../Assets/Images/Hamburguesas/whopper-doble.png';
+// import friesCupon from '../../Assets/Images/Hamburguesas/PAPAS-KING-copia.png';
 
-function CardCupponHome() {
+function CardCupponHome({
+  code,
+  title,
+  expirationDate,
+  imgUri,
+  discountPorcentage,
+}) {
   return (
-    <section className="sectionCupponsHome">
+    <section>
       <div className="cardCuponHome__cupon">
+        <div className="cardCuponHome__containerImg">
+          <img
+            className="cardCuponHome__img img-fluid"
+            src={
+              imgUri ||
+              'https://assets.stickpng.com/images/5a4613eed099a2ad03f9c996.png'
+            }
+            alt="cupon de hamburguesa"
+          />
+        </div>
+        <div className="cardCuponHome__text">
+          <h2>{title}</h2>
+          <p>{discountPorcentage}%OFF</p>
+          <Button
+            onClick={() => {
+              navigator.clipboard.writeText(code);
+              alert('Código copiado al portapapeles con éxito');
+            }}
+            variant="primary"
+            className="cupponCardHome__cupponButton"
+          >
+            {code}
+          </Button>
+        </div>
+      </div>
+      {/* <div className="cardCuponHome__cupon">
         <div className="cardCuponHome__containerImg">
           <img
             className="cardCuponHome__img img-fluid"
@@ -54,7 +86,7 @@ function CardCupponHome() {
             XLXR567
           </Button>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }
