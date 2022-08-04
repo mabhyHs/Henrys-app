@@ -27,6 +27,7 @@ import { isLogged, isLoggedAdmin } from './Components/methods';
 import MercadoPago from './Components/ShoppingCart/mercadoPago/MercadoPago';
 import AddProductHome from './Components/Admin/AddProduct/ProductHome/AddProductHome';
 import ReviewsContainer from './Components/ReviewsContainer/ReviewsContainer';
+import AdminUsers from './Components/Admin/AdminUsers/AdminUsers';
 
 function App() {
   const isSession = isLogged();
@@ -95,6 +96,10 @@ function App() {
         <Route
           path="/adminproducts"
           element={isSessionAdmin ? <AddProductHome /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/adminusers"
+          element={isSessionAdmin ? <AdminUsers /> : <Navigate to="/" />}
         />
       </Routes>
       <Footer />
