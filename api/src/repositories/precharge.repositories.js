@@ -1,4 +1,5 @@
 const {
+  Newsletter,
   Ingredient,
   Burger,
   Fries,
@@ -73,6 +74,12 @@ async function precharge() {
         ignoreDuplicates: true,
       }
     );
+
+    await Newsletter.bulkCreate([
+      {
+        email: "henrysburgers@admin.com",
+      },
+    ]);
 
     await BurgerBase.bulkCreate(
       [
