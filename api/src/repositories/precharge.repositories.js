@@ -26,7 +26,7 @@ async function precharge() {
 
     if (data.burgers.length) {
       for (const burger of data.burgers) {
-        const find = await Burger.findByPk(burger.id);
+        const find = await Burger.findByPk(burger.id, {paranoid: false});
         if (!find) {
           const newBurger = await Burger.create(burger);
           await newBurger.addIngredient(burger.ingredients);
@@ -48,7 +48,7 @@ async function precharge() {
 
     if (data.combos.length) {
       for (const combo of data.combos) {
-        const find = await Combo.findByPk(combo.id);
+        const find = await Combo.findByPk(combo.id, {paranoid: false});
         if (!find) {
           const newCombo = await Combo.create(combo);
           await newCombo.addBeverage(combo.beverages);
