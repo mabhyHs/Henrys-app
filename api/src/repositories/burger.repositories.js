@@ -25,17 +25,17 @@ async function getById(id) {
   return burger;
 }
 
-async function getAll() {
-  const burgers = await Burger.findAll();
+async function getAll(paranoid) {
+  const burgers = await Burger.findAll({paranoid: paranoid});
   return burgers;
 }
 
-async function getByQuery(queries) {
+async function getByQuery(queries, paranoid) {
   if (!queries) {
-    return await getAll();
+    return await getAll(paranoid);
   }
 
-  const burgers = await Burger.findAll({ where: queries });
+  const burgers = await Burger.findAll({ where: queries, paranoid: paranoid });
   return burgers;
 }
 

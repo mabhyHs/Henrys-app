@@ -11,17 +11,17 @@ async function getById(id) {
   return fries;
 }
 
-async function getAll() {
-  const fries = await Fries.findAll();
+async function getAll(paranoid) {
+  const fries = await Fries.findAll({paranoid: paranoid});
   return fries;
 }
 
-async function getByQuery(queries) {
+async function getByQuery(queries, paranoid) {
   if (!queries) {
-    return await getAll();
+    return await getAll(paranoid);
   }
 
-  const fries = await Fries.findAll({ where: queries });
+  const fries = await Fries.findAll({ where: queries, paranoid: paranoid });
   return fries;
 }
 

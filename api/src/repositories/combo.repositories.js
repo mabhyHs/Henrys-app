@@ -41,17 +41,17 @@ async function getById(id) {
   return combo;
 }
 
-async function getAll() {
-  const combos = await Combo.findAll();
+async function getAll(paranoid) {
+  const combos = await Combo.findAll({paranoid: paranoid});
   return combos;
 }
 
-async function getByQuery(queries) {
+async function getByQuery(queries, paranoid) {
   if (!queries) {
-    return await getAll();
+    return await getAll(paranoid);
   }
 
-  const combos = await Combo.findAll({ where: queries });
+  const combos = await Combo.findAll({ where: queries, paranoid: paranoid });
   return combos;
 }
 
