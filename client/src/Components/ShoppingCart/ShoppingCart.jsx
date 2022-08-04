@@ -7,6 +7,7 @@ import {
   allProductsDelete,
   deleteCart,
   productDelete,
+  setDiscount
 } from '../../Redux/actions/actions';
 import CardProductCart from '../CardProductCart/CardProductCart';
 import Container from 'react-bootstrap/Container';
@@ -24,6 +25,8 @@ function ShoppingCart() {
   let itemsToCart = useSelector((state) => state.cart);
   const [mount, setMount] = useState(true);
   const navigate = useNavigate();
+  const [cupon, setCupon] = useState('')
+  
 
   useEffect(() => {
     if (!mount) {
@@ -54,7 +57,7 @@ function ShoppingCart() {
     }
   };
 
-  const total = Object.values(itemsToCart).reduce(
+  let total = Object.values(itemsToCart).reduce(
     (acc, { price, cantidad }) => acc + price * cantidad,
     0
   );
@@ -93,7 +96,22 @@ function ShoppingCart() {
             });
         }    
   };
-
+  function handleCupon(e){
+    setCupon(e.target.value)
+  }
+  function validateCupon(cupon){
+    try{
+      const json = {code: 'XS123', porcentaje: 20}
+      const array = [...itemsToCart].map((e) => {
+        const precioDecrementado = e.price - (e.price * json.porcentaje / 100)
+        return{...e, price: precioDecrementado}
+      })
+      dispatch(setDiscount(array))
+      window.localStorage.setItem('carrito', JSON.stringify(array));
+    }catch(error){
+      console.log(error)
+    }
+  }
   return (
     <Container className="py-4 shoppinCart__container">
       {itemsToCart && itemsToCart?.length === 0 ? (
@@ -162,6 +180,9 @@ function ShoppingCart() {
               cols="36"
               rows="3"
             />
+            <h2>Cupon de descuento:</h2>
+            <input type='text' name='cupon' onChange={(e) => handleCupon(e)}></input>
+            <button onClick={() => validateCupon(cupon)}>Aplicar</button>
             <h2 className="shoppingCart__h2 mb-4">
               Total de mi compra: <span>{`$${' ' + total}`}</span>
             </h2>
