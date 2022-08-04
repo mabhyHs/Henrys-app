@@ -21,6 +21,7 @@ import {
   SET_LOGIN_STATE,
   ADD_BURGER_CUSTOM_TO_CART,
   POST_MP,
+  SET_DISCOUNT
 } from '../actions/actions';
 
 import {
@@ -63,6 +64,11 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
         products: action.payload,
       };
+    case SET_DISCOUNT:
+      return{
+        ...state,
+        cart: action.payload,
+      }
     case GET_COMBOS:
       return {
         ...state,

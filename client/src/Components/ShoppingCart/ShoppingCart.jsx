@@ -7,6 +7,7 @@ import {
   allProductsDelete,
   deleteCart,
   productDelete,
+  setDiscount
 } from '../../Redux/actions/actions';
 import CardProductCart from '../CardProductCart/CardProductCart';
 import Container from 'react-bootstrap/Container';
@@ -25,6 +26,7 @@ function ShoppingCart() {
   const [mount, setMount] = useState(true);
   const navigate = useNavigate();
   const [cupon, setCupon] = useState('')
+  
 
   useEffect(() => {
     if (!mount) {
@@ -100,8 +102,12 @@ function ShoppingCart() {
   function validateCupon(cupon){
     try{
       const json = {code: 'XS123', porcentaje: 20}
-      total = total - (total * json.porcentaje / 100)
-      console.log(total)
+      const array = [...itemsToCart].map((e) => {
+        const precioDecrementado = e.price - (e.price * json.porcentaje / 100)
+        return{...e, price: precioDecrementado}
+      })
+      dispatch(setDiscount(array))
+      window.localStorage.setItem('carrito', JSON.stringify(array));
     }catch(error){
       console.log(error)
     }
