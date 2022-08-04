@@ -15,12 +15,13 @@ import {
   DELETE_PRODUCT_CART,
   LOCAL_STORAGE,
   ADD_FAVORITES,
-  DELETE_ON_FAVORITES,
   ADD_TO_LOCAL,
   CLEAR_STATE,
   SET_LOGIN_STATE,
   ADD_BURGER_CUSTOM_TO_CART,
   POST_MP,
+  GET_FAVORITES,
+  REMOVE_FAVORITES,
 } from '../actions/actions';
 
 import {
@@ -46,7 +47,7 @@ const initialState = {
   burgerBase: {},
   cart: [],
   favorites: [],
-  loginState: JSON.parse(window.localStorage.getItem("user")),
+  loginState: JSON.parse(window.localStorage.getItem('user')),
   mercaDopago: '',
 };
 
@@ -143,36 +144,20 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
         cart: action.payload,
       };
-    case ADD_FAVORITES:
-      localStorage.setItem(
-        'favoritos',
-        JSON.stringify(
-          addFav(
-            action.payload,
-            state.products,
-            JSON.parse(localStorage.getItem('favoritos')) || []
-          )
-        )
-      );
+    case GET_FAVORITES:
       return {
         ...state,
-        favorites: JSON.parse(localStorage.getItem('favoritos')),
+        favorites: action.payload,
       };
-    case DELETE_ON_FAVORITES:
-      console.log(
-        JSON.stringify(JSON.parse(localStorage.getItem('favoritos')))
-      );
-      localStorage.setItem(
-        'favoritos',
-        JSON.stringify(
-          JSON.parse(localStorage.getItem('favoritos'))?.filter(
-            (e) => e.id !== action.payload
-          )
-        )
-      );
+    case ADD_FAVORITES:
       return {
         ...state,
-        favorites: JSON.parse(localStorage.getItem('favoritos')),
+        favorites: action.payload,
+      };
+    case REMOVE_FAVORITES:
+      return {
+        ...state,
+        favorites: action.payload,
       };
     case ADD_TO_LOCAL:
       return {

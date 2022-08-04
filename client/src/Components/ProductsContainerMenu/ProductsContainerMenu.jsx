@@ -1,15 +1,17 @@
 import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { addCartProduct, getFavorites } from '../../Redux/actions/actions';
 import CardProductMenu from '../CardProductMenu/CardProductMenu';
 import Container from 'react-bootstrap/Container';
 import './ProductsContainerMenu.css';
-import { addCartProduct, setLocalStorage } from '../../Redux/actions/actions';
 import Swal from 'sweetalert2';
 
 function ProductsContainerMenu({ currentProduct }) {
   const dispatch = useDispatch();
   let itemsToCart = useSelector((state) => state.cart);
   const [mount, setMount] = useState(true);
+
+  const isSession = useSelector((state) => state.loginState);
 
   useEffect(() => {
     if (!mount) {
@@ -22,6 +24,13 @@ function ProductsContainerMenu({ currentProduct }) {
       setMount(false);
     }
   }, [dispatch, itemsToCart, mount]);
+
+  useEffect(() => {
+    const user = JSON.parse(window.localStorage.getItem('user'));
+    if (isSession && user) {
+      dispatch(getFavorites(user.id));
+    }
+  }, [dispatch, isSession]);
 
   const addToCart = (id) => {
     dispatch(addCartProduct(id));
