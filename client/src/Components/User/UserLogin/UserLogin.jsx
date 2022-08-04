@@ -104,7 +104,7 @@ function UserLogin() {
           confirmButton: 'confirmBtnSwal',
         },
         title: 'Opss...',
-        text: typeof(error.response.data.error) !== "string" ? "Error al registrarse!" : error.response.data.error,
+        text: typeof(error.response.data.error) !== "string" ? "Correo inválido!" : error.response.data.error,
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
         imageWidth: 150,
