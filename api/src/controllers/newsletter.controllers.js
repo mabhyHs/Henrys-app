@@ -4,13 +4,13 @@ const { transporter } = require("../config/emailTransporter");
 
 async function get(req, res, next) {
   try {
-    /* hay que validar que tenga el rol de admin */
+
     const all = await newsletterRepositories.get();
 
     if (!all || !all.length) {
       return res
         .status(404)
-        .json({ error: "No se pudo enviar novedades, no hay usuarios suscriptos!" });
+        .json({ error: "Error al enviar novedades, no hay usuarios suscriptos!" });
     }
 
     return res.status(200).json(all);
@@ -22,7 +22,7 @@ async function get(req, res, next) {
 /* las cuentas que crea el admin */
 async function create(req, res, next) {
   try {
-    /* hay que validar que tenga el rol de admin */
+    
     const data = req.body;
 
     if (!req.body.email) {
