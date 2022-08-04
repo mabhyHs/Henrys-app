@@ -25,11 +25,11 @@ async function destroy(req, res, next) {
     const deletedIngredient = await ingredientRepository.destroy(id);
 
     if (deletedIngredient)
-      return res.status(200).json("Ingredient deleted successfully");
+      return res.status(200).json("Ingrediente desactivado correctamente!");
 
     return res
       .status(404)
-      .json({ error: "There is no Ingredient to be deleted with this id" });
+      .json({ error: `No hay ningún ingrediente para ser desactivado con id ${id}!` });
   } catch (error) {
     next(error);
   }
@@ -43,11 +43,11 @@ async function restore(req, res, next) {
     if (restoredIngredient)
       return res
         .status(200)
-        .json({ message: "Ingredient restored successfully" });
+        .json({ message: "Ingrediente activado correctamente!" });
 
     return res
       .status(404)
-      .json({ error: "There is no Ingredient deleted with this id" });
+      .json({ error: `No hay ningún ingrediente para ser activado con id ${id}!` });
   } catch (error) {
     next(error);
   }
@@ -57,7 +57,7 @@ async function update(req, res, next) {
   try {
     const data = req.body;
     const updatedIngredient = await ingredientRepository.update(data);
-    return res.status(200).json({ message: "Ingredient updated" });
+    return res.status(200).json({ message: "Ingrediente actualizado!" });
   } catch (error) {
     next(error);
   }

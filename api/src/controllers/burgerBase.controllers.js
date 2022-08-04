@@ -22,7 +22,7 @@ async function update(req, res, next) {
   try {
     const data = req.body;
     const updatedBurge = await burgerBaseRepository.update(data);
-    return res.status(200).json({ message: "BurgerBase updated" });
+    return res.status(200).json({ message: "Hamburguesa base actualizada!" });
   } catch (error) {
     next(error);
   }

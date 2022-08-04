@@ -75,12 +75,6 @@ async function precharge() {
       }
     );
 
-    await Newsletter.bulkCreate([
-      {
-        email: "henrysburgers@admin.com",
-      },
-    ]);
-
     await BurgerBase.bulkCreate(
       [
         {
