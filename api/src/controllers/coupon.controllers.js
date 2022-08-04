@@ -26,7 +26,19 @@ async function getAll(req, res, next) {
   }
 }
 
+async function update(req, res, next) {
+  try {
+    const code = req.body.code;
+    const data = req.body;
+    const coupon = await couponRepository.update(code, data);
+    res.status(201).json({ message: "Cupon actualizado" });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   createCoupon,
   getAll,
+  update,
 };

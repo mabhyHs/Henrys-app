@@ -18,8 +18,13 @@ async function getById(code) {
   return coupon;
 }
 
+async function update(code, data) {
+  return await Coupon.update(data, { where: { code: code } });
+}
+
 module.exports = {
   createCoupon,
   getAll,
   getById,
+  update,
 };
