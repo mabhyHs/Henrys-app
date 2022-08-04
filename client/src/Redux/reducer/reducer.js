@@ -46,7 +46,8 @@ const initialState = {
   burgerBase: {},
   cart: [],
   favorites: [],
-  loginState: JSON.parse(window.localStorage.getItem("user")),
+  reviews: [],
+  loginState: JSON.parse(window.localStorage.getItem('user')),
   mercaDopago: '',
 };
 
@@ -189,6 +190,12 @@ const rootReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         mercaDopago: action.payload,
+      };
+
+    case GET_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
       };
     default:
       return state;

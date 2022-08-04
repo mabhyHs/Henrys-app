@@ -22,6 +22,7 @@ export const ADD_TO_LOCAL = 'ADD_TO_LOCAL';
 export const SET_LOGIN_STATE = 'SET_LOGIN_STATE';
 export const ADD_BURGER_CUSTOM_TO_CART = 'ADD_BURGER_CUSTOM_TO_CART';
 export const POST_MP = 'POST_MP';
+export const GET_REVIEWS = 'GET_REVIEWS';
 
 export function getProduct(
   category = '',
@@ -230,3 +231,16 @@ export function postMP(data, token) {
   };
 }
 
+export function getReviews() {
+  return async function (dispatch) {
+    const json = await axios.get('/reviews');
+    try {
+      return dispatch({
+        type: 'GET_REVIEWS',
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
