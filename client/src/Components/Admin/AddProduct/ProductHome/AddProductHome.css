@@ -1,0 +1,16 @@
+.addProductHome__container {
+  min-height: 60vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.adminProductHome__card {
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.adminProductHome__card__img {
+  height: 150px;
+}

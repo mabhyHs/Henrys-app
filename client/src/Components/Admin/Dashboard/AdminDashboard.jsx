@@ -40,7 +40,7 @@ function AdminDashboard() {
             <Card.Body className="adminHome__card__body">
               <Card.Title>Productos</Card.Title>
               <Card.Text>Visualizar, editar, crear productos.</Card.Text>
-              <Button as={Link} to="/adminusers" variant="secondary">
+              <Button as={Link} to="/adminproducts" variant="secondary">
                 Ingresar
               </Button>
             </Card.Body>
