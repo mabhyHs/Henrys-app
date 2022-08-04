@@ -156,7 +156,7 @@ async function recovery(req, res, next) {
         </html>`,
     });
 
-    return res.status(200).json({ message: "succes" });
+    return res.status(200).json({ message: "Contraseña de recuperación enviada al correo!" });
   } catch (error) {
     next(error);
   }

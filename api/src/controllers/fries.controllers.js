@@ -15,10 +15,10 @@ async function destroy(req, res, next) {
     const { id } = req.params;
     const fries = await friesRepository.destroy(id);
     fries
-      ? res.status(200).json({ message: "Product deleted successfully" })
+      ? res.status(200).json({ message: "Producto desactivado correctamente!" })
       : res
           .status(404)
-          .json({ error: "There is no product to be deleted with this id" });
+          .json({ error: `No hay ningún producto para ser desactivado con id ${id}!` });
   } catch (error) {
     next(error);
   }
@@ -29,7 +29,7 @@ async function update(req, res, next) {
     const id = req.body.id;
     const data = req.body;
     const fries = await friesRepository.update(id, data);
-    res.status(201).json({ message: "Fries updated" });
+    res.status(201).json({ message: "Producto actualizado!" });
   } catch (error) {
     next(error);
   }
@@ -41,10 +41,10 @@ async function restore(req, res, next) {
 
     const fries = await friesRepository.restore(id);
     fries
-      ? res.status(200).json({ message: "Product restored successfully" })
+      ? res.status(200).json({ message: "Producto activado correctamente!" })
       : res
           .status(404)
-          .json({ error: "There is no product deleted with this id" });
+          .json({ error: `No hay ningún producto para ser activado con id ${id}!` });
   } catch (error) {
     next(error);
   }

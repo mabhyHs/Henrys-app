@@ -5,11 +5,11 @@ const { transporter } = require("../config/emailTransporter");
 
 async function getAllSecure(req, res, next) {
   try {
-    /* hay que validar que tenga el rol de admin */
+
     const all = await userRepositories.getAllSecure();
 
     if (!all) {
-      return res.status(404).json("There are no users loaded!");
+      return res.status(404).json("No se pudo enviar el newsletter, no hay usuarios cargados!");
     }
 
     return res.status(200).json(all);
@@ -21,14 +21,14 @@ async function getAllSecure(req, res, next) {
 /* las cuentas que crea el admin */
 async function create(req, res, next) {
   try {
-    /* hay que validar que tenga el rol de admin */
+
     const data = req.body;
     const findUser = await userRepositories.getByEmail(data.email);
 
     if (findUser) {
       return res
         .status(400)
-        .json({ error: "A user with this email already exists" });
+        .json({ error: "Ya existe un usuario con este correo electrónico!" });
     }
 
     data.password = await bcrypt.hash(data.password, 10);
@@ -49,7 +49,7 @@ async function register(req, res, next) {
     if (findUser)
       return res
         .status(400)
-        .json({ error: "A user with this email already exists" });
+        .json({ error: "Ya existe un usuario con este correo electrónico!" });
 
     data.password = await bcrypt.hash(data.password, 10);
     const newUser = await userRepositories.create(data);
@@ -237,11 +237,11 @@ async function destroy(req, res, next) {
     const deletedUser = await userRepositories.destroy(id);
 
     if (deletedUser)
-      return res.status(200).json({ message: "User deleted successfully" });
+      return res.status(200).json({ message: "Usuario desactivado correctamente!" });
 
     return res
       .status(404)
-      .json({ error: "There is no User to be deleted with this id" });
+      .json({ error: `No hay ningún usuario para ser desactivado con id ${id}!` });
   } catch (error) {
     next(error);
   }
@@ -253,11 +253,11 @@ async function restore(req, res, next) {
     const restoredUser = await userRepositories.restore(id);
 
     if (restoredUser)
-      return res.status(200).json({ message: "User restored successfully" });
+      return res.status(200).json({ message: "Usuario activado corretamente!" });
 
     return res
       .status(404)
-      .json({ error: "There is no User deleted with this id" });
+      .json({ error: `No hay ningún usuario para ser activado con id ${id}!`  });
   } catch (error) {
     next(error);
   }
@@ -267,7 +267,7 @@ async function update(req, res, next) {
   try {
     const data = req.body;
     const updatedUser = await userRepositories.update(data);
-    return res.status(200).json({ message: "User updated" });
+    return res.status(200).json({ message: "Info de usuario actualizada!" });
   } catch (error) {
     next(error);
   }
@@ -291,7 +291,7 @@ async function updateProfileData(req, res, next) {
       data.imgUri = imgUri;
     }
     const updatedUser = await userRepositories.update(data);
-    return res.status(200).json({ message: "User updated" });
+    return res.status(200).json({ message: "Info de usuario actualizada!" });
   } catch (error) {
     next(error);
   }
@@ -302,7 +302,7 @@ async function getById(req, res, next) {
     const user = await userRepositories.getById(req.params.id);
     return user
       ? res.status(200).json(user)
-      : res.status(400).json({ message: "User not found" });
+      : res.status(400).json({ message: "Usuario no encontrado!" });
   } catch (error) {
     next(error);
   }
