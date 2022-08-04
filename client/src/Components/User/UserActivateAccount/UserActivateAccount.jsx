@@ -3,13 +3,15 @@ import Container from 'react-bootstrap/esm/Container';
 import Button from 'react-bootstrap/esm/Button';
 import ActivateImg from '../../../Assets/Images/combos/combo2-dobles.png';
 import { Link, useParams } from 'react-router-dom';
-import { FcOk } from 'react-icons/fc';
+import { FcHighPriority, FcOk } from 'react-icons/fc';
 
 import './UserActivateAccount.css';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function UserActivateAccount() {
   const [mount, setMount] = useState(false);
+  const [isSuccess, setSucess] = useState(false);
 
   const { id } = useParams();
   useEffect(() => {
@@ -18,12 +20,21 @@ function UserActivateAccount() {
     } else {
       const fetchData = async (id) => {
         try {
-          const json = await axios.put(`/activateAccount/${id}`);
-          // if (json.status !== 200) {
-          //   throw new Error('Error al activar la cuenta');
-          // }
+          await axios.put(`/activateAccount/${id}`);
+          setSucess(true);
         } catch (error) {
-          window.alert('Error al activar la cuenta');
+            Swal.fire({
+                customClass: {
+                  confirmButton: 'confirmBtnSwal',
+                },
+                title: 'Opss...',
+                text: typeof(error.response.data.error) !== "string" ? "Error al activar la cuenta!" : error.response.data.error,
+                imageUrl:
+                  'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+                imageWidth: 170,
+                imageHeight: 170,
+                imageAlt: 'Logo henrys',
+              });
         }
       };
       fetchData(id);
@@ -35,14 +46,15 @@ function UserActivateAccount() {
       <Container>
         <div className="userActivate__container">
           <div>
-            <h1>¡Bienvenido!</h1>
+            <h1>{isSuccess ? "¡Bienvenido!" : ""}</h1>
             <h2 className="userActivate__subtittle">
-              <FcOk />
-              Cuenta verificada con éxito
+            {isSuccess ? <FcOk /> : <FcHighPriority /> }
+              {isSuccess ? "Cuenta verificada con éxito" : " Error al activar la cuenta!"}
             </h2>
-            <p>Empezá a disfrutar de las más deliciosas hamburguesas</p>
+            <p>{isSuccess ? "Empezá a disfrutar de las más deliciosas hamburguesas" : ""}</p>
+            
             <Button as={Link} to="/">
-              Iniciar la experiencia
+                {isSuccess ? "Iniciar la experiencia" : "Volver al menú"}
             </Button>
           </div>
           <img

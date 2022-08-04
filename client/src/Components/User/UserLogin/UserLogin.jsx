@@ -31,6 +31,8 @@ function UserLogin() {
   });
 
   const [recoveryInput, setRecoveryInput] = useState('');
+  const [isSubmitedLogin, setSubmitedLogin] = useState(false);
+  const [isSubmitedRecovery, setSubmitedRecovery] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -45,6 +47,7 @@ function UserLogin() {
     e.preventDefault();
 
     try {
+      setSubmitedLogin(true);
       const res = await axios.post(`/login`, { ...input });
 
       if (res.status === 200) {
@@ -60,33 +63,36 @@ function UserLogin() {
         customClass: {
           confirmButton: 'confirmBtnSwal',
         },
-        title: 'Algo salió mal...',
-        text: 'Email o contraseña inválida!',
+        title: 'Opss...',
+        text: typeof(error.response.data.error) !== "string" ? "Credenciales inválidas!" : error.response.data.error,
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
         imageWidth: 170,
         imageHeight: 170,
         imageAlt: 'Logo henrys',
       });
+    } finally {
+        setSubmitedLogin(false);
     }
   };
 
   const handleSubmitRecoveryPass = async (e) => {
-    e.preventDefault();
     try {
+      e.preventDefault();
+      setSubmitedRecovery(true);
       const res = await axios.post('/passwordRecovery', {
         email: recoveryInput,
       });
-      console.log(res.status);
+
       if (res.status === 200) {
         Swal.fire({
           customClass: {
             confirmButton: 'confirmBtnSwal',
           },
-          title: 'Mensaje enviado exitosamente!',
-          text: 'Revise el correo para recuperar su cuenta',
+          title: 'Mensaje enviado correctamente',
+          text: 'Revise el correo para recuperar su cuenta!',
           imageUrl:
-            'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+            'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
           imageWidth: 150,
           imageHeight: 150,
           imageAlt: 'Logo henrys',
@@ -97,14 +103,16 @@ function UserLogin() {
         customClass: {
           confirmButton: 'confirmBtnSwal',
         },
-        title: 'Error',
-        text: 'Error al enviar el correo intente nuevamente.',
+        title: 'Opss...',
+        text: typeof(error.response.data.error) !== "string" ? "Error al registrarse!" : error.response.data.error,
         imageUrl:
-          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
         imageWidth: 150,
         imageHeight: 150,
         imageAlt: 'Logo henrys',
       });
+    } finally {
+        setSubmitedRecovery(false);
     }
     handleClose();
   };
@@ -178,6 +186,7 @@ function UserLogin() {
                 <Modal.Footer>
                   <Button
                     variant="primary"
+                    disabled={!recoveryInput || isSubmitedRecovery}
                     onClick={(e) => handleSubmitRecoveryPass(e)}
                   >
                     Enviar
@@ -189,6 +198,10 @@ function UserLogin() {
                 // to="/userprofiledashboard"
                 variant="primary"
                 type="submit"
+                disabled={
+                    !input.email.length ||
+                    !input.password.length ||
+                    isSubmitedLogin}
               >
                 Ingresar
               </Button>
