@@ -8,7 +8,7 @@ async function recovery(req, res, next) {
     const { email } = req.body;
 
     if(!email){
-        return res.status(404).json({ error: "Correo inválido!" });
+        return res.status(404).json({ error: "El correo no puede estar vacio!" });
     }
 
     const find = await userRepository.getByEmail(email);
