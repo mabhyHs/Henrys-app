@@ -17,11 +17,12 @@ export const DELETE_PRODUCT_CART = 'DELETE_PRODUCT_CART';
 export const LOCAL_STORAGE = 'LOCAL_STORAGE';
 export const GET_BURGER_BASE = 'GET_BURGER_BASE';
 export const ADD_FAVORITES = 'ADD_FAVORITES';
-export const DELETE_ON_FAVORITES = 'DELETE_ON_FAVORITES';
+export const REMOVE_FAVORITES = 'REMOVE_FAVORITES';
 export const ADD_TO_LOCAL = 'ADD_TO_LOCAL';
 export const SET_LOGIN_STATE = 'SET_LOGIN_STATE';
 export const ADD_BURGER_CUSTOM_TO_CART = 'ADD_BURGER_CUSTOM_TO_CART';
 export const POST_MP = 'POST_MP';
+export const GET_FAVORITES = 'GET_FAVORITES';
 export const SET_DISCOUNT = 'SET_DISCOUNT';
 
 export function getProduct(
@@ -100,17 +101,49 @@ export function setLocalStorage(payload) {
   };
 }
 
-export function addFavorites(id) {
-  return {
-    type: ADD_FAVORITES,
-    payload: id,
+export function getFavorites(userId) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`/users/favorites/${userId}`);
+      return dispatch({
+        type: GET_FAVORITES,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 
-export function removeFavorites(id) {
-  return {
-    type: DELETE_ON_FAVORITES,
-    payload: id,
+export function addFavorites(userId, favorites, id) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(`/users/favorites/${userId}`, {
+        favoritesList: [...favorites, id],
+      });
+      return dispatch({
+        type: ADD_FAVORITES,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function removeFavorites(userId, favorites, id) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(`/users/favorites/${userId}`, {
+        favoritesList: [...favorites.filter((e) => e !== id)],
+      });
+      return dispatch({
+        type: REMOVE_FAVORITES,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 
@@ -232,8 +265,9 @@ export function postMP(data, token) {
 }
 
 export function setDiscount(array) {
-  return {
-    type: SET_DISCOUNT,
-    payload: array,
-  };
-}
+    return {
+      type: SET_DISCOUNT,
+      payload: array,
+    };
+  }
+
