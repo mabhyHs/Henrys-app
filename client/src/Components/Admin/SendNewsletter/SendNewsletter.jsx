@@ -60,7 +60,7 @@ function SendNewsletter() {
           confirmButton: 'confirmBtnSwal',
         },
         title: 'Opss...',
-        text: 'No se pudo enviar el newsletter!',
+        text: error.response.data.error,
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
         imageWidth: 150,
