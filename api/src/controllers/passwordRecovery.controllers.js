@@ -7,13 +7,23 @@ async function recovery(req, res, next) {
   try {
     const { email } = req.body;
 
+    if(!email){
+        return res.status(404).json({ error: "Correo inválido!" });
+    }
+
+    const find = await userRepository.getByEmail(email);
+
+    if(!find){
+        return res.status(404).json({ error: "Correo no encontrado!" });
+    }
+
     const newPassword = jwt.sign(
       {
         email: email,
       },
       process.env.TOKEN_SECRET
     );
-    // const newPassword = "NhSvgtv3RP3jWwk4dy63a8opheb7aIHAZ62os6BFfqhgmJMKU0";
+   
     const newHashPassword = await bcrypt.hash(newPassword, 10);
 
     await userRepository.updatePassword(email, newHashPassword);
