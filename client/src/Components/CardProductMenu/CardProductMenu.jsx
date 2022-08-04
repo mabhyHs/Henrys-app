@@ -3,6 +3,7 @@ import { addFavorites, removeFavorites } from '../../Redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Heart, CartPlus, HeartFill } from 'react-bootstrap-icons';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -18,7 +19,21 @@ function CardProductMenu({ id, name, price, imgUri, addToCart }) {
 
   const ClickFav = (id) => {
     if (!isSession) {
-      navigate('/userlogin');
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        confirmButtonText: 'Iniciar sesión',
+        title: 'Opss...',
+        text: 'Primero debes iniciar sesión!',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      }).then(function () {
+        navigate('/userlogin');
+      });
       // alert('es necesario estar logueado');
     } else if (favorites.includes(id)) {
       const userId = JSON.parse(window.localStorage.getItem('user')).id;
