@@ -7,6 +7,6 @@ const verifyToken = require("../middlewares/tokenValidation");
 const router = express.Router();
 
 router.post("/", verifyToken, createCoupon);
-router.get("/", verifyToken, getAll);
+router.get("/", getAll);
 
 module.exports = router;
