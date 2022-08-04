@@ -29,6 +29,7 @@ import AddProductHome from './Components/Admin/AddProduct/ProductHome/AddProduct
 import ReviewsContainer from './Components/ReviewsContainer/ReviewsContainer';
 import AdminUsers from './Components/Admin/AdminUsers/AdminUsers';
 import CreateOrEditBurger from './Components/Admin/AddProduct/AddProductViews/CreateOrEditBurger/CreateOrEditBurger';
+import CreateOrEditBurgerBase from './Components/Admin/AddProduct/AddProductViews/CreateOrEditBurgerBase/CreateOrEditBurgerBase';
 
 function App() {
   const isSession = isLogged();
@@ -101,6 +102,13 @@ function App() {
         <Route
           path="/adminusers"
           element={isSessionAdmin ? <AdminUsers /> : <Navigate to="/" />}
+        />
+
+        <Route
+          path="/admineditburgerbase"
+          element={
+            isSessionAdmin ? <CreateOrEditBurgerBase /> : <Navigate to="/" />
+          }
         />
 
         <Route
