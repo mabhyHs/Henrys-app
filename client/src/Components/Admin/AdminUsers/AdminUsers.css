@@ -1,0 +1,11 @@
+.adminUsers__container {
+  min-height: 70vh;
+}
+.adminUser__td__btns button {
+  margin: 5px;
+}
+
+.adminUser__td__btns svg {
+  font-size: 1rem;
+  font-weight: bold;
+}
