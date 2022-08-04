@@ -23,6 +23,8 @@ const payRouter = require("./pay.routes");
 
 const reviewsRouter = require("./review.routes");
 
+const ordersRouter = require("./order.routes");
+
 const router = express.Router();
 
 router.use("/users", usersRouter);
@@ -46,5 +48,7 @@ router.use("/newsletter", newsletterRouter);
 router.use("/pay", payRouter);
 
 router.use("/reviews", reviewsRouter);
+
+router.use("/orders", ordersRouter);
 
 module.exports = router;
