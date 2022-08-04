@@ -102,14 +102,15 @@ export function setLocalStorage(payload) {
   };
 }
 
-export function getFavorites(userId) {
+export function getFavorites(userId, setLoading) {
   return async function (dispatch) {
     try {
       const response = await axios.get(`/users/favorites/${userId}`);
-      return dispatch({
+      dispatch({
         type: GET_FAVORITES,
         payload: response.data,
       });
+      if (setLoading) return setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -266,22 +267,22 @@ export function postMP(data, token) {
 }
 
 export function setDiscount(array) {
-    return {
-      type: SET_DISCOUNT,
-      payload: array,
-    };
-  }
+  return {
+    type: SET_DISCOUNT,
+    payload: array,
+  };
+}
 
-  export function getReviews() {
-    return async function (dispatch) {
-      const json = await axios.get('/reviews');
-      try {
-        return dispatch({
-          type: 'GET_REVIEWS',
-          payload: json.data,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-  }
+export function getReviews() {
+  return async function (dispatch) {
+    const json = await axios.get('/reviews');
+    try {
+      return dispatch({
+        type: 'GET_REVIEWS',
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}

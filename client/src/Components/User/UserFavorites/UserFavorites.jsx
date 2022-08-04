@@ -3,29 +3,36 @@ import { useDispatch, useSelector } from 'react-redux';
 import UserFavoritesCard from '../UserFavoritesCard/UserFavoritesCard';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
-import { addLocalAState, getFavorites } from '../../../Redux/actions/actions';
+import { getFavorites } from '../../../Redux/actions/actions';
 
 import './UserFavorites.css';
-import axios from 'axios';
+import Loading from '../../Loading/Loading';
 
 function UserFavorites() {
   const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(false);
+
   const favoritosId = useSelector((state) => state.favorites);
 
   useEffect(() => {
-    if (JSON.parse(window.localStorage.getItem('user'))) {
-      dispatch(
-        getFavorites(JSON.parse(window.localStorage.getItem('user')).id)
-      );
+    const user = JSON.parse(window.localStorage.getItem('user'));
+    if (user) {
+      setLoading(true);
+      dispatch(getFavorites(user.id, setLoading));
     }
   }, [dispatch]);
 
   return (
     <div className="userFav__container mb-5">
       <h1 className="mt-5">Mis favoritos</h1>
-      {favoritosId?.map((id) => (
-        <UserFavoritesCard id={id} key={id} favoritosId={favoritosId} />
-      ))}
+      {loading ? (
+        <Loading />
+      ) : (
+        favoritosId?.map((id) => (
+          <UserFavoritesCard id={id} key={id} favoritosId={favoritosId} />
+        ))
+      )}
       <Button as={Link} to="/userprofiledashboard">
         Volver
       </Button>
