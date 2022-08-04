@@ -10,7 +10,7 @@ import './CreateOrEditFries.css';
 function CreateOrEditFries() {
   return (
     <div>
-      <Container className="editBurgerBase__container">
+      <Container className="editFries__container">
         <h2>Editar o Crear Papas Fritas</h2>
         <Form>
           <Row className="mb-3">
@@ -24,14 +24,14 @@ function CreateOrEditFries() {
             </Form.Group>
           </Row>
 
-          <Form.Group className="mb-3" controlId="formGridAddress1">
+          <Form.Group className="mb-3" controlId="formGridImage">
             <Form.Label>Imagen</Form.Label>
             <Form.Control type="file" name="file"></Form.Control>
           </Form.Group>
 
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridDescription">
-              <Form.Label>Descripcion</Form.Label>
+            <Form.Group as={Col} controlId="formGridsize">
+              <Form.Label>Tamaño</Form.Label>
               <Form.Select defaultValue="Tamaño">
                 <option>Tamaño</option>
                 <option>Chico</option>
