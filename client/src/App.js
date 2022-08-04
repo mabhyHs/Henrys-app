@@ -26,6 +26,7 @@ import './App.css';
 import { isLogged, isLoggedAdmin } from './Components/methods';
 import MercadoPago from './Components/ShoppingCart/mercadoPago/MercadoPago';
 import AddProductHome from './Components/Admin/AddProduct/ProductHome/AddProductHome';
+import ReviewsContainer from './Components/ReviewsContainer/ReviewsContainer';
 
 function App() {
   const isSession = isLogged();
@@ -43,6 +44,7 @@ function App() {
         <Route path="/addBurger" element={<AddBurger />} />
         <Route path="/nosotros" element={<AboutUs />} />
         <Route path="/detalle/:id" element={<ProductDetail />} />
+        <Route path="/quedicendenosotros" element={<ReviewsContainer />} />
 
         {/* USER ROUTES */}
         <Route

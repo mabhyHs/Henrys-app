@@ -24,6 +24,7 @@ export const ADD_BURGER_CUSTOM_TO_CART = 'ADD_BURGER_CUSTOM_TO_CART';
 export const POST_MP = 'POST_MP';
 export const GET_FAVORITES = 'GET_FAVORITES';
 export const SET_DISCOUNT = 'SET_DISCOUNT';
+export const GET_REVIEWS = 'GET_REVIEWS';
 
 export function getProduct(
   category = '',
@@ -271,3 +272,16 @@ export function setDiscount(array) {
     };
   }
 
+  export function getReviews() {
+    return async function (dispatch) {
+      const json = await axios.get('/reviews');
+      try {
+        return dispatch({
+          type: 'GET_REVIEWS',
+          payload: json.data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  }

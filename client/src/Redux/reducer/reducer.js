@@ -23,6 +23,7 @@ import {
     GET_FAVORITES,
     REMOVE_FAVORITES,
     SET_DISCOUNT,
+    GET_REVIEWS,
   } from '../actions/actions';
   
   import {
@@ -50,6 +51,7 @@ import {
     favorites: [],
     loginState: JSON.parse(window.localStorage.getItem('user')),
     mercaDopago: '',
+    reviews: [],
   };
   
   const rootReducer = (state = initialState, action = {}) => {
@@ -180,6 +182,11 @@ import {
         return {
           ...state,
           mercaDopago: action.payload,
+        };    
+      case GET_REVIEWS:
+        return {
+          ...state,
+          reviews: action.payload,
         };
       default:
         return state;
