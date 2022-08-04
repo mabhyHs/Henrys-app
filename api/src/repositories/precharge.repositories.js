@@ -61,6 +61,7 @@ async function precharge() {
     await User.bulkCreate(
       [
         {
+          id: "dbaf0142-48ec-4900-8694-1d8eb4080c39",
           firstName: "Henry",
           lastName: "Burger",
           email: "henrysburgers@admin.com",

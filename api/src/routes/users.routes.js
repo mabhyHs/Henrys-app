@@ -7,6 +7,8 @@ const {
   update,
   updateProfileData,
   getById,
+  setFavorites,
+  getFavoritesByUserId,
 } = require("../controllers/users.controllers");
 const { roleValidator } = require("../middlewares/usersValidation");
 const validationResultHandler = require("../middlewares/validationResultHandler");
@@ -43,5 +45,8 @@ router.post(
 router.put("/:id", verifyToken, validationResultHandler, updateProfileData);
 
 router.put("/", verifyToken, roleValidator, validationResultHandler, update);
+
+router.put("/favorites/:id", setFavorites);
+router.get("/favorites/:id", getFavoritesByUserId);
 
 module.exports = router;
