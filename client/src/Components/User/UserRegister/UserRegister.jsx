@@ -4,11 +4,8 @@ import axios from 'axios';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import imgLogin from '../../../Assets/Images/Hamburguesas/PAPAS-KING.png';
-import { createUser } from '../../../Redux/actions/actions';
 import Form from 'react-bootstrap/Form';
-import { FcGoogle } from 'react-icons/fc';
 import Button from 'react-bootstrap/Button';
-import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 
 import './UserRegister.css';
@@ -24,8 +21,7 @@ function UserRegister() {
 
   const [error, setError] = useState({});
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [isSubmited, setSubmited] = useState(false);
 
   /* Funcion que modifica el estado local con los valores de los input */
   const handleChange = (e) => {
@@ -97,8 +93,8 @@ function UserRegister() {
   /* al submitear */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      // dispatch(createUser(input));
+    try {      
+      setSubmited(true);
       const res = await axios.post(`/register`, { ...input });
       if (res.status === 201) {
         setInput({
@@ -113,7 +109,7 @@ function UserRegister() {
             confirmButton: 'confirmBtnSwal',
           },
           title: 'Usuario creado exitosamente!',
-          text: 'Revise el correo para activar su cuenta',
+          text: 'Revise su correo para activar la cuenta',
           imageUrl:
             'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
           imageWidth: 150,
@@ -122,18 +118,20 @@ function UserRegister() {
         });
       }
     } catch (error) {
-      Swal.fire({
-        customClass: {
-          confirmButton: 'confirmBtnSwal',
-        },
-        title: 'Error al registrarse',
-        text: 'Revise los datos e intente nuevamente.',
-        imageUrl:
-          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
-        imageWidth: 150,
-        imageHeight: 150,
-        imageAlt: 'Logo henrys',
-      });
+        Swal.fire({
+            customClass: {
+              confirmButton: 'confirmBtnSwal',
+            },
+            title: 'Opss...',
+            text: typeof(error.response.data.error) !== "string" ? "Error al registrarse!" : error.response.data.error,
+            imageUrl:
+              'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+            imageWidth: 150,
+            imageHeight: 150,
+            imageAlt: 'Logo henrys',
+          });
+    } finally {
+        setSubmited(false);
     }
   };
 
@@ -219,7 +217,14 @@ function UserRegister() {
                 />
               </Form.Group>
             </Row>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" disabled={
+              !input.firstName.length ||
+              !input.lastName.length ||
+              !input.email.length ||
+              !input.password.length ||
+              !input.passwordConfirm.length ||
+              Object.keys(error).length ||
+              isSubmited}>
               Registrarme
             </Button>
           </Form>

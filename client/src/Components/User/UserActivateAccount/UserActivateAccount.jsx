@@ -3,13 +3,15 @@ import Container from 'react-bootstrap/esm/Container';
 import Button from 'react-bootstrap/esm/Button';
 import ActivateImg from '../../../Assets/Images/combos/combo2-dobles.png';
 import { Link, useParams } from 'react-router-dom';
-import { FcOk } from 'react-icons/fc';
+import { FcAdvertising, FcHighPriority, FcOk } from 'react-icons/fc';
 
 import './UserActivateAccount.css';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function UserActivateAccount() {
   const [mount, setMount] = useState(false);
+  const [isSuccess, setSucess] = useState(-1);
 
   const { id } = useParams();
   useEffect(() => {
@@ -18,12 +20,29 @@ function UserActivateAccount() {
     } else {
       const fetchData = async (id) => {
         try {
-          const json = await axios.put(`/activateAccount/${id}`);
-          // if (json.status !== 200) {
-          //   throw new Error('Error al activar la cuenta');
-          // }
+          await axios.put(`/activateAccount/${id}`);
+          setSucess(1);
         } catch (error) {
-          window.alert('Error al activar la cuenta');
+            let imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png";
+            const msg = error.response.data.error;
+            if(typeof(msg) === "string" && msg === "La cuenta ya fue activada!"){
+                imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659640839/advert_aotsaj.png";
+                setSucess(0);
+            }else{
+                setSucess(-1);
+            }
+
+            Swal.fire({
+                customClass: {
+                  confirmButton: 'confirmBtnSwal',
+                },
+                title: 'Opss...',
+                text: typeof(msg) !== "string" ? "Error al activar la cuenta!" : msg,
+                imageUrl: imgUrl,
+                imageWidth: 170,
+                imageHeight: 170,
+                imageAlt: 'Logo henrys',
+              });
         }
       };
       fetchData(id);
@@ -35,14 +54,18 @@ function UserActivateAccount() {
       <Container>
         <div className="userActivate__container">
           <div>
-            <h1>¡Bienvenido!</h1>
-            <h2 className="userActivate__subtittle">
-              <FcOk />
-              Cuenta verificada con éxito
+            <h1>{isSuccess !== 0 ? "¡Bienvenido!" : ""}</h1>
+            <h2 className="userActivate__subtittle"> 
+              {isSuccess === 1 && <FcOk />}
+              {isSuccess === 0 && <FcAdvertising />}
+              {isSuccess === -1 && <FcHighPriority />}               
+              {isSuccess === 1 && " Cuenta activada con éxito"}
+              {isSuccess === 0 && " La cuenta ya fue activada!"}
+              {isSuccess === -1 && " Error al activar la cuenta!"}
             </h2>
-            <p>Empezá a disfrutar de las más deliciosas hamburguesas</p>
+            <p>{isSuccess === 1 ? "Empezá a disfrutar de las más deliciosas hamburguesas" : ""}</p> 
             <Button as={Link} to="/">
-              Iniciar la experiencia
+                {isSuccess === 1 ? "Iniciar la experiencia" : "Volver al menú"}
             </Button>
           </div>
           <img
