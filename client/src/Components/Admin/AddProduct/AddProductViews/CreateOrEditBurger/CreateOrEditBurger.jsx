@@ -24,14 +24,14 @@ function CreateOrEditBurger() {
               <Form.Control type="Number" />
             </Form.Group>
           </Row>
-
-          <Form.Group className="mb-3" controlId="uploadImgBurger">
-            <Form.Label>Imagen</Form.Label>
-            <Form.Control type="file" name="file"></Form.Control>
-          </Form.Group>
-
+          <Row>
+            <Form.Group className="mb-3" controlId="uploadImgBurger">
+              <Form.Label>Imagen</Form.Label>
+              <Form.Control type="file" name="file"></Form.Control>
+            </Form.Group>
+          </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridState">
+            <Form.Group as={Col} controlId="isVeggie">
               <Form.Label>Vegetariano</Form.Label>
               <Form.Select defaultValue="Es Veggie">
                 <option>Es Veggie?</option>
@@ -40,7 +40,7 @@ function CreateOrEditBurger() {
               </Form.Select>
             </Form.Group>
 
-            <Form.Group as={Col} controlId="formGridState">
+            <Form.Group as={Col} controlId="burgerIngredients">
               <Form.Label>Ingredientes</Form.Label>
               <Form.Select defaultValue="seleccionar">
                 <option>Seleccionar</option>
