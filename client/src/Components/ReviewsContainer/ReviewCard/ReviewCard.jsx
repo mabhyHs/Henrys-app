@@ -8,15 +8,20 @@ function ReviewCard({ author, description, rating }) {
       <Card className="reviews__mainCard">
         <div className="reviews__mainCard__headerContainer">
           <Card.Header className="reviews__mainCard__title">
-            <h2>{rating} ★</h2>
+            <h2>
+              {rating} <span>★</span>{' '}
+            </h2>
           </Card.Header>
         </div>
         <Card.Body className="reviews__mainCard__body">
-          <blockquote className="blockquote mb-0">
-            <p>{description}</p>
-          </blockquote>
-          <footer className="blockquote-footer">{author}</footer>
+          <Card.Text>{description}</Card.Text>
         </Card.Body>
+        <Card.Footer
+          className="reviews__mainCard__footer"
+          style={{ borderRadius: '18px' }}
+        >
+          {author}
+        </Card.Footer>
       </Card>
     </div>
   );
