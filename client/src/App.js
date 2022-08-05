@@ -33,6 +33,7 @@ import CreateOrEditBurgerBase from './Components/Admin/AddProduct/AddProductView
 import CreateOrEditBeverage from './Components/Admin/AddProduct/AddProductViews/CreateOrEditBeverage/CreateOrEditBeverage';
 import CreateOrEditCombo from './Components/Admin/AddProduct/AddProductViews/CreateOrEditCombo/CreateOrEditCombo';
 import CreateOrEditFries from './Components/Admin/AddProduct/AddProductViews/CreateOrEditFries/CreateOrEditFries';
+import EditProducts from './Components/Admin/AddProduct/EditProducts/EditProducts';
 
 function App() {
   const isSession = isLogged();
@@ -134,6 +135,10 @@ function App() {
         <Route
           path="/admineditfries"
           element={isSessionAdmin ? <CreateOrEditFries /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/admineditproducts/:id"
+          element={isSessionAdmin ? <EditProducts /> : <Navigate to="/" />}
         />
       </Routes>
       <Footer />

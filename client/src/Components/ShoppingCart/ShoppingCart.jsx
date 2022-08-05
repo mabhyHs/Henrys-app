@@ -7,7 +7,7 @@ import {
   allProductsDelete,
   deleteCart,
   productDelete,
-  setDiscount
+  setDiscount,
 } from '../../Redux/actions/actions';
 import CardProductCart from '../CardProductCart/CardProductCart';
 import Container from 'react-bootstrap/Container';
@@ -25,8 +25,7 @@ function ShoppingCart() {
   let itemsToCart = useSelector((state) => state.cart);
   const [mount, setMount] = useState(true);
   const navigate = useNavigate();
-  const [cupon, setCupon] = useState('')
-  
+  const [cupon, setCupon] = useState('');
 
   useEffect(() => {
     if (!mount) {
@@ -34,7 +33,7 @@ function ShoppingCart() {
         window.localStorage.setItem('carrito', JSON.stringify(itemsToCart));
       } else {
         window.localStorage.removeItem('carrito');
-        window.localStorage.removeItem("compra");
+        window.localStorage.removeItem('compra');
       }
     } else {
       setMount(false);
@@ -61,55 +60,56 @@ function ShoppingCart() {
     (acc, { price, cantidad }) => acc + price * cantidad,
     0
   );
-  
+
   const handleMPago = async () => {
+    try {
+      const json = await axios.post(
+        'http://localhost:3001/pay/mercadopago',
+        {
+          cart: JSON.parse(window.localStorage.getItem('carrito')),
+        },
+        {
+          headers: {
+            'auth-token': JSON.parse(window.localStorage.getItem('user')).token,
+          },
+        }
+      );
 
-    try {        
+      window.localStorage.setItem('compra', JSON.stringify(json.data));
 
-        const json = await axios.post(
-            'http://localhost:3001/pay/mercadopago',
-            {
-              cart: JSON.parse(window.localStorage.getItem('carrito')),
-            },
-            { headers: { 'auth-token': JSON.parse(window.localStorage.getItem('user')).token } }
-          );
-    
-          window.localStorage.setItem("compra", JSON.stringify(json.data));
-
-          navigate("/mercadoPago");
-    
-        } catch (error) {
-            Swal.fire({
-                customClass: {
-                  confirmButton: 'confirmBtnSwal',
-                },
-                confirmButtonText: 'Iniciar sesión',
-                title: 'Opss...',
-                text: 'Primero debes iniciar sesión!',
-                imageUrl:
-                  'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
-                imageWidth: 150,
-                imageHeight: 150,
-                imageAlt: 'Logo henrys',
-              }).then(function() {
-                navigate("/userlogin");
-            });
-        }    
+      navigate('/mercadoPago');
+    } catch (error) {
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        confirmButtonText: 'Iniciar sesión',
+        title: 'Opss...',
+        text: 'Primero debes iniciar sesión!',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      }).then(function () {
+        navigate('/userlogin');
+      });
+    }
   };
-  function handleCupon(e){
-    setCupon(e.target.value)
+  function handleCupon(e) {
+    setCupon(e.target.value);
   }
-  function validateCupon(cupon){
-    try{
-      const json = {code: 'XS123', porcentaje: 20}
+  function validateCupon(cupon) {
+    try {
+      const json = { code: 'XS123', porcentaje: 20 };
       const array = [...itemsToCart].map((e) => {
-        const precioDecrementado = e.price - (e.price * json.porcentaje / 100)
-        return{...e, price: precioDecrementado}
-      })
-      dispatch(setDiscount(array))
+        const precioDecrementado = e.price - (e.price * json.porcentaje) / 100;
+        return { ...e, price: precioDecrementado };
+      });
+      dispatch(setDiscount(array));
       window.localStorage.setItem('carrito', JSON.stringify(array));
-    }catch(error){
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     }
   }
   return (
@@ -181,7 +181,11 @@ function ShoppingCart() {
               rows="3"
             />
             <h2>Cupon de descuento:</h2>
-            <input type='text' name='cupon' onChange={(e) => handleCupon(e)}></input>
+            <input
+              type="text"
+              name="cupon"
+              onChange={(e) => handleCupon(e)}
+            ></input>
             <button onClick={() => validateCupon(cupon)}>Aplicar</button>
             <h2 className="shoppingCart__h2 mb-4">
               Total de mi compra: <span>{`$${' ' + total}`}</span>
