@@ -10,7 +10,7 @@ async function create(data) {
 }
 
 async function getById(id) {
-  const burger = await Burger.findByPk(id, {
+  const burger = await Burger.findByPk(id, {paranoid: false}, {
     include: [
       {
         association: "ingredient",
