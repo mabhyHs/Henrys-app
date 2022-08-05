@@ -10,6 +10,7 @@ async function check(req, res, next) {
     const user = await userRepository.getById(req.body.user.id);
     if (!user)
       return res.status(404).json({ error: "There is no user with this id" });
+
     const preference = {
       items: req.body.items,
       back_urls: {
@@ -27,7 +28,11 @@ async function check(req, res, next) {
     };
 
     const mp = await mercadopago.preferences.create(preference);
-    res.status(200).json({ id: mp.body.id, items: req.body.items });
+    return res.status(200).json({
+      id: mp.body.id,
+      coupons: req.body.coupons,
+      items: req.body.items,
+    });
   } catch (error) {
     next(error);
   }
