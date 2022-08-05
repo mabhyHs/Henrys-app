@@ -2,55 +2,27 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLoginState } from '../../../Redux/actions/actions';
+import { postAndUpdateImg } from '../../methods';
 import './UserProfile.css';
 import { ArrowRightCircleFill, EmojiSunglasses } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import axios from 'axios';
 
 function UserProfileDashboard() {
   const dispatch = useDispatch();
   const sesionInfo = useSelector((state) => state.loginState);
-  const id = sesionInfo.id;
-  const token = sesionInfo.token;
-
-  const [userImage, setImage] = useState('');
   const [loading, setLoading] = useState(false);
 
   async function uploadImage(e) {
     try {
-      const files = e.target.files;
-      const data = new FormData();
-      data.append('file', files[0]);
-      data.append('upload_preset', 'henryspf');
       setLoading(true);
-      const res = await fetch(
-        'https://api.cloudinary.com/v1_1/henrysburgers/image/upload',
-        {
-          method: 'POST',
-          body: data,
-        }
+      const imgUri = await postAndUpdateImg(
+        e,
+        'users',
+        sesionInfo.token,
+        sesionInfo.id
       );
-      const userImage = await res.json();
-      console.log(userImage.secure_url);
-      const imgUri = userImage.secure_url;
-      console.log(imgUri);
-      setImage(
-        await axios.put(
-          `users/${id}`,
-          { imgUri: imgUri },
-          {
-            headers: {
-              'auth-token': token,
-            },
-          }
-        )
-      );
-      const updateSesion = {
-        ...sesionInfo,
-        imgUri: imgUri,
-      };
-      dispatch(setLoginState(updateSesion));
+      dispatch(setLoginState({ ...sesionInfo, imgUri }));
     } catch (error) {
       console.log(error);
     } finally {
@@ -160,3 +132,44 @@ function UserProfileDashboard() {
 }
 
 export default UserProfileDashboard;
+
+// async function uploadImage(e) {
+//   try {
+//     const files = e.target.files;
+//     const data = new FormData();
+//     data.append('file', files[0]);
+//     data.append('upload_preset', 'henryspf');
+//     setLoading(true);
+//     const res = await fetch(
+//       'https://api.cloudinary.com/v1_1/henrysburgers/image/upload',
+//       {
+//         method: 'POST',
+//         body: data,
+//       }
+//     );
+//     const userImage = await res.json();
+//     console.log(userImage.secure_url);
+//     const imgUri = userImage.secure_url;
+//     console.log(imgUri);
+//     setImage(
+//       await axios.put(
+//         `users/${id}`,
+//         { imgUri: imgUri },
+//         {
+//           headers: {
+//             'auth-token': token,
+//           },
+//         }
+//       )
+//     );
+//     const updateSesion = {
+//       ...sesionInfo,
+//       imgUri: imgUri,
+//     };
+//     dispatch(setLoginState(updateSesion));
+//   } catch (error) {
+//     console.log(error);
+//   } finally {
+//     setLoading(false);
+//   }
+// }
