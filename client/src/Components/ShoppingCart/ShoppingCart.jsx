@@ -136,6 +136,28 @@ function ShoppingCart() {
       }
 
       if (!coupons.find((c) => c.code === value)) {
+        const today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+        const yyyy = today.getFullYear();
+        const todayDate = new Date(`${yyyy}-${mm}-${dd}`);
+        const expDate = new Date(couponInState.expirationDate);
+
+        if (todayDate > expDate) {
+          return Swal.fire({
+            customClass: {
+              confirmButton: 'confirmBtnSwal',
+            },
+            confirmButtonText: 'OK',
+            title: 'Opss...',
+            text: 'El cupon esta vencido',
+            imageUrl:
+              'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+            imageWidth: 150,
+            imageHeight: 150,
+            imageAlt: 'Logo henrys',
+          });
+        }
         setCoupons(coupons.concat(couponInState));
         e.target.value = '';
       }
