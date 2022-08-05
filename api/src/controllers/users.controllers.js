@@ -5,11 +5,12 @@ const { transporter } = require("../config/emailTransporter");
 
 async function getAllSecure(req, res, next) {
   try {
-
     const all = await userRepositories.getAllSecure();
 
     if (!all) {
-      return res.status(404).json("No se pudo enviar el newsletter, no hay usuarios cargados!");
+      return res
+        .status(404)
+        .json("No se pudo enviar el newsletter, no hay usuarios cargados!");
     }
 
     return res.status(200).json(all);
@@ -18,10 +19,23 @@ async function getAllSecure(req, res, next) {
   }
 }
 
+async function getAllAdmin(req, res, next) {
+  try {
+    let { pag, rol, confirmed } = req.query;
+    pag = parseInt(pag, 10) || 1;
+    rol = rol || "";
+    confirmed = confirmed || "";
+    const users = await userRepositories.getAllAdmin(pag, rol, confirmed);
+
+    return res.status(200).json(users);
+  } catch (error) {
+    next(error);
+  }
+}
+
 /* las cuentas que crea el admin */
 async function create(req, res, next) {
   try {
-
     const data = req.body;
     const findUser = await userRepositories.getByEmail(data.email);
 
@@ -237,11 +251,13 @@ async function destroy(req, res, next) {
     const deletedUser = await userRepositories.destroy(id);
 
     if (deletedUser)
-      return res.status(200).json({ message: "Usuario desactivado correctamente!" });
+      return res
+        .status(200)
+        .json({ message: "Usuario desactivado correctamente!" });
 
-    return res
-      .status(404)
-      .json({ error: `No hay ningún usuario para ser desactivado con id ${id}!` });
+    return res.status(404).json({
+      error: `No hay ningún usuario para ser desactivado con id ${id}!`,
+    });
   } catch (error) {
     next(error);
   }
@@ -253,11 +269,13 @@ async function restore(req, res, next) {
     const restoredUser = await userRepositories.restore(id);
 
     if (restoredUser)
-      return res.status(200).json({ message: "Usuario activado corretamente!" });
+      return res
+        .status(200)
+        .json({ message: "Usuario activado corretamente!" });
 
     return res
       .status(404)
-      .json({ error: `No hay ningún usuario para ser activado con id ${id}!`  });
+      .json({ error: `No hay ningún usuario para ser activado con id ${id}!` });
   } catch (error) {
     next(error);
   }
@@ -343,4 +361,5 @@ module.exports = {
   getById,
   setFavorites,
   getFavoritesByUserId,
+  getAllAdmin,
 };

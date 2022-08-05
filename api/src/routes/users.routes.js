@@ -9,6 +9,7 @@ const {
   getById,
   setFavorites,
   getFavoritesByUserId,
+  getAllAdmin,
 } = require("../controllers/users.controllers");
 const { roleValidator } = require("../middlewares/usersValidation");
 const validationResultHandler = require("../middlewares/validationResultHandler");
@@ -22,6 +23,14 @@ router.get(
   roleValidator,
   validationResultHandler,
   getAllSecure
+);
+
+router.get(
+  "/admin",
+  verifyToken,
+  roleValidator,
+  validationResultHandler,
+  getAllAdmin
 );
 
 router.get("/:id", getById);
