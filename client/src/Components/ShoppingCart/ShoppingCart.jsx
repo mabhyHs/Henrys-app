@@ -166,7 +166,9 @@ function ShoppingCart() {
 
   function handleDeleteCoupon(e, code) {
     e.preventDefault();
-    setCoupons(coupons.filter((c) => c.code !== code));
+    const couponsFiltered = coupons.filter((c) => c.code !== code);
+    setCoupons(couponsFiltered);
+    window.localStorage.setItem('cupones', JSON.stringify(couponsFiltered));
   }
 
   useEffect(() => {
@@ -183,6 +185,16 @@ function ShoppingCart() {
 
     setDiscount(discount);
   }, [itemsToCart, coupons]);
+
+  useEffect(() => {
+    const couponsLS = JSON.parse(window.localStorage.getItem('cupones'));
+
+    if (couponsLS.length > coupons.length) {
+      return setCoupons(couponsLS);
+    }
+
+    window.localStorage.setItem('cupones', JSON.stringify(coupons));
+  }, [coupons]);
 
   return (
     <Container className="py-4 shoppinCart__container">
