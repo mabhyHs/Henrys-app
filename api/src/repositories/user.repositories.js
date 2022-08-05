@@ -30,7 +30,6 @@ async function getAllSecure() {
 async function getAllAdmin(pag, rol, confirmed) {
   const where = {};
   if (rol) {
-    console.log(rol);
     where.role = {
       [Op.eq]: rol,
     };
@@ -47,9 +46,7 @@ async function getAllAdmin(pag, rol, confirmed) {
   }
 
   let { count, rows } = await User.findAndCountAll({
-    // where: whereRol,
     where,
-    // where: whereConfirmed,
     limit: 10,
     offset: (pag - 1) * 10,
   });
