@@ -82,10 +82,6 @@ function NavBar() {
     return !!window.localStorage.getItem('user');
   }
 
-  function getUserData() {
-    return JSON.parse(window.localStorage.getItem('user'));
-  }
-
   function setScrollToTop() {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }
@@ -169,7 +165,7 @@ function NavBar() {
 
               {isSession && (
                 <UserLoggedInDropdown
-                  userData={getUserData()}
+                  userData={isSession}
                   logoutSession={logoutSession}
                 />
               )}
