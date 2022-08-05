@@ -31,6 +31,21 @@ function toDBQuery(filters) {
     filters.forEach(filter => {
         const property = Object.keys(filter)[0];
 
+        if(property === "isDeleted"){
+
+            if(filter["isDeleted"] === "true"){                
+                //console.log("true")
+                queries[Op.and].push({ deletedAt: {[Op.not]: null} });
+            } else {
+                //console.log("false")
+                queries[Op.and].push({ deletedAt: { [Op.is]: null} });                
+            }
+        } 
+        /* if(property === "isDeleted" && !property["isDeleted"]){
+            console.log("false")
+            queries[Op.and].push({...filter, [Op.is]: null});
+        } */
+
         if(property === "isVeggie"){
             queries[Op.and].push(filter);
         } else {

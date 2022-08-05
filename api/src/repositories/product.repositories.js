@@ -20,11 +20,11 @@ async function getById(id) {
     return undefined;
 }
 
-async function getByQuery(queries, paranoid) {
-    const burgers = await burgerRepository.getByQuery(queries, paranoid); 
-    const combos = await comboRepository.getByQuery(queries, paranoid);
-    const fries = await friesRepository.getByQuery(queries, paranoid);
-    const beverages = await beverageRepository.getByQuery(queries, paranoid);
+async function getByQuery(queries) {
+    const burgers = await burgerRepository.getByQuery(queries); 
+    const combos = await comboRepository.getByQuery(queries);
+    const fries = await friesRepository.getByQuery(queries);
+    const beverages = await beverageRepository.getByQuery(queries);
     const all = [...burgers, ...combos, ...fries, ...beverages];
      
     return all;
