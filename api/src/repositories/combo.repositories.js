@@ -12,7 +12,8 @@ async function create(data) {
 }
 
 async function getById(id) {
-  const combo = await Combo.findByPk(id, {paranoid: false}, {
+  const combo = await Combo.findByPk(id, {
+    paranoid: false,
     include: [
       {
         association: "burger",
