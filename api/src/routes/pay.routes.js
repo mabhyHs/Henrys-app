@@ -1,10 +1,13 @@
 const express = require("express");
 const { check } = require("../controllers/mercadopago.controllers");
 const verifyToken = require("../middlewares/tokenValidation");
-const { validatePurchase } = require("../middlewares/purchaseValidation");
+const {
+  validatePurchase,
+  applyCupons,
+} = require("../middlewares/purchaseValidation");
 
 const router = express.Router();
 
-router.post("/mercadopago", verifyToken, validatePurchase, check);
+router.post("/mercadopago", verifyToken, validatePurchase, applyCupons, check);
 
 module.exports = router;
