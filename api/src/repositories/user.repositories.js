@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { User } = require("../models");
 
 async function create(data) {
@@ -24,6 +25,36 @@ async function getAllSecure() {
     return e;
   });
   return user;
+}
+
+async function getAllAdmin(pag, rol, confirmed) {
+  const where = {};
+  if (rol) {
+    where.role = {
+      [Op.eq]: rol,
+    };
+  }
+
+  if (confirmed === "true") {
+    where.isConfirmed = {
+      [Op.eq]: true,
+    };
+  } else if (confirmed === "false") {
+    where.isConfirmed = {
+      [Op.eq]: false,
+    };
+  }
+
+  let { count, rows } = await User.findAndCountAll({
+    where,
+    limit: 10,
+    offset: (pag - 1) * 10,
+  });
+  rows = rows.map((e) => {
+    e.password = undefined;
+    return e;
+  });
+  return { count, pages: Math.ceil(count / 10), pag, rows };
 }
 
 async function getById(id) {
@@ -100,4 +131,5 @@ module.exports = {
   getAllSecure,
   getById,
   setFavorites,
+  getAllAdmin,
 };
