@@ -21,11 +21,17 @@ async function getAllSecure(req, res, next) {
 
 async function getAllAdmin(req, res, next) {
   try {
-    let { pag, rol, confirmed } = req.query;
+    let { pag, rol, confirmed, active } = req.query;
     pag = parseInt(pag, 10) || 1;
     rol = rol || "";
     confirmed = confirmed || "";
-    const users = await userRepositories.getAllAdmin(pag, rol, confirmed);
+    active = active || "";
+    const users = await userRepositories.getAllAdmin(
+      pag,
+      rol,
+      confirmed,
+      active
+    );
 
     return res.status(200).json(users);
   } catch (error) {
