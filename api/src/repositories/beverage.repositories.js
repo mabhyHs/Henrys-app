@@ -7,7 +7,7 @@ async function create(data) {
 }
 
 async function getById(id) {
-  const beverage = await Beverage.findByPk(id);
+  const beverage = await Beverage.findByPk(id, {paranoid: false});
   return beverage;
 }
 
