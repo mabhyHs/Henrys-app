@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-
+import {useDispatch, useSelector} from 'react-redux'
+import { getUser } from '../../../Redux/actions/actions';
 import {
   PersonCheckFill,
   PersonXFill,
@@ -19,6 +20,14 @@ function AdminUsers() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const token = JSON.parse(window.localStorage.getItem("user")).token
+  const dispatch = useDispatch()
+  const users = useSelector(state => state.users)
+
+  useEffect(() => {
+    dispatch(getUser(token))
+  }, [dispatch, token])
+
   return (
     <Container>
       <div className="adminUsers__container">
@@ -47,10 +56,14 @@ function AdminUsers() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Agustina Lopez</td>
-              <td>aguslopez@gmail.com</td>
-              <td>USUARIO</td>
+            {users.rows  &&(
+              users.rows.map((user) => {
+                return(
+              
+            <tr key={user.id}>
+              <td>{user.firstName}  {user.lastName}</td>
+              <td>{user.email}</td>
+              <td>{user.role}</td>
               <td className="adminUser__td__btns">
                 <Button
                   variant="outline-secondary"
@@ -90,8 +103,12 @@ function AdminUsers() {
                 </Button>
               </td>
             </tr>
+                )
+              })
+            )}
           </tbody>
         </Table>
+        <button onClick={() => console.log(users)}>prueba</button>
       </div>
     </Container>
   );
