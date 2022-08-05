@@ -19,34 +19,44 @@ function UserProfileDashboard() {
   const [loading, setLoading] = useState(false);
 
   async function uploadImage(e) {
-    const files = e.target.files;
-    const data = new FormData();
-    data.append('file', files[0]);
-    data.append('upload_preset', 'henryspf');
-    setLoading(true);
-    const res = await fetch(
-      'https://api.cloudinary.com/v1_1/henrysburgers/image/upload',
-      {
-        method: 'POST',
-        body: data,
-      }
-    );
-    const userImage = await res.json();
-    console.log(userImage.secure_url);
-    const imgUri = userImage.secure_url;
-    console.log(imgUri);
-    setImage(
-      await axios.put(
-        `users/${id}`,
-        { imgUri: imgUri },
+    try {
+      const files = e.target.files;
+      const data = new FormData();
+      data.append('file', files[0]);
+      data.append('upload_preset', 'henryspf');
+      setLoading(true);
+      const res = await fetch(
+        'https://api.cloudinary.com/v1_1/henrysburgers/image/upload',
         {
-          headers: {
-            'auth-token': token,
-          },
+          method: 'POST',
+          body: data,
         }
-      )
-    );
-    setLoading(false);
+      );
+      const userImage = await res.json();
+      console.log(userImage.secure_url);
+      const imgUri = userImage.secure_url;
+      console.log(imgUri);
+      setImage(
+        await axios.put(
+          `users/${id}`,
+          { imgUri: imgUri },
+          {
+            headers: {
+              'auth-token': token,
+            },
+          }
+        )
+      );
+      const updateLocal = {
+        ...JSON.parse(window.localStorage.getItem('user')),
+        imgUri: imgUri,
+      };
+      window.localStorage.setItem('user', JSON.stringify(updateLocal));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
