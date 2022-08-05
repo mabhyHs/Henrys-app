@@ -1,59 +1,29 @@
 import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import './UserProfile.css';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setLoginState } from '../../../Redux/actions/actions';
+import { postAndUpdateImg } from '../../methods';
 import { ArrowRightCircleFill, EmojiSunglasses } from 'react-bootstrap-icons';
+import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
-
-import axios from 'axios';
+import './UserProfile.css';
 
 function UserProfileDashboard() {
-  function getUserData() {
-    return JSON.parse(window.localStorage.getItem('user'));
-  }
-  const userData = getUserData();
-  const id = userData.id;
-  let imgUri = userData.imgUri;
-  const token = userData.token;
-
-  const [userImage, setImage] = useState('');
+  const dispatch = useDispatch();
+  const sesionInfo = useSelector((state) => state.loginState);
   const [loading, setLoading] = useState(false);
 
   async function uploadImage(e) {
     try {
-      const files = e.target.files;
-      const data = new FormData();
-      data.append('file', files[0]);
-      data.append('upload_preset', 'henryspf');
       setLoading(true);
-      const res = await fetch(
-        'https://api.cloudinary.com/v1_1/henrysburgers/image/upload',
-        {
-          method: 'POST',
-          body: data,
-        }
+      const imgUri = await postAndUpdateImg(
+        e,
+        'users',
+        sesionInfo.token,
+        sesionInfo.id
       );
-      const userImage = await res.json();
-      console.log(userImage.secure_url);
-      const imgUri = userImage.secure_url;
-      console.log(imgUri);
-      setImage(
-        await axios.put(
-          `users/${id}`,
-          { imgUri },
-          {
-            headers: {
-              'auth-token': token,
-            },
-          }
-        )
-      );
-      const updateLocal = {
-        ...JSON.parse(window.localStorage.getItem('user')),
-        imgUri,
-      };
-      window.localStorage.setItem('user', JSON.stringify(updateLocal));
+      dispatch(setLoginState({ ...sesionInfo, imgUri }));
     } catch (error) {
       console.log(error);
     } finally {
@@ -72,11 +42,10 @@ function UserProfileDashboard() {
           <div className="profile__mainCard__headerContainer">
             <Card.Header
               className="profile__mainCard__title"
-              // userData={getUserData()}
             >
-              {userData.imgUri ? (
+              {sesionInfo.imgUri ? (
                 <img
-                  src={userData.imgUri}
+                  src={sesionInfo.imgUri}
                   alt="foto de perfil"
                   className="profile__mainCard__userPicture"
                 />
@@ -84,7 +53,7 @@ function UserProfileDashboard() {
                 <EmojiSunglasses className="profile__mainCard__userPicture" />
               )}
 
-              <h2>{userData.firstName + ' ' + userData.lastName}</h2>
+              <h2>{sesionInfo.firstName + ' ' + sesionInfo.lastName}</h2>
             </Card.Header>
           </div>
           <Card.Body className="profile__mainCard__body">
@@ -168,3 +137,44 @@ function UserProfileDashboard() {
 }
 
 export default UserProfileDashboard;
+
+// async function uploadImage(e) {
+//   try {
+//     const files = e.target.files;
+//     const data = new FormData();
+//     data.append('file', files[0]);
+//     data.append('upload_preset', 'henryspf');
+//     setLoading(true);
+//     const res = await fetch(
+//       'https://api.cloudinary.com/v1_1/henrysburgers/image/upload',
+//       {
+//         method: 'POST',
+//         body: data,
+//       }
+//     );
+//     const userImage = await res.json();
+//     console.log(userImage.secure_url);
+//     const imgUri = userImage.secure_url;
+//     console.log(imgUri);
+//     setImage(
+//       await axios.put(
+//         `users/${id}`,
+//         { imgUri: imgUri },
+//         {
+//           headers: {
+//             'auth-token': token,
+//           },
+//         }
+//       )
+//     );
+//     const updateSesion = {
+//       ...sesionInfo,
+//       imgUri: imgUri,
+//     };
+//     dispatch(setLoginState(updateSesion));
+//   } catch (error) {
+//     console.log(error);
+//   } finally {
+//     setLoading(false);
+//   }
+// }
