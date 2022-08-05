@@ -30,11 +30,12 @@ export function getProduct(
   category = '',
   order = '',
   name = '',
-  isVeggie = ''
+  isVeggie = '',
+  paranoid = ''
 ) {
   return async function (dispatch) {
     const json = await axios(
-      `/products?category=${category}&order=${order}&name=${name}&isVeggie=${isVeggie}`
+      `/products?category=${category}&order=${order}&name=${name}&isVeggie=${isVeggie}&paranoid=${paranoid}`
     );
     try {
       return dispatch({

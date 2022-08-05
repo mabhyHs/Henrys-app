@@ -1,22 +1,21 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import imgProduct from '../../../../Assets/Images/combos/Combo1.png';
 import { PencilSquare } from 'react-bootstrap-icons';
 
 import './ProductCardAdmin.css';
 
-function ProductCardAdmin() {
+function ProductCardAdmin({ data }) {
   return (
     <Card style={{ width: '15rem' }} className="adminProductHome__card">
       <Card.Img
         variant="top"
-        src={imgProduct}
+        src={data.imgUri}
         className="adminProductHome__card__img"
       />
       <Card.Body className="adminProductHome__cardBody">
         <Card.Title className="adminProductHome__cardTittle">
-          Nombre Producto
+          {data.name}
         </Card.Title>
         <Button variant="secondary">
           <PencilSquare />

@@ -2,10 +2,13 @@ import React from 'react';
 import ProductCardAdmin from '../ProductCardAdmin/ProductCardAdmin';
 
 import './ProductCardAdminContainer.css';
-function ProductsCardAdminContainer() {
+function ProductsCardAdminContainer({ currentProduct }) {
   return (
     <div className="productAdminCards__container">
-      <ProductCardAdmin />
+      {currentProduct &&
+        currentProduct.map((item) => (
+          <ProductCardAdmin data={item} key={item.id} />
+        ))}
     </div>
   );
 }

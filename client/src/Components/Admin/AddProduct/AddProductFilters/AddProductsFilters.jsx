@@ -6,11 +6,15 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 import './AddProductFilters.css';
 
-function AddProductsFilters() {
+function AddProductsFilters({ setFilter, filters }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleOnChange = (e) => {
+    setFilter(e.target.name, e.target.value);
+  };
 
   return (
     <Container>
@@ -53,13 +57,88 @@ function AddProductsFilters() {
           className="me-2 filter__btn"
           size="sm"
         >
-          <Button className="filter__btn">Todo</Button>
-          <Button className="filter__btn">Hamburguesas</Button>
-          <Button className="filter__btn">Combos</Button>
-          <Button className="filter__btn">Bebidas</Button>
-          <Button className="filter__btn">Papas</Button>
-          <Button className="filter__btn">Veggie</Button>
-          <Button className="filter__btn">Inactivos</Button>
+          <Button
+            onClick={handleOnChange}
+            name="category"
+            value=""
+            className={
+              filters.category === '' ? 'filter__btn activeBtn' : 'filter__btn'
+            }
+          >
+            Todo
+          </Button>
+          <Button
+            onClick={handleOnChange}
+            name="category"
+            value="burgers"
+            className={
+              filters.category === 'burgers'
+                ? 'filter__btn activeBtn'
+                : 'filter__btn'
+            }
+          >
+            Hamburguesas
+          </Button>
+          <Button
+            onClick={handleOnChange}
+            name="category"
+            value="combos"
+            className={
+              filters.category === 'combos'
+                ? 'filter__btn activeBtn'
+                : 'filter__btn'
+            }
+          >
+            Combos
+          </Button>
+          <Button
+            onClick={handleOnChange}
+            name="category"
+            value="beverages"
+            className={
+              filters.category === 'beverages'
+                ? 'filter__btn activeBtn'
+                : 'filter__btn'
+            }
+          >
+            Bebidas
+          </Button>
+          <Button
+            onClick={handleOnChange}
+            name="category"
+            value="fries"
+            className={
+              filters.category === 'fries'
+                ? 'filter__btn activeBtn'
+                : 'filter__btn'
+            }
+          >
+            Papas
+          </Button>
+          <Button
+            onClick={handleOnChange}
+            name="isVeggie"
+            value="true"
+            className={
+              filters.isVeggie === 'true'
+                ? 'filter__btn activeBtn'
+                : 'filter__btn'
+            }
+          >
+            Veggie
+          </Button>
+          <Button
+            onClick={handleOnChange}
+            name="paranoid"
+            value="false"
+            className={
+              filters.paranoid === 'false'
+                ? 'filter__btn activeBtn'
+                : 'filter__btn'
+            }
+          >
+            Inactivos
+          </Button>
         </ButtonGroup>
       </div>
     </Container>
