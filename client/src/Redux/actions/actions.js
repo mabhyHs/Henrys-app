@@ -25,7 +25,26 @@ export const POST_MP = 'POST_MP';
 export const GET_FAVORITES = 'GET_FAVORITES';
 export const SET_DISCOUNT = 'SET_DISCOUNT';
 export const GET_REVIEWS = 'GET_REVIEWS';
+export const GET_USERS = 'GET_USERS';
 
+
+export function getUsers(token){
+  return async function(dispatch){
+    try{
+      const json = axios('http://localhost:3001/users', {
+        headers:{
+          'auth-token': token,
+        }
+      })
+      return dispatch({
+        type: GET_USERS,
+        payload: json
+      })
+    }catch(error){
+      console.log(error)
+    }
+  }
+}
 export function getProduct(
   category = '',
   order = '',

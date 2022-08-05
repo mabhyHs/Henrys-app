@@ -24,6 +24,7 @@ import {
     REMOVE_FAVORITES,
     SET_DISCOUNT,
     GET_REVIEWS,
+    GET_USERS,
   } from '../actions/actions';
   
   import {
@@ -52,10 +53,16 @@ import {
     loginState: JSON.parse(window.localStorage.getItem('user')),
     mercaDopago: '',
     reviews: [],
+    users: [],
   };
   
   const rootReducer = (state = initialState, action = {}) => {
     switch (action.type) {
+      case GET_USERS:
+        return{
+          ...state,
+          users: action.payload
+        }
       case GET_BURGERS:
         return {
           ...state,
