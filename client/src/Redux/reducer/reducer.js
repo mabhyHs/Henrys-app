@@ -25,6 +25,7 @@ import {
   SET_DISCOUNT,
   GET_REVIEWS,
   GET_COUPONS,
+  GET_USERS,
 } from '../actions/actions';
 
 import {
@@ -54,10 +55,16 @@ const initialState = {
   mercaDopago: '',
   reviews: [],
   coupons: undefined,
+  users: [],
 };
 
 const rootReducer = (state = initialState, action = {}) => {
   switch (action.type) {
+    case GET_USERS:
+      return {
+        ...state,
+        users: action.payload
+      }
     case GET_BURGERS:
       return {
         ...state,

@@ -26,6 +26,25 @@ export const GET_FAVORITES = 'GET_FAVORITES';
 export const SET_DISCOUNT = 'SET_DISCOUNT';
 export const GET_REVIEWS = 'GET_REVIEWS';
 export const GET_COUPONS = 'GET_COUPONS';
+export const GET_USERS = 'GET_USERS';
+
+export function getUser(token, query='/'){
+  return async function(dispatch){
+    try{
+      const json = await axios('http://localhost:3001/users/admin' + query,{
+        headers:{
+          'auth-token': token
+        }
+      })
+      return dispatch({
+        type: GET_USERS,
+        payload: json.data
+      })
+    }catch(error){
+      console.log(error)
+    }
+  }
+}
 
 export function getProduct(
   category = '',
