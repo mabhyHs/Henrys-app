@@ -4,7 +4,6 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import './UserPersonalInfo.css';
@@ -30,8 +29,7 @@ function UserPersonalInfo() {
     let error = {};
     if (input.password || input.confirm) {
       if (input.confirm !== input.password) {
-        error.password =
-          'ambos espacios deben tener la misma contraseña por favor verifica que estes escribiendo la misma contraseña';
+        error.password = 'Las contraseñas deben coincidir';
       }
     }
     return error;
@@ -172,29 +170,13 @@ function UserPersonalInfo() {
 
   return (
     <div className="userPersonalInfo__container">
-      <Container>
-        <h1>Mis Datos</h1>
-        <Form className="mb-5">
-          <div className="mb-4">
-            <Button
-              variant="outline-warning"
-              className="userInfo__btn m-3"
-              onClick={() => clearData()}
-            >
-              Cancelar
-            </Button>
-            <Button
-              variant="primary"
-              type="Submit"
-              disable={Object.keys(error).length !== 0}
-              onClick={(e) => handleSubmit(e, input)}
-            >
-              Actualizar Datos
-            </Button>
-          </div>
-          <hr />
-          <Row className="mb-3 mt-5">
+      <h1>Mis Datos</h1>
+      <Form className="mb-5">
+        <hr />
+        <Row className="mb-3 mt-5 userInfo__row">
+          <Col lg={6}>
             <Form.Group as={Col} controlId="formGridNombre">
+              <Form.Label>Nombre:</Form.Label>
               <Form.Control
                 placeholder="Nombre*"
                 name="firstName"
@@ -202,8 +184,10 @@ function UserPersonalInfo() {
                 value={input.firstName}
               />
             </Form.Group>
-
+          </Col>
+          <Col lg={6}>
             <Form.Group as={Col} controlId="formGridApellido">
+              <Form.Label>Apellido:</Form.Label>
               <Form.Control
                 placeholder="Apellido*"
                 name="lastName"
@@ -211,50 +195,77 @@ function UserPersonalInfo() {
                 value={input.lastName}
               />
             </Form.Group>
-          </Row>
-
-          <Row className="mb-5">
-            <Form.Group as={Col} controlId="formGridPassword">
+          </Col>
+          <Button
+            className="userInfo__btn__pass"
+            variant="primary"
+            type="Submit"
+            disable={Object.keys(error).length !== 0}
+            onClick={(e) => handleSubmit(e, input)}
+          >
+            Actualizar Datos
+          </Button>
+        </Row>
+        {error.password && (
+          <span className="userInfo__error">{error.password}</span>
+        )}
+        <Row className="mb-5 userInfo__row">
+          <Col lg={4}>
+            <Form.Group controlId="formGridPassword">
+              <Form.Label>Contraseña:</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Antigua Contraseña*"
+                placeholder="Ingrese contraseña actual*"
                 name="beforePassword"
                 onChange={(e) => handlePassword(e)}
               />
             </Form.Group>
+          </Col>
 
-            <Form.Group as={Col} controlId="formGridPassword">
+          <Col lg={4}>
+            <Form.Group controlId="formGridPassword">
+              <Form.Label>Nueva:</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Nueva Contraseña*"
+                placeholder="Ingrese contraseña nueva*"
                 name="password"
                 onChange={(e) => handlePassword(e)}
               />
             </Form.Group>
+          </Col>
 
+          <Col lg={4}>
             <Form.Group as={Col} controlId="formGridConfirPassword">
+              <Form.Label>Confirmar:</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Confirmar*"
+                placeholder="Confirme la contraseña*"
                 name="confirm"
                 onChange={(e) => handlePassword(e)}
               />
             </Form.Group>
-            {error.password && <p>{error.password}</p>}
-          </Row>
+          </Col>
           <Button
+            className="mb-3 userInfo__btn__pass"
             variant="primary"
             type="Submit"
             onClick={(e) => submitPassword(e, password)}
           >
             Actualizar Contraseña
           </Button>
-          <hr />
-          <Button as={Link} to="/userprofiledashboard" variant="primary">
-            Volver
-          </Button>
-        </Form>
-      </Container>
+        </Row>
+        <hr />
+        <Button as={Link} to="/userprofiledashboard" variant="primary">
+          Volver
+        </Button>
+        <Button
+          variant="outline-warning"
+          className="userInfo__btn m-3"
+          onClick={() => clearData()}
+        >
+          Cancelar
+        </Button>
+      </Form>
     </div>
   );
 }

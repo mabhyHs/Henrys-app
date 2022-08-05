@@ -13,7 +13,7 @@
   margin-bottom: 15px;
 }
 .contactForm__errContainer {
-  height: 20px;
+  max-height: 10px;
 }
 
 .contactForm__errContainer p {
