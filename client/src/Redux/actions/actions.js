@@ -38,7 +38,7 @@ export function getUsers(token){
       })
       return dispatch({
         type: GET_USERS,
-        payload: json
+        payload: (await json).data
       })
     }catch(error){
       console.log(error)
