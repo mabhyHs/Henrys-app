@@ -4,6 +4,8 @@ import './UserProfile.css';
 import { ArrowRightCircleFill, EmojiSunglasses } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+
 import axios from 'axios';
 
 function UserProfileDashboard() {
@@ -39,7 +41,7 @@ function UserProfileDashboard() {
       setImage(
         await axios.put(
           `users/${id}`,
-          { imgUri: imgUri },
+          { imgUri },
           {
             headers: {
               'auth-token': token,
@@ -49,7 +51,7 @@ function UserProfileDashboard() {
       );
       const updateLocal = {
         ...JSON.parse(window.localStorage.getItem('user')),
-        imgUri: imgUri,
+        imgUri,
       };
       window.localStorage.setItem('user', JSON.stringify(updateLocal));
     } catch (error) {
@@ -61,104 +63,106 @@ function UserProfileDashboard() {
 
   return (
     <section>
-      <div className="mainTitle__profile">
-        <h1>Mi perfil</h1>
-      </div>
-
-      <Card className="profile__mainCard">
-        <div className="profile__mainCard__headerContainer">
-          <Card.Header
-            className="profile__mainCard__title"
-            // userData={getUserData()}
-          >
-            {userData.imgUri ? (
-              <img
-                src={userData.imgUri}
-                alt="foto de perfil"
-                className="profile__mainCard__userPicture"
-              />
-            ) : (
-              <EmojiSunglasses className="profile__mainCard__userPicture" />
-            )}
-
-            <h2>{userData.firstName + ' ' + userData.lastName}</h2>
-          </Card.Header>
+      <Container>
+        <div className="mainTitle__profile mt-5">
+          <h1>Mi perfil</h1>
         </div>
-        <Card.Body className="profile__mainCard__body">
-          {loading ? (
-            <p className="profile__loader">Cargando...</p>
-          ) : (
-            <Form className="profile__form">
-              <Form.Group className="mb-3">
-                <Form.Label className="profile__form__label">
-                  Personalizá tu imagen
-                </Form.Label>
-                <Form.Control
-                  type="file"
-                  name="file"
-                  size="sm"
-                  className="profile__form__input"
-                  onChange={uploadImage}
-                ></Form.Control>
-              </Form.Group>
-            </Form>
-          )}
-        </Card.Body>
-      </Card>
+        <hr />
+        <Card className="profile__mainCard">
+          <div className="profile__mainCard__headerContainer">
+            <Card.Header
+              className="profile__mainCard__title"
+              // userData={getUserData()}
+            >
+              {userData.imgUri ? (
+                <img
+                  src={userData.imgUri}
+                  alt="foto de perfil"
+                  className="profile__mainCard__userPicture"
+                />
+              ) : (
+                <EmojiSunglasses className="profile__mainCard__userPicture" />
+              )}
 
-      <div className="profile__cardsInfo__container">
-        <Card className="profile__infoCard">
-          <div className="profile__infoCard__headerContainer">
-            <Card.Header className="profile__infoCard__title" as="h2">
-              Mis Favoritos
+              <h2>{userData.firstName + ' ' + userData.lastName}</h2>
             </Card.Header>
           </div>
-          <Card.Body className="profile__infoCard__body">
-            <Card.Text>
-              Guardá tus productos favoritos para tenerlos siempre cerca.
-            </Card.Text>
+          <Card.Body className="profile__mainCard__body">
+            {loading ? (
+              <p className="profile__loader">Cargando...</p>
+            ) : (
+              <Form className="profile__form">
+                <Form.Group className="mb-3">
+                  <Form.Label className="profile__form__label">
+                    Personalizá tu imagen
+                  </Form.Label>
+                  <Form.Control
+                    type="file"
+                    name="file"
+                    size="sm"
+                    className="profile__form__input"
+                    onChange={uploadImage}
+                  ></Form.Control>
+                </Form.Group>
+              </Form>
+            )}
           </Card.Body>
-          <Card.Footer className="profile__infoCard__footer">
-            <Link to="/userfavorites">
-              <ArrowRightCircleFill className="profile__infoCard__arrow" />
-            </Link>
-          </Card.Footer>
         </Card>
+        <div className="profile__cardsInfo__container">
+          <Card className="profile__infoCard">
+            <div className="profile__infoCard__headerContainer">
+              <Card.Header className="profile__infoCard__title" as="h2">
+                Mis Favoritos
+              </Card.Header>
+            </div>
+            <Card.Body className="profile__infoCard__body">
+              <Card.Text>
+                Guardá tus productos favoritos para tenerlos siempre cerca.
+              </Card.Text>
+            </Card.Body>
+            <Card.Footer className="profile__infoCard__footer">
+              <Link to="/userfavorites">
+                <ArrowRightCircleFill className="profile__infoCard__arrow" />
+              </Link>
+            </Card.Footer>
+          </Card>
 
-        <Card className="profile__infoCard">
-          <div className="profile__infoCard__headerContainer">
-            <Card.Header className="profile__infoCard__title" as="h2">
-              Mis Datos
-            </Card.Header>
-          </div>
-          <Card.Body className="profile__infoCard__body">
-            <Card.Text>
-              Mantené tus datos siempre actualizados para una mejor experiencia.
-            </Card.Text>
-          </Card.Body>
-          <Card.Footer className="profile__infoCard__footer">
-            <Link to="/userpersonalinfo">
-              <ArrowRightCircleFill className="profile__infoCard__arrow" />
-            </Link>
-          </Card.Footer>
-        </Card>
+          <Card className="profile__infoCard">
+            <div className="profile__infoCard__headerContainer">
+              <Card.Header className="profile__infoCard__title" as="h2">
+                Mis Datos
+              </Card.Header>
+            </div>
+            <Card.Body className="profile__infoCard__body">
+              <Card.Text>
+                Mantené tus datos siempre actualizados para una mejor
+                experiencia.
+              </Card.Text>
+            </Card.Body>
+            <Card.Footer className="profile__infoCard__footer">
+              <Link to="/userpersonalinfo">
+                <ArrowRightCircleFill className="profile__infoCard__arrow" />
+              </Link>
+            </Card.Footer>
+          </Card>
 
-        <Card className="profile__infoCard">
-          <div className="profile__infoCard__headerContainer">
-            <Card.Header className="profile__infoCard__title" as="h2">
-              Ayuda
-            </Card.Header>
-          </div>
-          <Card.Body className="profile__infoCard__body">
-            <Card.Text>Contactanos ante cualquier duda</Card.Text>
-          </Card.Body>
-          <Card.Footer className="profile__infoCard__footer">
-            <Link to="/contacto">
-              <ArrowRightCircleFill className="profile__infoCard__arrow" />
-            </Link>
-          </Card.Footer>
-        </Card>
-      </div>
+          <Card className="profile__infoCard">
+            <div className="profile__infoCard__headerContainer">
+              <Card.Header className="profile__infoCard__title" as="h2">
+                Ayuda
+              </Card.Header>
+            </div>
+            <Card.Body className="profile__infoCard__body">
+              <Card.Text>Contactanos ante cualquier duda</Card.Text>
+            </Card.Body>
+            <Card.Footer className="profile__infoCard__footer">
+              <Link to="/contacto">
+                <ArrowRightCircleFill className="profile__infoCard__arrow" />
+              </Link>
+            </Card.Footer>
+          </Card>
+        </div>
+      </Container>
     </section>
   );
 }

@@ -8,12 +8,11 @@
 .cardCuponHome__containerImg {
   margin-right: 20px;
   border: 2px solid var(--brand-color);
-  border-radius: 50%;
+  border-radius: 20px;
 }
 .cardCuponHome__img {
   max-width: 130px;
   height: 130px;
-  border-radius: 50%;
 }
 .cardCuponHome__cupon {
   display: flex;

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable import/named */
 /* eslint-disable no-useless-escape */
 
@@ -112,7 +113,7 @@ function Footer() {
                 alt="Henrys burguer logo"
               />
             </Link>
-            <h3>Hamburguesas que se ajustan a tu estilo de vida</h3>
+            <h4>"Hamburguesas que se ajustan a tu estilo de vida"</h4>
           </Col>
           <Col sm={12} lg={4} className="p-3">
             <p>Seguinos:</p>
