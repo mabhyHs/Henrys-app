@@ -30,8 +30,17 @@ function toDBQuery(filters) {
 
     filters.forEach(filter => {
         const property = Object.keys(filter)[0];
+        console.log(property)
+        if(property === "isDeleted"){
 
-        if(property === "isVeggie"){
+            if(filter["isDeleted"] === "true"){      
+                queries[Op.and].push({ deletedAt: {[Op.not]: null} });
+            } else {
+                queries[Op.and].push({ deletedAt: { [Op.is]: null} });                
+            }
+        } 
+
+        else if(property === "isVeggie"){
             queries[Op.and].push(filter);
         } else {
             const format = {...filter}

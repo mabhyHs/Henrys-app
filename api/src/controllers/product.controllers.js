@@ -28,32 +28,32 @@ async function getByQuery(req, res, next) {
     const name = req.query.name ? req.query.name.toLowerCase() : req.query.name;
     const isVeggie = req.query.isVeggie ? req.query.isVeggie.toLowerCase() : req.query.isVeggie;
     const order = req.query.order ? req.query.order.toLowerCase() : req.query.order;
-    const paranoid = req.query.paranoid ? false : true;
-    const filters = utils.setFilters({isVeggie, name});
+    const isDeleted = req.query.isDeleted ? "true" : "false";
+    const filters = utils.setFilters({isVeggie, name, isDeleted});
     let products = [];
 
     if(!category){
-        const all = await productRepository.getByQuery(filters, paranoid);     
+        const all = await productRepository.getByQuery(filters);     
         products = [...all];
     }    
     else if(category === "burgers"){
-        const burgers = await burgerRepository.getByQuery(filters, paranoid);
+        const burgers = await burgerRepository.getByQuery(filters);
         products = [...burgers]; 
     }
     else if(category === "combos"){
-        const combos = await comboRepository.getByQuery(filters, paranoid);
+        const combos = await comboRepository.getByQuery(filters);
         products = [...combos]; 
     }
     else if(category === "fries"){
-        const fries = await friesRepository.getByQuery(filters, paranoid);
+        const fries = await friesRepository.getByQuery(filters);
         products = [...fries]; 
     }
     else if(category === "beverages"){
-        const beverages = await beverageRepository.getByQuery(filters, paranoid);
+        const beverages = await beverageRepository.getByQuery(filters);
         products = [...beverages];
     }
     else if(category === "veggie"){
-        const all = await productRepository.getByQuery(filters, paranoid);
+        const all = await productRepository.getByQuery(filters);
         products = [...all];
     }
 
