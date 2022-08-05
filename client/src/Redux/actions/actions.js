@@ -174,7 +174,7 @@ export function getCoupons(token) {
 }
 
 export function updateCoupons(data, token) {
-  return async function (dispatch) {
+  return async function () {
     try {
       await axios.put('/coupons', data, {
         headers: { 'auth-token': token },
