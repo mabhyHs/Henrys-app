@@ -162,7 +162,7 @@ export function getBurgerBase() {
   };
 }
 
-export function getCoupons(token) {
+export function getCoupons() {
   return async function (dispatch) {
     try {
       const coupons = await axios('/coupons');

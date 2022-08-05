@@ -7,6 +7,7 @@ import {
   allProductsDelete,
   deleteCart,
   productDelete,
+  getCoupons,
 } from '../../Redux/actions/actions';
 import CardProductCart from '../CardProductCart/CardProductCart';
 import Container from 'react-bootstrap/Container';
@@ -23,6 +24,9 @@ function ShoppingCart() {
   const dispatch = useDispatch();
   let itemsToCart = useSelector((state) => state.cart);
   const [mount, setMount] = useState(true);
+  const [coupons, setCoupons] = useState([]);
+  const couponsState = useSelector((state) => state.coupons);
+  const [discount, setDiscount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,7 +35,7 @@ function ShoppingCart() {
         window.localStorage.setItem('carrito', JSON.stringify(itemsToCart));
       } else {
         window.localStorage.removeItem('carrito');
-        window.localStorage.removeItem("compra");
+        window.localStorage.removeItem('compra');
       }
     } else {
       setMount(false);
@@ -58,41 +62,106 @@ function ShoppingCart() {
     (acc, { price, cantidad }) => acc + price * cantidad,
     0
   );
-  
+
   const handleMPago = async () => {
+    try {
+      const json = await axios.post(
+        'http://localhost:3001/pay/mercadopago',
+        {
+          cart: JSON.parse(window.localStorage.getItem('carrito')),
+          coupons,
+        },
+        {
+          headers: {
+            'auth-token': JSON.parse(window.localStorage.getItem('user')).token,
+          },
+        }
+      );
 
-    try {        
+      window.localStorage.setItem('compra', JSON.stringify(json.data));
 
-        const json = await axios.post(
-            'http://localhost:3001/pay/mercadopago',
-            {
-              cart: JSON.parse(window.localStorage.getItem('carrito')),
-            },
-            { headers: { 'auth-token': JSON.parse(window.localStorage.getItem('user')).token } }
-          );
-    
-          window.localStorage.setItem("compra", JSON.stringify(json.data));
-
-          navigate("/mercadoPago");
-    
-        } catch (error) {
-            Swal.fire({
-                customClass: {
-                  confirmButton: 'confirmBtnSwal',
-                },
-                confirmButtonText: 'Iniciar sesión',
-                title: 'Opss...',
-                text: 'Primero debes iniciar sesión!',
-                imageUrl:
-                  'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
-                imageWidth: 150,
-                imageHeight: 150,
-                imageAlt: 'Logo henrys',
-              }).then(function() {
-                navigate("/userlogin");
-            });
-        }    
+      navigate('/mercadoPago');
+    } catch (error) {
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        confirmButtonText: 'Iniciar sesión',
+        title: 'Opss...',
+        text: 'Primero debes iniciar sesión!',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      }).then(function () {
+        navigate('/userlogin');
+      });
+    }
   };
+
+  useEffect(() => {
+    if (!couponsState) {
+      dispatch(getCoupons());
+    }
+  }, [dispatch, getCoupons]);
+
+  function handleAddCoupon(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+
+      const value = e.target.value.trim();
+
+      if (value === '') {
+        return null;
+      }
+
+      if (!couponsState.find((c) => c.code === value)) {
+        Swal.fire({
+          customClass: {
+            confirmButton: 'confirmBtnSwal',
+          },
+          confirmButtonText: 'OK',
+          title: 'Opss...',
+          text: 'El cupon ingresado no existe!!',
+          imageUrl:
+            'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+          imageWidth: 150,
+          imageHeight: 150,
+          imageAlt: 'Logo henrys',
+        });
+      }
+
+      if (!coupons.find((c) => c === value)) {
+        setCoupons(coupons.concat(value));
+        e.target.value = '';
+      }
+    }
+  }
+
+  function handleDeleteCoupon(e, code) {
+    e.preventDefault();
+    setCoupons(coupons.filter((c) => c !== code));
+  }
+
+  useEffect(() => {
+    let discount = 0;
+
+    itemsToCart.map((item) => {
+      for (let i = 0; i < coupons?.length; i++) {
+        if (coupons[i].productsId.includes(item.id)) {
+          discount = (item.price / 100) * coupons[i].discountPorcentage;
+          console.log('descuento', discount);
+          console.log('id', item.id);
+          console.log('precio', item.price);
+        }
+      }
+      return null;
+    });
+
+    console.log(discount);
+    setDiscount(discount);
+  }, [itemsToCart, coupons]);
 
   return (
     <Container className="py-4 shoppinCart__container">
@@ -154,6 +223,26 @@ function ShoppingCart() {
             </div>
           ))}
           <div className="shoppingCart__total__container">
+            <div>
+              <h2 className="shoppingCart__h2 mb-4">
+                Ingresa tu cupon de descuento
+              </h2>
+              <input type="text" onKeyDown={handleAddCoupon} />
+              <div>
+                {discount}
+                {coupons.map((c) => (
+                  <div key={c}>
+                    {c}
+                    <button
+                      type="button"
+                      onClick={(e) => handleDeleteCoupon(e, c)}
+                    >
+                      x
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
             <h2 className="shoppingCart__h2 mb-4">¿Necesitas algo más?</h2>
             <textarea
               name="message"
