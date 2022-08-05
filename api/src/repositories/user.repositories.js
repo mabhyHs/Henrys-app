@@ -27,7 +27,7 @@ async function getAllSecure() {
   return user;
 }
 
-async function getAllAdmin(pag, rol, confirmed) {
+async function getAllAdmin(pag, rol, confirmed, active) {
   const where = {};
   if (rol) {
     where.role = {
@@ -45,8 +45,20 @@ async function getAllAdmin(pag, rol, confirmed) {
     };
   }
 
+  if (active === "true") {
+    console.log(active);
+    where.deletedAt = {
+      [Op.is]: null,
+    };
+  } else if (active === "false") {
+    where.deletedAt = {
+      [Op.not]: null,
+    };
+  }
+
   let { count, rows } = await User.findAndCountAll({
     where,
+    paranoid: false,
     limit: 10,
     offset: (pag - 1) * 10,
   });
