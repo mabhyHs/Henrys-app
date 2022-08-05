@@ -7,13 +7,12 @@ import './CuponContainerHome.css';
 function CuponContainerHome() {
   const { coupons } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const token = JSON.parse(window.localStorage.getItem('user'))?.token;
 
   useEffect(() => {
-    if (!coupons && token) {
-      dispatch(getCoupons(token));
+    if (!coupons) {
+      dispatch(getCoupons());
     }
-  }, [coupons, dispatch, token]);
+  }, [coupons, dispatch]);
 
   return (
     <div className="couponsHome">

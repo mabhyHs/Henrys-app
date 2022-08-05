@@ -1,21 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getProduct } from '../../Redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
 import CardCupponHome from '../CardCuponHome/CardCuponHome';
 
 function CouponUpdate() {
+  const dispatch = useDispatch();
+  const { products } = useSelector((state) => state);
+  const [btnSubmit, setBtnSubmit] = useState(false);
+
+  useEffect(() => {
+    if (products.length < 1) {
+      dispatch(getProduct());
+    }
+  }, [dispatch, products]);
+
   const [coupon, setCoupon] = useState({
     code: 'Codigo del cupon',
     title: 'Titulo del cupon',
     expirationDate: 'Fecha de vencimiento',
     imgUri: null,
     discountPorcentage: 'Descuento',
+    products: [],
   });
 
   const [couponError, setCouponError] = useState({
     code: true,
     title: true,
     expirationDate: true,
-    imgUri: true,
+    imgUri: false, // cambiar a true cuando se implemente la imagen
     discountPorcentage: true,
+    products: true,
   });
 
   function validateCode(e) {
@@ -61,7 +75,7 @@ function CouponUpdate() {
       });
     }
 
-    if (isNaN(value) || value < 0 || value > 100) {
+    if (isNaN(value) || value < 0 || value > 100 || value.length > 5) {
       return setCouponError({ ...couponError, discountPorcentage: true });
     }
 
@@ -110,10 +124,52 @@ function CouponUpdate() {
     return setCoupon({ ...coupon, expirationDate: value });
   }
 
+  useEffect(() => {
+    const { code, title, expirationDate, imgUri, discountPorcentage } =
+      couponError;
+    if (code || title || expirationDate || imgUri || discountPorcentage) {
+      return setBtnSubmit(false);
+    }
+    return setBtnSubmit(true);
+  }, [couponError]);
+
+  function handleProducts(e) {
+    const { value } = e.target;
+    const product = products?.find((p) => p.name === value);
+    e.target.value = '';
+
+    if (!coupon.products?.find((d) => d.name === value)) {
+      if (typeof product?.name === 'string') {
+        setCouponError({ ...couponError, products: false });
+        return setCoupon({
+          ...coupon,
+          products: coupon.products.concat(product),
+        });
+      }
+    } else {
+      return null;
+    }
+  }
+
+  const handleRemoveProduct = (e, productId) => {
+    e.preventDefault();
+
+    setCoupon({
+      ...coupon,
+      products: coupon.products.filter((d) => d.id !== productId),
+    });
+
+    if (coupon.products.length === 1) {
+      return setCouponError({ ...couponError, products: true });
+    }
+
+    return setCouponError({ ...couponError, products: false });
+  };
+
   function handleCreateNewCoupon(e) {
     e.preventDefault();
-    console.log('entro en el handle');
   }
+
   return (
     <div>
       <div>
@@ -163,7 +219,7 @@ function CouponUpdate() {
                 couponError.discountPorcentage ? 'statusWrong' : 'statusOk'
               }
             >
-              No puede estar vacio.
+              Ingrese un numero entre 0 y 100.
             </small>
           </label>
 
@@ -188,7 +244,37 @@ function CouponUpdate() {
               Selecciona una fecha desde hoy en adelante.
             </small>
           </label>
-          <button onClick={handleCreateNewCoupon}>CREAR CUPON</button>
+          <label htmlFor="productOfCoupon">
+            <select
+              name="productOfCoupon"
+              id="productOfCoupon"
+              onClick={handleProducts}
+            >
+              <option value="Elige un producto" />
+              {products?.map((p) => (
+                <option value={p.name} key={p.id}>
+                  {p.name}
+                </option>
+              ))}
+            </select>
+
+            <div>
+              {coupon.products?.map((p) => (
+                <div key={p.id}>
+                  {p.name}
+                  <button
+                    type="button"
+                    onClick={(e) => handleRemoveProduct(e, p.id)}
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+            </div>
+          </label>
+          <button disabled={!btnSubmit} onClick={handleCreateNewCoupon}>
+            CREAR CUPON
+          </button>
         </form>
       </div>
       <div>

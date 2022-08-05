@@ -165,10 +165,20 @@ export function getBurgerBase() {
 export function getCoupons(token) {
   return async function (dispatch) {
     try {
-      const coupons = await axios('/coupons', {
+      const coupons = await axios('/coupons');
+      dispatch({ type: GET_COUPONS, payload: coupons.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function updateCoupons(data, token) {
+  return async function (dispatch) {
+    try {
+      await axios.put('/coupons', data, {
         headers: { 'auth-token': token },
       });
-      dispatch({ type: GET_COUPONS, payload: coupons.data });
     } catch (error) {
       console.log(error);
     }
