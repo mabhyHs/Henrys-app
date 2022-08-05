@@ -124,10 +124,24 @@ function CouponUpdate() {
     return setCoupon({ ...coupon, expirationDate: value });
   }
 
+  // Validacion del boton
   useEffect(() => {
-    const { code, title, expirationDate, imgUri, discountPorcentage } =
-      couponError;
-    if (code || title || expirationDate || imgUri || discountPorcentage) {
+    const {
+      code,
+      title,
+      expirationDate,
+      imgUri,
+      discountPorcentage,
+      products,
+    } = couponError;
+    if (
+      code ||
+      title ||
+      expirationDate ||
+      imgUri ||
+      discountPorcentage ||
+      products
+    ) {
       return setBtnSubmit(false);
     }
     return setBtnSubmit(true);
@@ -158,13 +172,15 @@ function CouponUpdate() {
       ...coupon,
       products: coupon.products.filter((d) => d.id !== productId),
     });
-
-    if (coupon.products.length === 1) {
-      return setCouponError({ ...couponError, products: true });
-    }
-
-    return setCouponError({ ...couponError, products: false });
   };
+
+  useEffect(() => {
+    if (coupon.products.length < 1) {
+      return setCouponError({ ...couponError, products: true });
+    } else {
+      return setCouponError({ ...couponError, products: false });
+    }
+  }, [coupon]);
 
   function handleCreateNewCoupon(e) {
     e.preventDefault();
