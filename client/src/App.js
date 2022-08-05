@@ -28,6 +28,11 @@ import MercadoPago from './Components/ShoppingCart/mercadoPago/MercadoPago';
 import AddProductHome from './Components/Admin/AddProduct/ProductHome/AddProductHome';
 import ReviewsContainer from './Components/ReviewsContainer/ReviewsContainer';
 import AdminUsers from './Components/Admin/AdminUsers/AdminUsers';
+import CreateOrEditBurger from './Components/Admin/AddProduct/AddProductViews/CreateOrEditBurger/CreateOrEditBurger';
+import CreateOrEditBurgerBase from './Components/Admin/AddProduct/AddProductViews/CreateOrEditBurgerBase/CreateOrEditBurgerBase';
+import CreateOrEditBeverage from './Components/Admin/AddProduct/AddProductViews/CreateOrEditBeverage/CreateOrEditBeverage';
+import CreateOrEditCombo from './Components/Admin/AddProduct/AddProductViews/CreateOrEditCombo/CreateOrEditCombo';
+import CreateOrEditFries from './Components/Admin/AddProduct/AddProductViews/CreateOrEditFries/CreateOrEditFries';
 
 function App() {
   const isSession = isLogged();
@@ -100,6 +105,35 @@ function App() {
         <Route
           path="/adminusers"
           element={isSessionAdmin ? <AdminUsers /> : <Navigate to="/" />}
+        />
+
+        <Route
+          path="/admineditburgerbase"
+          element={
+            isSessionAdmin ? <CreateOrEditBurgerBase /> : <Navigate to="/" />
+          }
+        />
+
+        <Route
+          path="/admineditburger"
+          element={
+            isSessionAdmin ? <CreateOrEditBurger /> : <Navigate to="/" />
+          }
+        />
+
+        <Route
+          path="/admineditbeverage"
+          element={
+            isSessionAdmin ? <CreateOrEditBeverage /> : <Navigate to="/" />
+          }
+        />
+        <Route
+          path="/admineditcombo"
+          element={isSessionAdmin ? <CreateOrEditCombo /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/admineditfries"
+          element={isSessionAdmin ? <CreateOrEditFries /> : <Navigate to="/" />}
         />
       </Routes>
       <Footer />

@@ -1,27 +1,31 @@
 .userReview__mainContainer {
-  text-align: center;
-  box-sizing: border-box;
+  min-height: 70vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.userReview__mainTitle {
-  margin: 2rem auto;
+.userReview__reviewContainer {
+  background-color: var(--main-color-light);
+  max-width: 100%;
+  border-radius: 30px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  box-shadow: var(--bs-card);
+  padding: 2rem;
 }
-
 .userReview__opinionContainer {
-  margin: 2rem auto 1rem auto;
+  padding: 1rem;
 }
-
-.userReview__opinionContainer__title {
-  margin-bottom: 2rem;
-}
-
 .userReview__opinionContainer__textArea {
-  width: 40vw;
-  height: 200px;
-  border-radius: 18px;
-  border: 1px solid black;
+  width: 16rem;
+  border-radius: 10px;
+  border: var(--bc-inputs);
   padding: 0.4rem;
 }
 
@@ -36,16 +40,7 @@
 }
 
 .userReview__submitButton {
-  margin: 3rem auto 5rem auto;
-  padding: 0.5rem;
-  background-color: #ffbe33;
-  color: white;
-  border-radius: 18px;
-  border: none;
-  box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
-  -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
-  cursor: pointer;
+  width: 8rem;
 }
 
 .userReview__submitButton:hover {
@@ -86,52 +81,3 @@ input[type='radio'] {
 .userReview__starsContainer__input:checked ~ label:hover {
   color: orange;
 }
-
-@media (max-width: 1200px) {
-  .userReview__opinionContainer__textArea {
-    width: 60vw;
-  }
-}
-
-@media (max-width: 768px) {
-  .userReview__opinionContainer__textArea {
-    width: 90vw;
-  }
-
-  .userReview__mainTitle {
-    width: 90%;
-  }
-  .userReview__opinionContainer__title {
-    width: 90%;
-  }
-}
-
-/* div p {
-    text-align: center;
-  }
-  
-  div label {
-    font-size: 20px;
-  }
-  
-  input[type="radio"] {
-    display: none;
-  }
-  
-  label {
-    color: grey;
-  }
-  
-  .clasificacion {
-    direction: rtl;
-    unicode-bidi: bidi-override;
-  }
-  
-  label:hover,
-  label:hover ~ label {
-    color: orange;
-  }
-  
-  input[type="radio"]:checked ~ label {
-    color: orange;
-  } */

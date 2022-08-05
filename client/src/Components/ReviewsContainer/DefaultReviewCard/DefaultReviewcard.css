@@ -1,4 +1,4 @@
-.reviews__mainCard {
+.defaultreviews__mainCardAlternative {
   border-radius: 20px;
   border: none;
   width: 22rem;
@@ -9,22 +9,22 @@
   -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
 }
 
-.reviews__mainCard__title {
+.defaultreviews__mainCard__title {
   color: #222831;
   background-color: #f1f2f3;
   width: 100%;
   text-align: center;
 }
 
-.reviews__mainCard__title span {
+.defaultreviews__mainCard__title span {
   color: var(--brand-color);
 }
-.reviews__mainCard__body {
+.defaultreviews__mainCard__body {
   background-color: #222831;
   color: #f1f2f3;
 }
 
-.reviews__mainCard__footer {
+.defaultreviews__mainCard__footer {
   background-color: #f1f2f3;
   color: var(--main-color-dark);
   border-radius: 20px;
@@ -36,7 +36,7 @@
 }
 
 @media (max-width: 481px) {
-  .reviews__mainCard {
+  .defaultreviews__mainCardAlternative {
     width: 18rem;
   }
 }
