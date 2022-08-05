@@ -69,7 +69,7 @@ function ShoppingCart() {
         'http://localhost:3001/pay/mercadopago',
         {
           cart: JSON.parse(window.localStorage.getItem('carrito')),
-          coupons,
+          coupons: coupons.map((c) => c.code),
         },
         {
           headers: {
@@ -116,8 +116,10 @@ function ShoppingCart() {
         return null;
       }
 
-      if (!couponsState.find((c) => c.code === value)) {
-        Swal.fire({
+      const couponInState = couponsState.find((c) => c.code === value);
+
+      if (!couponInState) {
+        return Swal.fire({
           customClass: {
             confirmButton: 'confirmBtnSwal',
           },
@@ -131,9 +133,9 @@ function ShoppingCart() {
           imageAlt: 'Logo henrys',
         });
       }
-
-      if (!coupons.find((c) => c === value)) {
-        setCoupons(coupons.concat(value));
+      // console.log(couponInState);
+      if (!coupons.find((c) => c.code === value)) {
+        setCoupons(coupons.concat(couponInState));
         e.target.value = '';
       }
     }
@@ -141,7 +143,7 @@ function ShoppingCart() {
 
   function handleDeleteCoupon(e, code) {
     e.preventDefault();
-    setCoupons(coupons.filter((c) => c !== code));
+    setCoupons(coupons.filter((c) => c.code !== code));
   }
 
   useEffect(() => {
@@ -149,17 +151,13 @@ function ShoppingCart() {
 
     itemsToCart.map((item) => {
       for (let i = 0; i < coupons?.length; i++) {
-        if (coupons[i].productsId.includes(item.id)) {
-          discount = (item.price / 100) * coupons[i].discountPorcentage;
-          console.log('descuento', discount);
-          console.log('id', item.id);
-          console.log('precio', item.price);
+        if (coupons[i]?.productsId?.includes(item.id)) {
+          discount += (item.price / 100) * coupons[i].discountPorcentage;
         }
       }
       return null;
     });
 
-    console.log(discount);
     setDiscount(discount);
   }, [itemsToCart, coupons]);
 
@@ -230,12 +228,12 @@ function ShoppingCart() {
               <input type="text" onKeyDown={handleAddCoupon} />
               <div>
                 {discount}
-                {coupons.map((c) => (
-                  <div key={c}>
-                    {c}
+                {coupons?.map((c) => (
+                  <div key={c?.code}>
+                    {c?.code}
                     <button
                       type="button"
-                      onClick={(e) => handleDeleteCoupon(e, c)}
+                      onClick={(e) => handleDeleteCoupon(e, c.code)}
                     >
                       x
                     </button>
@@ -251,8 +249,14 @@ function ShoppingCart() {
               cols="36"
               rows="3"
             />
+            <h3 className="shoppingCart__h2 mb-4">
+              Subtotal: <span>{`$${' ' + total}`}</span>
+            </h3>
+            <h3 className="shoppingCart__h2 mb-4">
+              Descuentos: <span>{`$${' ' + discount}`}</span>
+            </h3>
             <h2 className="shoppingCart__h2 mb-4">
-              Total de mi compra: <span>{`$${' ' + total}`}</span>
+              Total de mi compra: <span>{`$${' ' + total - discount}`}</span>
             </h2>
             <Link to={false}>
               <Button onClick={handleMPago}>Confirmar Pago</Button>
