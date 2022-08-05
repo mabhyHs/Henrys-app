@@ -1,0 +1,12 @@
+.couponForm {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  text-align: left;
+}
+
+.couponForm label {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
