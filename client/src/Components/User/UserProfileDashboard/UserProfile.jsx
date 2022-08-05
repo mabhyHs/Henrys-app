@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setLoginState } from '../../../Redux/actions/actions';
 import './UserProfile.css';
 import { ArrowRightCircleFill, EmojiSunglasses } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
@@ -7,13 +9,10 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 
 function UserProfileDashboard() {
-  function getUserData() {
-    return JSON.parse(window.localStorage.getItem('user'));
-  }
-  const userData = getUserData();
-  const id = userData.id;
-  let imgUri = userData.imgUri;
-  const token = userData.token;
+  const dispatch = useDispatch();
+  const sesionInfo = useSelector((state) => state.loginState);
+  const id = sesionInfo.id;
+  const token = sesionInfo.token;
 
   const [userImage, setImage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -47,11 +46,11 @@ function UserProfileDashboard() {
           }
         )
       );
-      const updateLocal = {
-        ...JSON.parse(window.localStorage.getItem('user')),
+      const updateSesion = {
+        ...sesionInfo,
         imgUri: imgUri,
       };
-      window.localStorage.setItem('user', JSON.stringify(updateLocal));
+      dispatch(setLoginState(updateSesion));
     } catch (error) {
       console.log(error);
     } finally {
@@ -67,13 +66,10 @@ function UserProfileDashboard() {
 
       <Card className="profile__mainCard">
         <div className="profile__mainCard__headerContainer">
-          <Card.Header
-            className="profile__mainCard__title"
-            // userData={getUserData()}
-          >
-            {userData.imgUri ? (
+          <Card.Header className="profile__mainCard__title">
+            {sesionInfo.imgUri ? (
               <img
-                src={userData.imgUri}
+                src={sesionInfo.imgUri}
                 alt="foto de perfil"
                 className="profile__mainCard__userPicture"
               />
@@ -81,7 +77,7 @@ function UserProfileDashboard() {
               <EmojiSunglasses className="profile__mainCard__userPicture" />
             )}
 
-            <h2>{userData.firstName + ' ' + userData.lastName}</h2>
+            <h2>{sesionInfo.firstName + ' ' + sesionInfo.lastName}</h2>
           </Card.Header>
         </div>
         <Card.Body className="profile__mainCard__body">
