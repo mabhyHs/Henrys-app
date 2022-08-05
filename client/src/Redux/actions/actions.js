@@ -25,6 +25,7 @@ export const POST_MP = 'POST_MP';
 export const GET_FAVORITES = 'GET_FAVORITES';
 export const SET_DISCOUNT = 'SET_DISCOUNT';
 export const GET_REVIEWS = 'GET_REVIEWS';
+export const GET_COUPONS = 'GET_COUPONS';
 
 export function getProduct(
   category = '',
@@ -190,6 +191,29 @@ export function getBurgerBase() {
       return dispatch({
         type: GET_BURGER_BASE,
         payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getCoupons() {
+  return async function (dispatch) {
+    try {
+      const coupons = await axios('/coupons');
+      dispatch({ type: GET_COUPONS, payload: coupons.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function updateCoupons(data, token) {
+  return async function () {
+    try {
+      await axios.put('/coupons', data, {
+        headers: { 'auth-token': token },
       });
     } catch (error) {
       console.log(error);
