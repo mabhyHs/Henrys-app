@@ -5,6 +5,7 @@ import { getReviews } from '../../Redux/actions/actions';
 import './ReviewsContainer.css';
 import Carousel from 'react-bootstrap/Carousel';
 import ReviewCard from './ReviewCard/ReviewCard';
+import DefaultReviewCard from './DefaultReviewCard/DefaultReviewCard';
 import CarouselItem from 'react-bootstrap/esm/CarouselItem';
 
 function ReviewsContainer() {
@@ -23,18 +24,22 @@ function ReviewsContainer() {
   console.log(allReviews);
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect}>
-      {allReviews.map((e) => {
-        return (
-          <CarouselItem key={e.id}>
-            <ReviewCard
-              rating={e.rating}
-              description={e.description}
-              author={e.author}
-            />
-          </CarouselItem>
-        );
-      })}
+    <Carousel variant="dark" activeIndex={index} onSelect={handleSelect}>
+      {allReviews.length > 0 ? (
+        allReviews.map((e) => {
+          return (
+            <CarouselItem key={e.id}>
+              <ReviewCard
+                rating={e.rating}
+                description={e.description}
+                author={e.author}
+              />
+            </CarouselItem>
+          );
+        })
+      ) : (
+        <DefaultReviewCard></DefaultReviewCard>
+      )}
     </Carousel>
   );
 }
