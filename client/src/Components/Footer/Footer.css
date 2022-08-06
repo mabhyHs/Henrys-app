@@ -26,8 +26,7 @@ a svg {
 }
 
 .footer__newsletter__error {
-  color: red;
+  color: var(--brand-color);
   font-size: smaller;
-  font-style: italic;
   padding-top: 10px;
 }
