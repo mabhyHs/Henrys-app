@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
-import { agregarCalificacion } from '../../../Redux/actions/actions';
+import { postReview } from '../../../Redux/actions/actions';
 import { useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import './UserReview.css';
 
 function enviarCalificacion(puntuacion, comentario, dispatch) {
-  dispatch(agregarCalificacion({ puntuacion, comentario }));
+  dispatch(postReview({ puntuacion, comentario }));
 }
 function cambiarEstrellas(e, estrellas, setEstrellas) {
   setEstrellas((estrellas = e.target.value));
