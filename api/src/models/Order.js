@@ -11,9 +11,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Order.init(
     {
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
+      purchaseId: {
+        type: DataTypes.STRING,
         primaryKey: true,
       },
       user_id: {
@@ -22,9 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       status: {
         type: DataTypes.ENUM(["Pendiente", "Entregado"]),
         defaultValue: "Pendiente",
-      },
-      purchaseId: {
-        type: DataTypes.STRING,
       },
     },
     {
