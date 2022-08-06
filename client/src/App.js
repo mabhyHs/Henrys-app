@@ -23,7 +23,6 @@ import UserPurchase from './Components/User/UserPurchase/UserPurchase';
 import AdminDashboard from './Components/Admin/Dashboard/AdminDashboard';
 import SendNewsletter from './Components/Admin/SendNewsletter/SendNewsletter';
 
-import './App.css';
 import { isLogged, isLoggedAdmin } from './Components/methods';
 import MercadoPago from './Components/ShoppingCart/mercadoPago/MercadoPago';
 import AddProductHome from './Components/Admin/AddProduct/ProductHome/AddProductHome';
@@ -36,6 +35,12 @@ import CreateOrEditCombo from './Components/Admin/AddProduct/AddProductViews/Cre
 import CreateOrEditFries from './Components/Admin/AddProduct/AddProductViews/CreateOrEditFries/CreateOrEditFries';
 import CouponAdmin from './Components/CouponAdmin/CouponAdmin';
 import UserPurchaseDetail from './Components/User/UserPurchaseDetail/UserPurchaseDetail';
+
+import EmployeeHome from './Components/employeePanel/employeeHome/EmployeeHome';
+import EmployeePendingOrder from './Components/employeePanel/EmployeePendignOrder/EmployeePendingOrder';
+import EmployeeOrderReady from './Components/employeePanel/EmployeeOrderReady/EmployeeOrderReady';
+
+import './App.css';
 
 function App() {
   const isSession = isLogged();
@@ -152,6 +157,14 @@ function App() {
           path="/admincupon"
           element={isSessionAdmin ? <CouponAdmin /> : <Navigate to="/" />}
         />
+
+        {/* EMPLOYEE ROUTES */}
+        <Route path="/employeehome" element={<EmployeeHome />} />
+        <Route
+          path="/employeependingorders"
+          element={<EmployeePendingOrder />}
+        />
+        <Route path="/employeeordersready" element={<EmployeeOrderReady />} />
       </Routes>
       <Footer />
     </div>
