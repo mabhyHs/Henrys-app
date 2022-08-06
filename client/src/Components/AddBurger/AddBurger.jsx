@@ -263,6 +263,7 @@ function AddBurger() {
   function setBurger(e){
     const find = burgerBase.find(burger => burger.id === e.target.value);
     setPrecio(0.0);
+    setIngredientsAdd([]);
     if(!find){
         setSelectBurger({})
         setSelectBurgerOpt("0");
@@ -398,10 +399,8 @@ function AddBurger() {
                 ))}
               </ul>
             </div>
-            <div>
-                <p className="addBurger__descriptionText">{selectBurger.description ? selectBurger.description : ""}</p>
-            </div>
-             </div>
+            <p className="addBurger__descriptionText">{selectBurger.description ? selectBurger.description : "."}</p>
+          </div>
           <div>
             <img
               src={selectBurger.imgUri ? selectBurger.imgUri : ""}
