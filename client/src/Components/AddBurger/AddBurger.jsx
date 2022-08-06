@@ -398,8 +398,10 @@ function AddBurger() {
                 ))}
               </ul>
             </div>
-            <p className="addBurger__descriptionText">{selectBurger.description ? selectBurger.description : ""}</p>
-          </div>
+            <div>
+                <p className="addBurger__descriptionText">{selectBurger.description ? selectBurger.description : ""}</p>
+            </div>
+             </div>
           <div>
             <img
               src={selectBurger.imgUri ? selectBurger.imgUri : ""}
