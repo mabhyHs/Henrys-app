@@ -231,11 +231,19 @@ function AddBurger() {
   };
 
   function ingredientsNotSelect() {
-    if (!ingredientsAdd || !ingredientsAdd.length) {
-      return ingredients;
+    let notSelect = ingredients.map(e => e);
+    
+    if(selectBurger.isVeggie === true){
+        notSelect = notSelect.filter(f => f.isVeggie === true);
     }
 
-    const notSelect = ingredients.map((e) => e);
+    if (!ingredientsAdd || !ingredientsAdd.length) {
+      return notSelect;
+    }
+
+    if(selectBurger.isVeggie === true){
+        notSelect = notSelect.filter(f => f.isVeggie === true);
+    }
 
     for (let j = 0; j < notSelect.length; j++) {
       const all = notSelect[j];
