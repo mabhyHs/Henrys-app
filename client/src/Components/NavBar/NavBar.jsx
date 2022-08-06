@@ -76,6 +76,10 @@ function NavBar() {
     if (window.localStorage.getItem('favoritos')) {
       window.localStorage.removeItem('favoritos');
     }
+
+    if (window.localStorage.getItem('cupones')) {
+      window.localStorage.removeItem('cupones');
+    }
   }
 
   function isLogged() {
