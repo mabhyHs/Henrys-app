@@ -31,4 +31,14 @@ async function changeStatus(req, res, next) {
   }
 }
 
-module.exports = { create, getAll, changeStatus };
+async function getAllByUserId(req, res, next) {
+  try {
+    const userId = req.body.user.id;
+    const orders = await orderRepositories.getAllByUserId(userId);
+    res.status(200).json(orders);
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { create, getAll, changeStatus, getAllByUserId };

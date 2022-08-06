@@ -15,9 +15,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         primaryKey: true,
       },
-      user_id: {
-        type: DataTypes.UUID,
-      },
       status: {
         type: DataTypes.ENUM(["Pendiente", "Entregado"]),
         defaultValue: "Pendiente",

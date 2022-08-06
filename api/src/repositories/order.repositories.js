@@ -1,9 +1,11 @@
+const { Op } = require("sequelize");
 const { Order } = require("../models");
 
 async function create(user_id, data) {
   const order = await Order.create(data);
+  console.log(user_id);
   await order.addCustomer(user_id);
-  const orderAndUser = await Order.findByPk(order.id, {
+  const orderAndUser = await Order.findByPk(order.purchaseId, {
     include: {
       association: "customer",
     },
@@ -28,6 +30,19 @@ async function getAll(pag, limit) {
   };
 }
 
+async function getAllByUserId(user_id) {
+  const orders = await Order.findAll({
+    include: {
+      association: "customer",
+      where: {
+        id: { [Op.eq]: user_id },
+      },
+    },
+    order: [["createdAt", "DESC"]],
+  });
+  return orders;
+}
+
 async function changeStatus(id, status) {
   const order = await Order.findByPk(id);
   return await order.update({ status });
@@ -37,4 +52,4 @@ async function getById(id) {
   return await Order.findByPk(id);
 }
 
-module.exports = { create, getAll, changeStatus, getById };
+module.exports = { create, getAll, changeStatus, getById, getAllByUserId };
