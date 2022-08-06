@@ -39,15 +39,6 @@ const idValid = param("id")
   })
   .withMessage("id inválido");
 
-const userValid = body("user_id")
-  .custom(async (id) => {
-    const user = await userRepositories.getById(id);
-    if (!user) {
-      throw new Error("id de usuario inválido");
-    }
-  })
-  .withMessage("id de usuario inválido");
-
 const roleValidator = [roleValid];
 
 const postValidator = [userValid];

@@ -2,7 +2,7 @@ const orderRepositories = require("../repositories/order.repositories");
 
 async function create(req, res, next) {
   try {
-    const order = await orderRepositories.create(req.body.user_id, req.body);
+    const order = await orderRepositories.create(req.body.user.id, req.body);
     res.status(201).json(order);
   } catch (error) {
     next(error);
