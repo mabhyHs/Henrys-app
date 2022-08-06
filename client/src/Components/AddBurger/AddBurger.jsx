@@ -7,6 +7,9 @@ import {
   addCartProductCustom,
 } from '../../Redux/actions/actions';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import imgAddBurger from '../../Assets/Images/Hamburguesas/Hamburguesa-con-Queso.png';
+
 import Swal from 'sweetalert2';
 
 import './AddBurger.css';
@@ -210,120 +213,154 @@ function AddBurger() {
   return (
     <div className="addBurger__motherContainer">
       <h1 className="addBurger__mainTitle">Arma tu Hamburguesa</h1>
-      <div className="addBurger__mainContainer">
-        <div>
-          <select
-            name="ingredientes"
-            className="addBurger__select"
-            onChange={(e) =>
-              añadirIngredientes(
-                e,
-                ingredientsAdd,
-                setIngredientsAdd,
-                ingredients,
-                precio,
-                setPrecio
-              )
-            }
-            value={'default'}
-          >
-            <option key={1000} disabled="" defaultValue>
-              Escoge tus ingredientes
-            </option>
-            {ingredientsNotSelect().length > 0 &&
-              ingredientsNotSelect()?.map((i) => (
-                <option key={i.id} value={i.name}>
-                  {i.name + ' - $' + i.price}
-                </option>
-              ))}
-          </select>
-
+      <Container>
+        <hr />
+        <div className="addBurger__mainContainer">
           <div>
-            <ul className="addBurger__ul">
-              {ingredientsAdd.map((i) => (
-                <div className="addBurger__ul__liContainer" key={i.id}>
-                  <button
-                    className="addBurger__ul__closeButton"
-                    onClick={() =>
-                      modificarIngredientes(
-                        i.id,
-                        ingredientsAdd,
-                        setIngredientsAdd,
-                        precio,
-                        setPrecio
-                      )
-                    }
-                  >
-                    X
-                  </button>
+            <div className="addBurger__selectContainer">
+              <div className="burgerBase__select">
+                <span>Burger Base:</span>
+                <select name="burgerBase" className="addBurger__select">
+                  <option disabled="" defaultValue>
+                    Escoge tu hamburgesa
+                  </option>
+                  <option className="addBurger__option">hamburgesa1 </option>
+                </select>
+              </div>
+              <div className="ingredients__select">
+                <span>Ingredientes:</span>
+                <select
+                  name="ingredientes"
+                  className="addBurger__select"
+                  onChange={(e) =>
+                    añadirIngredientes(
+                      e,
+                      ingredientsAdd,
+                      setIngredientsAdd,
+                      ingredients,
+                      precio,
+                      setPrecio
+                    )
+                  }
+                  value={'default'}
+                >
+                  <option key={1000} disabled="" defaultValue>
+                    Escoge tus ingredientes
+                  </option>
+                  {ingredientsNotSelect().length > 0 &&
+                    ingredientsNotSelect()?.map((i) => (
+                      <option
+                        key={i.id}
+                        value={i.name}
+                        className="addBurger__option"
+                      >
+                        {i.name + ' - $' + i.price}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            </div>
 
-                  <li className="addBurger__ul__li" key={i.id}>
-                    {i.name + ' - $' + i.price + ' c/u'}
-                  </li>
+            <div>
+              <ul className="addBurger__ul">
+                {ingredientsAdd.map((i) => (
+                  <div className="addBurger__ul__liContainer" key={i.id}>
+                    <button
+                      className="addBurger__ul__closeButton"
+                      onClick={() =>
+                        modificarIngredientes(
+                          i.id,
+                          ingredientsAdd,
+                          setIngredientsAdd,
+                          precio,
+                          setPrecio
+                        )
+                      }
+                    >
+                      X
+                    </button>
 
-                  <button
-                    name="menos"
-                    className="addBurger__ul__plusAndMinus"
-                    onClick={(e) =>
-                      cambiarCantidad(
-                        e,
-                        i.id,
-                        ingredientsAdd,
-                        setIngredientsAdd,
-                        precio,
-                        setPrecio
-                      )
-                    }
-                  >
-                    -
-                  </button>
+                    <li className="addBurger__ul__li" key={i.id}>
+                      {i.name + ' - $' + i.price + ' c/u'}
+                    </li>
 
-                  <span className="addBurger__ul__cantidad"> {i.cantidad}</span>
-                  <button
-                    name="mas"
-                    className="addBurger__ul__plusAndMinus"
-                    onClick={(e) =>
-                      cambiarCantidad(
-                        e,
-                        i.id,
-                        ingredientsAdd,
-                        setIngredientsAdd,
-                        precio,
-                        setPrecio
-                      )
-                    }
-                  >
-                    +
-                  </button>
-                </div>
-              ))}
-            </ul>
+                    <button
+                      name="menos"
+                      className="addBurger__ul__plusAndMinus"
+                      onClick={(e) =>
+                        cambiarCantidad(
+                          e,
+                          i.id,
+                          ingredientsAdd,
+                          setIngredientsAdd,
+                          precio,
+                          setPrecio
+                        )
+                      }
+                    >
+                      -
+                    </button>
+
+                    <span className="addBurger__ul__cantidad">
+                      {' '}
+                      {i.cantidad}
+                    </span>
+                    <button
+                      name="mas"
+                      className="addBurger__ul__plusAndMinus"
+                      onClick={(e) =>
+                        cambiarCantidad(
+                          e,
+                          i.id,
+                          ingredientsAdd,
+                          setIngredientsAdd,
+                          precio,
+                          setPrecio
+                        )
+                      }
+                    >
+                      +
+                    </button>
+                  </div>
+                ))}
+              </ul>
+            </div>
+            <p className="addBurger__descriptionText">
+              * Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Officiis mollitia libero modi omnis quam deleniti.
+            </p>
+          </div>
+          <div>
+            <img
+              src={imgAddBurger}
+              alt=""
+              className="addBurger__image img-fluid"
+            />
           </div>
         </div>
-        <div className="addBurger__image"></div>
-      </div>
 
-      <div className="addBurger__bottom">
-        <p className="addBurger__bottom__p">
-          <span className="addBurger__bottom__span">Hamburguesa base:</span> $
-          {precioBase}
-        </p>
-        <p className="addBurger__bottom__p">
-          <span className="addBurger__bottom__span">Ingredientes:</span> $
-          {precio}
-        </p>
-        <p className="addBurger__bottom__p">
-          <span className="addBurger__bottom__span">Costo total:</span> $
-          {getTotal(precioBase, precio)}
-        </p>
-        <Button
-          onClick={() =>
-            crearBurguer(setPrecio, ingredientsAdd, setIngredientsAdd)
-          }
-        >
-          Crear Hamburguesa
-        </Button>
-      </div>
+        <div className="addBurger__bottom">
+          <p className="addBurger__bottom__p">
+            <span className="addBurger__bottom__span">Hamburguesa base:</span> $
+            {precioBase}
+          </p>
+          <p className="addBurger__bottom__p">
+            <span className="addBurger__bottom__span">Ingredientes:</span> $
+            {precio}
+          </p>
+          <p className="addBurger__bottom__p">
+            <span className="addBurger__bottom__span">Costo total:</span> $
+            {getTotal(precioBase, precio)}
+          </p>
+          <Button
+            onClick={() =>
+              crearBurguer(setPrecio, ingredientsAdd, setIngredientsAdd)
+            }
+          >
+            Crear Hamburguesa
+          </Button>
+        </div>
+      </Container>
     </div>
   );
 }
