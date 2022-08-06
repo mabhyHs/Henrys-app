@@ -1,4 +1,5 @@
 const userRepository = require("../repositories/user.repositories");
+const mercadopagoRepository = require("../repositories/mercadopago.repositories");
 const mercadopago = require("mercadopago");
 
 mercadopago.configure({
@@ -38,4 +39,14 @@ async function check(req, res, next) {
   }
 }
 
-module.exports = { check };
+async function getPaymentById(req, res, next) {
+  try {
+    const { id } = req.params;
+    const payment = await mercadopagoRepository.getPaymentById(id);
+    res.status(200).json(payment);
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { check, getPaymentById };
