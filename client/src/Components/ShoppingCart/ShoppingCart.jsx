@@ -187,7 +187,7 @@ function ShoppingCart() {
   }, [itemsToCart, coupons]);
 
   useEffect(() => {
-    const couponsLS = JSON.parse(window.localStorage.getItem('cupones'));
+    const couponsLS = JSON.parse(window.localStorage.getItem('cupones')) || [];
 
     if (couponsLS.length > coupons.length) {
       return setCoupons(couponsLS);
