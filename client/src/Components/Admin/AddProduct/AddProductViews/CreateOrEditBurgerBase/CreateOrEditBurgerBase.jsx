@@ -36,8 +36,6 @@ function CreateOrEditBurgerBase({ data }) {
     }
   }, [dispatch, edit, isRestore]);
 
-  console.log(data);
-
   const onChange = (e) => {
     setInput({
       ...input,

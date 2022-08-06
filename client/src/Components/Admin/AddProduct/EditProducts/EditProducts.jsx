@@ -22,8 +22,6 @@ function EditProducts() {
     dispatch(getBurgerBase());
   }, [dispatch, id]);
 
-  console.log(product);
-
   return (
     <div>
       {product.type === 'burger' && <CreateOrEditBurger data={product} />}

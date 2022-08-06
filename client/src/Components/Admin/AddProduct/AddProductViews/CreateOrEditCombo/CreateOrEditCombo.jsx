@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
+import { getProduct } from '../../../../../Redux/actions/actions';
 
 import './CreateOrEditCombo.css';
-import { useDispatch, useSelector } from 'react-redux';
 
 function CreateOrEditCombo({ data }) {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ function CreateOrEditCombo({ data }) {
   });
 
   useEffect(() => {
+    dispatch(getProduct());
     if (edit && !isRestore) {
       setInput({
         name: data.name,
@@ -36,8 +38,6 @@ function CreateOrEditCombo({ data }) {
       setRestore(true);
     }
   }, [dispatch, edit, isRestore]);
-
-  console.log(data);
 
   const onChange = (e) => {
     setInput({
@@ -67,12 +67,22 @@ function CreateOrEditCombo({ data }) {
           <Row className="mb-3">
             <Form.Group as={Col} controlId="comboName">
               <Form.Label>Nombre</Form.Label>
-              <Form.Control type="text" name="name" value={input.name} />
+              <Form.Control
+                onChange={onChange}
+                type="text"
+                name="name"
+                value={input.name}
+              />
             </Form.Group>
 
             <Form.Group as={Col} controlId="comboPrice">
               <Form.Label>Precio</Form.Label>
-              <Form.Control type="number" name="price" value={input.price} />
+              <Form.Control
+                onChange={onChange}
+                type="number"
+                name="price"
+                value={input.price}
+              />
             </Form.Group>
           </Row>
 
@@ -101,7 +111,10 @@ function CreateOrEditCombo({ data }) {
               <Form.Label>Hamburguesa</Form.Label>
               <Form.Select defaultValue="seleccionar">
                 <option>Seleccionar</option>
-                <option>...</option>
+                {data.burger &&
+                  data.burger.map((bur) => (
+                    <option key={bur}>{bur.name}</option>
+                  ))}
               </Form.Select>
             </Form.Group>
           </Row>
@@ -111,7 +124,10 @@ function CreateOrEditCombo({ data }) {
               <Form.Label>Papas</Form.Label>
               <Form.Select defaultValue="seleccionar">
                 <option>Seleccionar</option>
-                <option>...</option>
+                {data.fries &&
+                  data.fries.map((fri) => (
+                    <option key={fri}>{fri.name}</option>
+                  ))}
               </Form.Select>
             </Form.Group>
 
