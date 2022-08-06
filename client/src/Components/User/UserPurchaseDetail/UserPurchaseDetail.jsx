@@ -37,7 +37,7 @@ function UserPurchaseDetail() {
           </h1>
 
           {/* Verifica si hay cuotas */}
-          {installments && installments > 0 && (
+          {installments && installments > 1 && (
             <div>
               <div>Precio base: {transaction_amount || ''}</div>
               {installments} cuotas de ${transaction_details.installment_amount}
