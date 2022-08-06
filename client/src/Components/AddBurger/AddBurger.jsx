@@ -221,9 +221,12 @@ function AddBurger() {
               <div className="burgerBase__select">
                 <span>Hamburguesa base:</span>
                 <select name="burgerBase" className="addBurger__select">
+
+                    {}
                   <option disabled="" defaultValue>
                     Escoge tu hamburguesa
                   </option>
+
                   <option className="addBurger__option">hamburgesa1 </option>
                 </select>
               </div>
