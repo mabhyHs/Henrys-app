@@ -5,12 +5,19 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
-import { getProduct } from '../../../../../Redux/actions/actions';
+import {
+  getBeverages,
+  getBurgers,
+  getFries,
+} from '../../../../../Redux/actions/actions';
 
 import './CreateOrEditCombo.css';
 
 function CreateOrEditCombo({ data }) {
   const dispatch = useDispatch();
+  const burgers = useSelector((state) => state.burgers);
+  const fries = useSelector((state) => state.fries);
+  const beverages = useSelector((state) => state.beverages);
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
   const [input, setInput] = useState({
@@ -24,7 +31,9 @@ function CreateOrEditCombo({ data }) {
   });
 
   useEffect(() => {
-    dispatch(getProduct());
+    dispatch(getBurgers('burgers'));
+    dispatch(getFries('fries'));
+    dispatch(getBeverages('beverages'));
     if (edit && !isRestore) {
       setInput({
         name: data.name,
@@ -39,6 +48,8 @@ function CreateOrEditCombo({ data }) {
     }
   }, [dispatch, edit, isRestore]);
 
+  console.log(burgers, fries, beverages);
+
   const onChange = (e) => {
     setInput({
       ...input,
@@ -48,6 +59,22 @@ function CreateOrEditCombo({ data }) {
 
   function isEdit() {
     return data && Object.keys(data).length;
+  }
+
+  function handleSelect(e) {
+    if (!input.ingredient.includes(e.target.value)) {
+      setInput({
+        ...input,
+        ingredient: [...input.ingredient, e.target.value],
+      });
+    }
+  }
+
+  function handleDelete(e) {
+    setInput({
+      ...input,
+      ingredient: input.ingredient.filter((c) => c !== e),
+    });
   }
 
   const onSubmit = async (event) => {
@@ -100,10 +127,19 @@ function CreateOrEditCombo({ data }) {
               <Form.Label>Bebida</Form.Label>
               <Form.Select defaultValue="Seleccionar">
                 <option>Seleccionar</option>
-                {data.beverage &&
-                  data.beverage.map((bev) => (
-                    <option key={bev}>{bev.name}</option>
-                  ))}
+                {beverages &&
+                  beverages.map((bur) => <option key={bur}>{bur.name}</option>)}
+                <div>
+                  {input.beverage &&
+                    input.beverage.map((e) => (
+                      <div key={e.id || e}>
+                        <p>{e.name || e}</p>
+                        <button type="button" onClick={() => handleDelete(e)}>
+                          X
+                        </button>
+                      </div>
+                    ))}
+                </div>
               </Form.Select>
             </Form.Group>
 
@@ -111,10 +147,19 @@ function CreateOrEditCombo({ data }) {
               <Form.Label>Hamburguesa</Form.Label>
               <Form.Select defaultValue="seleccionar">
                 <option>Seleccionar</option>
-                {data.burger &&
-                  data.burger.map((bur) => (
-                    <option key={bur}>{bur.name}</option>
-                  ))}
+                {burgers &&
+                  burgers.map((bur) => <option key={bur}>{bur.name}</option>)}
+                <div>
+                  {input.burger &&
+                    input.burger.map((e) => (
+                      <div key={e.id || e}>
+                        <p>{e.name || e}</p>
+                        <button type="button" onClick={() => handleDelete(e)}>
+                          X
+                        </button>
+                      </div>
+                    ))}
+                </div>
               </Form.Select>
             </Form.Group>
           </Row>
@@ -124,10 +169,19 @@ function CreateOrEditCombo({ data }) {
               <Form.Label>Papas</Form.Label>
               <Form.Select defaultValue="seleccionar">
                 <option>Seleccionar</option>
-                {data.fries &&
-                  data.fries.map((fri) => (
-                    <option key={fri}>{fri.name}</option>
-                  ))}
+                {fries &&
+                  fries.map((bur) => <option key={bur}>{bur.name}</option>)}
+                <div>
+                  {input.fries &&
+                    input.fries.map((e) => (
+                      <div key={e.id || e}>
+                        <p>{e.name || e}</p>
+                        <button type="button" onClick={() => handleDelete(e)}>
+                          X
+                        </button>
+                      </div>
+                    ))}
+                </div>
               </Form.Select>
             </Form.Group>
 

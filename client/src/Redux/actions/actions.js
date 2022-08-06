@@ -5,7 +5,7 @@ export const GET_BURGERS = 'GET_BURGERS';
 export const GET_COMBOS = 'GET_COMBOS';
 export const GET_BEVERAGES = 'GET_BEVERAGES';
 export const GET_INGREDIENTS = 'GET_INGREDIENTS';
-export const GET_POTATOES = 'GET_POTATOES';
+export const GET_FRIES = 'GET_FRIES';
 export const GET_VEGGIE = 'GET_VEGGIE';
 export const SET_CATEGORY = 'SET_CATEGORY';
 export const GET_PRODUCT_BY_ID = 'GET_PRODUCT_BY_ID';
@@ -202,6 +202,48 @@ export function agregarCalificacion(payload) {
   return async function () {
     const json = await axios.post('pending...', payload);
     return json;
+  };
+}
+
+export function getFries(payload) {
+  return async function (dispatch) {
+    const response = await axios.get(`/products/${payload}`);
+    try {
+      return dispatch({
+        type: GET_FRIES,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getBurgers(payload) {
+  return async function (dispatch) {
+    const response = await axios.get(`/products/${payload}`);
+    try {
+      return dispatch({
+        type: GET_BURGERS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getBeverages(payload) {
+  return async function (dispatch) {
+    const response = await axios.get(`/products/${payload}`);
+    try {
+      return dispatch({
+        type: GET_BEVERAGES,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 
