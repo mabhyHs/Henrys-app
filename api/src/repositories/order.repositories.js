@@ -43,6 +43,15 @@ async function getAllByUserId(user_id) {
   return orders;
 }
 
+async function getByPurchaseId(purchaseId) {
+  const order = await Order.findByPk(purchaseId, {
+    include: {
+      association: "customer",
+    },
+  });
+  return order;
+}
+
 async function changeStatus(id, status) {
   const order = await Order.findByPk(id);
   return await order.update({ status });
@@ -52,4 +61,11 @@ async function getById(id) {
   return await Order.findByPk(id);
 }
 
-module.exports = { create, getAll, changeStatus, getById, getAllByUserId };
+module.exports = {
+  create,
+  getAll,
+  changeStatus,
+  getById,
+  getAllByUserId,
+  getByPurchaseId,
+};

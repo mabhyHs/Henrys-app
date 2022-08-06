@@ -20,6 +20,16 @@ async function getAll(req, res, next) {
   }
 }
 
+async function getByPurchaseId(req, res, next) {
+  try {
+    const { purchaseId } = req.params;
+    const order = await orderRepositories.getByPurchaseId(purchaseId);
+    res.status(200).json(order);
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function changeStatus(req, res, next) {
   try {
     const { id } = req.params;
@@ -41,4 +51,10 @@ async function getAllByUserId(req, res, next) {
   }
 }
 
-module.exports = { create, getAll, changeStatus, getAllByUserId };
+module.exports = {
+  create,
+  getAll,
+  changeStatus,
+  getAllByUserId,
+  getByPurchaseId,
+};
