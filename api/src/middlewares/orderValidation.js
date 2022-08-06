@@ -41,8 +41,6 @@ const idValid = param("id")
 
 const roleValidator = [roleValid];
 
-const postValidator = [userValid];
-
 const putValidator = [statusValid, idValid, roleValid];
 
-module.exports = { roleValidator, putValidator, postValidator };
+module.exports = { roleValidator, putValidator };
