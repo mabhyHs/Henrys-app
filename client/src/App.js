@@ -18,6 +18,7 @@ import UserProfileDashboard from './Components/User/UserProfileDashboard/UserPro
 import UserActivateAccount from './Components/User/UserActivateAccount/UserActivateAccount';
 import UserReview from './Components/User/UserReview/UserReview';
 import ShoppingCart from './Components/ShoppingCart/ShoppingCart';
+import UserPurchase from './Components/User/UserPurchase/UserPurchase';
 
 import AdminDashboard from './Components/Admin/Dashboard/AdminDashboard';
 import SendNewsletter from './Components/Admin/SendNewsletter/SendNewsletter';
@@ -34,6 +35,7 @@ import CreateOrEditBeverage from './Components/Admin/AddProduct/AddProductViews/
 import CreateOrEditCombo from './Components/Admin/AddProduct/AddProductViews/CreateOrEditCombo/CreateOrEditCombo';
 import CreateOrEditFries from './Components/Admin/AddProduct/AddProductViews/CreateOrEditFries/CreateOrEditFries';
 import CouponAdmin from './Components/CouponAdmin/CouponAdmin';
+import UserPurchaseDetail from './Components/User/UserPurchaseDetail/UserPurchaseDetail';
 
 function App() {
   const isSession = isLogged();
@@ -87,6 +89,16 @@ function App() {
         <Route
           path="/mercadoPago"
           element={isSession ? <MercadoPago /> : <Navigate to="/" />}
+        />
+
+        <Route
+          path="/pay/"
+          element={isSession ? <UserPurchase /> : <Navigate to="/" />}
+        />
+
+        <Route
+          path="/user/purchaseDetail/:id"
+          element={isSession ? <UserPurchaseDetail /> : <Navigate to="/" />}
         />
 
         {/* ADMIN ROUTES */}

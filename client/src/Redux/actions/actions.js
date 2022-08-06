@@ -23,27 +23,28 @@ export const SET_LOGIN_STATE = 'SET_LOGIN_STATE';
 export const ADD_BURGER_CUSTOM_TO_CART = 'ADD_BURGER_CUSTOM_TO_CART';
 export const POST_MP = 'POST_MP';
 export const GET_FAVORITES = 'GET_FAVORITES';
-export const SET_DISCOUNT = 'SET_DISCOUNT';
 export const GET_REVIEWS = 'GET_REVIEWS';
 export const GET_COUPONS = 'GET_COUPONS';
 export const GET_USERS = 'GET_USERS';
+export const GET_PURCHASE = 'GET_PURCHASE';
+export const POST_PURCHASE = 'POST_PURCHASE';
 
-export function getUser(token, query='/'){
-  return async function(dispatch){
-    try{
-      const json = await axios('http://localhost:3001/users/admin' + query,{
-        headers:{
-          'auth-token': token
-        }
-      })
+export function getUser(token, query = '/') {
+  return async function (dispatch) {
+    try {
+      const json = await axios('http://localhost:3001/users/admin' + query, {
+        headers: {
+          'auth-token': token,
+        },
+      });
       return dispatch({
         type: GET_USERS,
-        payload: json.data
-      })
-    }catch(error){
-      console.log(error)
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 }
 
 export function getProduct(
@@ -247,6 +248,19 @@ export function agregarCalificacion(payload) {
   };
 }
 
+export function getPurchase(id, token) {
+  return async function (dispatch) {
+    try {
+      const purchase = await axios(`/pay/mercadopago/${id}`, {
+        headers: { 'auth-token': token },
+      });
+      dispatch({ type: GET_PURCHASE, payload: purchase.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 // ACCIONES POST
 export function createBurger(payload) {
   return async function () {
@@ -309,13 +323,6 @@ export function postMP(data, token) {
   };
 }
 
-export function setDiscount(array) {
-  return {
-    type: SET_DISCOUNT,
-    payload: array,
-  };
-}
-
 export function getReviews() {
   return async function (dispatch) {
     const json = await axios.get('/reviews');
@@ -326,6 +333,22 @@ export function getReviews() {
       });
     } catch (error) {
       console.log(error);
+    }
+  };
+}
+
+export function postPurchase(purchaseId, token) {
+  return async function () {
+    try {
+      axios.post(
+        '/orders',
+        {
+          purchaseId,
+        },
+        { headers: { 'auth-token': token } }
+      );
+    } catch (error) {
+      return error;
     }
   };
 }
