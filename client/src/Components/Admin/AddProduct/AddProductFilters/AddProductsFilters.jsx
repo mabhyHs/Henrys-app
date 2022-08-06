@@ -3,10 +3,12 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import { useNavigate } from 'react-router-dom';
 
 import './AddProductFilters.css';
 
 function AddProductsFilters({ setFilter, filters }) {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -14,6 +16,26 @@ function AddProductsFilters({ setFilter, filters }) {
 
   const handleOnChange = (e) => {
     setFilter(e.target.name, e.target.value);
+  };
+
+  const creaBurger = () => {
+    navigate('/admineditburger');
+  };
+
+  const creaCombo = () => {
+    navigate('/admineditcombo');
+  };
+
+  const creaBeverage = () => {
+    navigate('/admineditbeverage');
+  };
+
+  const creaBurgerBase = () => {
+    navigate('/admineditburgerbase');
+  };
+
+  const creaFries = () => {
+    navigate('/admineditfries');
   };
 
   return (
@@ -32,19 +54,39 @@ function AddProductsFilters({ setFilter, filters }) {
             <Modal.Title>Crear:</Modal.Title>
           </Modal.Header>
           <div className="btn__modal__container">
-            <Button className="btn__modal__create" variant="secondary">
+            <Button
+              onClick={creaBurgerBase}
+              className="btn__modal__create"
+              variant="secondary"
+            >
               Base Burguer
             </Button>
-            <Button className="btn__modal__create" variant="secondary">
+            <Button
+              onClick={creaBurger}
+              className="btn__modal__create"
+              variant="secondary"
+            >
               Hamburguesa
             </Button>
-            <Button className="btn__modal__create" variant="secondary">
+            <Button
+              onClick={creaBeverage}
+              className="btn__modal__create"
+              variant="secondary"
+            >
               Bebidas
             </Button>
-            <Button className="btn__modal__create" variant="secondary">
+            <Button
+              onClick={creaCombo}
+              className="btn__modal__create"
+              variant="secondary"
+            >
               Combos
             </Button>
-            <Button className="btn__modal__create" variant="secondary">
+            <Button
+              onClick={creaFries}
+              className="btn__modal__create"
+              variant="secondary"
+            >
               Papas
             </Button>
           </div>

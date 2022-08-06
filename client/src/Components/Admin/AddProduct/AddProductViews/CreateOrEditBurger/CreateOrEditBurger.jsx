@@ -29,7 +29,7 @@ function CreateOrEditBurger({ data }) {
         name: data.name,
         price: data.price,
         ingredient: data.ingredient,
-        /* imgUri: data.imgUri ? data.imgUri : '', */
+        imgUri: '',
         isVeggie: data.isVeggie,
       });
       setRestore(true);
@@ -47,6 +47,22 @@ function CreateOrEditBurger({ data }) {
 
   function isEdit() {
     return data && Object.keys(data).length;
+  }
+
+  function handleSelect(e) {
+    if (!input.ingredient.includes(e.target.value)) {
+      setInput({
+        ...input,
+        ingredient: [...input.ingredient, e.target.value],
+      });
+    }
+  }
+
+  function handleDelete(e) {
+    setInput({
+      ...input,
+      ingredient: input.ingredient.filter((c) => c !== e),
+    });
   }
 
   const onSubmit = async (event) => {
@@ -77,13 +93,19 @@ function CreateOrEditBurger({ data }) {
 
             <Form.Group as={Col} controlId="burgerPrice">
               <Form.Label>Precio</Form.Label>
-              <Form.Control type="number" value={input.price} name="price" />
+              <Form.Control
+                onChange={onChange}
+                type="number"
+                value={input.price}
+                name="price"
+              />
             </Form.Group>
           </Row>
           <Row>
             <Form.Group className="mb-3" controlId="uploadImgBurger">
               <Form.Label>Imagen</Form.Label>
               <Form.Control
+                onChange={onChange}
                 type="file"
                 name="imgUri"
                 value={input.imgUri}
@@ -94,6 +116,7 @@ function CreateOrEditBurger({ data }) {
             <Form.Group as={Col} controlId="isVeggie">
               <Form.Label>Vegetariano</Form.Label>
               <Form.Select
+                onChange={onChange}
                 defaultValue="Es Veggie"
                 value={input.isVeggie}
                 name="isVeggie"
@@ -104,7 +127,11 @@ function CreateOrEditBurger({ data }) {
               </Form.Select>
             </Form.Group>
 
-            <Form.Group as={Col} controlId="burgerIngredients">
+            <Form.Group
+              onChange={(e) => handleSelect(e)}
+              as={Col}
+              controlId="burgerIngredients"
+            >
               <Form.Label>Ingredientes</Form.Label>
               <Form.Select defaultValue="seleccionar">
                 <option>Seleccionar</option>
@@ -114,6 +141,17 @@ function CreateOrEditBurger({ data }) {
                   ))}
               </Form.Select>
             </Form.Group>
+            <div>
+              {input.ingredient &&
+                input.ingredient.map((e) => (
+                  <div key={e.id || e}>
+                    <p>{e.name || e}</p>
+                    <button type="button" onClick={() => handleDelete(e)}>
+                      X
+                    </button>
+                  </div>
+                ))}
+            </div>
           </Row>
 
           <Button onSubmit={onSubmit} variant="primary" type="submit">
