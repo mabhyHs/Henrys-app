@@ -33,6 +33,7 @@ function UserLoggedInDropdown({ userData, logoutSession }) {
           <Heart className="loggedIn__icons" />
           Favoritos
         </Link>
+        <br />
         <Link to={false} onClick={logoutSession} className="loggedIn__Link">
           <BoxArrowLeft className="loggedIn__icons" /> Salir
         </Link>
