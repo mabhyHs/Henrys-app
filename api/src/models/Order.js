@@ -16,23 +16,15 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true,
       },
+      user_id: {
+        type: DataTypes.UUID,
+      },
       status: {
         type: DataTypes.ENUM(["Pendiente", "Entregado"]),
         defaultValue: "Pendiente",
       },
-      products: {
-        type: DataTypes.ARRAY(DataTypes.JSONB),
-      },
-      // cupon: {},
-      date: {
-        type: DataTypes.DATE,
-        defaultValue: new Date(),
-      },
-      note: {
-        type: DataTypes.TEXT,
-      },
-      totalPrice: {
-        type: DataTypes.FLOAT,
+      purchaseId: {
+        type: DataTypes.STRING,
       },
     },
     {
