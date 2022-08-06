@@ -14,12 +14,25 @@ import {
 } from 'react-bootstrap-icons';
 
 import './AdminUsers.css';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function AdminUsers() {
   const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [page, setPage] = useState(1)
+  const [rol, setRol] = useState('')
+  const [id, setId] = useState('')
+  const [filter, setFilter] = useState('')
+  function handleClose(){
+    setShow(false)
+    if(rol !== ''){
+      submitRole(id)
+    }
+  }
+  function handleShow(id){
+    setShow(true);
+    setId(id)
+  }
   const token = JSON.parse(window.localStorage.getItem("user")).token
   const dispatch = useDispatch()
   const users = useSelector(state => state.users)
@@ -28,6 +41,80 @@ function AdminUsers() {
     dispatch(getUser(token))
   }, [dispatch, token])
 
+  function handlePage(e, page, filter){
+    let query = ''
+    let role = ''
+    if(filter !== '/'){
+      role = '&rol=' + filter
+    }
+    if(e.target.name === 'next'){
+      const newPage = page + 1
+      if(page === users.pages) return
+      setPage(newPage)
+      query ='?pag=' + newPage + role
+      dispatch(getUser(token, query))
+    }
+    else if(e.target.name === 'prev'){
+      const newPage = page - 1
+      if(page === 1) return
+      setPage(newPage)
+       query = '?pag=' + newPage + role
+      dispatch(getUser(token, query))
+  }
+  }
+
+  function handleRole(e){
+    setRol(e.target.value)
+  }
+
+  function submitRole(id){
+    const obj = {id, role: rol}
+    try {
+      const json = axios.put('/users/', obj , {
+        headers:{
+          'auth-token': token
+        }
+      })
+      setRol('')
+      setId('')
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Exito!',
+        text: 'Se ha podido cambiar el rol con exito!',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
+      setTimeout(window.location.reload(), 3000)
+    } catch (error) {
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Error',
+        text: 'Algo salio mal..',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
+    }
+  }
+
+  function filterUsers(e){
+    const name = e.target.name
+    let query = '?rol=' + name
+    if(name === '/') query = ''
+    setPage(1)
+    setFilter(name)
+   dispatch(getUser(token, query))
+  }
+
   return (
     <Container>
       <div className="adminUsers__container">
@@ -35,7 +122,7 @@ function AdminUsers() {
         <hr />
         <div className="filters__btn__container mb-3">
           <p>Filtrar Usuarios:</p>
-
+          <h3>{rol}</h3>
           <ButtonGroup
             aria-label="Filter Buttons"
             className="me-2 filter__btn"
@@ -43,7 +130,10 @@ function AdminUsers() {
           >
             <Button className="filter__btn">Activos</Button>
             <Button className="filter__btn">Inactivos</Button>
-            <Button className="filter__btn">Rol</Button>
+            <Button className="filter__btn" name='admin' onClick={(e) => filterUsers(e)}>Administradores</Button>
+            <Button className="filter__btn" name='customer' onClick={(e) => filterUsers(e)}>Usuarios</Button>
+            <Button className="filter__btn"name='employee' onClick={(e) => filterUsers(e)}>Empleados</Button>
+            <Button className="filter__btn"name='/' onClick={(e)=> filterUsers(e)}>Todos</Button>
           </ButtonGroup>
         </div>
         <Table responsive bordered hover>
@@ -68,7 +158,7 @@ function AdminUsers() {
                 <Button
                   variant="outline-secondary"
                   size="sm"
-                  onClick={handleShow}
+                  onClick={() => handleShow(user.id)}
                 >
                   <PencilSquare />
                 </Button>
@@ -81,26 +171,29 @@ function AdminUsers() {
                     <Form.Select
                       aria-label="selectRol"
                       defaultValue="Selecionar rol"
+                      onChange={(e) => handleRole(e)}
                     >
-                      <option>Selecionar</option>
+                      <option hidden>Selecionar</option>
                       <option value="admin">ADMIN</option>
-                      <option value="empleado">EMPLEADO</option>
-                      <option value="usuario">USUARIO</option>
+                      <option value="employee">EMPLEADO</option>
+                      <option value="customer">USUARIO</option>
                     </Form.Select>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={() => handleClose()}>
                       Confirmar
                     </Button>
                   </Modal.Footer>
                 </Modal>
-
+                  {user.deleteAt?(
                 <Button variant="outline-success" size="sm">
                   <PersonCheckFill />
                 </Button>
+                  ):
                 <Button variant="outline-danger" size="sm">
                   <PersonXFill />
                 </Button>
+                  }
               </td>
             </tr>
                 )
@@ -108,6 +201,11 @@ function AdminUsers() {
             )}
           </tbody>
         </Table>
+        <div>
+          <span>Pag {users.pag} de {users.pages}</span>
+          <button name='next' onClick={(e) => handlePage(e, page, filter)}>Next</button>
+          <button name='prev' onClick={(e) => handlePage(e, page, filter)}>Prev</button>
+          </div>
         <button onClick={() => console.log(users)}>prueba</button>
       </div>
     </Container>
