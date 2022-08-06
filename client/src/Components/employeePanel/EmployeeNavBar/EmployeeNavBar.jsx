@@ -11,7 +11,12 @@ import './EmployeeNavBar.css';
 
 function EmployeeNavBar() {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="light">
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      bg="light"
+      className="navBar__employee"
+    >
       <Container>
         <Navbar.Brand as={Link} to="/employeehome">
           <img src={imgNavEmp} className="nav-img" alt="Henrys burguer logo" />
