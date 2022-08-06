@@ -10,16 +10,15 @@
   margin: 7px;
   border: var(--bc-inputs);
   padding: 0.5rem;
-  margin-bottom: 15px;
+  margin-top: 20px;
 }
 .contactForm__errContainer {
-  max-height: 10px;
+  height: 10px;
 }
 
 .contactForm__errContainer p {
   color: red;
   font-size: smaller;
-  font-style: italic;
 }
 
 .btn.disabled,
@@ -30,4 +29,5 @@ fieldset:disabled .btn {
   color: gray;
   border: var(--btn-hover);
   cursor: default;
+  margin-top: 15px;
 }

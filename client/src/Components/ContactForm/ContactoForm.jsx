@@ -125,9 +125,6 @@ function ContactoForm() {
               id="contact_form"
             >
               <Row>
-                <div className="contactForm__errContainer">
-                  {error.user_name && <p>{error.user_name}</p>}
-                </div>
                 <input
                   className="contactForm__input"
                   type="text"
@@ -138,8 +135,8 @@ function ContactoForm() {
                   onChange={(e) => handleChange(e)}
                 />
                 <div className="contactForm__errContainer">
-                  {error.user_surname && <p>{error.user_surname}</p>}
-                </div>
+                  {error.user_name && <p>{error.user_name}</p>}
+                </div>               
                 <input
                   className="contactForm__input"
                   type="text"
@@ -148,12 +145,12 @@ function ContactoForm() {
                   id="surname_input"
                   required
                   onChange={(e) => handleChange(e)}
-                />
+                /> 
+                <div className="contactForm__errContainer">
+                    {error.user_surname && <p>{error.user_surname}</p>}
+                </div>
               </Row>
               <Row>
-                <div className="contactForm__errContainer">
-                  {error.email && <p>{error.email}</p>}
-                </div>
                 <input
                   className="contactForm__input"
                   type="email"
@@ -164,7 +161,7 @@ function ContactoForm() {
                   onChange={(e) => handleChange(e)}
                 />
                 <div className="contactForm__errContainer">
-                  {error.telephone && <p>{error.telephone}</p>}
+                  {error.email && <p>{error.email}</p>}
                 </div>
                 <input
                   className="contactForm__input"
@@ -175,13 +172,11 @@ function ContactoForm() {
                   required
                   onChange={(e) => handleChange(e)}
                 />
+                <div className="contactForm__errContainer">
+                  {error.telephone && <p>{error.telephone}</p>}
+                </div>
               </Row>
               <Row>
-                <div className="contactForm__errContainer">
-                  {Object.keys(error).length > 0 && !input.subject && (
-                    <p>Por favor seleccione una opción</p>
-                  )}
-                </div>
                 <select
                   className="contactForm__input"
                   placeholder="Tipo de consulta"
@@ -198,10 +193,12 @@ function ContactoForm() {
                   <option value="3">Felicitaciones</option>
                   <option value="4">Reclamos</option>
                 </select>
-
                 <div className="contactForm__errContainer">
-                  {error.message && <p>{error.message}</p>}
+                  {Object.keys(error).length > 0 && !input.subject && (
+                    <p>Por favor seleccione una opción</p>
+                  )}
                 </div>
+
                 <textarea
                   className="contactForm__input"
                   name="message"
@@ -212,6 +209,9 @@ function ContactoForm() {
                   required
                   onChange={(e) => handleChange(e)}
                 />
+                <div className="contactForm__errContainer">
+                  {error.message && <p>{error.message}</p>}
+                </div>
               </Row>
               <Button
                 type="submit"
