@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { postPurchase } from '../../../Redux/actions/actions';
+import { deleteCart, postPurchase } from '../../../Redux/actions/actions';
 
 function UserPurchase() {
   const dispatch = useDispatch();
@@ -14,6 +14,7 @@ function UserPurchase() {
   function removeLocalStorage() {
     if (window.localStorage.getItem('carrito')) {
       window.localStorage.removeItem('carrito');
+      dispatch(deleteCart());
     }
 
     if (window.localStorage.getItem('cupones')) {
