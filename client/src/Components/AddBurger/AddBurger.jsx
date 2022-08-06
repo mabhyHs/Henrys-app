@@ -262,7 +262,7 @@ function AddBurger() {
 
   function setBurger(e){
     const find = burgerBase.find(burger => burger.id === e.target.value);
-    setIngredientsAdd([]);
+    setPrecio(0.0);
     if(!find){
         setSelectBurger({})
         setSelectBurgerOpt("0");
