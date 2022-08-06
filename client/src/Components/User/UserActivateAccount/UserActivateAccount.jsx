@@ -25,8 +25,11 @@ function UserActivateAccount() {
         } catch (error) {
             let imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png";
             const msg = error.response.data.error;
+            let title = "Oops..."
+            
             if(typeof(msg) === "string" && msg === "La cuenta ya fue activada!"){
                 imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659640839/advert_aotsaj.png";
+                title = "";
                 setSucess(0);
             }else{
                 setSucess(-1);

@@ -63,7 +63,7 @@ function UserLogin() {
         customClass: {
           confirmButton: 'confirmBtnSwal',
         },
-        title: 'Opss...',
+        title: 'Oops...',
         text: typeof(error.response.data.error) !== "string" ? "Credenciales inválidas!" : error.response.data.error,
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
