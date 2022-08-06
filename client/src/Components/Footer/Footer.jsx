@@ -44,16 +44,18 @@ function Footer() {
 
         let imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png";
         const msg = error.response.data.error;
+        let title = "Oops..."
         
         if(typeof(msg) === "string" && msg === "El email ya está suscripto!"){
-            imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659640839/advert_aotsaj.png";
+            imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659800373/warning-henrys_saeddx.png";
+            title = "";
         }
 
         Swal.fire({
             customClass: {
               confirmButton: 'confirmBtnSwal',
             },
-            title: 'Oops...',
+            title,
             text: typeof(msg) !== "string" ? "Error al enviar el newsletter!" : msg,
             imageUrl: imgUrl,
             imageWidth: 150,

@@ -25,8 +25,11 @@ function UserActivateAccount() {
         } catch (error) {
             let imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png";
             const msg = error.response.data.error;
+            let title = "Oops..."
+            
             if(typeof(msg) === "string" && msg === "La cuenta ya fue activada!"){
-                imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659640839/advert_aotsaj.png";
+                imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659800373/warning-henrys_saeddx.png";
+                title = "";
                 setSucess(0);
             }else{
                 setSucess(-1);
@@ -36,7 +39,7 @@ function UserActivateAccount() {
                 customClass: {
                   confirmButton: 'confirmBtnSwal',
                 },
-                title: 'Opss...',
+                title,
                 text: typeof(msg) !== "string" ? "Error al activar la cuenta!" : msg,
                 imageUrl: imgUrl,
                 imageWidth: 170,
