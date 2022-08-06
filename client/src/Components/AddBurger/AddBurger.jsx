@@ -117,8 +117,8 @@ function AddBurger() {
   const [mount, setMount] = useState(true);
 
   useEffect(() => {
-    dispatch(getIngredients());
     dispatch(getBurgerBase());
+    dispatch(getIngredients());
 
     if (!mount) {
       if (itemsToCart && itemsToCart.length) {
@@ -132,7 +132,6 @@ function AddBurger() {
           setLocalStorage(JSON.parse(window.localStorage.getItem('carrito')))
         );
       }
-      console.log(itemsToCart[0]);
       setMount(false);
     }
   }, [dispatch, itemsToCart, mount]);
@@ -222,12 +221,15 @@ function AddBurger() {
                 <span>Hamburguesa base:</span>
                 <select name="burgerBase" className="addBurger__select">
 
-                    {}
-                  <option disabled="" defaultValue>
+                <option disabled="" defaultValue>
                     Escoge tu hamburguesa
                   </option>
+                    {burgerBase && burgerBase.length > 0 && burgerBase?.map(burger => 
+                        
+                        <option key={burger.id} className="addBurger__option">{burger.name}</option>
+                        
+                        )}
 
-                  <option className="addBurger__option">hamburgesa1 </option>
                 </select>
               </div>
               <div className="ingredients__select">
