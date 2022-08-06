@@ -1,5 +1,5 @@
 const express = require("express");
-const { getFirst, update } = require("../controllers/burgerBase.controllers");
+const { get, getFirst, update } = require("../controllers/burgerBase.controllers");
 const {
   postValidator,
   roleValidator,
@@ -9,7 +9,8 @@ const verifyToken = require("../middlewares/tokenValidation");
 
 const router = express.Router();
 
-router.get("/", getFirst);
+router.get("/", get);
+router.get("/first", getFirst);
 router.put(
   "/",
   verifyToken,
