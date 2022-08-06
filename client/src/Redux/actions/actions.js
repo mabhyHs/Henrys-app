@@ -345,19 +345,18 @@ export function getReviews() {
   };
 }
 
-export function postPurchase(purchaseId, token, userId) {
+export function postPurchase(purchaseId, token) {
   return async function () {
     try {
       axios.post(
         '/orders',
         {
-          user_id: userId,
           purchaseId,
         },
         { headers: { 'auth-token': token } }
       );
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 }

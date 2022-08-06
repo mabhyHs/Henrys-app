@@ -35,6 +35,7 @@ import CreateOrEditBeverage from './Components/Admin/AddProduct/AddProductViews/
 import CreateOrEditCombo from './Components/Admin/AddProduct/AddProductViews/CreateOrEditCombo/CreateOrEditCombo';
 import CreateOrEditFries from './Components/Admin/AddProduct/AddProductViews/CreateOrEditFries/CreateOrEditFries';
 import CouponAdmin from './Components/CouponAdmin/CouponAdmin';
+import UserPurchaseDetail from './Components/User/UserPurchase/UserPurchaseDetail';
 
 function App() {
   const isSession = isLogged();
@@ -93,6 +94,11 @@ function App() {
         <Route
           path="/pay/"
           element={isSession ? <UserPurchase /> : <Navigate to="/" />}
+        />
+
+        <Route
+          path="/user/purchaseDetail/"
+          element={isSession ? <UserPurchaseDetail /> : <Navigate to="/" />}
         />
 
         {/* ADMIN ROUTES */}

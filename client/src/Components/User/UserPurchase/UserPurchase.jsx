@@ -1,23 +1,24 @@
 /* eslint-disable camelcase */
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPurchase, postPurchase } from '../../../Redux/actions/actions';
 
 function UserPurchase() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const params = useLocation().search;
   const purchaseId = params.slice(params.indexOf('=') + 1, params.indexOf('&'));
   const { purchaseInfo } = useSelector((state) => state);
-  const { token, id } = JSON.parse(window.localStorage.getItem('user'));
+  const { token } = JSON.parse(window.localStorage.getItem('user'));
   const { transaction_amount, status, additional_info } = purchaseInfo || '';
 
   useEffect(() => {
     if (purchaseId) {
-      dispatch(getPurchase(purchaseId, token));
-      dispatch(postPurchase(purchaseId, token, id));
+      dispatch(postPurchase(purchaseId, token));
+      navigate('/user/purchaseDetail/:id');
     }
-  }, [dispatch, purchaseId, token, id]);
+  }, [dispatch, purchaseId, token, navigate]);
 
   return (
     <div>
