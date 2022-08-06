@@ -47,7 +47,7 @@ function Footer() {
         let title = "Oops..."
         
         if(typeof(msg) === "string" && msg === "El email ya está suscripto!"){
-            imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659640839/advert_aotsaj.png";
+            imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659800373/warning-henrys_saeddx.png";
             title = "";
         }
 

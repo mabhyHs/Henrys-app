@@ -28,7 +28,7 @@ function UserActivateAccount() {
             let title = "Oops..."
             
             if(typeof(msg) === "string" && msg === "La cuenta ya fue activada!"){
-                imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659640839/advert_aotsaj.png";
+                imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659800373/warning-henrys_saeddx.png";
                 title = "";
                 setSucess(0);
             }else{
@@ -39,7 +39,7 @@ function UserActivateAccount() {
                 customClass: {
                   confirmButton: 'confirmBtnSwal',
                 },
-                title: 'Opss...',
+                title,
                 text: typeof(msg) !== "string" ? "Error al activar la cuenta!" : msg,
                 imageUrl: imgUrl,
                 imageWidth: 170,
