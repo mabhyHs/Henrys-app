@@ -22,7 +22,6 @@ import {
   POST_MP,
   GET_FAVORITES,
   REMOVE_FAVORITES,
-  SET_DISCOUNT,
   GET_REVIEWS,
   GET_COUPONS,
   GET_USERS,
@@ -123,11 +122,6 @@ const rootReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         category: action.payload,
-      };
-    case SET_DISCOUNT:
-      return {
-        ...state,
-        cart: action.payload,
       };
 
     case ADD_TO_CART:

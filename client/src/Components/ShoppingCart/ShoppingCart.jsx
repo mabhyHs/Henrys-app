@@ -7,7 +7,6 @@ import {
   allProductsDelete,
   deleteCart,
   productDelete,
-  setDiscount,
   getCoupons,
 } from '../../Redux/actions/actions';
 import CardProductCart from '../CardProductCart/CardProductCart';

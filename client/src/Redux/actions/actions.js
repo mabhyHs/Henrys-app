@@ -23,7 +23,6 @@ export const SET_LOGIN_STATE = 'SET_LOGIN_STATE';
 export const ADD_BURGER_CUSTOM_TO_CART = 'ADD_BURGER_CUSTOM_TO_CART';
 export const POST_MP = 'POST_MP';
 export const GET_FAVORITES = 'GET_FAVORITES';
-export const SET_DISCOUNT = 'SET_DISCOUNT';
 export const GET_REVIEWS = 'GET_REVIEWS';
 export const GET_COUPONS = 'GET_COUPONS';
 export const GET_USERS = 'GET_USERS';
@@ -321,13 +320,6 @@ export function postMP(data, token) {
       type: POST_MP,
       payload: json.data,
     });
-  };
-}
-
-export function setDiscount(array) {
-  return {
-    type: SET_DISCOUNT,
-    payload: array,
   };
 }
 

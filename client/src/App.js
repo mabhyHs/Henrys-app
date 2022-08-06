@@ -35,7 +35,7 @@ import CreateOrEditBeverage from './Components/Admin/AddProduct/AddProductViews/
 import CreateOrEditCombo from './Components/Admin/AddProduct/AddProductViews/CreateOrEditCombo/CreateOrEditCombo';
 import CreateOrEditFries from './Components/Admin/AddProduct/AddProductViews/CreateOrEditFries/CreateOrEditFries';
 import CouponAdmin from './Components/CouponAdmin/CouponAdmin';
-import UserPurchaseDetail from './Components/User/UserPurchase/UserPurchaseDetail';
+import UserPurchaseDetail from './Components/User/UserPurchaseDetail/UserPurchaseDetail';
 
 function App() {
   const isSession = isLogged();
@@ -97,7 +97,7 @@ function App() {
         />
 
         <Route
-          path="/user/purchaseDetail/"
+          path="/user/purchaseDetail/:id"
           element={isSession ? <UserPurchaseDetail /> : <Navigate to="/" />}
         />
 
