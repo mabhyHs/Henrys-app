@@ -26,6 +26,7 @@ import {
   GET_REVIEWS,
   GET_COUPONS,
   GET_USERS,
+  GET_PURCHASE,
 } from '../actions/actions';
 
 import {
@@ -56,6 +57,7 @@ const initialState = {
   reviews: [],
   coupons: undefined,
   users: [],
+  purchaseInfo: undefined,
 };
 
 const rootReducer = (state = initialState, action = {}) => {
@@ -63,8 +65,8 @@ const rootReducer = (state = initialState, action = {}) => {
     case GET_USERS:
       return {
         ...state,
-        users: action.payload
-      }
+        users: action.payload,
+      };
     case GET_BURGERS:
       return {
         ...state,
@@ -201,6 +203,11 @@ const rootReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         coupons: action.payload,
+      };
+    case GET_PURCHASE:
+      return {
+        ...state,
+        purchaseInfo: action.payload,
       };
     default:
       return state;

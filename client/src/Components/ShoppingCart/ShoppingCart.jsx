@@ -29,6 +29,7 @@ function ShoppingCart() {
   const [coupons, setCoupons] = useState([]);
   const couponsState = useSelector((state) => state.coupons);
   const [discount, setDiscount] = useState(0);
+  const [note, setNote] = useState('');
 
   useEffect(() => {
     if (!mount) {
@@ -71,6 +72,7 @@ function ShoppingCart() {
         {
           cart: JSON.parse(window.localStorage.getItem('carrito')),
           coupons: coupons.map((c) => c.code),
+          note: note.trim(),
         },
         {
           headers: {
@@ -196,6 +198,14 @@ function ShoppingCart() {
     window.localStorage.setItem('cupones', JSON.stringify(coupons));
   }, [coupons]);
 
+  function handleNote(e) {
+    const value = e.target.value;
+
+    if (value.length < 150) {
+      return setNote(value);
+    }
+  }
+
   return (
     <Container className="py-4 shoppinCart__container">
       {itemsToCart && itemsToCart?.length === 0 ? (
@@ -277,6 +287,8 @@ function ShoppingCart() {
             </div>
             <h2 className="shoppingCart__h2 mb-4">¿Necesitas algo más?</h2>
             <textarea
+              onChange={handleNote}
+              value={note}
               name="message"
               placeholder="* Me gustaria quitar o añadir..."
               id="message_input"

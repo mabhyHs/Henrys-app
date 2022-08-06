@@ -18,6 +18,7 @@ import UserProfileDashboard from './Components/User/UserProfileDashboard/UserPro
 import UserActivateAccount from './Components/User/UserActivateAccount/UserActivateAccount';
 import UserReview from './Components/User/UserReview/UserReview';
 import ShoppingCart from './Components/ShoppingCart/ShoppingCart';
+import UserPurchase from './Components/User/UserPurchase/UserPurchase';
 
 import AdminDashboard from './Components/Admin/Dashboard/AdminDashboard';
 import SendNewsletter from './Components/Admin/SendNewsletter/SendNewsletter';
@@ -87,6 +88,11 @@ function App() {
         <Route
           path="/mercadoPago"
           element={isSession ? <MercadoPago /> : <Navigate to="/" />}
+        />
+
+        <Route
+          path="/pay/"
+          element={isSession ? <UserPurchase /> : <Navigate to="/" />}
         />
 
         {/* ADMIN ROUTES */}

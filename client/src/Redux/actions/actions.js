@@ -27,23 +27,25 @@ export const SET_DISCOUNT = 'SET_DISCOUNT';
 export const GET_REVIEWS = 'GET_REVIEWS';
 export const GET_COUPONS = 'GET_COUPONS';
 export const GET_USERS = 'GET_USERS';
+export const GET_PURCHASE = 'GET_PURCHASE';
+export const POST_PURCHASE = 'POST_PURCHASE';
 
-export function getUser(token, query='/'){
-  return async function(dispatch){
-    try{
-      const json = await axios('http://localhost:3001/users/admin' + query,{
-        headers:{
-          'auth-token': token
-        }
-      })
+export function getUser(token, query = '/') {
+  return async function (dispatch) {
+    try {
+      const json = await axios('http://localhost:3001/users/admin' + query, {
+        headers: {
+          'auth-token': token,
+        },
+      });
       return dispatch({
         type: GET_USERS,
-        payload: json.data
-      })
-    }catch(error){
-      console.log(error)
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 }
 
 export function getProduct(
@@ -247,6 +249,19 @@ export function agregarCalificacion(payload) {
   };
 }
 
+export function getPurchase(id, token) {
+  return async function (dispatch) {
+    try {
+      const purchase = await axios(`/pay/mercadopago/${id}`, {
+        headers: { 'auth-token': token },
+      });
+      dispatch({ type: GET_PURCHASE, payload: purchase.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 // ACCIONES POST
 export function createBurger(payload) {
   return async function () {
@@ -324,6 +339,23 @@ export function getReviews() {
         type: 'GET_REVIEWS',
         payload: json.data,
       });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function postPurchase(purchaseId, token, userId) {
+  return async function () {
+    try {
+      axios.post(
+        '/orders',
+        {
+          user_id: userId,
+          purchaseId,
+        },
+        { headers: { 'auth-token': token } }
+      );
     } catch (error) {
       console.log(error);
     }
