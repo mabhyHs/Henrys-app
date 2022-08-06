@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
+      isRepeat: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        allowNull: false,
+      },
       isVeggie: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
