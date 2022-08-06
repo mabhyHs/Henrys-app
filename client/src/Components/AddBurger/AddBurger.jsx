@@ -109,7 +109,7 @@ const cambiarCantidad = function (e, id, ingredientes, cb, precio, setPrecio) {
 function AddBurger() {
   const dispatch = useDispatch();
   const ingredients = useSelector((state) => state.ingredients);
-  const precioBase = useSelector((state) => state.burgerBase.price);
+  const burgerBase = useSelector((state) => state.burgerBase);
   const [ingredientsAdd, setIngredientsAdd] = useState([]);
   const [precio, setPrecio] = useState(0);
 
@@ -157,7 +157,7 @@ function AddBurger() {
       name: 'Burger custom ' + randomNum(6),
       cantidad: 1,
       isVeggie: false,
-      price: getTotal(precioBase, precio),
+      price: getTotal(burgerBase.price, precio),
       ingredients: ingredientsAdd,
     };
     setIngredientsAdd((ingredientes = []));
@@ -345,7 +345,7 @@ function AddBurger() {
         <div className="addBurger__bottom">
           <p className="addBurger__bottom__p">
             <span className="addBurger__bottom__span">Hamburguesa base:</span> $
-            {precioBase}
+            {burgerBase.price}
           </p>
           <p className="addBurger__bottom__p">
             <span className="addBurger__bottom__span">Ingredientes:</span> $
@@ -353,7 +353,7 @@ function AddBurger() {
           </p>
           <p className="addBurger__bottom__p">
             <span className="addBurger__bottom__span">Costo total:</span> $
-            {getTotal(precioBase, precio)}
+            {getTotal(burgerBase.price, precio)}
           </p>
           <Button
             onClick={() =>
