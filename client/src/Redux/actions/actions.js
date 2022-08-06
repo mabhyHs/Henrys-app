@@ -241,9 +241,9 @@ export function updateCoupons(data, token) {
   };
 }
 
-export function agregarCalificacion(payload) {
+export function postReview(payload) {
   return async function () {
-    const json = await axios.post('pending...', payload);
+    const json = await axios.post('/reviews', payload);
     return json;
   };
 }
