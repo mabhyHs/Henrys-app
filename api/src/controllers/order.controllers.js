@@ -5,12 +5,9 @@ const { transporter } = require("../config/emailTransporter");
 async function create(req, res, next) {
   try {
     const order = await orderRepositories.create(req.body.user.id, req.body);
-    console.log(req.body.purchaseId);
     const receipt = await mercadopagoRepository.getPaymentById(
       req.body.purchaseId
     );
-    console.log(receipt);
-    console.log(req.body.user.email);
 
     await transporter.sendMail({
       from: '"Recibo de compra" <henrysBurger2022@gmail.com',
