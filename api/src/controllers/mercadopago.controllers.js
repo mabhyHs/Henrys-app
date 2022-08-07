@@ -8,6 +8,7 @@ mercadopago.configure({
 
 async function check(req, res, next) {
   try {
+    const note = req.body.note;
     const user = await userRepository.getById(req.body.user.id);
     if (!user)
       return res.status(404).json({ error: "There is no user with this id" });
@@ -26,10 +27,12 @@ async function check(req, res, next) {
         surname: user.lastName,
         email: user.email,
       },
+      additional_info: "holaaaa",
     };
 
     const mp = await mercadopago.preferences.create(preference);
     return res.status(200).json({
+      mp: mp,
       id: mp.body.id,
       coupons: req.body.coupons,
       items: req.body.items,
