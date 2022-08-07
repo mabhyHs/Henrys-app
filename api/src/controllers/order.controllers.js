@@ -11,7 +11,7 @@ async function create(req, res, next) {
 
     await transporter.sendMail({
       from: '"Confirm account" <henrysBurger2022@gmail.com',
-      to: data.email,
+      to: req.body.user.email,
       subject: "Receipt",
       html: `
         <html lang="en-US">
