@@ -69,6 +69,23 @@ async function restore(id) {
 
 async function update(data) {
   const updatedBurger = await Burger.update(data, { where: { id: data.id } });
+
+  /* // lo busco
+  const updateado = await Burger.findByPk(data.id);
+        
+  // lo relaciono
+  if(recipe){
+      await recipe.setDiets(diets); // set, que pise todo y lo reemplace
+
+      const recipeRelation = await Recipe.findByPk(id, { include: [{ model: Diet, attributes: ["name"] }] });
+      return res.status(200).send(recipeRelation);
+  }       
+
+  await updatedBurger.addIngredient(data.ingredients);
+  const withRelation = await getById(burger.id);
+
+  return withRelation; */
+
   return updatedBurger;
 }
 

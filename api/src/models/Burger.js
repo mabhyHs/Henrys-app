@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       type: {
         type: DataTypes.STRING,
-        defaultValue: "burger",
+        defaultValue: "burgers",
         allowNull: false,
       },
     },

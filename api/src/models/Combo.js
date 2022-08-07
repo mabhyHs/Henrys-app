@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       type: {
         type: DataTypes.STRING,
-        defaultValue: "combo",
+        defaultValue: "combos",
         allowNull: false,
       },
     },
