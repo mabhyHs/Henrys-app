@@ -241,9 +241,13 @@ export function updateCoupons(data, token) {
   };
 }
 
-export function postReview(payload) {
+export function postReview(payload, token) {
   return async function () {
-    const json = await axios.post('/reviews', payload);
+    const json = await axios.post('/reviews', payload, {
+      headers: {
+        'auth-token': token,
+      },
+    });
     return json;
   };
 }
