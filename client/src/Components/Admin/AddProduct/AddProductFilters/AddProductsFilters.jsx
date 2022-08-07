@@ -1,4 +1,4 @@
-import  { React, useState } from 'react';
+import { React, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
@@ -171,10 +171,10 @@ function AddProductsFilters({ setFilter, filters }) {
           </Button>
           <Button
             onClick={handleOnChange}
-            name="paranoid"
-            value="false"
+            name="isDeleted"
+            value="true"
             className={
-              filters.paranoid === 'false'
+              filters.isDeleted === 'true'
                 ? 'filter__btn activeBtn'
                 : 'filter__btn'
             }

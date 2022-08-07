@@ -4,11 +4,13 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
-
-import './CreateOrEditBurger.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients } from '../../../../../Redux/actions/actions';
-import axios from 'axios';
+import {
+  getIngredients,
+  postBurgers,
+  updateBurger,
+} from '../../../../../Redux/actions/actions';
+import './CreateOrEditBurger.css';
 
 function CreateOrEditBurger({ data }) {
   const dispatch = useDispatch();
@@ -16,6 +18,7 @@ function CreateOrEditBurger({ data }) {
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
   const [input, setInput] = useState({
+    id: '',
     name: '',
     price: '',
     ingredient: [],
@@ -27,14 +30,16 @@ function CreateOrEditBurger({ data }) {
     dispatch(getIngredients());
     if (edit && !isRestore) {
       setInput({
+        id: data.id,
         name: data.name,
         price: data.price,
         ingredient: data.ingredient,
-        imgUri: '',
+        imgUri: data.imgUri,
         isVeggie: data.isVeggie,
       });
       setRestore(true);
     }
+    console.log(input);
   }, [dispatch, edit, isRestore]);
 
   const onChange = (e) => {
@@ -54,6 +59,7 @@ function CreateOrEditBurger({ data }) {
         ...input,
         ingredient: [...input.ingredient, e.target.value],
       });
+      console.log(input.ingredient);
     }
   }
 
@@ -64,11 +70,12 @@ function CreateOrEditBurger({ data }) {
     });
   }
 
-  const onSubmit = async () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     if (edit) {
-      // put
+      dispatch(updateBurger(input));
     } else {
-      // post
+      dispatch(postBurgers({ ...input, id: undefined }));
     }
   };
 
@@ -104,7 +111,7 @@ function CreateOrEditBurger({ data }) {
               <Form.Label>Imagen</Form.Label>
               <Form.Control
                 onChange={onChange}
-                type="file"
+                type="url"
                 name="imgUri"
                 value={input.imgUri}
               ></Form.Control>
@@ -120,8 +127,8 @@ function CreateOrEditBurger({ data }) {
                 name="isVeggie"
               >
                 <option>Es Veggie?</option>
-                <option>Si</option>
-                <option>No</option>
+                <option value={true}>Si</option>
+                <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
 
@@ -152,7 +159,7 @@ function CreateOrEditBurger({ data }) {
             </div>
           </Row>
 
-          <Button onSubmit={onSubmit} variant="primary" type="submit">
+          <Button onClick={onSubmit} variant="primary" type="submit">
             Confirmar
           </Button>
           <hr />

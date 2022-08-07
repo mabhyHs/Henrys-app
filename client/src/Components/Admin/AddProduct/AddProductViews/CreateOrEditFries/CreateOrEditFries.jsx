@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFries } from '../../../../../Redux/actions/actions';
+import { getFries, updateFries } from '../../../../../Redux/actions/actions';
 
 import './CreateOrEditFries.css';
 
@@ -49,28 +49,12 @@ function CreateOrEditFries({ data }) {
     return data && Object.keys(data).length;
   }
 
-  function handleSelect(e) {
-    if (!input.ingredient.includes(e.target.value)) {
-      setInput({
-        ...input,
-        ingredient: [...input.ingredient, e.target.value],
-      });
-    }
-  }
-
-  function handleDelete(e) {
-    setInput({
-      ...input,
-      ingredient: input.ingredient.filter((c) => c !== e),
-    });
-  }
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
+  const onSubmit = async (e) => {
+    e.preventDefault();
     if (edit) {
-      // put
+      dispatch(updateFries(input));
     } else {
-      // post
+      /* dispatch(postBurgers({ ...input, id: undefined })); */
     }
   };
 
@@ -104,7 +88,7 @@ function CreateOrEditFries({ data }) {
             <Form.Label>Imagen</Form.Label>
             <Form.Control
               onChange={onChange}
-              type="file"
+              type="url"
               name="imgUri"
               value={input.imgUri}
             ></Form.Control>
@@ -135,7 +119,7 @@ function CreateOrEditFries({ data }) {
             </Form.Group>
           </Row>
 
-          <Button>Confirmar</Button>
+          <Button onClick={onSubmit}>Confirmar</Button>
           <hr />
         </Form>
       </Container>

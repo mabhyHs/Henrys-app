@@ -26,6 +26,11 @@ import {
   GET_COUPONS,
   GET_USERS,
   GET_PURCHASE,
+  UPDATE_BURGER,
+  POST_BURGER,
+  DELETE_PRODUCT,
+  RESTORE_PRODUCT,
+  UPDATE_FRIES,
 } from '../actions/actions';
 
 import {
@@ -202,6 +207,28 @@ const rootReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         purchaseInfo: action.payload,
+      };
+    case UPDATE_BURGER:
+      return {
+        ...state,
+      };
+    case POST_BURGER:
+      return {
+        ...state,
+      };
+    case DELETE_PRODUCT:
+      return {
+        ...state,
+        products: state.products.filter((item) => item.id !== action.payload),
+      };
+    case RESTORE_PRODUCT:
+      return {
+        ...state,
+        products: state.products.filter((item) => item.id !== action.payload),
+      };
+    case UPDATE_FRIES:
+      return {
+        ...state,
       };
     default:
       return state;

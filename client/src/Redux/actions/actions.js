@@ -28,6 +28,11 @@ export const GET_COUPONS = 'GET_COUPONS';
 export const GET_USERS = 'GET_USERS';
 export const GET_PURCHASE = 'GET_PURCHASE';
 export const POST_PURCHASE = 'POST_PURCHASE';
+export const UPDATE_BURGER = 'UPDATE_BURGER';
+export const POST_BURGER = 'POST_BURGER';
+export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+export const RESTORE_PRODUCT = 'RESTORE_PRODUCT';
+export const UPDATE_FRIES = 'UPDATE_FRIES';
 
 export function getUser(token, query = '/') {
   return async function (dispatch) {
@@ -51,11 +56,12 @@ export function getProduct(
   category = '',
   order = '',
   name = '',
-  isVeggie = ''
+  isVeggie = '',
+  isDeleted = ''
 ) {
   return async function (dispatch) {
     const json = await axios(
-      `/products?category=${category}&order=${order}&name=${name}&isVeggie=${isVeggie}`
+      `/products?category=${category}&order=${order}&name=${name}&isVeggie=${isVeggie}&isDelete=${isDeleted}`
     );
     try {
       return dispatch({
@@ -391,6 +397,91 @@ export function postPurchase(purchaseId, token) {
       );
     } catch (error) {
       return error;
+    }
+  };
+}
+
+export function updateBurger(data) {
+  return async function (dispatch) {
+    try {
+      await axios.put('/burgers', data, {
+        headers: {
+          'auth-token': JSON.parse(localStorage.getItem('user')).token,
+        },
+      });
+      return dispatch({
+        type: UPDATE_BURGER,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function postBurgers(data) {
+  return async function (dispatch) {
+    try {
+      await axios.post('/burgers', data, {
+        headers: {
+          'auth-token': JSON.parse(localStorage.getItem('user')).token,
+        },
+      });
+      return dispatch({
+        type: POST_BURGER,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function deleteProduct(id, producto) {
+  return async function (dispatch) {
+    try {
+      await axios.delete(`/${producto}/${id}`, {
+        headers: {
+          'auth-token': JSON.parse(localStorage.getItem('user')).token,
+        },
+      });
+      return dispatch({
+        type: DELETE_PRODUCT,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function restoreProduct(id, producto) {
+  return async function (dispatch) {
+    try {
+      await axios.delete(`/${producto}/${id}`, {
+        headers: {
+          'auth-token': JSON.parse(localStorage.getItem('user')).token,
+        },
+      });
+      return dispatch({
+        type: RESTORE_PRODUCT,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function updateFries(data) {
+  return async function (dispatch) {
+    try {
+      await axios.put('/fries', data, {
+        headers: {
+          'auth-token': JSON.parse(localStorage.getItem('user')).token,
+        },
+      });
+      return dispatch({
+        type: UPDATE_FRIES,
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 }
