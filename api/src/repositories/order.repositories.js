@@ -8,6 +8,7 @@ async function create(user_id, data) {
   const orderAndUser = await Order.findByPk(order.purchaseId, {
     include: {
       association: "customer",
+      attributes: { exclude: ["password"] },
     },
   });
   return orderAndUser;
@@ -17,6 +18,7 @@ async function getAll(pag, limit) {
   const { count, rows } = await Order.findAndCountAll({
     include: {
       association: "customer",
+      attributes: { exclude: ["password"] },
     },
     order: [["createdAt", "DESC"]],
     limit: limit,
@@ -34,6 +36,7 @@ async function getAllByUserId(user_id) {
   const orders = await Order.findAll({
     include: {
       association: "customer",
+      attributes: { exclude: ["password"] },
       where: {
         id: { [Op.eq]: user_id },
       },
@@ -47,6 +50,7 @@ async function getByPurchaseId(purchaseId) {
   const order = await Order.findByPk(purchaseId, {
     include: {
       association: "customer",
+      attributes: { exclude: ["password"] },
     },
   });
   return order;
