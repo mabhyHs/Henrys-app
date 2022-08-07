@@ -14,157 +14,358 @@ async function create(req, res, next) {
       to: req.body.user.email,
       subject: "Recibo de compra",
       html: `
-        <html lang="en-US">
+      <html lang="en-US">
         <head>
           <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
           <title>Henry's Burger</title>
           <meta name="description" content="Henry's Burger" />
           <style type="text/css">
-            a:hover {
-              text-decoration: underline !important;
-            }
+          /* -------------------------------------
+          GLOBAL
+          A very basic CSS reset
+      ------------------------------------- */
+      * {
+          margin: 0;
+          padding: 0;
+          font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+          box-sizing: border-box;
+          font-size: 14px;
+      }
+      
+      img {
+          max-width: 100%;
+      }
+      
+      body {
+          -webkit-font-smoothing: antialiased;
+          -webkit-text-size-adjust: none;
+          width: 100% !important;
+          height: 100%;
+          line-height: 1.6;
+      }
+      
+      /* Let's make sure all tables have defaults */
+      table td {
+          vertical-align: top;
+      }
+      
+      /* -------------------------------------
+          BODY & CONTAINER
+      ------------------------------------- */
+      body {
+          background-color: #f6f6f6;
+      }
+      
+      .body-wrap {
+          background-color: #f6f6f6;
+          width: 100%;
+      }
+      
+      .container {
+          display: block !important;
+          max-width: 600px !important;
+          margin: 0 auto !important;
+          /* makes it centered */
+          clear: both !important;
+      }
+      
+      .content {
+          max-width: 600px;
+          margin: 0 auto;
+          display: block;
+          padding: 20px;
+      }
+      
+      /* -------------------------------------
+          HEADER, FOOTER, MAIN
+      ------------------------------------- */
+      .main {
+          background: #fff;
+          border: 1px solid #e9e9e9;
+          border-radius: 3px;
+      }
+      
+      .content-wrap {
+          padding: 20px;
+      }
+      
+      .content-block {
+          padding: 0 0 20px;
+      }
+      
+      .header {
+          width: 100%;
+          margin-bottom: 20px;
+      }
+      
+      .footer {
+          width: 100%;
+          clear: both;
+          color: #999;
+          padding: 20px;
+      }
+      .footer a {
+          color: #999;
+      }
+      .footer p, .footer a, .footer unsubscribe, .footer td {
+          font-size: 12px;
+      }
+      
+      /* -------------------------------------
+          TYPOGRAPHY
+      ------------------------------------- */
+      h1, h2, h3 {
+          font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+          color: #000;
+          margin: 40px 0 0;
+          line-height: 1.2;
+          font-weight: 400;
+      }
+      
+      h1 {
+          font-size: 32px;
+          font-weight: 500;
+      }
+      
+      h2 {
+          font-size: 24px;
+      }
+      
+      h3 {
+          font-size: 18px;
+      }
+      
+      h4 {
+          font-size: 14px;
+          font-weight: 600;
+      }
+      
+      p, ul, ol {
+          margin-bottom: 10px;
+          font-weight: normal;
+      }
+      p li, ul li, ol li {
+          margin-left: 5px;
+          list-style-position: inside;
+      }
+      
+      /* -------------------------------------
+          LINKS & BUTTONS
+      ------------------------------------- */
+      a {
+          color: #1ab394;
+          text-decoration: underline;
+      }
+      
+      .btn-primary {
+          text-decoration: none;
+          color: #FFF;
+          background-color: #1ab394;
+          border: solid #1ab394;
+          border-width: 5px 10px;
+          line-height: 2;
+          font-weight: bold;
+          text-align: center;
+          cursor: pointer;
+          display: inline-block;
+          border-radius: 5px;
+          text-transform: capitalize;
+      }
+      
+      /* -------------------------------------
+          OTHER STYLES THAT MIGHT BE USEFUL
+      ------------------------------------- */
+      .last {
+          margin-bottom: 0;
+      }
+      
+      .first {
+          margin-top: 0;
+      }
+      
+      .aligncenter {
+          text-align: center;
+      }
+      
+      .alignright {
+          text-align: right;
+      }
+      
+      .alignleft {
+          text-align: left;
+      }
+      
+      .clear {
+          clear: both;
+      }
+      
+      /* -------------------------------------
+          ALERTS
+          Change the class depending on warning email, good email or bad email
+      ------------------------------------- */
+      .alert {
+          font-size: 16px;
+          color: #fff;
+          font-weight: 500;
+          padding: 20px;
+          text-align: center;
+          border-radius: 3px 3px 0 0;
+      }
+      .alert a {
+          color: #fff;
+          text-decoration: none;
+          font-weight: 500;
+          font-size: 16px;
+      }
+      .alert.alert-warning {
+          background: #f8ac59;
+      }
+      .alert.alert-bad {
+          background: #ed5565;
+      }
+      .alert.alert-good {
+          background: #1ab394;
+      }
+      
+      /* -------------------------------------
+          INVOICE
+          Styles for the billing table
+      ------------------------------------- */
+      .invoice {
+          margin: 40px auto;
+          text-align: left;
+          width: 80%;
+      }
+      .invoice td {
+          padding: 5px 0;
+      }
+      .invoice .invoice-items {
+          width: 100%;
+      }
+      .invoice .invoice-items td {
+          border-top: #eee 1px solid;
+      }
+      .invoice .invoice-items .total td {
+          border-top: 2px solid #333;
+          border-bottom: 2px solid #333;
+          font-weight: 700;
+      }
+      
+      /* -------------------------------------
+          RESPONSIVE AND MOBILE FRIENDLY STYLES
+      ------------------------------------- */
+      @media only screen and (max-width: 640px) {
+          h1, h2, h3, h4 {
+              font-weight: 600 !important;
+              margin: 20px 0 5px !important;
+          }
+      
+          h1 {
+              font-size: 22px !important;
+          }
+      
+          h2 {
+              font-size: 18px !important;
+          }
+      
+          h3 {
+              font-size: 16px !important;
+          }
+      
+          .container {
+              width: 100% !important;
+          }
+      
+          .content, .content-wrap {
+              padding: 10px !important;
+          }
+      
+          .invoice {
+              width: 100% !important;
+          }
+      }
           </style>
         </head>
-      
-        <body
-          marginheight="0"
-          topmargin="0"
-          marginwidth="0"
-          style="margin: 0px; background-color: #f2f3f8"
-          leftmargin="0"
-        >
-          <!-- 100% body table -->
-          <table
-            cellspacing="0"
-            border="0"
-            cellpadding="0"
-            width="100%"
-            bgcolor="#f2f3f8"
-            style="
-              @import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700);
-              font-family: 'Open Sans', sans-serif;
-            "
-          >
-            <tr>
-              <td>
-                <table
-                  style="background-color: #f2f3f8; max-width: 670px; margin: 0 auto"
-                  width="100%"
-                  border="0"
-                  align="center"
-                  cellpadding="0"
-                  cellspacing="0"
-                >
-                  <tr>
-                    <td style="height: 80px">&nbsp;</td>
-                  </tr>
-                  <tr>
-                    <td style="height: 20px">&nbsp;</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <table
-                        width="95%"
-                        border="0"
-                        align="center"
-                        cellpadding="0"
-                        cellspacing="0"
-                        style="
-                          max-width: 670px;
-                          background: #fff;
-                          border-radius: 3px;
-                          text-align: center;
-                          -webkit-box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.06);
-                          -moz-box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.06);
-                          box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.06);
-                        "
-                      >
-                        <tr>
-                          <td style="height: 40px">&nbsp;</td>
+
+        <body>
+        <table class="body-wrap">
+        <tbody><tr>
+            <td></td>
+            <td class="container" width="600">
+                <div class="content">
+                    <table class="main" width="100%" cellpadding="0" cellspacing="0">
+                        <tbody><tr>
+                            <td class="content-wrap aligncenter">
+                                <table width="100%" cellpadding="0" cellspacing="0">
+                                    <tbody><tr>
+                                        <td class="content-block">
+                                            <h2>Gracias por su compra</h2>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="content-block">
+                                            <table class="invoice">
+                                                <tbody><tr>
+                                                    <td>${
+                                                      req.body.user.lastName
+                                                    }, ${req.body.user.name}<br>
+                                                      <p>Invoice #${
+                                                        req.body.purchaseId
+                                                      }</p>
+                                                      <p></br>${new Date()}</td></p>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <table class="invoice-items" cellpadding="0" cellspacing="0">
+                                                        ${receipt.additional_info.items.map(
+                                                          (e) => ` <tbody><tr>
+                                                          <td>${e.title} x${e.quantity}</td>
+                                                          <td class="alignright">$ ${e.unit_price}</td>
+                                                      </tr>`
+                                                        )}
+                                                            <tbody>
+                                                            <tr class="total">
+                                                                <td class="alignright" width="80%">Total</td>
+                                                                <td class="alignright">$ ${
+                                                                  receipt.transaction_amount
+                                                                }</td>
+                                                            </tr>
+                                                        </tbody></table>
+                                                    </td>
+                                                </tr>
+                                            </tbody></table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="content-block">
+                                            <a href="${
+                                              process.env.HOST
+                                            }">View in browser</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="content-block">
+                                            Company Inc. Gualeyguaychú 3895, C1419 CABA
+                                        </td>
+                                    </tr>
+                                </tbody></table>
+                            </td>
                         </tr>
-                        <tr>
-                          <td style="text-align: center">
-                            <a
-                              href="https://henrys-app.vercel.app/"
-                              title="logo"
-                              target="_blank"
-                            >
-                              <img
-                                width="60"
-                                src="https://i.postimg.cc/Y0T86N5w/logo-henrys300px.png"
-                                title="logo"
-                                alt="logo"
-                              />
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style="padding: 0 35px">
-                            <h1
-                              style="
-                                color: #1e1e2d;
-                                font-weight: 500;
-                                margin: 0;
-                                font-size: 32px;
-                                font-family: 'Rubik', sans-serif;
-                              "
-                            >
-                              Gracias por su compra.
-                            </h1>
-                            <p
-                              style="
-                                font-size: 15px;
-                                color: #455056;
-                                margin: 8px 0 0;
-                                line-height: 24px;
-                              "
-                            >
-                            <!-- ${JSON.stringify(receipt)} -->
-                            </p>
-                            <p>Precio final: ${
-                              receipt.transaction_details.total_paid_amount ||
-                              ""
-                            }</p>
-                            <p>${receipt.additional_info.items.map(
-                              (e) => `<h2>${e.title}</h2>
-                              <h3>${e.unit_price}</h3>`
-                            )}</p>
-      
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style="height: 40px">&nbsp;</td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="height: 20px">&nbsp;</td>
-                  </tr>
-                  <tr>
-                    <td style="text-align: center">
-                      <p
-                        style="
-                          font-size: 14px;
-                          color: rgba(69, 80, 86, 0.7411764705882353);
-                          line-height: 18px;
-                          margin: 0 0 0;
-                        "
-                      >
-                        &copy; <strong>Henry's Burger</strong>
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="height: 80px">&nbsp;</td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-          <!--/100% body table-->
+                    </tbody></table>
+                    <div class="footer">
+                        <table width="100%">
+                            <tbody><tr>
+                                <td class="aligncenter content-block">Questions? Email <a href="mailto:">henrysburgers2022@gmail.com</a></td>
+                            </tr>
+                        </tbody></table>
+                    </div></div>
+            </td>
+            <td></td>
+        </tr>
+    </tbody></table>
         </body>
-      </html>`,
+      </html>
+      `,
     });
 
     res.status(201).json(order);
