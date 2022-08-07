@@ -123,26 +123,30 @@ async function create(req, res, next) {
                               "
                             >
                             </p>
-                            ${receipt.items.map((e) => <p>{}</p>)}
                             ${
-                              installments &&
-                              installments > 1 && (
+                              receipt.installments &&
+                              receipt.installments > 1 && (
                                 <div>
                                   <div>
-                                    Precio base: {transaction_amount || ""}
+                                    Precio base:{" "}
+                                    {receipt.transaction_amount || ""}
                                   </div>
-                                  {installments} cuotas de $
-                                  {transaction_details.installment_amount}
+                                  {receipt.installments} cuotas de $
+                                  {
+                                    receipt.transaction_details
+                                      .installment_amount
+                                  }
                                 </div>
                               )
                             }
                   
                             <div>Precio final: ${
-                              transaction_details.total_paid_amount || ""
+                              receipt.transaction_details.total_paid_amount ||
+                              ""
                             }</div>
                             <div>
                               <h2>Detalle:</h2>
-                              ${additional_info.items.map((i) => (
+                              ${receipt.additional_info.items.map((i) => (
                                 <div key={i.id}>
                                   <div>Producto: {i.title}</div>
                                   <div>Precio unitario: {i.unit_price}</div>
