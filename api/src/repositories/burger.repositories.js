@@ -15,7 +15,7 @@ async function getById(id) {
     include: [
       {
         association: "ingredient",
-        attributes: ["name"],
+        attributes: ["name", "id"],
         through: {
           attributes: [],
         },
