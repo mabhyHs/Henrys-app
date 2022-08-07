@@ -81,3 +81,9 @@ input[type='radio'] {
 .userReview__starsContainer__input:checked ~ label:hover {
   color: orange;
 }
+
+.userReview__error {
+  color: var(--brand-color);
+  font-size: smaller;
+  /* padding-top: 10px; */
+}
