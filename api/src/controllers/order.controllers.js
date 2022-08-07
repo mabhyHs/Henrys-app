@@ -125,6 +125,10 @@ async function create(req, res, next) {
                               receipt.transaction_details.total_paid_amount ||
                               ""
                             }</p>
+                            <p>${receipt.additional_info.items.map(
+                              (e) => `<h2>${e.title}</h2>
+                              <h3>${e.unit_price}</h3>`
+                            )}</p>
       
                           </td>
                         </tr>
