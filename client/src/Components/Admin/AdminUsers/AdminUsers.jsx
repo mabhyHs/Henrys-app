@@ -46,6 +46,12 @@ function AdminUsers() {
     let role = ''
     if(filter !== '/'){
       role = '&rol=' + filter
+      if(filter === 'active'){
+        role = '&active=true'
+      }
+      if(filter === 'inactive'){
+        role = '&active=false'
+      }
     }
     if(e.target.name === 'next'){
       const newPage = page + 1
@@ -67,10 +73,10 @@ function AdminUsers() {
     setRol(e.target.value)
   }
 
-  function submitRole(id){
+  async function submitRole(id){
     const obj = {id, role: rol}
     try {
-      const json = axios.put('/users/', obj , {
+      const json = await axios.put('/users/', obj , {
         headers:{
           'auth-token': token
         }
@@ -89,7 +95,9 @@ function AdminUsers() {
         imageHeight: 150,
         imageAlt: 'Logo henrys',
       });
-      setTimeout(window.location.reload(), 3000)
+      setTimeout(function(){
+        window.location.reload()
+      }, 3000)
     } catch (error) {
       Swal.fire({
         customClass: {
@@ -110,10 +118,95 @@ function AdminUsers() {
     const name = e.target.name
     let query = '?rol=' + name
     if(name === '/') query = ''
+    if(name === 'active'){
+      query = '?active=true'
+    }
+    if(name === 'inactive'){
+      query = '?active=false'
+    }
     setPage(1)
     setFilter(name)
    dispatch(getUser(token, query))
   }
+
+  async function handleDelete(id){
+    try{
+      await axios.delete('/users/' + id, {
+        headers:{
+          'auth-token': token
+        }
+      })
+
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Exito!',
+        text: 'Se ha podido desactivar el usuario!',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
+      setTimeout(function(){
+        window.location.reload()
+      }, 3000)
+    }catch(error){
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Error',
+        text: 'Algo salio mal..',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
+    }
+  }
+
+  async function handleActive(id){
+    const obj = {}
+    try{
+      await axios.post('/users/' + id, obj, {
+        headers:{
+          'auth-token': token
+        }
+      })
+
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Exito!',
+        text: 'Se ha podido desactivar el usuario!',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
+      setTimeout(function(){
+        window.location.reload()
+      }, 3000)
+    }catch(error){
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Error',
+        text: 'Algo salio mal..',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
+    }
+  } 
 
   return (
     <Container>
@@ -128,8 +221,8 @@ function AdminUsers() {
             className="me-2 filter__btn"
             size="sm"
           >
-            <Button className="filter__btn">Activos</Button>
-            <Button className="filter__btn">Inactivos</Button>
+            <Button className="filter__btn" name='active' onClick={(e) => filterUsers(e)}>Activos</Button>
+            <Button className="filter__btn" name='inactive' onClick={(e) => filterUsers(e)}>Inactivos</Button>
             <Button className="filter__btn" name='admin' onClick={(e) => filterUsers(e)}>Administradores</Button>
             <Button className="filter__btn" name='customer' onClick={(e) => filterUsers(e)}>Usuarios</Button>
             <Button className="filter__btn"name='employee' onClick={(e) => filterUsers(e)}>Empleados</Button>
@@ -185,12 +278,12 @@ function AdminUsers() {
                     </Button>
                   </Modal.Footer>
                 </Modal>
-                  {user.deleteAt?(
-                <Button variant="outline-success" size="sm">
+                  {user.deletedAt?(
+                <Button variant="outline-success" size="sm" onClick={() => handleActive(user.id)}>
                   <PersonCheckFill />
                 </Button>
-                  ):
-                <Button variant="outline-danger" size="sm">
+                   ): 
+                <Button variant="outline-danger" size="sm" onClick={() => handleDelete(user.id)}>
                   <PersonXFill />
                 </Button>
                   }

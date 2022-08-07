@@ -1,16 +1,42 @@
-import React, { useState } from 'react';
+import  { React, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import { useNavigate } from 'react-router-dom';
 
 import './AddProductFilters.css';
 
-function AddProductsFilters() {
+function AddProductsFilters({ setFilter, filters }) {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleOnChange = (e) => {
+    setFilter(e.target.name, e.target.value);
+  };
+
+  const creaBurger = () => {
+    navigate('/admineditburger');
+  };
+
+  const creaCombo = () => {
+    navigate('/admineditcombo');
+  };
+
+  const creaBeverage = () => {
+    navigate('/admineditbeverage');
+  };
+
+  const creaBurgerBase = () => {
+    navigate('/admineditburgerbase');
+  };
+
+  const creaFries = () => {
+    navigate('/admineditfries');
+  };
 
   return (
     <Container>
@@ -28,19 +54,39 @@ function AddProductsFilters() {
             <Modal.Title>Crear:</Modal.Title>
           </Modal.Header>
           <div className="btn__modal__container">
-            <Button className="btn__modal__create" variant="secondary">
+            <Button
+              onClick={creaBurgerBase}
+              className="btn__modal__create"
+              variant="secondary"
+            >
               Base Burguer
             </Button>
-            <Button className="btn__modal__create" variant="secondary">
+            <Button
+              onClick={creaBurger}
+              className="btn__modal__create"
+              variant="secondary"
+            >
               Hamburguesa
             </Button>
-            <Button className="btn__modal__create" variant="secondary">
+            <Button
+              onClick={creaBeverage}
+              className="btn__modal__create"
+              variant="secondary"
+            >
               Bebidas
             </Button>
-            <Button className="btn__modal__create" variant="secondary">
+            <Button
+              onClick={creaCombo}
+              className="btn__modal__create"
+              variant="secondary"
+            >
               Combos
             </Button>
-            <Button className="btn__modal__create" variant="secondary">
+            <Button
+              onClick={creaFries}
+              className="btn__modal__create"
+              variant="secondary"
+            >
               Papas
             </Button>
           </div>
@@ -53,13 +99,88 @@ function AddProductsFilters() {
           className="me-2 filter__btn"
           size="sm"
         >
-          <Button className="filter__btn">Todo</Button>
-          <Button className="filter__btn">Hamburguesas</Button>
-          <Button className="filter__btn">Combos</Button>
-          <Button className="filter__btn">Bebidas</Button>
-          <Button className="filter__btn">Papas</Button>
-          <Button className="filter__btn">Veggie</Button>
-          <Button className="filter__btn">Inactivos</Button>
+          <Button
+            onClick={handleOnChange}
+            name="category"
+            value=""
+            className={
+              filters.category === '' ? 'filter__btn activeBtn' : 'filter__btn'
+            }
+          >
+            Todo
+          </Button>
+          <Button
+            onClick={handleOnChange}
+            name="category"
+            value="burgers"
+            className={
+              filters.category === 'burgers'
+                ? 'filter__btn activeBtn'
+                : 'filter__btn'
+            }
+          >
+            Hamburguesas
+          </Button>
+          <Button
+            onClick={handleOnChange}
+            name="category"
+            value="combos"
+            className={
+              filters.category === 'combos'
+                ? 'filter__btn activeBtn'
+                : 'filter__btn'
+            }
+          >
+            Combos
+          </Button>
+          <Button
+            onClick={handleOnChange}
+            name="category"
+            value="beverages"
+            className={
+              filters.category === 'beverages'
+                ? 'filter__btn activeBtn'
+                : 'filter__btn'
+            }
+          >
+            Bebidas
+          </Button>
+          <Button
+            onClick={handleOnChange}
+            name="category"
+            value="fries"
+            className={
+              filters.category === 'fries'
+                ? 'filter__btn activeBtn'
+                : 'filter__btn'
+            }
+          >
+            Papas
+          </Button>
+          <Button
+            onClick={handleOnChange}
+            name="isVeggie"
+            value="true"
+            className={
+              filters.isVeggie === 'true'
+                ? 'filter__btn activeBtn'
+                : 'filter__btn'
+            }
+          >
+            Veggie
+          </Button>
+          <Button
+            onClick={handleOnChange}
+            name="paranoid"
+            value="false"
+            className={
+              filters.paranoid === 'false'
+                ? 'filter__btn activeBtn'
+                : 'filter__btn'
+            }
+          >
+            Inactivos
+          </Button>
         </ButtonGroup>
       </div>
     </Container>
