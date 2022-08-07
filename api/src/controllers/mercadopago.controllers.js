@@ -27,7 +27,7 @@ async function check(req, res, next) {
         surname: user.lastName,
         email: user.email,
       },
-      additional_info: "holaaaa",
+      description: "hola hola",
     };
 
     const mp = await mercadopago.preferences.create(preference);
