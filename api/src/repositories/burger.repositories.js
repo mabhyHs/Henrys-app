@@ -75,7 +75,7 @@ async function update(data) {
   const updateado = await Burger.findByPk(data.id);
         
   // lo relaciono
-  await updateado.setIngredient(data.ingredient); // set, que pise todo y lo reemplace
+  await updateado.setIngredient(data.ingredient ? data.ingredient : []); // set, que pise todo y lo reemplace
   const withRelation = await Burger.findByPk(updateado.id, {
     paranoid: false,
     include: [
