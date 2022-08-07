@@ -68,8 +68,28 @@ async function restore(id) {
 }
 
 async function update(data) {
-  const updatedBurger = await Burger.update(data, { where: { id: data.id } });
-  return updatedBurger;
+    
+  // actualizo la data
+  await Burger.update(data, { where: { id: data.id } });
+  // lo busco
+  const updateado = await Burger.findByPk(data.id);
+        
+  // lo relaciono
+  await updateado.setIngredient(data.ingredient ? data.ingredient : []); // set, que pise todo y lo reemplace
+  const withRelation = await Burger.findByPk(updateado.id, {
+    paranoid: false,
+    include: [
+      {
+        association: "ingredient",
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+  });
+
+  return withRelation;
 }
 
 module.exports = {

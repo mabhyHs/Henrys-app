@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       type: {
         type: DataTypes.STRING,
-        defaultValue: "beverage",
+        defaultValue: "beverages",
         allowNull: false,
       },
     },
