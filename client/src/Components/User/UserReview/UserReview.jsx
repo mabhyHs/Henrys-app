@@ -31,9 +31,9 @@ function UserReview() {
 
   function validate(input) {
     let errors = {};
-    if ((input.rating = 0)) {
-      errors.rating = 'Debes ingresar una calificacion';
-    }
+    // if ((input.rating = 0)) {
+    //   errors.rating = 'Debes ingresar una calificacion';
+    // }
     if (!input.description) {
       errors.description = 'Debes enviar un comentario';
     }
@@ -67,7 +67,7 @@ function UserReview() {
       </h2>
       <hr />
       <div className="userReview__reviewContainer mb-4">
-        <div>{errors.rating && <p>{errors.rating}</p>}</div>
+        {/* <div>{errors.rating && <p>{errors.rating}</p>}</div> */}
         <div className="userReview__starsContainer">
           <input
             className="userReview__starsContainer__input"
