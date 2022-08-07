@@ -33,3 +33,7 @@
   align-content: center;
   min-width: 10rem;
 }
+
+.disCursor:hover {
+  cursor: default;
+}
