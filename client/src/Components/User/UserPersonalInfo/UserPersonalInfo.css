@@ -38,3 +38,12 @@
   font-style: italic;
   width: 300px;
 }
+
+.formGrid__errContainer {
+  height: 10px;
+}
+
+.formGrid__errContainer p {
+  color: red;
+  font-size: smaller;
+}

@@ -4,22 +4,28 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import './UserPersonalInfo.css';
 import axios from 'axios';
+import { setLoginState } from '../../../Redux/actions/actions';
+import './UserPersonalInfo.css';
 
 function UserPersonalInfo() {
-  const id = JSON.parse(window.localStorage.getItem('user')).id;
-  const token = JSON.parse(window.localStorage.getItem('user')).token;
-  const email = JSON.parse(window.localStorage.getItem('user')).email;
-  const firstName = JSON.parse(window.localStorage.getItem('user')).firstName;
-  const lastName = JSON.parse(window.localStorage.getItem('user')).lastName;
 
-  const [input, setInput] = useState({ firstName, lastName });
-  const [password, setPassword] = useState({});
-  const [error, setError] = useState({});
   const dispatch = useDispatch();
+  const isSession = useSelector((state) => state.loginState);
+
+  const [input, setInput] = useState({
+    firstName: isSession.firstName,
+    lastName: isSession.lastName
+  });
+
+  const [password, setPassword] = useState({
+    beforePassword: "",
+    password: "",
+    confirm: ""
+  });
+  const [error, setError] = useState({});
 
   function handleChange(e) {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -42,8 +48,8 @@ function UserPersonalInfo() {
         customClass: {
           confirmButton: 'confirmBtnSwal',
         },
-        title: 'Error',
-        text: 'Por favor no dejes ningun campo vacio',
+        title: 'Error!',
+        text: 'Los campos no pueden estar vacios!',
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
         imageWidth: 150,
@@ -52,24 +58,24 @@ function UserPersonalInfo() {
       });
       return;
     }
-    const obj = { ...input, id };
+    const obj = { ...input, id: isSession.id };
     try {
-      const json = await axios.put('/users/', obj, {
+      await axios.put('/users/', obj, {
         headers: {
-          'auth-token': token,
+          'auth-token': isSession.token,
         },
       });
-      const updateLocal = {
-        ...JSON.parse(window.localStorage.getItem('user')),
+      const updateSession = {
+        ...isSession,
         ...input,
       };
-      window.localStorage.setItem('user', JSON.stringify(updateLocal));
+      dispatch(setLoginState(updateSession));
       Swal.fire({
         customClass: {
           confirmButton: 'confirmBtnSwal',
         },
         title: 'Exito!',
-        text: 'Se ha podido cambiar los datos con exito!',
+        text: 'Se han modificado los datos!',
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
         imageWidth: 150,
@@ -82,7 +88,7 @@ function UserPersonalInfo() {
           confirmButton: 'confirmBtnSwal',
         },
         title: 'Opss...',
-        text: 'Algo ha salido mal',
+        text: 'Error del servidor!',
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
         imageWidth: 150,
@@ -91,16 +97,26 @@ function UserPersonalInfo() {
       });
     }
 
-    setInput({ firstName, lastName, email });
-    window.location.reload();
   }
-  function clearData() {
-    console.log(input);
-    setInput({ firstName, lastName, email });
-    window.location.reload();
+  function defaultData() {
+    setInput({
+        firstName: isSession.firstName,
+        lastName: isSession.lastName
+    }); 
+    resetPassInputs();   
+  }
+
+  function resetPassInputs(){
+    setPassword({
+        beforePassword: "",
+        password: "",
+        confirm: ""
+    });
+    setError({});
   }
 
   function handlePassword(e) {
+
     setPassword({ ...password, [e.target.name]: e.target.value });
     setError(validate({ ...password, [e.target.name]: e.target.value }));
   }
@@ -120,7 +136,7 @@ function UserPersonalInfo() {
         title: 'No se puede cambiar la contraseña',
         text: 'Por favor complete todos los espacios correctamente',
         imageUrl:
-          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
         imageWidth: 150,
         imageHeight: 150,
         imageAlt: 'Logo henrys',
@@ -130,21 +146,22 @@ function UserPersonalInfo() {
     const obj = {
       passwordOld: password.beforePassword,
       passwordNew: password.confirm,
-      email,
+      email: isSession.email,
     };
 
     try {
-      const json = await axios.put('/changePassword/', obj, {
+      await axios.put('/changePassword/', obj, {
         headers: {
-          'auth-token': token,
+          'auth-token': isSession.token,
         },
       });
+      resetPassInputs();
       Swal.fire({
         customClass: {
           confirmButton: 'confirmBtnSwal',
         },
         title: 'Exito!',
-        text: 'Se ha podido cambiar la contraseña!',
+        text: 'Contraseña modificada!',
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
         imageWidth: 150,
@@ -157,7 +174,7 @@ function UserPersonalInfo() {
           confirmButton: 'confirmBtnSwal',
         },
         title: 'Opss...',
-        text: 'Tu contraseña anterior ha sido incorrecta',
+        text: 'La contraseña actual es incorrecta!',
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
         imageWidth: 150,
@@ -165,7 +182,6 @@ function UserPersonalInfo() {
         imageAlt: 'Logo henrys',
       });
     }
-    window.location.reload();
   }
 
   return (
@@ -200,20 +216,17 @@ function UserPersonalInfo() {
             className="userInfo__btn__pass"
             variant="primary"
             type="Submit"
-            disable={Object.keys(error).length !== 0}
             onClick={(e) => handleSubmit(e, input)}
           >
             Actualizar Datos
           </Button>
         </Row>
-        {error.password && (
-          <span className="userInfo__error">{error.password}</span>
-        )}
         <Row className="mb-5 userInfo__row">
           <Col lg={4}>
             <Form.Group controlId="formGridPassword">
-              <Form.Label>Contraseña:</Form.Label>
+              <Form.Label>Contraseña actual:</Form.Label>
               <Form.Control
+                value={password.beforePassword}
                 type="password"
                 placeholder="Ingrese contraseña actual*"
                 name="beforePassword"
@@ -224,8 +237,9 @@ function UserPersonalInfo() {
 
           <Col lg={4}>
             <Form.Group controlId="formGridPassword">
-              <Form.Label>Nueva:</Form.Label>
+              <Form.Label>Contraseña nueva:</Form.Label>
               <Form.Control
+                value={password.password}
                 type="password"
                 placeholder="Ingrese contraseña nueva*"
                 name="password"
@@ -236,14 +250,18 @@ function UserPersonalInfo() {
 
           <Col lg={4}>
             <Form.Group as={Col} controlId="formGridConfirPassword">
-              <Form.Label>Confirmar:</Form.Label>
+              <Form.Label>Confirmar contraseña:</Form.Label>
               <Form.Control
+                value={password.confirm}
                 type="password"
                 placeholder="Confirme la contraseña*"
                 name="confirm"
                 onChange={(e) => handlePassword(e)}
               />
             </Form.Group>
+            <div className="formGrid__errContainer">
+                {error.password && <p>{error.password}</p>}
+            </div>
           </Col>
           <Button
             className="mb-3 userInfo__btn__pass"
@@ -261,7 +279,7 @@ function UserPersonalInfo() {
         <Button
           variant="outline-warning"
           className="userInfo__btn m-3"
-          onClick={() => clearData()}
+          onClick={defaultData}
         >
           Cancelar
         </Button>
