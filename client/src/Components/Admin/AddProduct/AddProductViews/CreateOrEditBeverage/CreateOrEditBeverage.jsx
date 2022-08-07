@@ -1,40 +1,131 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getProduct,
+} from '../../../../../Redux/actions/actions';
+import { useParams } from 'react-router-dom';
 
 import './CreateOrEditBeverage.css';
 
-function CreateOrEditBeverage() {
+function CreateOrEditBeverage({ data }) {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const bebidas = useSelector((state) => state.products);
+  const [size] = useState(['Chica', 'Mediana', 'Grande']);
+  const [edit] = useState(isEdit());
+  const [isRestore, setRestore] = useState(false);
+  const [input, setInput] = useState({
+    id: '',
+    name: '',
+    price: '',
+    size: '',
+    isCarbonated: '',
+    isSugar: '',
+    imgUri: '',
+    isVeggie: '',
+  });
+
+  useEffect(() => {
+    dispatch(getProduct('beverages'));
+    if (edit && !isRestore) {
+      setInput({
+        id: data.id,
+        name: data.name,
+        price: data.price,
+        size: data.size,
+        isCarbonated: data.isCarbonated,
+        isSugar: data.isSugar,
+        imgUri: data.img,
+        isVeggie: data.isVeggie,
+      });
+      setRestore(true);
+    }
+  }, [dispatch, edit, isRestore]);
+
+  const onChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  function isEdit() {
+    return data && Object.keys(data).length;
+  }
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    let beveragesUpdate = input;
+    beveragesUpdate = {
+      ...input,
+      id: beveragesUpdate.id,
+      name: beveragesUpdate.name,
+      price: beveragesUpdate.price,
+      size: beveragesUpdate.size,
+      isCarbonated: beveragesUpdate.isCarbonated,
+      isSugar: beveragesUpdate.isSugar,
+      imgUri: beveragesUpdate.imgUri,
+      isVeggie: beveragesUpdate.isVeggie,
+    };
+    console.log(beveragesUpdate);
+    if (edit) {
+      // put
+    } else {
+      // post
+    }
+  };
   return (
     <Container>
       <div className="editBeverage__container">
-        <h2>Editar Crear Bebidas</h2>
+        <h2>{edit ? 'Editar Bebidas' : 'Crear Bebidas'}</h2>
         <Form>
           <hr />
           <Row className="mb-3">
             <Form.Group as={Col} controlId="beverageName">
               <Form.Label>Nombre</Form.Label>
-              <Form.Control type="text" />
+              <Form.Control
+                onChange={onChange}
+                type="text"
+                value={input.name}
+                name="name"
+              />
             </Form.Group>
 
             <Form.Group as={Col} controlId="beveragePrice">
               <Form.Label>Precio</Form.Label>
-              <Form.Control type="Number" />
+              <Form.Control
+                onChange={onChange}
+                type="number"
+                value={input.price}
+                name="price"
+              />
             </Form.Group>
           </Row>
 
           <Form.Group className="mb-3" controlId="uploadImgBeverage">
             <Form.Label>Imagen</Form.Label>
-            <Form.Control type="file" name="file"></Form.Control>
+            <Form.Control
+              onChange={onChange}
+              type="file"
+              name="imgUri"
+              value={input.imgUri}
+            ></Form.Control>
           </Form.Group>
 
           <Row className="mb-3">
             <Form.Group as={Col} controlId="isCarbonated">
               <Form.Label>Gasificada</Form.Label>
-              <Form.Select defaultValue="Seleccionar">
+              <Form.Select
+                onChange={onChange}
+                defaultValue="Seleccionar"
+                name="isCarbonated"
+                value={input.isCarbonated}
+              >
                 <option>Seleccionar</option>
                 <option>Si</option>
                 <option>No</option>
@@ -43,7 +134,12 @@ function CreateOrEditBeverage() {
 
             <Form.Group as={Col} controlId="IsSugar">
               <Form.Label>Tiene Azúcar</Form.Label>
-              <Form.Select defaultValue="seleccionar">
+              <Form.Select
+                onChange={onChange}
+                defaultValue="seleccionar"
+                name="isSugar"
+                value={input.isSugar}
+              >
                 <option>Seleccionar</option>
                 <option>Si</option>
                 <option>No</option>
@@ -54,15 +150,21 @@ function CreateOrEditBeverage() {
           <Row className="mb-3">
             <Form.Group as={Col} controlId="size">
               <Form.Label>Tamaño</Form.Label>
-              <Form.Select defaultValue="seleccionar">
+              <Form.Select onChange={onChange} defaultValue="seleccionar">
                 <option>Seleccionar</option>
-                <option>...</option>
+                {size &&
+                  size.map((s) => <option key={s.id}>{s.name || s}</option>)}
               </Form.Select>
             </Form.Group>
 
             <Form.Group as={Col} controlId="isVeggie">
               <Form.Label>Vegetariano</Form.Label>
-              <Form.Select defaultValue="Es Veggie">
+              <Form.Select
+                onChange={onChange}
+                defaultValue="Es Veggie"
+                name="isVeggie"
+                value={input.isVeggie}
+              >
                 <option>Es Veggie?</option>
                 <option>Si</option>
                 <option>No</option>
@@ -70,7 +172,7 @@ function CreateOrEditBeverage() {
             </Form.Group>
           </Row>
 
-          <Button variant="primary" type="submit">
+          <Button onClick={onSubmit} variant="primary" type="submit">
             Confirmar
           </Button>
           <hr />
