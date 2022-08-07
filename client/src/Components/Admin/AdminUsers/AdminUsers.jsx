@@ -46,6 +46,12 @@ function AdminUsers() {
     let role = ''
     if(filter !== '/'){
       role = '&rol=' + filter
+      if(filter === 'active'){
+        role = '&active=true'
+      }
+      if(filter === 'inactive'){
+        role = '&active=false'
+      }
     }
     if(e.target.name === 'next'){
       const newPage = page + 1
@@ -89,7 +95,9 @@ function AdminUsers() {
         imageHeight: 150,
         imageAlt: 'Logo henrys',
       });
-      setTimeout(window.location.reload(), 10000)
+      setTimeout(function(){
+        window.location.reload()
+      }, 3000)
     } catch (error) {
       Swal.fire({
         customClass: {
@@ -110,6 +118,12 @@ function AdminUsers() {
     const name = e.target.name
     let query = '?rol=' + name
     if(name === '/') query = ''
+    if(name === 'active'){
+      query = '?active=true'
+    }
+    if(name === 'inactive'){
+      query = '?active=false'
+    }
     setPage(1)
     setFilter(name)
    dispatch(getUser(token, query))
@@ -135,7 +149,9 @@ function AdminUsers() {
         imageHeight: 150,
         imageAlt: 'Logo henrys',
       });
-      setTimeout(window.location.reload(), 5000)
+      setTimeout(function(){
+        window.location.reload()
+      }, 3000)
     }catch(error){
       Swal.fire({
         customClass: {
@@ -153,8 +169,9 @@ function AdminUsers() {
   }
 
   async function handleActive(id){
+    const obj = {}
     try{
-      await axios.post('/users/' + id, {
+      await axios.post('/users/' + id, obj, {
         headers:{
           'auth-token': token
         }
@@ -172,7 +189,9 @@ function AdminUsers() {
         imageHeight: 150,
         imageAlt: 'Logo henrys',
       });
-      setTimeout(window.location.reload(), 5000)
+      setTimeout(function(){
+        window.location.reload()
+      }, 3000)
     }catch(error){
       Swal.fire({
         customClass: {
@@ -202,8 +221,8 @@ function AdminUsers() {
             className="me-2 filter__btn"
             size="sm"
           >
-            <Button className="filter__btn">Activos</Button>
-            <Button className="filter__btn">Inactivos</Button>
+            <Button className="filter__btn" name='active' onClick={(e) => filterUsers(e)}>Activos</Button>
+            <Button className="filter__btn" name='inactive' onClick={(e) => filterUsers(e)}>Inactivos</Button>
             <Button className="filter__btn" name='admin' onClick={(e) => filterUsers(e)}>Administradores</Button>
             <Button className="filter__btn" name='customer' onClick={(e) => filterUsers(e)}>Usuarios</Button>
             <Button className="filter__btn"name='employee' onClick={(e) => filterUsers(e)}>Empleados</Button>
