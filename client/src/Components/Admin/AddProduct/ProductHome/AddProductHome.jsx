@@ -61,7 +61,7 @@ function AddProductHome() {
           filters.order,
           filters.search,
           filters.isVeggie,
-          filters.paranoid
+          filters.isDeleted
         )
       );
     }
@@ -73,7 +73,10 @@ function AddProductHome() {
         <h2>Gestioná tus productos</h2>
         <AddProductsFilters setFilter={setFilter} filters={filters} />
         <AdminSearchBarProduct setFilter={setFilter} />
-        <ProductsCardAdminContainer currentProduct={currentProduct} />
+        <ProductsCardAdminContainer
+          currentProduct={currentProduct}
+          isDeleted={!filters.isDeleted.length}
+        />
         <AdminPagination
           burgersPerPage={burgersPerPage}
           allProducts={allProducts.length}

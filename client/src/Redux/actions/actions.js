@@ -61,7 +61,7 @@ export function getProduct(
 ) {
   return async function (dispatch) {
     const json = await axios(
-      `/products?category=${category}&order=${order}&name=${name}&isVeggie=${isVeggie}&isDelete=${isDeleted}`
+      `/products?category=${category}&order=${order}&name=${name}&isVeggie=${isVeggie}&isDeleted=${isDeleted}`
     );
     try {
       return dispatch({
@@ -445,6 +445,7 @@ export function deleteProduct(id, producto) {
       });
       return dispatch({
         type: DELETE_PRODUCT,
+        payload: id,
       });
     } catch (error) {
       console.log(error);
@@ -455,13 +456,18 @@ export function deleteProduct(id, producto) {
 export function restoreProduct(id, producto) {
   return async function (dispatch) {
     try {
-      await axios.delete(`/${producto}/${id}`, {
-        headers: {
-          'auth-token': JSON.parse(localStorage.getItem('user')).token,
-        },
-      });
+      await axios.post(
+        `/${producto}/${id}`,
+        {},
+        {
+          headers: {
+            'auth-token': JSON.parse(localStorage.getItem('user')).token,
+          },
+        }
+      );
       return dispatch({
         type: RESTORE_PRODUCT,
+        payload: id,
       });
     } catch (error) {
       console.log(error);

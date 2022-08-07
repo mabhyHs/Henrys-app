@@ -17,6 +17,7 @@ function CreateOrEditBurger({ data }) {
   const ingredientes = useSelector((state) => state.ingredients);
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
+  const [selectIngredient, setSelectIngredient] = useState([]);
   const [input, setInput] = useState({
     id: '',
     name: '',
@@ -25,6 +26,8 @@ function CreateOrEditBurger({ data }) {
     imgUri: '',
     isVeggie: '',
   });
+
+  console.log(data.ingredient);
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -49,29 +52,42 @@ function CreateOrEditBurger({ data }) {
     });
   };
 
+  function cargarIngredientes() {}
+
   function isEdit() {
     return data && Object.keys(data).length;
   }
 
   function handleSelect(e) {
-    if (!input.ingredient.includes(e.target.value)) {
+    const ingredientFind = ingredientes.find(
+      (el) => el.id === Number(e.target.value)
+    );
+    console.log(e.target.value);
+    if (ingredientFind) {
       setInput({
         ...input,
         ingredient: [...input.ingredient, e.target.value],
       });
-      console.log(input.ingredient);
+      setSelectIngredient([...selectIngredient, ingredientFind.name]);
     }
   }
 
   function handleDelete(e) {
+    const ingredientFind = ingredientes.find(
+      (el) => el.name === e.target.value
+    );
     setInput({
       ...input,
-      ingredient: input.ingredient.filter((c) => c !== e),
+      ingredient: input.ingredient.filter((c) => c !== ingredientFind.id),
     });
+    setSelectIngredient([
+      ...selectIngredient.filter((c) => c !== e.target.value),
+    ]);
   }
 
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log(input);
     if (edit) {
       dispatch(updateBurger(input));
     } else {
@@ -142,16 +158,22 @@ function CreateOrEditBurger({ data }) {
                 <option>Seleccionar</option>
                 {ingredientes &&
                   ingredientes?.map((el) => (
-                    <option key={el.id}>{el.name}</option>
+                    <option value={el.id} key={el.id}>
+                      {el.name}
+                    </option>
                   ))}
               </Form.Select>
             </Form.Group>
             <div>
-              {input.ingredient &&
-                input.ingredient.map((e) => (
-                  <div key={e.id || e}>
-                    <p>{e.name || e}</p>
-                    <button type="button" onClick={() => handleDelete(e)}>
+              {selectIngredient &&
+                selectIngredient.map((e) => (
+                  <div key={e}>
+                    <p>{e}</p>
+                    <button
+                      value={e}
+                      type="button"
+                      onClick={(e) => handleDelete(e)}
+                    >
                       X
                     </button>
                   </div>
