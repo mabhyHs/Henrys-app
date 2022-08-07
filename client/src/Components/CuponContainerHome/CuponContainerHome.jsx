@@ -7,6 +7,7 @@ import './CuponContainerHome.css';
 function CuponContainerHome() {
   const { coupons } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const currentDate = getCurrentDate();
 
   useEffect(() => {
     if (!coupons) {
@@ -14,18 +15,49 @@ function CuponContainerHome() {
     }
   }, [coupons, dispatch]);
 
+  function getCurrentDate(){
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const yyyy = today.getFullYear();
+
+    return new Date(`${yyyy}-${mm}-${dd}`);    
+  }
+
+  function isExpired(currentDate, expirationDate){
+    const expDate = new Date(expirationDate);
+    return (currentDate > expDate)
+  }
+
   return (
     <div className="couponsHome">
-      {coupons?.map((c) => (
-        <CardCupponHome
-          key={c.code}
-          code={c.code}
-          title={c.title}
-          expirationDate={c.expirationDate}
-          imgUri={c.imgUri}
-          discountPorcentage={c.discountPorcentage}
-        />
-      ))}
+      {coupons && coupons.length > 0 && coupons?.map((c) =>         
+        <>
+        {!isExpired(currentDate, c.expirationDate) ? 
+        
+            <CardCupponHome
+            key={c.code}
+            code={c.code}
+            title={c.title}
+            expirationDate={c.expirationDate}
+            imgUri={c.imgUri}
+            discountPorcentage={c.discountPorcentage}
+          />
+          :
+          <div className='couponsHome__disabled'>
+            <CardCupponHome
+                key={c.code}
+                code={c.code}
+                title={c.title}
+                expirationDate={c.expirationDate}
+                imgUri={c.imgUri}
+                discountPorcentage={c.discountPorcentage}
+                expired={true}
+            />
+          </div>
+        }
+        </>
+      )}
     </div>
   );
 }

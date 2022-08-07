@@ -4,3 +4,7 @@
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
+
+.couponsHome__disabled {
+    filter: grayscale(100%);
+  }
