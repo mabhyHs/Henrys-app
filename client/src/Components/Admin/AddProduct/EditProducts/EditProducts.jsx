@@ -27,6 +27,7 @@ function EditProducts() {
       {product.type === 'fries' && <CreateOrEditFries data={product} />}
       {product.type === 'beverage' && <CreateOrEditBeverage data={product} />}
       {product.type === 'combo' && <CreateOrEditCombo data={product} />}
+      {!product.type && <CreateOrEditBurgerBase data={product} />}
     </div>
   );
 }
