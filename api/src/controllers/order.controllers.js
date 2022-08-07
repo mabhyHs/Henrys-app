@@ -1,14 +1,16 @@
-const axios = require("axios");
 const orderRepositories = require("../repositories/order.repositories");
+const mercadopagoRepository = require("../repositories/mercadopago.repositories");
+const { transporter } = require("../config/emailTransporter");
 
 async function create(req, res, next) {
   try {
     const order = await orderRepositories.create(req.body.user.id, req.body);
+    console.log(req.body.purchaseId);
     const receipt = await mercadopagoRepository.getPaymentById(
       req.body.purchaseId
     );
     console.log(receipt);
-    console.log(req.body.user.emai);
+    console.log(req.body.user.email);
 
     await transporter.sendMail({
       from: '"Confirm account" <henrysBurger2022@gmail.com',
