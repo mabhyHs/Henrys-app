@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  clearState,
   getProduct,
   postBeverages,
   updateBeverages,
@@ -49,8 +50,6 @@ function CreateOrEditBeverage({ data }) {
     }
   }, [dispatch, edit, isRestore]);
 
-  console.log(bebidas);
-
   const onChange = (e) => {
     setInput({
       ...input,
@@ -78,9 +77,9 @@ function CreateOrEditBeverage({ data }) {
     };
     console.log(beveragesUpdate);
     if (edit) {
-      dispatch(updateBeverages(id, beveragesUpdate));
+      // put
     } else {
-      dispatch(postBeverages(beveragesUpdate));
+      // post
     }
   };
   return (
@@ -145,8 +144,8 @@ function CreateOrEditBeverage({ data }) {
                 value={input.isSugar}
               >
                 <option>Seleccionar</option>
-                <option value={true}>Si</option>
-                <option value={false}>No</option>
+                <option>Si</option>
+                <option>No</option>
               </Form.Select>
             </Form.Group>
           </Row>

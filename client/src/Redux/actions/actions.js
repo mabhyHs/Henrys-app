@@ -66,7 +66,7 @@ export function addCartProduct(id) {
 
 export function clearState(payload) {
   return {
-    type: 'CLEAR_STATE',
+    type: CLEAR_STATE,
     payload,
   };
 }

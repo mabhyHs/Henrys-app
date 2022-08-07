@@ -2,6 +2,7 @@ import { React, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
+  clearState,
   getBurgerBase,
   getProductById,
 } from '../../../../Redux/actions/actions';
@@ -19,6 +20,9 @@ function EditProducts() {
   useEffect(() => {
     dispatch(getProductById(id));
     dispatch(getBurgerBase());
+    return () => {
+      dispatch(clearState());
+    };
   }, [dispatch, id]);
 
   return (
