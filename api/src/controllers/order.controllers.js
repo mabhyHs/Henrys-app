@@ -13,9 +13,9 @@ async function create(req, res, next) {
     console.log(req.body.user.email);
 
     await transporter.sendMail({
-      from: '"Confirm account" <henrysBurger2022@gmail.com',
+      from: '"Recibo de compra" <henrysBurger2022@gmail.com',
       to: req.body.user.email,
-      subject: "Receipt",
+      subject: "Recibo de compra",
       html: `
         <html lang="en-US">
         <head>
@@ -112,7 +112,7 @@ async function create(req, res, next) {
                                 font-family: 'Rubik', sans-serif;
                               "
                             >
-                              Ya casi terminamos...
+                              Gracias por su compra.
                             </h1>
                             <p
                               style="
@@ -122,8 +122,8 @@ async function create(req, res, next) {
                                 line-height: 24px;
                               "
                             >
-                            ${JSON.stringify(receipt)}
                             </p>
+                            ${receipt.items.map((e) => <p>{}</p>)}
       
                           </td>
                         </tr>
