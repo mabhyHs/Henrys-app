@@ -122,8 +122,12 @@ async function create(req, res, next) {
                                 line-height: 24px;
                               "
                             >
-                            ${JSON.stringify(receipt)}
+                            <!-- ${JSON.stringify(receipt)} -->
                             </p>
+                            <p>Precio final: ${
+                              receipt.transaction_details.total_paid_amount ||
+                              ""
+                            }</p>
       
                           </td>
                         </tr>
