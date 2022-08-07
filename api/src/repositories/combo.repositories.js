@@ -84,8 +84,45 @@ async function restore(id) {
 }
 
 async function update(data) {
-  const updatedCombo = await Combo.update(data, { where: { id: data.id } });
-  return updatedCombo;
+
+  // actualizo la data
+  await Combo.update(data, { where: { id: data.id } });
+  // lo busco
+  const updateado = await Combo.findByPk(data.id);
+  console.log(updateado.__proto__)
+        
+  // lo relaciono
+  await updateado.setBurger(data.burger ? data.burger : []); // set, que pise todo y lo reemplace
+  await updateado.setBeverage(data.beverage ? data.beverage : []); // set, que pise todo y lo reemplace
+  await updateado.setFries(data.fries ? data.fries : []); // set, que pise todo y lo reemplace
+  const withRelation = await Combo.findByPk(updateado.id, {
+    paranoid: false,
+    include: [
+      {
+        association: "burger",
+        attributes: ["name", "id"],
+        through: {
+          attributes: [],
+        },
+      },
+      {
+        association: "beverage",
+        attributes: ["name", "id"],
+        through: {
+          attributes: [],
+        },
+      },
+      {
+        association: "fries",
+        attributes: ["name", "id"],
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+  });
+
+  return withRelation;
 }
 
 module.exports = {
