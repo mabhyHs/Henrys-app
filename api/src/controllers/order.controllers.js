@@ -122,38 +122,8 @@ async function create(req, res, next) {
                                 line-height: 24px;
                               "
                             >
+                            ${JSON.stringify(receipt)}
                             </p>
-                            ${
-                              receipt.installments &&
-                              receipt.installments > 1 && (
-                                <div>
-                                  <div>
-                                    Precio base:{" "}
-                                    {receipt.transaction_amount || ""}
-                                  </div>
-                                  {receipt.installments} cuotas de $
-                                  {
-                                    receipt.transaction_details
-                                      .installment_amount
-                                  }
-                                </div>
-                              )
-                            }
-                  
-                            <div>Precio final: ${
-                              receipt.transaction_details.total_paid_amount ||
-                              ""
-                            }</div>
-                            <div>
-                              <h2>Detalle:</h2>
-                              ${receipt.additional_info.items.map((i) => (
-                                <div key={i.id}>
-                                  <div>Producto: {i.title}</div>
-                                  <div>Precio unitario: {i.unit_price}</div>
-                                  <div>Cantidad: {i.quantity}</div>
-                                </div>
-                              ))}
-                            </div>
       
                           </td>
                         </tr>
