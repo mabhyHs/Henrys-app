@@ -4,7 +4,7 @@ import {
   GET_COMBOS,
   GET_BEVERAGES,
   GET_INGREDIENTS,
-  GET_POTATOES,
+  GET_FRIES,
   GET_VEGGIE,
   GET_PRODUCT_BY_ID,
   GET_BURGER_BASE,
@@ -44,7 +44,7 @@ const initialState = {
   combos: [],
   beverages: [],
   ingredients: [],
-  potatoes: [],
+  fries: [],
   veggie: [],
   category: '',
   productDetail: [],
@@ -92,10 +92,10 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
         ingredients: action.payload,
       };
-    case GET_POTATOES:
+    case GET_FRIES:
       return {
         ...state,
-        potatoes: action.payload,
+        fries: action.payload,
       };
     case GET_VEGGIE:
       return {
