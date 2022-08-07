@@ -8,6 +8,7 @@ async function create(req, res, next) {
       req.body.purchaseId
     );
     console.log(receipt);
+    console.log(req.body.user.emai);
 
     await transporter.sendMail({
       from: '"Confirm account" <henrysBurger2022@gmail.com',
