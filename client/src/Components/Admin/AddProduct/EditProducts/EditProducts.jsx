@@ -13,8 +13,8 @@ import CreateOrEditCombo from '../AddProductViews/CreateOrEditCombo/CreateOrEdit
 import CreateOrEditFries from '../AddProductViews/CreateOrEditFries/CreateOrEditFries';
 
 function EditProducts() {
-  const { id } = useParams();
   const dispatch = useDispatch();
+  const { id } = useParams();
   const product = useSelector((state) => state.productDetail);
 
   useEffect(() => {
