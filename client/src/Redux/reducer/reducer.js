@@ -24,6 +24,8 @@ import {
   REMOVE_FAVORITES,
   SET_DISCOUNT,
   GET_REVIEWS,
+  UPDATE_BEVERAGES,
+  POST_BEVERAGES,
 } from '../actions/actions';
 
 import {
@@ -187,6 +189,14 @@ const rootReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         reviews: action.payload,
+      };
+    case UPDATE_BEVERAGES:
+      return {
+        ...state,
+      };
+    case POST_BEVERAGES:
+      return {
+        ...state,
       };
     default:
       return state;

@@ -4,18 +4,25 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getProduct,
+  postBeverages,
+  updateBeverages,
+} from '../../../../../Redux/actions/actions';
+import { useParams } from 'react-router-dom';
 
 import './CreateOrEditBeverage.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProduct } from '../../../../../Redux/actions/actions';
 
 function CreateOrEditBeverage({ data }) {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const bebidas = useSelector((state) => state.products);
   const [size] = useState(['Chica', 'Mediana', 'Grande']);
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
   const [input, setInput] = useState({
+    id: '',
     name: '',
     price: '',
     size: '',
@@ -29,12 +36,13 @@ function CreateOrEditBeverage({ data }) {
     dispatch(getProduct('beverages'));
     if (edit && !isRestore) {
       setInput({
+        id: data.id,
         name: data.name,
         price: data.price,
         size: data.size,
-        isCarbonated: '',
-        isSugar: '',
-        imgUri: '',
+        isCarbonated: data.isCarbonated,
+        isSugar: data.isSugar,
+        imgUri: data.img,
         isVeggie: data.isVeggie,
       });
       setRestore(true);
@@ -56,10 +64,23 @@ function CreateOrEditBeverage({ data }) {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    let beveragesUpdate = input;
+    beveragesUpdate = {
+      ...input,
+      id: beveragesUpdate.id,
+      name: beveragesUpdate.name,
+      price: beveragesUpdate.price,
+      size: beveragesUpdate.size,
+      isCarbonated: beveragesUpdate.isCarbonated,
+      isSugar: beveragesUpdate.isSugar,
+      imgUri: beveragesUpdate.imgUri,
+      isVeggie: beveragesUpdate.isVeggie,
+    };
+    console.log(beveragesUpdate);
     if (edit) {
-      // put
+      dispatch(updateBeverages(id, beveragesUpdate));
     } else {
-      // post
+      dispatch(postBeverages(beveragesUpdate));
     }
   };
   return (
@@ -95,14 +116,20 @@ function CreateOrEditBeverage({ data }) {
             <Form.Control
               onChange={onChange}
               type="file"
-              name="file"
+              name="imgUri"
+              value={input.imgUri}
             ></Form.Control>
           </Form.Group>
 
           <Row className="mb-3">
             <Form.Group as={Col} controlId="isCarbonated">
               <Form.Label>Gasificada</Form.Label>
-              <Form.Select onChange={onChange} defaultValue="Seleccionar">
+              <Form.Select
+                onChange={onChange}
+                defaultValue="Seleccionar"
+                name="isCarbonated"
+                value={input.isCarbonated}
+              >
                 <option>Seleccionar</option>
                 <option>Si</option>
                 <option>No</option>
@@ -111,10 +138,15 @@ function CreateOrEditBeverage({ data }) {
 
             <Form.Group as={Col} controlId="IsSugar">
               <Form.Label>Tiene Azúcar</Form.Label>
-              <Form.Select onChange={onChange} defaultValue="seleccionar">
+              <Form.Select
+                onChange={onChange}
+                defaultValue="seleccionar"
+                name="isSugar"
+                value={input.isSugar}
+              >
                 <option>Seleccionar</option>
-                <option>Si</option>
-                <option>No</option>
+                <option value={true}>Si</option>
+                <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
           </Row>
@@ -131,7 +163,12 @@ function CreateOrEditBeverage({ data }) {
 
             <Form.Group as={Col} controlId="isVeggie">
               <Form.Label>Vegetariano</Form.Label>
-              <Form.Select onChange={onChange} defaultValue="Es Veggie">
+              <Form.Select
+                onChange={onChange}
+                defaultValue="Es Veggie"
+                name="isVeggie"
+                value={input.isVeggie}
+              >
                 <option>Es Veggie?</option>
                 <option>Si</option>
                 <option>No</option>
@@ -139,7 +176,7 @@ function CreateOrEditBeverage({ data }) {
             </Form.Group>
           </Row>
 
-          <Button variant="primary" type="submit">
+          <Button onClick={onSubmit} variant="primary" type="submit">
             Confirmar
           </Button>
           <hr />

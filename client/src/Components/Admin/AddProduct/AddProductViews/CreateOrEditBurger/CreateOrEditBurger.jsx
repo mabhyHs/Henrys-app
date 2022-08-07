@@ -8,6 +8,7 @@ import Container from 'react-bootstrap/Container';
 import './CreateOrEditBurger.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from '../../../../../Redux/actions/actions';
+import axios from 'axios';
 
 function CreateOrEditBurger({ data }) {
   const dispatch = useDispatch();
@@ -35,8 +36,6 @@ function CreateOrEditBurger({ data }) {
       setRestore(true);
     }
   }, [dispatch, edit, isRestore]);
-
-  console.log(ingredientes);
 
   const onChange = (e) => {
     setInput({
@@ -68,7 +67,12 @@ function CreateOrEditBurger({ data }) {
   const onSubmit = async (event) => {
     event.preventDefault();
     if (edit) {
-      // put
+      await axios.put('/burgers', input, {
+        headers: {
+          'auth-token': JSON.parse(window.localStorage.getItem('user')).token,
+        },
+      });
+      console.log(input);
     } else {
       // post
     }

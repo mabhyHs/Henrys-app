@@ -15,7 +15,6 @@ function EditProducts() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productDetail);
-  const burgerBase = useSelector((state) => state.burgerBase);
 
   useEffect(() => {
     dispatch(getProductById(id));
@@ -28,7 +27,6 @@ function EditProducts() {
       {product.type === 'fries' && <CreateOrEditFries data={product} />}
       {product.type === 'beverage' && <CreateOrEditBeverage data={product} />}
       {product.type === 'combo' && <CreateOrEditCombo data={product} />}
-      {<CreateOrEditBurgerBase data={burgerBase} />}
     </div>
   );
 }

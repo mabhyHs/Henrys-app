@@ -25,6 +25,8 @@ export const POST_MP = 'POST_MP';
 export const GET_FAVORITES = 'GET_FAVORITES';
 export const SET_DISCOUNT = 'SET_DISCOUNT';
 export const GET_REVIEWS = 'GET_REVIEWS';
+export const UPDATE_BEVERAGES = 'UPDATE_BEVERAGES';
+export const POST_BEVERAGES = 'POST_BEVERAGES';
 
 export function getProduct(
   category = '',
@@ -207,7 +209,7 @@ export function agregarCalificacion(payload) {
 
 export function getFries(payload) {
   return async function (dispatch) {
-    const response = await axios.get(`/products/${payload}`);
+    const response = await axios.get(`/products?category=${payload}`);
     try {
       return dispatch({
         type: GET_FRIES,
@@ -221,7 +223,7 @@ export function getFries(payload) {
 
 export function getBurgers(payload) {
   return async function (dispatch) {
-    const response = await axios.get(`/products/${payload}`);
+    const response = await axios.get(`/products?category=${payload}`);
     try {
       return dispatch({
         type: GET_BURGERS,
@@ -235,7 +237,7 @@ export function getBurgers(payload) {
 
 export function getBeverages(payload) {
   return async function (dispatch) {
-    const response = await axios.get(`/products/${payload}`);
+    const response = await axios.get(`/products?category=${payload}`);
     try {
       return dispatch({
         type: GET_BEVERAGES,
@@ -329,3 +331,29 @@ export function getReviews() {
     }
   };
 }
+
+export const updateBeverages = (id, data) => {
+  return async function (dispatch) {
+    await axios.put(`/beverages`, data, {
+      headers: {
+        'auth-token': JSON.parse(window.localStorage.getItem('user')).token,
+      },
+    });
+    return dispatch({
+      type: UPDATE_BEVERAGES,
+    });
+  };
+};
+
+export const postBeverages = (data) => {
+  return async function (dispatch) {
+    await axios.post('/beverages', data, {
+      headers: {
+        'auth-token': JSON.parse(window.localStorage.getItem('user')).token,
+      },
+    });
+    return dispatch({
+      type: POST_BEVERAGES,
+    });
+  };
+};

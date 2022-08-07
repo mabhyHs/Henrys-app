@@ -88,7 +88,7 @@ function CreateOrEditCombo({ data }) {
   return (
     <Container>
       <div className="editCombo__container">
-        <h2>Editar Crear Combo</h2>
+        <h2>{edit ? 'Editar Combo' : 'Crear Combo'}</h2>
         <Form>
           <hr />
           <Row className="mb-3">
@@ -125,7 +125,12 @@ function CreateOrEditCombo({ data }) {
           <Row className="mb-3">
             <Form.Group as={Col} controlId="beverages">
               <Form.Label>Bebida</Form.Label>
-              <Form.Select defaultValue="Seleccionar">
+              <Form.Select
+                onChange={onChange}
+                defaultValue="seleccionar"
+                name="beverage"
+                value={input.beverage}
+              >
                 <option>Seleccionar</option>
                 {beverages &&
                   beverages.map((bur) => <option key={bur}>{bur.name}</option>)}
@@ -145,7 +150,12 @@ function CreateOrEditCombo({ data }) {
 
             <Form.Group as={Col} controlId="burger" multiple>
               <Form.Label>Hamburguesa</Form.Label>
-              <Form.Select defaultValue="seleccionar">
+              <Form.Select
+                onChange={onChange}
+                defaultValue="seleccionar"
+                name="burger"
+                value={input.burger}
+              >
                 <option>Seleccionar</option>
                 {burgers &&
                   burgers.map((bur) => <option key={bur}>{bur.name}</option>)}
@@ -167,7 +177,12 @@ function CreateOrEditCombo({ data }) {
           <Row className="mb-3">
             <Form.Group as={Col} controlId="fries">
               <Form.Label>Papas</Form.Label>
-              <Form.Select defaultValue="seleccionar">
+              <Form.Select
+                onChange={onChange}
+                defaultValue="seleccionar"
+                name="fries"
+                value={input.fries}
+              >
                 <option>Seleccionar</option>
                 {fries &&
                   fries.map((bur) => <option key={bur}>{bur.name}</option>)}
