@@ -67,10 +67,10 @@ function AdminUsers() {
     setRol(e.target.value)
   }
 
-  function submitRole(id){
+  async function submitRole(id){
     const obj = {id, role: rol}
     try {
-      const json = axios.put('/users/', obj , {
+      const json = await axios.put('/users/', obj , {
         headers:{
           'auth-token': token
         }
@@ -89,7 +89,7 @@ function AdminUsers() {
         imageHeight: 150,
         imageAlt: 'Logo henrys',
       });
-      setTimeout(window.location.reload(), 3000)
+      setTimeout(window.location.reload(), 10000)
     } catch (error) {
       Swal.fire({
         customClass: {
@@ -114,6 +114,80 @@ function AdminUsers() {
     setFilter(name)
    dispatch(getUser(token, query))
   }
+
+  async function handleDelete(id){
+    try{
+      await axios.delete('/users/' + id, {
+        headers:{
+          'auth-token': token
+        }
+      })
+
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Exito!',
+        text: 'Se ha podido desactivar el usuario!',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
+      setTimeout(window.location.reload(), 5000)
+    }catch(error){
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Error',
+        text: 'Algo salio mal..',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
+    }
+  }
+
+  async function handleActive(id){
+    try{
+      await axios.post('/users/' + id, {
+        headers:{
+          'auth-token': token
+        }
+      })
+
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Exito!',
+        text: 'Se ha podido desactivar el usuario!',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
+      setTimeout(window.location.reload(), 5000)
+    }catch(error){
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Error',
+        text: 'Algo salio mal..',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
+    }
+  } 
 
   return (
     <Container>
@@ -185,12 +259,12 @@ function AdminUsers() {
                     </Button>
                   </Modal.Footer>
                 </Modal>
-                  {user.deleteAt?(
-                <Button variant="outline-success" size="sm">
+                  {user.deletedAt?(
+                <Button variant="outline-success" size="sm" onClick={() => handleActive(user.id)}>
                   <PersonCheckFill />
                 </Button>
-                  ):
-                <Button variant="outline-danger" size="sm">
+                   ): 
+                <Button variant="outline-danger" size="sm" onClick={() => handleDelete(user.id)}>
                   <PersonXFill />
                 </Button>
                   }
