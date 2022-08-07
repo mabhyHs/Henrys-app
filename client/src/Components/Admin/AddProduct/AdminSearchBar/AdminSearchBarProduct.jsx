@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { React, useState } from 'react';
 import { Search } from 'react-bootstrap-icons';
 
 function AdminSearchBarProduct({ setFilter }) {
