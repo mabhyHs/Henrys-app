@@ -21,7 +21,7 @@ function AddProductHome() {
   const mount = useRef(false);
   const [filters, setFilters] = useState({
     category,
-    order: '',
+    order: 'ASC',
     search: '',
     isVeggie: '',
     isDeleted: '',
