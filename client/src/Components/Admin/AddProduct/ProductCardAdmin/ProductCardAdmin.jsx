@@ -3,13 +3,14 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { PencilSquare } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
-
-import './ProductCardAdmin.css';
 import { useDispatch } from 'react-redux';
 import {
   deleteProduct,
   restoreProduct,
 } from '../../../../Redux/actions/actions';
+import { setImgProductHomeErr } from '../../../methods';
+
+import './ProductCardAdmin.css';
 
 function ProductCardAdmin({ data, isDeleted }) {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ function ProductCardAdmin({ data, isDeleted }) {
         variant="top"
         src={data.imgUri}
         className="adminProductHome__card__img"
+        onError={(e)=> setImgProductHomeErr(e)}
       />
       <Card.Body className="adminProductHome__cardBody">
         <Card.Title className="adminProductHome__cardTittle">

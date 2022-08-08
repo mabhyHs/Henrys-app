@@ -13,6 +13,10 @@ export function setImgProductErr(e) {
     setImgError(e, imgProductErr);
 }
 
+export function setImgProductHomeErr(e) {
+    setImgError(e, imgProductErr);
+}
+
 export function isLogged() {
   const { isAuthenticated } = useAuth0();
 
