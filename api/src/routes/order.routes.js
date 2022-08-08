@@ -5,6 +5,7 @@ const {
   changeStatus,
   getAllByUserId,
   getByPurchaseId,
+  changeReview,
 } = require("../controllers/order.controllers");
 const verifyToken = require("../middlewares/tokenValidation");
 const {
@@ -31,5 +32,6 @@ router.put(
   validationResultHandler,
   changeStatus
 );
+router.put("/reviews/:id", verifyToken, validationResultHandler, changeReview);
 
 module.exports = router;

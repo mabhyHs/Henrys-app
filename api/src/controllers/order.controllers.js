@@ -611,10 +611,22 @@ async function getAllByUserId(req, res, next) {
   }
 }
 
+async function changeReview(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { review } = req.body;
+    const order = await orderRepositories.changeReview(id, review);
+    res.status(201).json(order);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   create,
   getAll,
   changeStatus,
   getAllByUserId,
   getByPurchaseId,
+  changeReview,
 };
