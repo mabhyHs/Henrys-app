@@ -615,7 +615,7 @@ async function changeReview(req, res, next) {
   try {
     const { id } = req.params;
     const { review } = req.body;
-    const order = await orderRepositories.changeStatus(id, review);
+    const order = await orderRepositories.changeReview(id, review);
     res.status(201).json(order);
   } catch (error) {
     next(error);

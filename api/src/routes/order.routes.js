@@ -5,6 +5,7 @@ const {
   changeStatus,
   getAllByUserId,
   getByPurchaseId,
+  changeReview,
 } = require("../controllers/order.controllers");
 const verifyToken = require("../middlewares/tokenValidation");
 const {
@@ -12,7 +13,6 @@ const {
   putValidator,
 } = require("../middlewares/orderValidation");
 const validationResultHandler = require("../middlewares/validationResultHandler");
-const { changeReview } = require("../controllers/order.controllers");
 
 const router = express.Router();
 
@@ -32,6 +32,6 @@ router.put(
   validationResultHandler,
   changeStatus
 );
-router.put("/review/:id", verifyToken, validationResultHandler, changeReview);
+router.put("/reviews/:id", verifyToken, validationResultHandler, changeReview);
 
 module.exports = router;

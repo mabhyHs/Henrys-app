@@ -20,7 +20,7 @@ const roleValid = header("auth-token")
 const statusValid = body("status")
   .custom(async (status) => {
     console.log(status);
-    if (!["Pendiente", "Entregado"].includes(status)) {
+    if (!["Pendiente", "Listo"].includes(status)) {
       throw new Error(
         "estado inválido, solo los siguientes estados están permitidos: 'Pendiente', 'Entregado'"
       );
