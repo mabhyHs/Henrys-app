@@ -22,10 +22,24 @@ const userValid = body("user")
   })
   .withMessage("El admin no puede desactivar su propia cuenta");
 
+const changeRoleValid = body("user")
+  .custom(async (user, { req }) => {
+    console.log(user.id);
+    const currentUser = await userRepositories.getById(user.id);
+    console.log(req.body.id);
+
+    if (currentUser.role === "admin" && user.id === req.body.id) {
+      throw new Error("El admin no puede cambiar el rol de su propia cuenta");
+    }
+  })
+  .withMessage("El admin no puede cambiar el rol de su propia cuenta");
+
 const roleValidator = [roleValid];
 const deleteValidator = [userValid];
+const putValidator = [changeRoleValid];
 
 module.exports = {
   roleValidator,
   deleteValidator,
+  putValidator,
 };
