@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body, param } = require("express-validator");
 const ingredientRepository = require("../repositories/ingredient.repositories");
 const userRepositories = require("../repositories/user.repositories");
 const { ingredientRoles, authRoute } = require("../utils/routesRoles");
