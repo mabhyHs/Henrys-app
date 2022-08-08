@@ -36,6 +36,8 @@ import {
   POST_BEVERAGE,
   UPDATE_COMBOS,
   POST_COMBOS,
+  UPDATE_BURGER_BASE,
+  POST_BURGER_BASE,
 } from '../actions/actions';
 
 import {
@@ -252,6 +254,14 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
       };
     case UPDATE_COMBOS:
+      return {
+        ...state,
+      };
+    case UPDATE_BURGER_BASE:
+      return {
+        ...state,
+      };
+    case POST_BURGER_BASE:
       return {
         ...state,
       };

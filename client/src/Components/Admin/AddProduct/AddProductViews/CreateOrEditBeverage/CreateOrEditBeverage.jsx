@@ -83,7 +83,13 @@ function CreateOrEditBeverage({ data }) {
         imageAlt: 'Logo henrys',
       });
     } else {
-      dispatch(postBeverage({ ...input, size: size, id: undefined }));
+      dispatch(
+        postBeverage({
+          ...input,
+          size: size,
+          id: undefined,
+        })
+      );
       Swal.fire({
         customClass: {
           confirmButton: 'confirmBtnSwal',

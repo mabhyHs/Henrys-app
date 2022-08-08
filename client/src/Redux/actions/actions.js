@@ -38,6 +38,8 @@ export const UPDATE_BEVERAGE = 'UPDATE_BEVERAGE';
 export const POST_BEVERAGE = 'POST_BEVERAGE';
 export const UPDATE_COMBOS = 'UPDATE_COMBOS';
 export const POST_COMBOS = 'POST_COMBOS';
+export const POST_BURGER_BASE = 'POST_BURGER_BASE';
+export const UPDATE_BURGER_BASE = 'UPDATE_BURGER_BASE';
 
 export function getUser(token, query = '/') {
   return async function (dispatch) {
@@ -579,6 +581,40 @@ export function postCombos(data) {
       });
       return dispatch({
         type: POST_COMBOS,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function updateBurgerBase(data) {
+  return async function (dispatch) {
+    try {
+      await axios.put('/burgers', data, {
+        headers: {
+          'auth-token': JSON.parse(localStorage.getItem('user')).token,
+        },
+      });
+      return dispatch({
+        type: UPDATE_BURGER_BASE,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function postBurgerBase(data) {
+  return async function (dispatch) {
+    try {
+      await axios.post('/burgers', data, {
+        headers: {
+          'auth-token': JSON.parse(localStorage.getItem('user')).token,
+        },
+      });
+      return dispatch({
+        type: POST_BURGER_BASE,
       });
     } catch (error) {
       console.log(error);
