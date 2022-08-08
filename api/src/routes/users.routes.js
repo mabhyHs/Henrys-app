@@ -11,7 +11,11 @@ const {
   getFavoritesByUserId,
   getAllAdmin,
 } = require("../controllers/users.controllers");
-const { roleValidator } = require("../middlewares/usersValidation");
+const {
+  roleValidator,
+  deleteValidator,
+  putValidator,
+} = require("../middlewares/usersValidation");
 const validationResultHandler = require("../middlewares/validationResultHandler");
 const verifyToken = require("../middlewares/tokenValidation");
 
@@ -40,6 +44,7 @@ router.delete(
   "/:id",
   verifyToken,
   roleValidator,
+  deleteValidator,
   validationResultHandler,
   destroy
 );
@@ -53,7 +58,14 @@ router.post(
 
 router.put("/:id", verifyToken, validationResultHandler, updateProfileData);
 
-router.put("/", verifyToken, roleValidator, validationResultHandler, update);
+router.put(
+  "/",
+  verifyToken,
+  roleValidator,
+  putValidator,
+  validationResultHandler,
+  update
+);
 
 router.put("/favorites/:id", setFavorites);
 router.get("/favorites/:id", getFavoritesByUserId);
