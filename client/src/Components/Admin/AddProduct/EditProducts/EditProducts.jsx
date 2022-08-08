@@ -25,9 +25,12 @@ function EditProducts() {
     };
   }, [dispatch, id]);
 
+  if(!product.type || product.deletedAt){
+    return <NotFound />;
+  }
+
   return (
     <div>
-      {!product.type && <NotFound />}
       {product.type === 'burgers' && <CreateOrEditBurger data={product} />}
       {product.type === 'fries' && <CreateOrEditFries data={product} />}
       {product.type === 'beverages' && <CreateOrEditBeverage data={product} />}
