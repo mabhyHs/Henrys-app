@@ -5,17 +5,12 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import {
-  getFries,
-} from '../../../../../Redux/actions/actions';
 
 import './CreateOrEditFries.css';
 import { alertCustom, createProduct, updateProduct } from '../../../../requests';
 
 function CreateOrEditFries({ data }) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
   const [input, setInput] = useState({
@@ -28,7 +23,6 @@ function CreateOrEditFries({ data }) {
   });
 
   useEffect(() => {
-    dispatch(getFries('fries'));
     if (edit && !isRestore) {
       setInput({
         id: data.id,
@@ -40,7 +34,7 @@ function CreateOrEditFries({ data }) {
       });
       setRestore(true);
     }
-  }, [dispatch, edit, isRestore, data]);
+  }, [edit, isRestore, data]);
 
   function isDisabledSubmit(){
     return (

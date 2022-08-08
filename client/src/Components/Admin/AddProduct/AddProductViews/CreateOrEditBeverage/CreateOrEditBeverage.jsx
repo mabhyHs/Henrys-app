@@ -4,22 +4,20 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   getProduct,
   postBeverage,
   updateBeverage,
 } from '../../../../../Redux/actions/actions';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 import './CreateOrEditBeverage.css';
 
 function CreateOrEditBeverage({ data }) {
   const navigate = useNavigate();
-  const { id } = useParams();
   const dispatch = useDispatch();
-  const bebidas = useSelector((state) => state.products);
   const [size, setSize] = useState('');
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
