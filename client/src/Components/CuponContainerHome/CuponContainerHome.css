@@ -1,10 +1,14 @@
 .couponsHome {
   display: flex;
-  margin: 4rem auto 4rem;
-  justify-content: space-evenly;
+  justify-content: center;
   flex-wrap: wrap;
+  align-items: stretch;
 }
 
 .couponsHome__disabled {
-    filter: grayscale(100%);
-  }
+  filter: grayscale(100%);
+}
+
+.cuponsHome__mainContainer {
+  background-color: var(--main-color-light);
+}
