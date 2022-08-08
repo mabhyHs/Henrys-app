@@ -26,18 +26,8 @@ import {
   GET_COUPONS,
   GET_USERS,
   GET_PURCHASE,
-  UPDATE_BURGER,
-  POST_BURGER,
   DELETE_PRODUCT,
   RESTORE_PRODUCT,
-  UPDATE_FRIES,
-  POST_FRIES,
-  UPDATE_BEVERAGE,
-  POST_BEVERAGE,
-  UPDATE_COMBOS,
-  POST_COMBOS,
-  UPDATE_BURGER_BASE,
-  POST_BURGER_BASE,
 } from '../actions/actions';
 
 import {
@@ -215,14 +205,7 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
         purchaseInfo: action.payload,
       };
-    case UPDATE_BURGER:
-      return {
-        ...state,
-      };
-    case POST_BURGER:
-      return {
-        ...state,
-      };
+
     case DELETE_PRODUCT:
       return {
         ...state,
@@ -232,39 +215,7 @@ const rootReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         products: state.products.filter((item) => item.id !== action.payload),
-      };
-    case UPDATE_FRIES:
-      return {
-        ...state,
-      };
-    case UPDATE_BEVERAGE:
-      return {
-        ...state,
-      };
-    case POST_BEVERAGE:
-      return {
-        ...state,
-      };
-    case POST_FRIES:
-      return {
-        ...state,
-      };
-    case POST_COMBOS:
-      return {
-        ...state,
-      };
-    case UPDATE_COMBOS:
-      return {
-        ...state,
-      };
-    case UPDATE_BURGER_BASE:
-      return {
-        ...state,
-      };
-    case POST_BURGER_BASE:
-      return {
-        ...state,
-      };
+      };    
     default:
       return state;
   }
