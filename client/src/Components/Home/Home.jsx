@@ -12,7 +12,6 @@ import axios from 'axios';
 function Home() {
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useAuth0();
-
   useEffect(() => {
     if (isAuthenticated && user && !window.localStorage.getItem('user')) {
       const fetchData = async (payload) => {
