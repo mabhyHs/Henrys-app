@@ -22,7 +22,7 @@ function CreateOrEditFries({ data }) {
     id: '',
     name: '',
     price: '',
-    size: '',
+    size: 'Chico',
     imgUri: '',
     isVeggie: true,
   });
@@ -41,6 +41,14 @@ function CreateOrEditFries({ data }) {
       setRestore(true);
     }
   }, [dispatch, edit, isRestore, data]);
+
+  function isDisabledSubmit(){
+    return (
+        !input.name ||
+        !input.price ||
+        !input.size
+    )
+  }
 
   const onChange = (e) => {
     setInput({
@@ -78,7 +86,7 @@ function CreateOrEditFries({ data }) {
     } else {
 
         try {  
-            await createProduct("burgers", input);
+            await createProduct("fries", input);
             alertCustom(
                 input.name,
                 "Creada con exito!",
@@ -161,7 +169,7 @@ function CreateOrEditFries({ data }) {
             </Form.Group>
           </Row>
 
-          <Button onClick={onSubmit}>Confirmar</Button>
+          <Button onClick={onSubmit} disabled={isDisabledSubmit()}>Confirmar</Button>
           <hr />
         </Form>
       </Container>
