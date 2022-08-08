@@ -4,9 +4,9 @@
   width: 22rem;
   margin: 5rem auto;
   background-color: #222831;
-  box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
-  -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
+  box-shadow: var(--bs-card);
+  -webkit-box-shadow: var(--bs-btn);
+  -moz-box-shadow: var(--bs-btn);
 }
 
 .defaultreviews__mainCard__title {
@@ -30,9 +30,9 @@
   border-radius: 20px;
   width: 80%;
   margin: 0 auto 10px auto;
-  box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
-  -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.6);
+  box-shadow: var(--bs-card);
+  -webkit-box-shadow: var(--bs-btn);
+  -moz-box-shadow: var(--bs-btn);
 }
 
 @media (max-width: 481px) {
