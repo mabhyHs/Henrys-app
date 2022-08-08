@@ -40,6 +40,14 @@ function CreateOrEditBeverage({ data }) {
     }
   }, [edit, isRestore, data]);
 
+  function isDisabledSubmit(){
+    return (
+        !input.name ||
+        !input.price ||
+        !input.size
+    )
+  }
+
   const onChange = (e) => {
     setInput({
       ...input,
@@ -188,7 +196,7 @@ function CreateOrEditBeverage({ data }) {
             </Form.Group>
           </Row>
 
-          <Button onClick={onSubmit} variant="primary" type="submit">
+          <Button onClick={onSubmit} disabled={isDisabledSubmit()} variant="primary" type="submit">
             Confirmar
           </Button>
           <hr />
