@@ -1,6 +1,7 @@
 const userRepository = require("../repositories/user.repositories");
 const mercadopagoRepository = require("../repositories/mercadopago.repositories");
 const mercadopago = require("mercadopago");
+const orderRepositories = require("../repositories/order.repositories");
 
 mercadopago.configure({
   access_token: process.env.ACCESS_TOKEN,
@@ -24,8 +25,11 @@ async function check(req, res, next) {
       payer: {
         name: user.firstName,
         surname: user.lastName,
-        email: user.email,
+        email: user.email, //user.email // BORRAR EL MAIL
       },
+      notification_url:
+        (process.env.NGROK || process.env.HOST) +
+        "/pay/mercadopago/notification",
     };
 
     const mp = await mercadopago.preferences.create(preference);
@@ -49,4 +53,43 @@ async function getPaymentById(req, res, next) {
   }
 }
 
-module.exports = { check, getPaymentById };
+async function notification(req, res, next) {
+  try {
+    console.log("entro en notification");
+    const topic = req.query.topic || req.query.type;
+    let merchantOrder;
+    console.log(req.query);
+    console.log("body ------------------------");
+    console.log(req.body);
+    switch (topic) {
+      case "payment":
+        const paymentId = req.query.id || req.query["data.id"];
+        console.log(paymentId);
+        const payment = await mercadopago.payment.findById(paymentId);
+        merchantOrder = await mercadopago.merchant_orders.findById(
+          payment.body.order.id
+        );
+        const info = await mercadopagoRepository.getByPreference(
+          merchantOrder.body.preference_id
+        );
+        console.log(info.payer.email);
+        const user = await userRepository.getByEmail(info.payer.email);
+        await orderRepositories.create(user.id, {
+          purchaseId: paymentId,
+        });
+        break;
+      // case "merchant_order":
+      //   const orderId = req.query.id;
+      //   console.log(orderId);
+      //   merchantOrder = await mercadopago.merchant_orders.findById(orderId);
+      default:
+        break;
+    }
+
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { check, getPaymentById, notification };
