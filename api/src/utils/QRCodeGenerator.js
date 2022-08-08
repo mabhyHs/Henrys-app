@@ -2,7 +2,7 @@ const QRCode = require("qrcode");
 
 const QRCodeGenerator = async (data) => {
   try {
-    return await QRCode.toDataURL(JSON.stringify(data));
+    return await QRCode.toDataURL(data);
   } catch (err) {
     console.log(err);
   }
