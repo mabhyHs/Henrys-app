@@ -3,24 +3,22 @@ const { Order } = require("../models");
 const mercadopagoRepository = require("../repositories/mercadopago.repositories");
 const { transporter } = require("../config/emailTransporter");
 
-async function create(user_id, data, user) {
+async function create(data, user) {
 
     try {
         const order = await Order.create(data);  
-  await order.addCustomer(user_id);
-  const orderAndUser = await Order.findByPk(order.purchaseId, {
+        await order.addCustomer(user.id);
+        const orderAndUser = await Order.findByPk(order.purchaseId, {
     include: {
       association: "customer",
       attributes: { exclude: ["password"] },
     },
   });
 
-  console.log("xxadsxx" + data.purchaseId)
   const receipt = await mercadopagoRepository.getPaymentById(
     data.purchaseId
   );
 
-  console.log("kkkkkkkkkkkkk")
   await transporter.sendMail({
     from: '"Recibo de compra" <henrysBurger2022@gmail.com',
     to: user.email,
@@ -265,7 +263,7 @@ async function create(user_id, data, user) {
                         text-align: center;
                       "
                     >
-                      ${user.lastName} ${user.name}, te
+                      ${user.lastName} ${user.firstName}, te
                       acercamos la factura con información de tu transacción.
                     </p>
                   </td>
@@ -328,7 +326,7 @@ async function create(user_id, data, user) {
                             padding: 15px 10px 5px 10px;
                           "
                         >
-                        - ${e.quantity} ${e.title}
+                        * ${e.quantity} ${e.title}
                         </td>
                         <td
                           width="25%"
@@ -342,7 +340,7 @@ async function create(user_id, data, user) {
                             padding: 15px 10px 5px 10px;
                           "
                         >
-                          $ ${e.unit_price}
+                          $ ${e.unit_price + "c/u"}
                         </td>
                       </tr>
                       `
@@ -574,8 +572,6 @@ async function create(user_id, data, user) {
 </html>
     `,
   });
-
-  console.log("kkkkkkkkkkkkk")
 
   return orderAndUser;
     } catch (error) {

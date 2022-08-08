@@ -74,7 +74,7 @@ async function notification(req, res, next) {
         );
         console.log(info.payer.email);
         const user = await userRepository.getByEmail(info.payer.email);
-        await orderRepositories.create(user.id, {
+        await orderRepositories.create({
           purchaseId: paymentId,
         }, user);
         break;
