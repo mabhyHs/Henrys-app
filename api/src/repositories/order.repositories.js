@@ -1,8 +1,7 @@
 const { Op } = require("sequelize");
 const { Order } = require("../models");
 const mercadopagoRepository = require("../repositories/mercadopago.repositories");
-
-
+const { transporter } = require("../config/emailTransporter");
 
 async function create(user_id, data, user) {
 
@@ -16,7 +15,7 @@ async function create(user_id, data, user) {
     },
   });
 
-  console.log("xxxx" + data.purchaseId)
+  console.log("xxadsxx" + data.purchaseId)
   const receipt = await mercadopagoRepository.getPaymentById(
     data.purchaseId
   );
