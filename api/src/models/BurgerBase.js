@@ -31,6 +31,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: false,
       },
+      type: {
+        type: DataTypes.STRING,
+        defaultValue: "burgerBase",
+        allowNull: false,
+      },
     },
     {
       sequelize,
