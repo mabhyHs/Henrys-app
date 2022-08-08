@@ -1,17 +1,44 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { postReview } from '../../../Redux/actions/actions';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Swal from 'sweetalert2';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 import './UserReview.css';
 
 function UserReview() {
+  const navigate = useNavigate();
+  const { purchaseId } = useParams();
   const dispatch = useDispatch();
   const sesionInfo = useSelector((state) => state.loginState);
   const [errors, setErrors] = useState({});
   const [isSubmited, setSubmited] = useState(false);
+
+  useEffect(() => {
+    async function validateReviewById(purchaseId) {
+      try {
+        const user = JSON.parse(window.localStorage.getItem('user'));
+        const order = (
+          await axios.get(`/orders/${purchaseId}`, {
+            headers: {
+              'auth-token': user.token,
+            },
+          })
+        ).data;
+
+        if (order.review) {
+          navigate('/quedicendenosotros');
+        }
+      } catch (error) {
+        console.log(error);
+        navigate('/quedicendenosotros');
+      }
+    }
+    validateReviewById(purchaseId);
+  }, [dispatch]);
 
   const [input, setInput] = useState({
     rating: 0,
@@ -42,10 +69,22 @@ function UserReview() {
     return errors;
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     dispatch(postReview(input));
+    const user = JSON.parse(window.localStorage.getItem('user'));
+    await axios.put(
+      `/orders/reviews/${purchaseId}`,
+      {
+        review: true,
+      },
+      {
+        headers: {
+          'auth-token': user.token,
+        },
+      }
+    );
     Swal.fire({
       customClass: {
         confirmButton: 'confirmBtnSwal',
@@ -60,6 +99,7 @@ function UserReview() {
     });
     setInput({ rating: 0, description: '' });
     setSubmited(true);
+    navigate('/quedicendenosotros');
   }
 
   return (
