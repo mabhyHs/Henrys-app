@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom';
 import { alertCustom, createProduct, updateProduct } from '../../../../requests';
 import './CreateOrEditFries.css';
+import { postImageToCloudinary } from '../../../../methods';
 
 function CreateOrEditFries({ data }) {
   const navigate = useNavigate();
@@ -49,6 +50,19 @@ function CreateOrEditFries({ data }) {
       [e.target.name]: e.target.value,
     });
   };
+
+  async function setImg(e){
+    const result = await postImageToCloudinary(e);
+
+    if(result){
+        setInput({
+            ...input,
+            imgUri: result,
+        });
+    } else {
+        e.target.value = "";
+    }
+  }
 
   function isEdit() {
     return data && Object.keys(data).length;
@@ -103,6 +117,7 @@ function CreateOrEditFries({ data }) {
         <h2>{edit ? 'Editar Papas Fritas' : 'Crear Papas Fritas'}</h2>
 
         <img src={input.imgUri ? input.imgUri : ""} alt="img not"></img>
+        
         <Form>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridName">
@@ -131,7 +146,7 @@ function CreateOrEditFries({ data }) {
             <Form.Label>Imagen</Form.Label>
             <Form.Control
               placeholder='Url de la imagen'
-              onChange={onChange}
+              onChange={setImg}
               type="file"
               name="imgUri"
             ></Form.Control>

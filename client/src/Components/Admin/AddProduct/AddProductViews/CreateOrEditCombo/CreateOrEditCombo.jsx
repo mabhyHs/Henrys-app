@@ -13,6 +13,7 @@ import {
 } from '../../../../../Redux/actions/actions';
 import './CreateOrEditCombo.css';
 import { alertCustom, createProduct, updateProduct } from '../../../../requests';
+import { postImageToCloudinary } from '../../../../methods';
 
 function CreateOrEditCombo({ data }) {
 
@@ -71,6 +72,19 @@ function CreateOrEditCombo({ data }) {
       [e.target.name]: e.target.value,
     });
   };
+
+  async function setImg(e){
+    const result = await postImageToCloudinary(e);
+
+    if(result){
+        setInput({
+            ...input,
+            imgUri: result,
+        });
+    } else {
+        e.target.value = "";
+    }
+  }
 
   const setVeggie = (e) => {
     setInput({
@@ -194,6 +208,9 @@ function CreateOrEditCombo({ data }) {
     <Container>
       <div className="editCombo__container">
         <h2>{edit ? 'Editar Combo' : 'Crear Combo'}</h2>
+
+        <img src={input.imgUri ? input.imgUri : ""} alt="img not"></img>
+
         <Form>
           <hr />
           <Row className="mb-3">
@@ -224,10 +241,9 @@ function CreateOrEditCombo({ data }) {
             <Form.Label>Imagen</Form.Label>
             <Form.Control
               placeholder='Url de la imagen'
-              onChange={onChange}
-              type="url"
+              onChange={setImg}
+              type="file"
               name="imgUri"
-              value={input.imgUri}
             ></Form.Control>
           </Form.Group>
 

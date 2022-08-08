@@ -11,6 +11,7 @@ import {
 } from '../../../../../Redux/actions/actions';
 import { alertCustom, createProduct, updateProduct } from '../../../../requests';
 import './CreateOrEditBurger.css';
+import { postImageToCloudinary } from '../../../../methods';
 
 function CreateOrEditBurger({ data }) {
   const navigate = useNavigate();
@@ -57,6 +58,19 @@ function CreateOrEditBurger({ data }) {
       [e.target.name]: e.target.value,
     });
   };
+
+  async function setImg(e){
+    const result = await postImageToCloudinary(e);
+
+    if(result){
+        setInput({
+            ...input,
+            imgUri: result,
+        });
+    } else {
+        e.target.value = "";
+    }
+  }
 
   const setVeggie = (e) => {
     setInput({
@@ -170,6 +184,9 @@ function CreateOrEditBurger({ data }) {
     <Container>
       <div className="editBurger__container">
         <h2>{edit ? 'Editar Hamburguesa' : 'Crear Hamburguesa'}</h2>
+
+        <img src={input.imgUri ? input.imgUri : ""} alt="img not"></img>
+
         <Form>
           <hr />
           <Row className="mb-3">
@@ -200,10 +217,9 @@ function CreateOrEditBurger({ data }) {
               <Form.Label>Imagen</Form.Label>
               <Form.Control
                 placeholder='Url de la imagen'
-                onChange={onChange}
-                type="url"
+                onChange={setImg}
+                type="file"
                 name="imgUri"
-                value={input.imgUri}
               ></Form.Control>
             </Form.Group>
           </Row>

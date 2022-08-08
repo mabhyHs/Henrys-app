@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import { alertCustom, createProduct, updateProduct } from '../../../../requests';
 import { useNavigate } from 'react-router-dom';
 import './CreateOrEditBurgerBase.css';
+import { postImageToCloudinary } from '../../../../methods';
 
 function CreateOrEditBurgerBase({ data }) {
   const navigate = useNavigate();
@@ -47,6 +48,19 @@ function CreateOrEditBurgerBase({ data }) {
       [e.target.name]: e.target.value,
     });
   };
+
+  async function setImg(e){
+    const result = await postImageToCloudinary(e);
+
+    if(result){
+        setInput({
+            ...input,
+            imgUri: result,
+        });
+    } else {
+        e.target.value = "";
+    }
+  }
 
   function isEdit() {
     return data && Object.keys(data).length;
@@ -99,6 +113,9 @@ function CreateOrEditBurgerBase({ data }) {
     <div>
       <Container className="editBurgerBase__container">
         <h2>Editar Burger Base</h2>
+
+        <img src={input.imgUri ? input.imgUri : ""} alt="img not"></img>
+
         <Form>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridName">
@@ -127,10 +144,9 @@ function CreateOrEditBurgerBase({ data }) {
             <Form.Label>Imagen</Form.Label>
             <Form.Control
               placeholder='Url de la imagen'
-              onChange={onChange}
-              type="url"
+              onChange={setImg}
+              type="file"
               name="imgUri"
-              value={input.imgUri}
             ></Form.Control>
           </Form.Group>
 

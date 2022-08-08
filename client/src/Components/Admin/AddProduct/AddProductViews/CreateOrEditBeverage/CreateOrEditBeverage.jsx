@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom';
 import { alertCustom, createProduct, updateProduct } from '../../../../requests';
 import './CreateOrEditBeverage.css';
+import { postImageToCloudinary } from '../../../../methods';
 
 function CreateOrEditBeverage({ data }) {
   const navigate = useNavigate();
@@ -53,6 +54,19 @@ function CreateOrEditBeverage({ data }) {
       [e.target.name]: e.target.value,
     });
   };
+
+  async function setImg(e){
+    const result = await postImageToCloudinary(e);
+
+    if(result){
+        setInput({
+            ...input,
+            imgUri: result,
+        });
+    } else {
+        e.target.value = "";
+    }
+  }
 
   function isEdit() {
     return data && Object.keys(data).length;
@@ -105,6 +119,9 @@ function CreateOrEditBeverage({ data }) {
     <Container>
       <div className="editBeverage__container">
         <h2>{edit ? 'Editar Bebidas' : 'Crear Bebidas'}</h2>
+
+        <img src={input.imgUri ? input.imgUri : ""} alt="img not"></img>
+
         <Form>
           <hr />
           <Row className="mb-3">
@@ -135,10 +152,9 @@ function CreateOrEditBeverage({ data }) {
             <Form.Label>Imagen *</Form.Label>
             <Form.Control
               placeholder='Url de la imagen'
-              onChange={onChange}
-              type="url"
+              onChange={setImg}
+              type="file"
               name="imgUri"
-              value={input.imgUri}
             ></Form.Control>
           </Form.Group>
 
