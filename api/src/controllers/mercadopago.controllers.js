@@ -25,11 +25,15 @@ async function check(req, res, next) {
       payer: {
         name: user.firstName,
         surname: user.lastName,
-        email: user.email, //user.email // BORRAR EL MAIL
+        email: user.email,
       },
       notification_url:
         (process.env.NGROK || process.env.HOST) +
         "/pay/mercadopago/notification",
+      payment_methods: {
+        installments: 3,
+      },
+      metadata: { note: req.body.note },
     };
 
     const mp = await mercadopago.preferences.create(preference);
@@ -55,12 +59,8 @@ async function getPaymentById(req, res, next) {
 
 async function notification(req, res, next) {
   try {
-    console.log("entro en notification");
     const topic = req.query.topic || req.query.type;
     let merchantOrder;
-    console.log(req.query);
-    console.log("body ------------------------");
-    console.log(req.body);
     switch (topic) {
       case "payment":
         const paymentId = req.query.id || req.query["data.id"];
@@ -72,11 +72,13 @@ async function notification(req, res, next) {
         const info = await mercadopagoRepository.getByPreference(
           merchantOrder.body.preference_id
         );
-        console.log(info.payer.email);
         const user = await userRepository.getByEmail(info.payer.email);
-        await orderRepositories.create({
-          purchaseId: paymentId,
-        }, user);
+        await orderRepositories.create(
+          {
+            purchaseId: paymentId,
+          },
+          user
+        );
         break;
       // case "merchant_order":
       //   const orderId = req.query.id;
