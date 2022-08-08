@@ -51,6 +51,19 @@ function UserLoggedInDropdown({ userData, logoutSession }) {
             </Button>
           </Dropdown.ItemText>
         )}
+
+        {userData.role === 'employee' && (
+          <Dropdown.ItemText>
+            <Button
+              as={Link}
+              to="/employeehome"
+              variant="secondary"
+              className="userLoggedIn__panelAdminBtn"
+            >
+              Empleado
+            </Button>
+          </Dropdown.ItemText>
+        )}
       </Dropdown.Menu>
     </Dropdown>
   );
