@@ -7,6 +7,7 @@ import { getFavorites } from '../../../Redux/actions/actions';
 
 import './UserFavorites.css';
 import Loading from '../../Loading/Loading';
+import Container from 'react-bootstrap/esm/Container';
 
 function UserFavorites() {
   const dispatch = useDispatch();
@@ -24,19 +25,30 @@ function UserFavorites() {
   }, [dispatch]);
 
   return (
-    <div className="userFav__container mb-5">
-      <h1 className="mt-5">Mis favoritos</h1>
-      {loading ? (
-        <Loading />
-      ) : (
-        favoritosId?.map((id) => (
-          <UserFavoritesCard id={id} key={id} favoritosId={favoritosId} />
-        ))
-      )}
-      <Button as={Link} to="/userprofiledashboard">
-        Volver
-      </Button>
-    </div>
+    <Container>
+      <div className="userFav__container mb-5">
+        <h1 className="mt-5">Mis favoritos</h1>
+        <hr />
+        {favoritosId && favoritosId?.length === 0 ? (
+          <>
+            <div>
+              <p className="emptyFav__text">
+                Todavia no tenés ningún producto en favoritos, date una vuelta
+                por menú, dejate tentar y guardalo si te gustó así está lo mejor
+                siempre cerca.
+              </p>
+            </div>
+            <Link to="/menu" className="mt-4">
+              <Button>Ir al Menú</Button>
+            </Link>
+          </>
+        ) : (
+          favoritosId?.map((id) => (
+            <UserFavoritesCard id={id} key={id} favoritosId={favoritosId} />
+          ))
+        )}
+      </div>
+    </Container>
   );
 }
 
