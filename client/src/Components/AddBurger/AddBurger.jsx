@@ -8,6 +8,7 @@ import {
 } from '../../Redux/actions/actions';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import baseNone from '../../Assets/Images/burgerbase-none.png';
 
 import Swal from 'sweetalert2';
 
@@ -28,7 +29,6 @@ const modificarIngredientes = function (
   }
   setPrecio((precio = sumaTotal));
 };
-
 
 const precioPrimeraVez = function (precio, setPrecio, ingredientes) {
   let sumaTotal = 0;
@@ -68,7 +68,7 @@ function AddBurger() {
   const [ingredientsAdd, setIngredientsAdd] = useState([]);
   const [precio, setPrecio] = useState(0);
   const [selectBurger, setSelectBurger] = useState({});
-  const [selectBurgerOpt, setSelectBurgerOpt] = useState("0");
+  const [selectBurgerOpt, setSelectBurgerOpt] = useState('0');
 
   const itemsToCart = useSelector((state) => state.cart);
   const [mount, setMount] = useState(true);
@@ -94,21 +94,20 @@ function AddBurger() {
   }, [dispatch, itemsToCart, mount]);
 
   const crearBurguer = function (setPrecio, ingredientes, setIngredientsAdd) {
-
-    if(!Object.keys(selectBurger).length){
-        Swal.fire({
-            customClass: {
-              confirmButton: 'confirmBtnSwal',
-            },
-            title: 'Oops...',
-            text: 'Primero debes seleccionar una hamburguesa base!',
-            imageUrl:
-              'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
-            imageWidth: 150,
-            imageHeight: 150,
-            imageAlt: 'Logo henrys',
-          });
-        return;
+    if (!Object.keys(selectBurger).length) {
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Oops...',
+        text: 'Primero debes seleccionar una hamburguesa base!',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
+      return;
     }
 
     setPrecio(0.0);
@@ -126,7 +125,7 @@ function AddBurger() {
     });
 
     const isVeggie = selectBurger.isVeggie;
-    const name = isVeggie ? "Burger vegetariana " : "Burger custom "
+    const name = isVeggie ? 'Burger vegetariana ' : 'Burger custom ';
 
     const burgerCustom = {
       id: uuidv4(),
@@ -135,11 +134,11 @@ function AddBurger() {
       isVeggie,
       price: getTotal(selectBurger.price, precio),
       ingredients: ingredientsAdd,
-      imgUri: selectBurger.imgUri
+      imgUri: selectBurger.imgUri,
     };
     setIngredientsAdd((ingredientes = []));
     setSelectBurger({});
-    setSelectBurgerOpt("0");
+    setSelectBurgerOpt('0');
     addToCart(burgerCustom);
   };
 
@@ -175,40 +174,39 @@ function AddBurger() {
     precio,
     setPrecio
   ) {
-  
-      if(!Object.keys(selectBurger).length){
-          Swal.fire({
-              customClass: {
-                confirmButton: 'confirmBtnSwal',
-              },
-              title: 'Oops...',
-              text: 'Primero debes seleccionar una hamburguesa base!',
-              imageUrl:
-                'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
-              imageWidth: 150,
-              imageHeight: 150,
-              imageAlt: 'Logo henrys',
-            });
-          return;
-      }
-  
+    if (!Object.keys(selectBurger).length) {
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Oops...',
+        text: 'Primero debes seleccionar una hamburguesa base!',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
+      return;
+    }
+
     const ingredienteSelect = igrGlobal.find((i) => i.name === e.target.value);
-  
+
     if (!ingredienteSelect) return;
-  
+
     let prueba = [];
-  
+
     for (const ele of ingredientes) {
       if (ele.name === ingredienteSelect.name) {
         prueba.push(ele);
       }
     }
-  
+
     if (prueba.length > 0) {
       prueba = [];
     } else {
       ingredienteSelect.cantidad = 1;
-  
+
       if ([...ingredientes, ingredienteSelect].length <= 6) {
         cb((ingredientes = [...ingredientes, ingredienteSelect]));
         const copiaIngredientes = [...ingredientes];
@@ -228,21 +226,21 @@ function AddBurger() {
         });
       }
     }
-  };
+  }
 
   function ingredientsNotSelect() {
-    let notSelect = ingredients.map(e => e);
-    
-    if(selectBurger.isVeggie === true){
-        notSelect = notSelect.filter(f => f.isVeggie === true);
+    let notSelect = ingredients.map((e) => e);
+
+    if (selectBurger.isVeggie === true) {
+      notSelect = notSelect.filter((f) => f.isVeggie === true);
     }
 
     if (!ingredientsAdd || !ingredientsAdd.length) {
       return notSelect;
     }
 
-    if(selectBurger.isVeggie === true){
-        notSelect = notSelect.filter(f => f.isVeggie === true);
+    if (selectBurger.isVeggie === true) {
+      notSelect = notSelect.filter((f) => f.isVeggie === true);
     }
 
     for (let j = 0; j < notSelect.length; j++) {
@@ -260,16 +258,16 @@ function AddBurger() {
     return notSelect;
   }
 
-  function setBurger(e){
-    const find = burgerBase.find(burger => burger.id === e.target.value);
+  function setBurger(e) {
+    const find = burgerBase.find((burger) => burger.id === e.target.value);
     setPrecio(0.0);
     setIngredientsAdd([]);
-    if(!find){
-        setSelectBurger({})
-        setSelectBurgerOpt("0");
+    if (!find) {
+      setSelectBurger({});
+      setSelectBurgerOpt('0');
     } else {
-        setSelectBurger(find);
-        setSelectBurgerOpt(find.id);
+      setSelectBurger(find);
+      setSelectBurgerOpt(find.id);
     }
   }
 
@@ -283,15 +281,26 @@ function AddBurger() {
             <div className="addBurger__selectContainer">
               <div className="burgerBase__select">
                 <span>Hamburguesa base:</span>
-                <select value={selectBurgerOpt} onChange={setBurger} name="burgerBase" className="addBurger__select">
-
-                <option value="0" disabled="">
+                <select
+                  value={selectBurgerOpt}
+                  onChange={setBurger}
+                  name="burgerBase"
+                  className="addBurger__select"
+                >
+                  <option value="0" disabled="">
                     Escoge tu hamburguesa
                   </option>
-                    {burgerBase && burgerBase.length > 0 && burgerBase?.map(burger =>                         
-                        <option value={burger.id} key={burger.id} className="addBurger__option">{burger.name}</option>
-                    )}
-
+                  {burgerBase &&
+                    burgerBase.length > 0 &&
+                    burgerBase?.map((burger) => (
+                      <option
+                        value={burger.id}
+                        key={burger.id}
+                        className="addBurger__option"
+                      >
+                        {burger.name}
+                      </option>
+                    ))}
                 </select>
               </div>
               <div className="ingredients__select">
@@ -311,7 +320,7 @@ function AddBurger() {
                   }
                   value={'default'}
                 >
-                  <option key={1000} disabled={""} defaultValue>
+                  <option key={1000} disabled={''} defaultValue>
                     Escoge tus ingredientes
                   </option>
                   {ingredientsNotSelect().length > 0 &&
@@ -332,7 +341,6 @@ function AddBurger() {
               <ul className="addBurger__ul">
                 {ingredientsAdd.map((i) => (
                   <div className="addBurger__ul__liContainer" key={i.id}>
-                    
                     <button
                       className="addBurger__ul__closeButton"
                       onClick={() =>
@@ -349,62 +357,68 @@ function AddBurger() {
                     </button>
 
                     <li className="addBurger__ul__li" key={i.id}>
-                      {i.isRepeat ? i.name + ' - $' + i.price + ' c/u' : i.name + ' - $' + i.price}
+                      {i.isRepeat
+                        ? i.name + ' - $' + i.price + ' c/u'
+                        : i.name + ' - $' + i.price}
                     </li>
 
-                    {i.isRepeat && 
-                        <button
+                    {i.isRepeat && (
+                      <button
                         name="menos"
                         className="addBurger__ul__plusAndMinus"
                         onClick={(e) =>
-                            cambiarCantidad(
-                                e,
-                                i.id,
-                                ingredientsAdd,
-                                setIngredientsAdd,
-                                precio,
-                                setPrecio
-                            )
-                            }
-                        >
-                        -
-                        </button>
-                    }
-
-                    <span className="addBurger__ul__cantidad">
-                      {' '}
-                      {i.cantidad}
-                    </span>
-                   
-                    {i.isRepeat && 
-                        <button
-                        name="mas"
-                        className="addBurger__ul__plusAndMinus"
-                        onClick={(e) =>
-                            cambiarCantidad(
+                          cambiarCantidad(
                             e,
                             i.id,
                             ingredientsAdd,
                             setIngredientsAdd,
                             precio,
                             setPrecio
-                            )
+                          )
                         }
-                        >
-                        +
-                        </button>
-                    }
+                      >
+                        -
+                      </button>
+                    )}
 
+                    <span className="addBurger__ul__cantidad">
+                      {' '}
+                      {i.cantidad}
+                    </span>
+
+                    {i.isRepeat && (
+                      <button
+                        name="mas"
+                        className="addBurger__ul__plusAndMinus"
+                        onClick={(e) =>
+                          cambiarCantidad(
+                            e,
+                            i.id,
+                            ingredientsAdd,
+                            setIngredientsAdd,
+                            precio,
+                            setPrecio
+                          )
+                        }
+                      >
+                        +
+                      </button>
+                    )}
                   </div>
                 ))}
               </ul>
             </div>
-            <p className="addBurger__descriptionText">{selectBurger.description ? selectBurger.description : "."}</p>
+            <p className="addBurger__descriptionText">
+              *
+              {selectBurger.description
+                ? selectBurger.description
+                : 'Debes elegir una hamburguesa base para continuar'}
+            </p>
           </div>
           <div>
             <img
-              src={selectBurger.imgUri ? selectBurger.imgUri : ""}
-              alt=""
+              src={selectBurger.imgUri ? selectBurger.imgUri : baseNone}
+              alt="imagen de una hamburguesa"
               className="addBurger__image img-fluid"
             />
           </div>

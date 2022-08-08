@@ -145,7 +145,8 @@
 }
 .burgerBase__select,
 .ingredients__select {
-  padding: 0.5rem;
+  width: 20rem;
+  padding: 0 0.5rem 0 0.5rem;
 }
 
 .addBurger__descriptionText {
