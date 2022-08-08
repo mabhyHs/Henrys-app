@@ -24,15 +24,11 @@ function AddProductHome() {
     order: '',
     search: '',
     isVeggie: '',
-    paranoid: '',
+    isDeleted: '',
   });
 
   function setFilter(name, value) {
     if (filters[name] === 'true' && value === 'true') {
-      setFilters({ ...filters, [name]: '' });
-    }
-
-    if (filters[name] === 'false' && value === 'false') {
       setFilters({ ...filters, [name]: '' });
     }
 
@@ -53,7 +49,7 @@ function AddProductHome() {
           filters.order,
           filters.search,
           filters.isVeggie,
-          filters.paranoid
+          filters.isDeleted
         )
       );
       mount.current = true;
@@ -65,7 +61,7 @@ function AddProductHome() {
           filters.order,
           filters.search,
           filters.isVeggie,
-          filters.paranoid
+          filters.isDeleted
         )
       );
     }
@@ -77,7 +73,10 @@ function AddProductHome() {
         <h2>Gestioná tus productos</h2>
         <AddProductsFilters setFilter={setFilter} filters={filters} />
         <AdminSearchBarProduct setFilter={setFilter} />
-        <ProductsCardAdminContainer currentProduct={currentProduct} />
+        <ProductsCardAdminContainer
+          currentProduct={currentProduct}
+          isDeleted={!filters.isDeleted.length}
+        />
         <AdminPagination
           burgersPerPage={burgersPerPage}
           allProducts={allProducts.length}

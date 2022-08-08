@@ -17,6 +17,8 @@ function EditProducts() {
   const { id } = useParams();
   const product = useSelector((state) => state.productDetail);
 
+  console.log(product);
+
   useEffect(() => {
     dispatch(getProductById(id));
     dispatch(getBurgerBase());
@@ -27,10 +29,10 @@ function EditProducts() {
 
   return (
     <div>
-      {product.type === 'burger' && <CreateOrEditBurger data={product} />}
+      {product.type === 'burgers' && <CreateOrEditBurger data={product} />}
       {product.type === 'fries' && <CreateOrEditFries data={product} />}
-      {product.type === 'beverage' && <CreateOrEditBeverage data={product} />}
-      {product.type === 'combo' && <CreateOrEditCombo data={product} />}
+      {product.type === 'beverages' && <CreateOrEditBeverage data={product} />}
+      {product.type === 'combos' && <CreateOrEditCombo data={product} />}
       {!product.type && <CreateOrEditBurgerBase data={product} />}
     </div>
   );

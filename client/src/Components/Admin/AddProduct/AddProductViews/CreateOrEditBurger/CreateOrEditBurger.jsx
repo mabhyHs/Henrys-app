@@ -4,18 +4,26 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
-
-import './CreateOrEditBurger.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients } from '../../../../../Redux/actions/actions';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import {
+  getIngredients,
+  postBurgers,
+  updateBurger,
+} from '../../../../../Redux/actions/actions';
+import Swal from 'sweetalert2';
+import './CreateOrEditBurger.css';
 
 function CreateOrEditBurger({ data }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const ingredientes = useSelector((state) => state.ingredients);
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
+  const [selectIngredient, setSelectIngredient] = useState([]);
+  const [ingredientOp, setIngredienOp] = useState([]);
   const [input, setInput] = useState({
+    id: '',
     name: '',
     price: '',
     ingredient: [],
@@ -27,14 +35,17 @@ function CreateOrEditBurger({ data }) {
     dispatch(getIngredients());
     if (edit && !isRestore) {
       setInput({
+        id: data.id,
         name: data.name,
         price: data.price,
-        ingredient: data.ingredient,
-        imgUri: '',
+        ingredient: data.ingredient.map((el) => el.id),
+        imgUri: data.imgUri,
         isVeggie: data.isVeggie,
       });
+      setSelectIngredient(data.ingredient.map((el) => el));
       setRestore(true);
     }
+    console.log(selectIngredient);
   }, [dispatch, edit, isRestore]);
 
   const onChange = (e) => {
@@ -44,32 +55,101 @@ function CreateOrEditBurger({ data }) {
     });
   };
 
+  const setVeggie = (e) => {
+    onChange(e);
+    setSelectIngredient([]);
+  };
+
+  function ingredientsNotSelect() {
+    let notSelect = ingredientes.map((e) => e);
+
+    if (input.isVeggie === 'true') {
+      notSelect = notSelect.filter((f) => f.isVeggie === true);
+    }
+
+    if (!selectIngredient || !selectIngredient.length) {
+      return notSelect;
+    }
+
+    for (let j = 0; j < notSelect.length; j++) {
+      const all = notSelect[j];
+
+      for (let i = 0; i < selectIngredient.length; i++) {
+        const add = selectIngredient[i];
+
+        if (all === add) {
+          notSelect.splice(j, 1);
+          j--;
+        }
+      }
+    }
+    return notSelect;
+  }
+
   function isEdit() {
     return data && Object.keys(data).length;
   }
 
   function handleSelect(e) {
-    if (!input.ingredient.includes(e.target.value)) {
+    const ingredientFind = ingredientes.find(
+      (el) => el.id === Number(e.target.value)
+    );
+    console.log(e.target.value);
+    if (ingredientFind) {
       setInput({
         ...input,
         ingredient: [...input.ingredient, e.target.value],
       });
+      setSelectIngredient([...selectIngredient, ingredientFind]);
     }
   }
 
   function handleDelete(e) {
+    const ingredientFind = ingredientes.find(
+      (el) => el.name === e.target.value
+    );
     setInput({
       ...input,
-      ingredient: input.ingredient.filter((c) => c !== e),
+      ingredient: input.ingredient.filter((c) => c !== ingredientFind.id),
     });
+    setSelectIngredient([
+      ...selectIngredient.filter((c) => c.name !== e.target.value),
+    ]);
   }
 
-  const onSubmit = async () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(input);
     if (edit) {
-      // put
+      dispatch(updateBurger(input));
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: `${input.name}`,
+        text: 'Actualizada con exito',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
     } else {
-      // post
+      dispatch(postBurgers({ ...input, id: undefined }));
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: `${input.name}`,
+        text: 'Creada con exito',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
     }
+    navigate('/adminproducts');
   };
 
   return (
@@ -104,7 +184,7 @@ function CreateOrEditBurger({ data }) {
               <Form.Label>Imagen</Form.Label>
               <Form.Control
                 onChange={onChange}
-                type="file"
+                type="url"
                 name="imgUri"
                 value={input.imgUri}
               ></Form.Control>
@@ -114,14 +194,13 @@ function CreateOrEditBurger({ data }) {
             <Form.Group as={Col} controlId="isVeggie">
               <Form.Label>Vegetariano</Form.Label>
               <Form.Select
-                onChange={onChange}
+                onChange={setVeggie}
                 defaultValue="Es Veggie"
                 value={input.isVeggie}
                 name="isVeggie"
               >
-                <option>Es Veggie?</option>
-                <option>Si</option>
-                <option>No</option>
+                <option value={true}>Si</option>
+                <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
 
@@ -133,18 +212,24 @@ function CreateOrEditBurger({ data }) {
               <Form.Label>Ingredientes</Form.Label>
               <Form.Select defaultValue="seleccionar">
                 <option>Seleccionar</option>
-                {ingredientes &&
-                  ingredientes?.map((el) => (
-                    <option key={el.id}>{el.name}</option>
+                {ingredientsNotSelect().length > 0 &&
+                  ingredientsNotSelect().map((el) => (
+                    <option value={el.id} key={el.id}>
+                      {el.name}
+                    </option>
                   ))}
               </Form.Select>
             </Form.Group>
             <div>
-              {input.ingredient &&
-                input.ingredient.map((e) => (
-                  <div key={e.id || e}>
-                    <p>{e.name || e}</p>
-                    <button type="button" onClick={() => handleDelete(e)}>
+              {selectIngredient &&
+                selectIngredient.map((e) => (
+                  <div key={e.id}>
+                    <p>{e.name}</p>
+                    <button
+                      value={e.name}
+                      type="button"
+                      onClick={(e) => handleDelete(e)}
+                    >
                       X
                     </button>
                   </div>
@@ -152,7 +237,7 @@ function CreateOrEditBurger({ data }) {
             </div>
           </Row>
 
-          <Button onSubmit={onSubmit} variant="primary" type="submit">
+          <Button onClick={onSubmit} variant="primary" type="submit">
             Confirmar
           </Button>
           <hr />

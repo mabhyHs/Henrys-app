@@ -5,12 +5,26 @@ import { PencilSquare } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 
 import './ProductCardAdmin.css';
+import { useDispatch } from 'react-redux';
+import {
+  deleteProduct,
+  restoreProduct,
+} from '../../../../Redux/actions/actions';
 
-function ProductCardAdmin({ data }) {
+function ProductCardAdmin({ data, isDeleted }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const isType = () => {
     navigate(`/admineditproducts/${data.id}`);
+  };
+
+  const onDelete = () => {
+    if (isDeleted) {
+      dispatch(deleteProduct(data.id, data.type));
+    } else {
+      dispatch(restoreProduct(data.id, data.type));
+    }
   };
 
   return (
@@ -27,6 +41,7 @@ function ProductCardAdmin({ data }) {
         <Button onClick={isType} variant="secondary">
           <PencilSquare />
         </Button>
+        <button onClick={onDelete}>{isDeleted ? 'Borrar' : 'Restaurar'}</button>
       </Card.Body>
     </Card>
   );

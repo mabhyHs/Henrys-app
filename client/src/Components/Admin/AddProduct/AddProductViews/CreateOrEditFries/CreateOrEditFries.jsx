@@ -4,17 +4,25 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFries } from '../../../../../Redux/actions/actions';
+import {
+  getFries,
+  postFries,
+  updateFries,
+} from '../../../../../Redux/actions/actions';
 
 import './CreateOrEditFries.css';
 
 function CreateOrEditFries({ data }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const fries = useSelector((state) => state.fries);
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
   const [input, setInput] = useState({
+    id: '',
     name: '',
     price: '',
     size: '',
@@ -26,6 +34,7 @@ function CreateOrEditFries({ data }) {
     dispatch(getFries('fries'));
     if (edit && !isRestore) {
       setInput({
+        id: data.id,
         name: data.name,
         price: data.price,
         size: data.size,
@@ -35,8 +44,6 @@ function CreateOrEditFries({ data }) {
       setRestore(true);
     }
   }, [dispatch, edit, isRestore]);
-
-  console.log(fries);
 
   const onChange = (e) => {
     setInput({
@@ -49,29 +56,38 @@ function CreateOrEditFries({ data }) {
     return data && Object.keys(data).length;
   }
 
-  function handleSelect(e) {
-    if (!input.ingredient.includes(e.target.value)) {
-      setInput({
-        ...input,
-        ingredient: [...input.ingredient, e.target.value],
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (edit) {
+      dispatch(updateFries(input));
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: `${input.name}`,
+        text: 'Actualizada con exito',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
+    } else {
+      dispatch(postFries({ ...input, id: undefined }));
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: `${input.name}`,
+        text: 'Creada con exito',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
       });
     }
-  }
-
-  function handleDelete(e) {
-    setInput({
-      ...input,
-      ingredient: input.ingredient.filter((c) => c !== e),
-    });
-  }
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    if (edit) {
-      // put
-    } else {
-      // post
-    }
+    navigate('/adminproducts');
   };
 
   return (
@@ -104,7 +120,7 @@ function CreateOrEditFries({ data }) {
             <Form.Label>Imagen</Form.Label>
             <Form.Control
               onChange={onChange}
-              type="file"
+              type="url"
               name="imgUri"
               value={input.imgUri}
             ></Form.Control>
@@ -120,22 +136,27 @@ function CreateOrEditFries({ data }) {
                 value={input.size}
               >
                 <option>Tamaño</option>
-                <option>Chico</option>
-                <option>Mediano</option>
-                <option>Grande</option>
+                <option value="Chico">Chico</option>
+                <option value="Mediano">Mediano</option>
+                <option value="Grande">Grande</option>
               </Form.Select>
             </Form.Group>
             <Form.Group as={Col} controlId="formGridVegan">
               <Form.Label>Vegetariano</Form.Label>
-              <Form.Select defaultValue="Es Veggie">
+              <Form.Select
+                onChange={onChange}
+                defaultValue="Es Veggie"
+                name="isVeggie"
+                value={input.isVeggie}
+              >
                 <option>Es Veggie?</option>
-                <option>Si</option>
-                <option>No</option>
+                <option value={true}>Si</option>
+                <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
           </Row>
 
-          <Button>Confirmar</Button>
+          <Button onClick={onSubmit}>Confirmar</Button>
           <hr />
         </Form>
       </Container>
