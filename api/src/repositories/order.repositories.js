@@ -2,7 +2,9 @@ const { Op } = require("sequelize");
 const { Order } = require("../models");
 
 async function create(user_id, data, user) {
-  const order = await Order.create(data);  
+
+    try {
+        const order = await Order.create(data);  
   await order.addCustomer(user_id);
   const orderAndUser = await Order.findByPk(order.purchaseId, {
     include: {
@@ -11,10 +13,12 @@ async function create(user_id, data, user) {
     },
   });
 
+  console("xxxx")
   const receipt = await mercadopagoRepository.getPaymentById(
     data.purchaseId
   );
 
+  console("kkkkkkkkkkkkk")
   await transporter.sendMail({
     from: '"Recibo de compra" <henrysBurger2022@gmail.com',
     to: user.email,
@@ -569,8 +573,13 @@ async function create(user_id, data, user) {
     `,
   });
 
+  console("kkkkkkkkkkkkk")
 
   return orderAndUser;
+    } catch (error) {
+        console.log(error);
+    }
+  
 }
 
 async function getAll(pag, limit) {
