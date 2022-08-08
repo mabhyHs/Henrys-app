@@ -208,7 +208,7 @@ function ShoppingCart() {
   return (
     <Container className="py-4 shoppinCart__container">
       {itemsToCart && itemsToCart?.length === 0 ? (
-        <div>
+        <div className="cartEmpty__container">
           <h2>El carrito se encuentra vacío</h2>
           <p>
             Entrá a nuestro menú y tentate con las hamburguesas más deliciosas

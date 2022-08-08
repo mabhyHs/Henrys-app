@@ -47,3 +47,12 @@
   font-weight: 700;
   font-size: 1.5rem;
 }
+
+.cartEmpty__container {
+  background-color: var(--main-color-light);
+  border-radius: 20px;
+  box-shadow: var(--bs-btn);
+  padding: 2rem;
+  max-width: 600px;
+  display: inline-block;
+}
