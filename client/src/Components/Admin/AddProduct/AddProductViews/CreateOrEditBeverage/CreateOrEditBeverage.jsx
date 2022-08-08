@@ -20,7 +20,7 @@ function CreateOrEditBeverage({ data }) {
   const { id } = useParams();
   const dispatch = useDispatch();
   const bebidas = useSelector((state) => state.products);
-  const [size, setSize] = useState([]);
+  const [size, setSize] = useState('');
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
   const [input, setInput] = useState({
@@ -59,7 +59,7 @@ function CreateOrEditBeverage({ data }) {
   };
 
   const onChangeSize = (e) => {
-    setSize([...size, e.target.value]);
+    setSize(e.target.value);
   };
 
   function isEdit() {
@@ -68,7 +68,6 @@ function CreateOrEditBeverage({ data }) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(input);
     if (edit) {
       dispatch(updateBeverage(input));
       Swal.fire({
@@ -84,7 +83,7 @@ function CreateOrEditBeverage({ data }) {
         imageAlt: 'Logo henrys',
       });
     } else {
-      dispatch(postBeverage({ ...input, id: undefined }));
+      dispatch(postBeverage({ ...input, size: size, id: undefined }));
       Swal.fire({
         customClass: {
           confirmButton: 'confirmBtnSwal',
@@ -176,8 +175,8 @@ function CreateOrEditBeverage({ data }) {
                 defaultValue="seleccionar"
               >
                 <option>Seleccionar</option>
-                <option value="Chica">Chica</option>
-                <option value="Mediana">Mediana</option>
+                <option value="Chico">Chica</option>
+                <option value="Mediano">Mediana</option>
                 <option value="Grande">Grande</option>
               </Form.Select>
             </Form.Group>

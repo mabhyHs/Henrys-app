@@ -31,8 +31,11 @@ import {
   DELETE_PRODUCT,
   RESTORE_PRODUCT,
   UPDATE_FRIES,
+  POST_FRIES,
   UPDATE_BEVERAGE,
   POST_BEVERAGE,
+  UPDATE_COMBOS,
+  POST_COMBOS,
 } from '../actions/actions';
 
 import {
@@ -237,6 +240,18 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
       };
     case POST_BEVERAGE:
+      return {
+        ...state,
+      };
+    case POST_FRIES:
+      return {
+        ...state,
+      };
+    case POST_COMBOS:
+      return {
+        ...state,
+      };
+    case UPDATE_COMBOS:
       return {
         ...state,
       };

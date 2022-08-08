@@ -33,8 +33,11 @@ export const POST_BURGER = 'POST_BURGER';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const RESTORE_PRODUCT = 'RESTORE_PRODUCT';
 export const UPDATE_FRIES = 'UPDATE_FRIES';
+export const POST_FRIES = 'POST_FRIES';
 export const UPDATE_BEVERAGE = 'UPDATE_BEVERAGE';
 export const POST_BEVERAGE = 'POST_BEVERAGE';
+export const UPDATE_COMBOS = 'UPDATE_COMBOS';
+export const POST_COMBOS = 'POST_COMBOS';
 
 export function getUser(token, query = '/') {
   return async function (dispatch) {
@@ -494,6 +497,23 @@ export function updateFries(data) {
   };
 }
 
+export function postFries(data) {
+  return async function (dispatch) {
+    try {
+      await axios.post('/fries', data, {
+        headers: {
+          'auth-token': JSON.parse(localStorage.getItem('user')).token,
+        },
+      });
+      return dispatch({
+        type: POST_FRIES,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export function updateBeverage(data) {
   return async function (dispatch) {
     try {
@@ -521,6 +541,40 @@ export function postBeverage(data) {
       });
       return dispatch({
         type: POST_BEVERAGE,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function updateCombos(data) {
+  return async function (dispatch) {
+    try {
+      await axios.put('/combos', data, {
+        headers: {
+          'auth-token': JSON.parse(localStorage.getItem('user')).token,
+        },
+      });
+      return dispatch({
+        type: UPDATE_COMBOS,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function postCombos(data) {
+  return async function (dispatch) {
+    try {
+      await axios.post('/combos', data, {
+        headers: {
+          'auth-token': JSON.parse(localStorage.getItem('user')).token,
+        },
+      });
+      return dispatch({
+        type: POST_COMBOS,
       });
     } catch (error) {
       console.log(error);

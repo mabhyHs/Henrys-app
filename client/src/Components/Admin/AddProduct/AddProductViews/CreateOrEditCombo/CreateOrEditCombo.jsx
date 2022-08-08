@@ -9,6 +9,7 @@ import {
   getBeverages,
   getBurgers,
   getFries,
+  updateCombos,
 } from '../../../../../Redux/actions/actions';
 
 import './CreateOrEditCombo.css';
@@ -39,7 +40,7 @@ function CreateOrEditCombo({ data }) {
         name: data.name,
         price: data.price,
         fries: data.fries,
-        beverage: data.beverage,
+        beverage: data.beverage.map((e) => e.id),
         burger: data.burger,
         imgUri: '',
         isVeggie: data.isVeggie,
@@ -47,8 +48,6 @@ function CreateOrEditCombo({ data }) {
       setRestore(true);
     }
   }, [dispatch, edit, isRestore]);
-
-  console.log(burgers, fries, beverages);
 
   const onChange = (e) => {
     setInput({
@@ -62,25 +61,26 @@ function CreateOrEditCombo({ data }) {
   }
 
   function handleSelect(e) {
-    if (!input.ingredient.includes(e.target.value)) {
+    if (!input.beverage.includes(e.target.value)) {
       setInput({
         ...input,
-        ingredient: [...input.ingredient, e.target.value],
+        beverage: [...input.beverage, e.target.value],
       });
     }
+    console.log(input.beverage);
   }
 
   function handleDelete(e) {
     setInput({
       ...input,
-      ingredient: input.ingredient.filter((c) => c !== e),
+      beverage: input.beverage.filter((c) => c !== e),
     });
   }
 
   const onSubmit = async (event) => {
     event.preventDefault();
     if (edit) {
-      // put
+      dispatch(updateCombos(input));
     } else {
       // post
     }
@@ -123,23 +123,30 @@ function CreateOrEditCombo({ data }) {
           </Form.Group>
 
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="beverages">
+            <Form.Group
+              onChange={(e) => handleSelect(e)}
+              as={Col}
+              controlId="beverages"
+            >
               <Form.Label>Bebida</Form.Label>
-              <Form.Select
-                onChange={onChange}
-                defaultValue="seleccionar"
-                name="beverage"
-                value={input.beverage}
-              >
+              <Form.Select defaultValue="seleccionar">
                 <option>Seleccionar</option>
                 {beverages &&
-                  beverages.map((bur) => <option key={bur}>{bur.name}</option>)}
+                  beverages.map((bev) => (
+                    <option value={bev.id} key={bev}>
+                      {bev.name}
+                    </option>
+                  ))}
                 <div>
                   {input.beverage &&
                     input.beverage.map((e) => (
-                      <div key={e.id || e}>
-                        <p>{e.name || e}</p>
-                        <button type="button" onClick={() => handleDelete(e)}>
+                      <div key={e}>
+                        <p>{e}</p>
+                        <button
+                          value={e}
+                          type="button"
+                          onClick={(e) => handleDelete(e)}
+                        >
                           X
                         </button>
                       </div>
@@ -159,17 +166,6 @@ function CreateOrEditCombo({ data }) {
                 <option>Seleccionar</option>
                 {burgers &&
                   burgers.map((bur) => <option key={bur}>{bur.name}</option>)}
-                <div>
-                  {input.burger &&
-                    input.burger.map((e) => (
-                      <div key={e.id || e}>
-                        <p>{e.name || e}</p>
-                        <button type="button" onClick={() => handleDelete(e)}>
-                          X
-                        </button>
-                      </div>
-                    ))}
-                </div>
               </Form.Select>
             </Form.Group>
           </Row>
@@ -186,31 +182,19 @@ function CreateOrEditCombo({ data }) {
                 <option>Seleccionar</option>
                 {fries &&
                   fries.map((bur) => <option key={bur}>{bur.name}</option>)}
-                <div>
-                  {input.fries &&
-                    input.fries.map((e) => (
-                      <div key={e.id || e}>
-                        <p>{e.name || e}</p>
-                        <button type="button" onClick={() => handleDelete(e)}>
-                          X
-                        </button>
-                      </div>
-                    ))}
-                </div>
               </Form.Select>
             </Form.Group>
 
             <Form.Group as={Col} controlId="isVeggie">
               <Form.Label>Vegetariano</Form.Label>
-              <Form.Select defaultValue="Es Veggie">
-                <option>Es Veggie?</option>
-                <option>Si</option>
-                <option>No</option>
+              <Form.Select onChange={onChange} defaultValue="Es Veggie">
+                <option value={true}>Si</option>
+                <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
           </Row>
 
-          <Button variant="primary" type="submit">
+          <Button onClick={onSubmit} variant="primary" type="submit">
             Confirmar
           </Button>
           <hr />
