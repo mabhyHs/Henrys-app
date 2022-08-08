@@ -13,44 +13,40 @@ function Home() {
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useAuth0();
 
-
   useEffect(() => {
-
     if (isAuthenticated && user && !window.localStorage.getItem('user')) {
-
-        const fetchData = async (payload) => {
-            try {
-                const res = await axios.post(`/google`, payload);
-            if (res.status === 200) {
-                const data = { ...res.data.user, token: res.data.data.token };
-                window.localStorage.setItem('user', JSON.stringify(data));
-                dispatch(setLoginState(data));
-            }
+      const fetchData = async (payload) => {
+        try {
+          const res = await axios.post(`/google`, payload);
+          if (res.status === 200) {
+            const data = { ...res.data.user, token: res.data.data.token };
+            window.localStorage.setItem('user', JSON.stringify(data));
+            dispatch(setLoginState(data));
+          }
         } catch (error) {
-                Swal.fire({
-                    customClass: {
-                        confirmButton: 'confirmBtnSwal',
-                    },
-                        title: 'Opss...',
-                        text: 'Error al intentar logearse con google!',
-                        imageUrl:
-                        'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
-                        imageWidth: 150,
-                        imageHeight: 150,
-                        imageAlt: 'Logo henrys',
-                    });
-                }
-            }
-        
-        fetchData({
-            firstName: user.given_name,
-            email: user.email,
-            lastName: user.family_name,
-            imgUri: user.picture,
-        });
+          Swal.fire({
+            customClass: {
+              confirmButton: 'confirmBtnSwal',
+            },
+            title: 'Opss...',
+            text: 'Error al intentar logearse con google!',
+            imageUrl:
+              'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+            imageWidth: 150,
+            imageHeight: 150,
+            imageAlt: 'Logo henrys',
+          });
+        }
+      };
+
+      fetchData({
+        firstName: user.given_name,
+        email: user.email,
+        lastName: user.family_name,
+        imgUri: user.picture,
+      });
     }
-  
-  }, [dispatch, isAuthenticated, user])
+  }, [dispatch, isAuthenticated, user]);
 
   return (
     <div>
