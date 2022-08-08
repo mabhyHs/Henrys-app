@@ -50,11 +50,11 @@ const isVeggieValid = body("isVeggie")
   .isBoolean()
   .withMessage("invalid value");
 
-const imgUrlValid = body("imgUri")
-  .notEmpty()
-  .withMessage("img required")
-  .isURL()
-  .withMessage("img invalid");
+// const imgUrlValid = body("imgUri")
+//   .notEmpty()
+//   .withMessage("img required")
+//   .isURL()
+//   .withMessage("img invalid");
 
 const sizeValid = body("size")
   .notEmpty()
@@ -80,7 +80,7 @@ const postValidator = [
   nameValid,
   priceValid,
   isVeggieValid,
-  imgUrlValid,
+  // imgUrlValid,
   sizeValid,
 ];
 
@@ -88,7 +88,7 @@ const putValidator = [
   nameValid,
   priceValid,
   isVeggieValid,
-  imgUrlValid,
+  // imgUrlValid,
   sizeValid,
 ];
 

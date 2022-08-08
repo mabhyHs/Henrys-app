@@ -31,9 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       imgUri: {
         type: DataTypes.TEXT,
-        validate: {
-          isUrl: true,
-        },
+        allowNull: true,
       },
       isVeggie: {
         type: DataTypes.BOOLEAN,
