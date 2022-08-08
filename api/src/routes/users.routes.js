@@ -11,7 +11,10 @@ const {
   getFavoritesByUserId,
   getAllAdmin,
 } = require("../controllers/users.controllers");
-const { roleValidator } = require("../middlewares/usersValidation");
+const {
+  roleValidator,
+  deleteValidator,
+} = require("../middlewares/usersValidation");
 const validationResultHandler = require("../middlewares/validationResultHandler");
 const verifyToken = require("../middlewares/tokenValidation");
 
@@ -40,6 +43,7 @@ router.delete(
   "/:id",
   verifyToken,
   roleValidator,
+  deleteValidator,
   validationResultHandler,
   destroy
 );

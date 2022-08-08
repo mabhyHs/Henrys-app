@@ -13,8 +13,19 @@ const roleValid = body("user")
   })
   .withMessage("This user is unauthorized");
 
+const userValid = body("user")
+  .custom(async (user, { req }) => {
+    const currentUser = await userRepositories.getById(user.id);
+    if (currentUser.role === "admin" && user.id === req.params.id) {
+      throw new Error("El admin no puede desactivar su propia cuenta");
+    }
+  })
+  .withMessage("El admin no puede desactivar su propia cuenta");
+
 const roleValidator = [roleValid];
+const deleteValidator = [userValid];
 
 module.exports = {
   roleValidator,
+  deleteValidator,
 };
