@@ -13,12 +13,12 @@ async function create(user_id, data, user) {
     },
   });
 
-  console("xxxx")
+  console.log("xxxx" + data.purchaseId)
   const receipt = await mercadopagoRepository.getPaymentById(
     data.purchaseId
   );
 
-  console("kkkkkkkkkkkkk")
+  console.log("kkkkkkkkkkkkk")
   await transporter.sendMail({
     from: '"Recibo de compra" <henrysBurger2022@gmail.com',
     to: user.email,
@@ -573,7 +573,7 @@ async function create(user_id, data, user) {
     `,
   });
 
-  console("kkkkkkkkkkkkk")
+  console.log("kkkkkkkkkkkkk")
 
   return orderAndUser;
     } catch (error) {
