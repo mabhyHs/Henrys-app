@@ -101,6 +101,8 @@ function CreateOrEditFries({ data }) {
     <div>
       <Container className="editFries__container">
         <h2>{edit ? 'Editar Papas Fritas' : 'Crear Papas Fritas'}</h2>
+
+        <img src={data.imgUri ? data.imgUri : ""} alt="img not found"></img>
         <Form>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridName">
