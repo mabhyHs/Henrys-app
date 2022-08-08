@@ -27,7 +27,9 @@ async function getById(id) {
 }
 
 async function getAll() {
-  const burgers = await Burger.findAll({paranoid: false}, {order: "name: ASC"});
+  const burgers = await Burger.findAll({paranoid: false}, {order: [
+        ['name', 'ASC'],
+    ]});
   return burgers;
 }
 
@@ -36,8 +38,13 @@ async function getByQuery(queries) {
     return await getAll();
   }
 
-  const burgers = await Burger.findAll({ where: queries, paranoid: false });
-  return burgers;
+  const burgers = await Burger.findAll({ 
+        where: queries,
+        paranoid: false, 
+        order: [ ['name', 'ASC'] ]
+    });
+    
+    return burgers;
 }
 
 async function getByName(name) {

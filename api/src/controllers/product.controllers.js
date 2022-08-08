@@ -30,7 +30,7 @@ async function getByQuery(req, res, next) {
     const isVeggie = req.query.isVeggie ? req.query.isVeggie.toLowerCase() : req.query.isVeggie;
     const order = req.query.order ? req.query.order.toLowerCase() : req.query.order;
     const isDeleted = req.query.isDeleted ? "true" : "false";
-    const filters = utils.setFilters({isVeggie, name, isDeleted});
+    const filters = category === "burgerbase" ? utils.setFilters({isVeggie, name}) : utils.setFilters({isVeggie, name, isDeleted});
     let products = [];
 
     if(!category){
@@ -57,7 +57,7 @@ async function getByQuery(req, res, next) {
         const all = await productRepository.getByQuery(filters);
         products = [...all];
     }
-    else if(category === "burgerBase"){
+    else if(category === "burgerbase"){
         const burgerBase = await burgerBaseRepository.getByQuery(filters);
         products = [...burgerBase];
     }

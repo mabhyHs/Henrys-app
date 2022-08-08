@@ -12,7 +12,9 @@ async function getById(id) {
 }
 
 async function getAll() {
-  const beverages = await Beverage.findAll({paranoid: false}, {order: "name: ASC"});
+  const beverages = await Beverage.findAll({paranoid: false}, {order: [
+    ['name', 'ASC'],
+    ]});
   return beverages;
 }
 
@@ -21,8 +23,13 @@ async function getByQuery(queries) {
     return await getAll();
   }
 
-  const beverages = await Beverage.findAll({ where: queries, paranoid: false });
-  return beverages;
+  const beverages = await Beverage.findAll({ 
+        where: queries,
+        paranoid: false, 
+        order: [ ['name', 'ASC'] ]
+    });
+    
+    return beverages;
 }
 
 async function getByName(name) {

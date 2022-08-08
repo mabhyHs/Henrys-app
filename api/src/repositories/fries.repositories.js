@@ -12,7 +12,9 @@ async function getById(id) {
 }
 
 async function getAll() {
-  const fries = await Fries.findAll({paranoid: false}, {order: "name: ASC"});
+  const fries = await Fries.findAll({paranoid: false}, {order: [
+    ['name', 'ASC'],
+]});
   return fries;
 }
 
@@ -21,8 +23,13 @@ async function getByQuery(queries) {
     return await getAll();
   }
 
-  const fries = await Fries.findAll({ where: queries, paranoid: false });
-  return fries;
+  const fries = await Fries.findAll({ 
+        where: queries,
+        paranoid: false, 
+        order: [ ['name', 'ASC'] ]
+    });
+    
+    return fries;
 }
 
 async function getByName(name) {
