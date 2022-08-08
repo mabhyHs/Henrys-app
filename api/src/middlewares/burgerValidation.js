@@ -20,10 +20,6 @@ const ingredientsValid = body("ingredients")
 const nameValid = body("name")
   .notEmpty()
   .withMessage("name is required")
-  .isLength({ min: 2 })
-  .withMessage("min lenght 2")
-  .isLength({ max: 40 })
-  .withMessage("max lenght 40")
   .custom(async (name, { req }) => {
     const result = await burgerRepository.getByName(name);
 

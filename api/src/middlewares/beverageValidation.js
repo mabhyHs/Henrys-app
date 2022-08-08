@@ -5,11 +5,7 @@ const { beverageRoles, authRoute } = require("../utils/routesRoles");
 
 const nameValid = body("name")
   .notEmpty()
-  .withMessage("name is required")
-  .isLength({ min: 2 })
-  .withMessage("min lenght 2")
-  .isLength({ max: 40 })
-  .withMessage("max lenght 40")
+  .withMessage("name is required")  
   .custom(async (name) => {
     const result = await beverageRepository.getByName(name);
     if (result) {
@@ -42,11 +38,6 @@ const isSugar = body("isSugar")
   .isBoolean()
   .withMessage("invalid value");
 
-// const imgUrlValid = body("imgUri")
-//   .notEmpty()
-//   .withMessage("img required")
-//   .isURL()
-//   .withMessage("img invalid");
 
 const sizeValid = body("size")
   .notEmpty()
@@ -86,7 +77,6 @@ const postValidator = [
   nameValid,
   priceValid,
   isVeggieValid,
-  // imgUrlValid,
   sizeValid,
   isCarbonatedValid,
   isSugar,
@@ -96,7 +86,6 @@ const putValidator = [
   namePutValid,
   priceValid,
   isVeggieValid,
-  // imgUrlValid,
   sizeValid,
   isCarbonatedValid,
   isSugar,

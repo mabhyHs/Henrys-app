@@ -1,4 +1,4 @@
-const { body, param } = require("express-validator");
+const { body } = require("express-validator");
 const ingredientRepository = require("../repositories/ingredient.repositories");
 const userRepositories = require("../repositories/user.repositories");
 const { ingredientRoles, authRoute } = require("../utils/routesRoles");
@@ -6,10 +6,6 @@ const { ingredientRoles, authRoute } = require("../utils/routesRoles");
 const nameValid = body("name")
   .notEmpty()
   .withMessage("name is required")
-  .isLength({ min: 2 })
-  .withMessage("min lenght 2")
-  .isLength({ max: 40 })
-  .withMessage("max lenght 40")
   .custom(async (name, { req }) => {
     const result = await ingredientRepository.getByName(name);
 
