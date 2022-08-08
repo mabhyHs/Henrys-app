@@ -31,7 +31,7 @@ function CreateOrEditBeverage({ data }) {
     isCarbonated: '',
     isSugar: '',
     imgUri: '',
-    isVeggie: '',
+    isVeggie: true,
   });
 
   useEffect(() => {

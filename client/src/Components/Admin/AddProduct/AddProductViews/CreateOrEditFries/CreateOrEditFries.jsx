@@ -27,7 +27,7 @@ function CreateOrEditFries({ data }) {
     price: '',
     size: '',
     imgUri: '',
-    isVeggie: '',
+    isVeggie: true,
   });
 
   useEffect(() => {

@@ -59,7 +59,7 @@ export async function postImageToCloudinary(e) {
 export async function updateModelImg(modelName, token, imgUri, id) {
   await axios.put(
     `${modelName}/${id}`,
-    { imgUri: imgUri },
+    { imgUri },
     {
       headers: {
         'auth-token': token,
@@ -73,20 +73,3 @@ export async function postAndUpdateImg(e, modelName, token, id) {
   updateModelImg(modelName, token, imgUri, id);
   return imgUri;
 }
-
-// setImage(
-//     await axios.put(
-//       `users/${id}`,
-//       { imgUri: imgUri },
-//       {
-//         headers: {
-//           'auth-token': token,
-//         },
-//       }
-//     )
-//   );
-//   const updateSesion = {
-//     ...sesionInfo,
-//     imgUri: imgUri,
-//   };
-//   dispatch(setLoginState(updateSesion));

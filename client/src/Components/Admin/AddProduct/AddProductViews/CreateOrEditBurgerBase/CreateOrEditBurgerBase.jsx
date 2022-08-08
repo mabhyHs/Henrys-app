@@ -23,7 +23,7 @@ function CreateOrEditBurgerBase({ data }) {
     price: '',
     description: '',
     imgUri: '',
-    isVeggie: '',
+    isVeggie: false,
   });
 
   useEffect(() => {

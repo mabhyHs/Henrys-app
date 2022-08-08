@@ -34,7 +34,7 @@ function CreateOrEditCombo({ data }) {
     beverage: [],
     burger: [],
     imgUri: '',
-    isVeggie: '',
+    isVeggie: false,
   });
 
   useEffect(() => {
