@@ -12,7 +12,7 @@ async function getById(id) {
 }
 
 async function getAll() {
-  const fries = await Fries.findAll({paranoid: false});
+  const fries = await Fries.findAll({paranoid: false}, {order: "name: ASC"});
   return fries;
 }
 

@@ -43,7 +43,7 @@ async function getById(id) {
 }
 
 async function getAll() {
-  const combos = await Combo.findAll({paranoid: false});
+  const combos = await Combo.findAll({paranoid: false}, {order: "name: ASC"});
   return combos;
 }
 

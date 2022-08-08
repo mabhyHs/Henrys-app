@@ -3,6 +3,7 @@ const comboRepository = require("../repositories/combo.repositories");
 const friesRepository = require("../repositories/fries.repositories");
 const beverageRepository = require("../repositories/beverage.repositories");
 const productRepository = require("../repositories/product.repositories");
+const burgerBaseRepository = require("../repositories/burgerBase.repositories");
 const utils = require("../utils/utils");
 
 async function getById(req, res, next) {
@@ -55,6 +56,10 @@ async function getByQuery(req, res, next) {
     else if(category === "veggie"){
         const all = await productRepository.getByQuery(filters);
         products = [...all];
+    }
+    else if(category === "burgerBase"){
+        const burgerBase = await burgerBaseRepository.getByQuery(filters);
+        products = [...burgerBase];
     }
 
         if(order){

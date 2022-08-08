@@ -1,9 +1,18 @@
 const { BurgerBase } = require("../models");
 
 async function getAll() {
-  const burgersBase = await BurgerBase.findAll();
-  return burgersBase;
-}
+    const burgersBase = await BurgerBase.findAll({paranoid: false}, {order: "name: ASC"});
+    return burgersBase;
+  }
+  
+  async function getByQuery(queries) {
+    if (!queries) {
+      return await getAll();
+    }
+  
+    const beverages = await BurgerBase.findAll({ where: queries, paranoid: false });
+    return beverages;
+  }
 
 async function getFirst() {
   const burgersBase = await getAll();
@@ -17,6 +26,7 @@ async function update(data) {
 
 module.exports = {
   getAll,
+  getByQuery,
   getFirst,
   update,
 };

@@ -27,7 +27,7 @@ async function getById(id) {
 }
 
 async function getAll() {
-  const burgers = await Burger.findAll({paranoid: false});
+  const burgers = await Burger.findAll({paranoid: false}, {order: "name: ASC"});
   return burgers;
 }
 
