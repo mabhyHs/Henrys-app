@@ -23,6 +23,9 @@ async function create(data, user) {
     from: '"Recibo de compra" <henrysBurger2022@gmail.com',
     to: user.email,
     subject: "Recibo de compra",
+    text: `Hola ${user.firstName} su pedido está en proceso de elaboración.
+    Le avisaremos cuando su pedido esté listo para retirar!
+    Adjuntamos el comprobante: `,
     html: `
     <!DOCTYPE html>
 <html>
@@ -340,7 +343,7 @@ async function create(data, user) {
                             padding: 15px 10px 5px 10px;
                           "
                         >
-                          $ ${e.unit_price + "c/u"}
+                          $ ${e.unit_price + " c/u"}
                         </td>
                       </tr>
                       `
