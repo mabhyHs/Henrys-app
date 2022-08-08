@@ -3,19 +3,20 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { PencilSquare } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
-
-import './ProductCardAdmin.css';
 import { useDispatch } from 'react-redux';
 import {
   deleteProduct,
   restoreProduct,
 } from '../../../../Redux/actions/actions';
+import { setImgProductHomeErr } from '../../../methods';
+
+import './ProductCardAdmin.css';
 
 function ProductCardAdmin({ data, isDeleted }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const isType = () => {
+  const redirect = () => {
     navigate(`/admineditproducts/${data.id}`);
   };
 
@@ -33,14 +34,16 @@ function ProductCardAdmin({ data, isDeleted }) {
         variant="top"
         src={data.imgUri}
         className="adminProductHome__card__img"
+        onError={(e)=> setImgProductHomeErr(e)}
       />
       <Card.Body className="adminProductHome__cardBody">
         <Card.Title className="adminProductHome__cardTittle">
           {data.name}
         </Card.Title>
-        <Button onClick={isType} variant="secondary">
-          <PencilSquare />
-        </Button>
+        {isDeleted &&    
+            <Button onClick={redirect} variant="secondary">
+                <PencilSquare />
+            </Button>}
         <button onClick={onDelete}>{isDeleted ? 'Borrar' : 'Restaurar'}</button>
       </Card.Body>
     </Card>

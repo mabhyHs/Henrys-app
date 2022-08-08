@@ -4,18 +4,13 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
-
+import { alertCustom, createProduct, updateProduct } from '../../../../requests';
+import { useNavigate } from 'react-router-dom';
 import './CreateOrEditBurgerBase.css';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  getBurgerBase,
-  postBurgerBase,
-  updateBurgerBase,
-} from '../../../../../Redux/actions/actions';
+import { postImageToCloudinary, setImgProductErr } from '../../../../methods';
 
 function CreateOrEditBurgerBase({ data }) {
-  const dispatch = useDispatch();
-  const base = useSelector((state) => state.burgerBase);
+  const navigate = useNavigate();
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
   const [input, setInput] = useState({
@@ -23,22 +18,29 @@ function CreateOrEditBurgerBase({ data }) {
     price: '',
     description: '',
     imgUri: '',
-    isVeggie: '',
+    isVeggie: false,
   });
 
   useEffect(() => {
-    dispatch(getBurgerBase());
     if (edit && !isRestore) {
       setInput({
         name: data.name,
         price: data.price,
         description: data.description,
-        imgUri: '',
+        imgUri: data.imgUri ? data.imgUri : "",
         isVeggie: data.isVeggie,
       });
       setRestore(true);
     }
-  }, [dispatch, edit, isRestore]);
+  }, [edit, isRestore, data]);
+
+  function isDisabledSubmit(){
+    return (
+        !input.name ||
+        !input.price ||
+        !input.description
+    )
+  }
 
   const onChange = (e) => {
     setInput({
@@ -47,27 +49,79 @@ function CreateOrEditBurgerBase({ data }) {
     });
   };
 
+  async function setImg(e){
+    const result = await postImageToCloudinary(e);
+
+    if(result){
+        setInput({
+            ...input,
+            imgUri: result,
+        });
+    } else {
+        e.target.value = "";
+    }
+  }
+
   function isEdit() {
     return data && Object.keys(data).length;
   }
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
+  
+  const onSubmit = async (e) => {
+    e.preventDefault();
     if (edit) {
-      dispatch(updateBurgerBase(input));
+
+    try {
+            
+        await updateProduct("burgerBase", input);
+        alertCustom(
+            input.name,
+            "Actualizada con exito!",
+            "https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png"
+        )
+        navigate('/adminproducts');
+
+        } catch (error) {
+            alertCustom(
+                "Oops...",
+                "No se pudo actualizar el producto!",
+                "https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png"
+            )
+        }
+
     } else {
-      dispatch(postBurgerBase({ ...input, id: undefined }));
+
+        try {  
+            await createProduct("burgerBase", input);
+            alertCustom(
+                input.name,
+                "Creada con exito!",
+                "https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png"
+            )
+            navigate('/adminproducts');
+        } catch (error) {
+            alertCustom(
+                "Oops...",
+                "No se pudo crear el producto!",
+                "https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png"
+            )
+        }
+
     }
   };
+  
   return (
     <div>
       <Container className="editBurgerBase__container">
         <h2>Editar Burger Base</h2>
+
+        <img src={input.imgUri} onError={(e)=> setImgProductErr(e)} alt="img not"></img>
+
         <Form>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridName">
-              <Form.Label>Nombre</Form.Label>
+              <Form.Label>Nombre *</Form.Label>
               <Form.Control
+                placeholder='Nombre *'
                 onChange={onChange}
                 type="text"
                 name="name"
@@ -75,8 +129,9 @@ function CreateOrEditBurgerBase({ data }) {
               />
             </Form.Group>
             <Form.Group as={Col} controlId="formGridPrice">
-              <Form.Label>Precio</Form.Label>
+              <Form.Label>Precio *</Form.Label>
               <Form.Control
+                placeholder='Precio *'
                 onChange={onChange}
                 type="number"
                 name="price"
@@ -88,17 +143,18 @@ function CreateOrEditBurgerBase({ data }) {
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Imagen</Form.Label>
             <Form.Control
-              onChange={onChange}
-              type="url"
+              placeholder='Url de la imagen'
+              onChange={setImg}
+              type="file"
               name="imgUri"
-              value={input.imgUri}
             ></Form.Control>
           </Form.Group>
 
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridDescription">
-              <Form.Label>Descripcion</Form.Label>
+              <Form.Label>Descripción *</Form.Label>
               <Form.Control
+                placeholder='Descripción *'
                 onChange={onChange}
                 type="text"
                 name="description"
@@ -106,21 +162,19 @@ function CreateOrEditBurgerBase({ data }) {
               />
             </Form.Group>
             <Form.Group as={Col} controlId="formGridVegan">
-              <Form.Label>Vegetariano</Form.Label>
+              <Form.Label>Apto para vegetarianos *</Form.Label>
               <Form.Select
                 onChange={onChange}
-                defaultValue="Es Veggie"
                 name="isVeggie"
                 value={input.isVeggie}
               >
-                <option>Es Veggie?</option>
+                <option value={false} defaultValue>No</option>
                 <option value={true}>Si</option>
-                <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
           </Row>
 
-          <Button onClick={onSubmit}>Confirmar</Button>
+          <Button onClick={onSubmit} disabled={isDisabledSubmit()}>Confirmar</Button>
           <hr />
         </Form>
       </Container>

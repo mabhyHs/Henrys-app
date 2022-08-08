@@ -2,12 +2,11 @@ import { React, useEffect, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import ProductsCardAdminContainer from '../ProductCardAdminContainer/ProductsCardAdminContainer';
 import AddProductsFilters from '../AddProductFilters/AddProductsFilters';
-
-import './AddProductHome.css';
 import AdminSearchBarProduct from '../AdminSearchBar/AdminSearchBarProduct';
 import AdminPagination from '../AdminPagination/AdminPagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProduct } from '../../../../Redux/actions/actions';
+import './AddProductHome.css';
 
 function AddProductHome() {
   const dispatch = useDispatch();
@@ -20,7 +19,7 @@ function AddProductHome() {
   const currentProduct = allProducts.slice(firstBurgerIndex, lastBurgerIndex);
   const mount = useRef(false);
   const [filters, setFilters] = useState({
-    category: category,
+    category,
     order: '',
     search: '',
     isVeggie: '',

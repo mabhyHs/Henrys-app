@@ -6,6 +6,7 @@ import {
   getBurgerBase,
   getProductById,
 } from '../../../../Redux/actions/actions';
+import NotFound from '../../../NotFound/NotFound';
 import CreateOrEditBeverage from '../AddProductViews/CreateOrEditBeverage/CreateOrEditBeverage';
 import CreateOrEditBurger from '../AddProductViews/CreateOrEditBurger/CreateOrEditBurger';
 import CreateOrEditBurgerBase from '../AddProductViews/CreateOrEditBurgerBase/CreateOrEditBurgerBase';
@@ -17,15 +18,16 @@ function EditProducts() {
   const { id } = useParams();
   const product = useSelector((state) => state.productDetail);
 
-  console.log(product);
-
   useEffect(() => {
     dispatch(getProductById(id));
-    dispatch(getBurgerBase());
     return () => {
       dispatch(clearState());
     };
   }, [dispatch, id]);
+
+  if(!product.type || product.deletedAt){
+    return <NotFound />;
+  }
 
   return (
     <div>
@@ -33,7 +35,7 @@ function EditProducts() {
       {product.type === 'fries' && <CreateOrEditFries data={product} />}
       {product.type === 'beverages' && <CreateOrEditBeverage data={product} />}
       {product.type === 'combos' && <CreateOrEditCombo data={product} />}
-      {!product.type && <CreateOrEditBurgerBase data={product} />}
+      {product.type === 'burgerBase' && <CreateOrEditBurgerBase data={product} />}
     </div>
   );
 }
