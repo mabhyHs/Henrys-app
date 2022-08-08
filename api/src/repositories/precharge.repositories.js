@@ -70,6 +70,15 @@ async function precharge() {
           role: "admin",
           isConfirmed: true,
         },
+        {
+            id: "9d70e6a6-bc63-46aa-9a4c-22c540a565fd",
+            firstName: "Juan",
+            lastName: "Burger",
+            email: "juan@gmail.com",
+            password: await bcrypt.hash("22", 10),
+            role: "employee",
+            isConfirmed: true,
+          },
       ],
       {
         ignoreDuplicates: true,
