@@ -85,11 +85,11 @@ const isVeggieValid = body("isVeggie")
   .isBoolean()
   .withMessage("invalid value");
 
-const imgUriValid = body("imgUri")
-  .notEmpty()
-  .withMessage("img required")
-  .isURL()
-  .withMessage("img invalid");
+// const imgUriValid = body("imgUri")
+//   .notEmpty()
+//   .withMessage("img required")
+//   .isURL()
+//   .withMessage("img invalid");
 
 const roleValid = body("user")
   .custom(async (user) => {
@@ -109,7 +109,7 @@ const postValidator = [
   nameValid,
   priceValid,
   isVeggieValid,
-  imgUriValid,
+  // imgUriValid,
 ];
 
 const roleValidator = [roleValid];
