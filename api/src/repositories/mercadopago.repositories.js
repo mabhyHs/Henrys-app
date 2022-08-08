@@ -12,4 +12,13 @@ async function getPaymentById(id) {
   }
 }
 
-module.exports = { getPaymentById };
+async function getByPreference(id) {
+  const payment = await axios.get(
+    `https://api.mercadopago.com/checkout/preferences/${id}`,
+    { headers: { Authorization: `Bearer ${process.env.ACCESS_TOKEN}` } }
+  );
+
+  return payment.data;
+}
+
+module.exports = { getPaymentById, getByPreference };
