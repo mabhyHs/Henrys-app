@@ -206,7 +206,7 @@ function ShoppingCart() {
   }
 
   return (
-    <Container className="py-4 shoppinCart__container">
+    <Container className="py-4 ">
       {itemsToCart && itemsToCart?.length === 0 ? (
         <div className="cartEmpty__container">
           <h2>El carrito se encuentra vacío</h2>
@@ -227,89 +227,102 @@ function ShoppingCart() {
             </Button>
           </div>
           <hr />
-          {itemsToCart.map((item) => (
-            <div key={item.name}>
-              {
-                <CardProductCart
-                  id={item.id}
-                  name={item.name}
-                  cantidad={item.cantidad}
-                  price={item.price}
-                  imgUri={item.imgUri || imgDefault}
-                />
-              }
-              <div>
-                <Button
-                  className="productCart__btn"
-                  type="button"
-                  onClick={() => addToCart(item.id)}
-                >
-                  <PlusLg />
-                </Button>
-                <Button
-                  className="productCart__btn"
-                  type="button"
-                  onClick={() => handleDelete(item.id)}
-                >
-                  <DashLg />
-                </Button>
-                <Button
-                  className="productCart__btn"
-                  type="button"
-                  onClick={() => handleDelete(item.id, true)}
-                >
-                  Quitar Producto
-                </Button>
-              </div>
-              <hr />
-            </div>
-          ))}
-          <div className="shoppingCart__total__container">
-            <div>
-              <h2 className="shoppingCart__h2 mb-4">
-                Ingresa tu cupon de descuento
-              </h2>
-              <input type="text" onKeyDown={handleAddCoupon} />
-              <div>
-                {coupons?.map((c) => (
-                  <div key={c?.code}>
-                    {c?.code}
-                    <button
+          <div className="shoppinCart__container">
+            <div className="productsCard__container">
+              {itemsToCart.map((item) => (
+                <div key={item.name}>
+                  {
+                    <CardProductCart
+                      id={item.id}
+                      name={item.name}
+                      cantidad={item.cantidad}
+                      price={item.price}
+                      imgUri={item.imgUri || imgDefault}
+                    />
+                  }
+                  <div>
+                    <Button
+                      className="productCart__btn"
                       type="button"
-                      onClick={(e) => handleDeleteCoupon(e, c.code)}
+                      onClick={() => addToCart(item.id)}
                     >
-                      x
-                    </button>
+                      <PlusLg />
+                    </Button>
+                    <Button
+                      className="productCart__btn"
+                      type="button"
+                      onClick={() => handleDelete(item.id)}
+                    >
+                      <DashLg />
+                    </Button>
+                    <Button
+                      className="productCart__btn"
+                      type="button"
+                      onClick={() => handleDelete(item.id, true)}
+                    >
+                      Quitar Producto
+                    </Button>
                   </div>
-                ))}
+                  <hr />
+                </div>
+              ))}
+            </div>
+
+            <div className="shoppingCart__total__container">
+              <div className="cart__textarea__container mt-4">
+                <h2 className="shoppingCart__h2 mb-4">¿Necesitas algo más?</h2>
+                <textarea
+                  onChange={handleNote}
+                  value={note}
+                  name="message"
+                  placeholder="* Me gustaria quitar o añadir..."
+                  id="message_input"
+                  cols="36"
+                  rows="3"
+                />
+              </div>
+
+              <hr />
+
+              <div className="cart__discount__container">
+                <h2 className="shoppingCart__h2 mb-4">
+                  Ingresá tu cupon de descuento
+                </h2>
+                <input type="text" onKeyDown={handleAddCoupon} />
+                <div>
+                  {coupons?.map((c) => (
+                    <div key={c?.code}>
+                      {c?.code}
+                      <button
+                        type="button"
+                        onClick={(e) => handleDeleteCoupon(e, c.code)}
+                      >
+                        x
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <hr />
+
+                {discount > 0 && (
+                  <h3 className="shoppingCart__h2 mb-4">
+                    Subtotal: <span>{`$${' ' + total}`}</span>
+                  </h3>
+                )}
+                {discount > 0 && (
+                  <h3 className="shoppingCart__h2 mb-4">
+                    Descuentos: <span>{`$${' ' + discount}`}</span>
+                  </h3>
+                )}
+                <h2 className="shoppingCart__h2 mb-4">
+                  <strong>Total de mi compra:</strong>
+                  <span> {`$${' ' + total - discount}`}</span>
+                </h2>
+                <Link to={false}>
+                  <Button onClick={handleMPago}>Confirmar Pago</Button>
+                </Link>
               </div>
             </div>
-            <h2 className="shoppingCart__h2 mb-4">¿Necesitas algo más?</h2>
-            <textarea
-              onChange={handleNote}
-              value={note}
-              name="message"
-              placeholder="* Me gustaria quitar o añadir..."
-              id="message_input"
-              cols="36"
-              rows="3"
-            />
-            {discount > 0 && (
-              <h3 className="shoppingCart__h2 mb-4">
-                Subtotal: <span>{`$${' ' + total}`}</span>
-              </h3>
-            )}
-            {discount > 0 && (
-              <h3 className="shoppingCart__h2 mb-4">
-                Descuentos: <span>{`$${' ' + discount}`}</span>
-              </h3>
-            )}
-            <h2 className="shoppingCart__h2 mb-4">
-              Total de mi compra: <span>{`$${' ' + total - discount}`}</span>
-            </h2>
-            <Link to={false}>
-              <Button onClick={handleMPago}>Confirmar Pago</Button>
-            </Link>
           </div>
         </>
       )}

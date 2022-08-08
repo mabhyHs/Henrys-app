@@ -1,5 +1,9 @@
 .shoppinCart__container {
   min-height: 80vh;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .productCart__btn {
@@ -34,6 +38,10 @@
   padding: 2rem;
   border-radius: 20px;
   box-shadow: var(--bs-card);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 20rem;
 }
 
 .shoppingCart__h2 {
@@ -55,4 +63,21 @@
   padding: 2rem;
   max-width: 600px;
   display: inline-block;
+}
+
+.cart__discount__container {
+  border: #e4e4e4 1px solid;
+  border-radius: 15px;
+  padding: 20px;
+  background-color: #e4e4e4;
+}
+
+.cart__discount__container input {
+  border-radius: 10px;
+  border: var(--bc-inputs);
+}
+
+.cart__textarea__container textarea {
+  border-radius: 10px;
+  border: var(--bc-inputs);
 }
