@@ -11,7 +11,7 @@ import {
 } from '../../../../../Redux/actions/actions';
 import { alertCustom, createProduct, updateProduct } from '../../../../requests';
 import './CreateOrEditBurger.css';
-import { postImageToCloudinary } from '../../../../methods';
+import { postImageToCloudinary, setImgProductErr } from '../../../../methods';
 
 function CreateOrEditBurger({ data }) {
   const navigate = useNavigate();
@@ -185,7 +185,7 @@ function CreateOrEditBurger({ data }) {
       <div className="editBurger__container">
         <h2>{edit ? 'Editar Hamburguesa' : 'Crear Hamburguesa'}</h2>
 
-        <img src={input.imgUri ? input.imgUri : ""} alt="img not"></img>
+        <img src={input.imgUri} onError={(e)=> setImgProductErr(e)} alt="img not"></img>
 
         <Form>
           <hr />

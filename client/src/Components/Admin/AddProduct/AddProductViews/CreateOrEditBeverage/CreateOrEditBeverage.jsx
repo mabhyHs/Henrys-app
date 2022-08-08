@@ -7,7 +7,7 @@ import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom';
 import { alertCustom, createProduct, updateProduct } from '../../../../requests';
 import './CreateOrEditBeverage.css';
-import { postImageToCloudinary } from '../../../../methods';
+import { postImageToCloudinary, setImgProductErr } from '../../../../methods';
 
 function CreateOrEditBeverage({ data }) {
   const navigate = useNavigate();
@@ -120,7 +120,7 @@ function CreateOrEditBeverage({ data }) {
       <div className="editBeverage__container">
         <h2>{edit ? 'Editar Bebidas' : 'Crear Bebidas'}</h2>
 
-        <img src={input.imgUri ? input.imgUri : ""} alt="img not"></img>
+        <img src={input.imgUri} onError={(e)=> setImgProductErr(e)} alt="img not"></img>
 
         <Form>
           <hr />

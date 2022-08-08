@@ -7,7 +7,7 @@ import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom';
 import { alertCustom, createProduct, updateProduct } from '../../../../requests';
 import './CreateOrEditFries.css';
-import { postImageToCloudinary } from '../../../../methods';
+import { postImageToCloudinary, setImgProductErr } from '../../../../methods';
 
 function CreateOrEditFries({ data }) {
   const navigate = useNavigate();
@@ -115,8 +115,8 @@ function CreateOrEditFries({ data }) {
     <div>
       <Container className="editFries__container">
         <h2>{edit ? 'Editar Papas Fritas' : 'Crear Papas Fritas'}</h2>
-
-        <img src={input.imgUri ? input.imgUri : ""} alt="img not"></img>
+        
+        <img src={input.imgUri} onError={(e)=> setImgProductErr(e)} alt="img not"></img>
         
         <Form>
           <Row className="mb-3">

@@ -13,7 +13,7 @@ import {
 } from '../../../../../Redux/actions/actions';
 import './CreateOrEditCombo.css';
 import { alertCustom, createProduct, updateProduct } from '../../../../requests';
-import { postImageToCloudinary } from '../../../../methods';
+import { postImageToCloudinary, setImgProductErr } from '../../../../methods';
 
 function CreateOrEditCombo({ data }) {
 
@@ -209,7 +209,7 @@ function CreateOrEditCombo({ data }) {
       <div className="editCombo__container">
         <h2>{edit ? 'Editar Combo' : 'Crear Combo'}</h2>
 
-        <img src={input.imgUri ? input.imgUri : ""} alt="img not"></img>
+        <img src={input.imgUri} onError={(e)=> setImgProductErr(e)} alt="img not"></img>
 
         <Form>
           <hr />

@@ -7,7 +7,7 @@ import Container from 'react-bootstrap/Container';
 import { alertCustom, createProduct, updateProduct } from '../../../../requests';
 import { useNavigate } from 'react-router-dom';
 import './CreateOrEditBurgerBase.css';
-import { postImageToCloudinary } from '../../../../methods';
+import { postImageToCloudinary, setImgProductErr } from '../../../../methods';
 
 function CreateOrEditBurgerBase({ data }) {
   const navigate = useNavigate();
@@ -114,7 +114,7 @@ function CreateOrEditBurgerBase({ data }) {
       <Container className="editBurgerBase__container">
         <h2>Editar Burger Base</h2>
 
-        <img src={input.imgUri ? input.imgUri : ""} alt="img not"></img>
+        <img src={input.imgUri} onError={(e)=> setImgProductErr(e)} alt="img not"></img>
 
         <Form>
           <Row className="mb-3">

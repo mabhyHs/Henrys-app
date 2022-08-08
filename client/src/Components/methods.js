@@ -1,11 +1,16 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
+import imgProductErr from "../Assets/Images/logo-henrys-20x20.png"
 import axios from 'axios';
 
 export function setImgError(e, img) {
   if (!img) return;
   e.target.src = img;
+}
+
+export function setImgProductErr(e) {
+    setImgError(e, imgProductErr);
 }
 
 export function isLogged() {
