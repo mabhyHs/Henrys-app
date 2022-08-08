@@ -37,11 +37,10 @@ function CuponContainerHome() {
       <div className="couponsHome pb-5 mt-4">
         {coupons &&
           coupons.length > 0 &&
-          coupons?.map((c) => (
-            <>
+          coupons?.map((c, i) => (
+            <div key={c.code}>
               {!isExpired(currentDate, c.expirationDate) ? (
                 <CardCupponHome
-                  key={c.code}
                   code={c.code}
                   title={c.title}
                   expirationDate={c.expirationDate}
@@ -51,7 +50,6 @@ function CuponContainerHome() {
               ) : (
                 <div className="couponsHome__disabled">
                   <CardCupponHome
-                    key={c.code}
                     code={c.code}
                     title={c.title}
                     expirationDate={c.expirationDate}
@@ -61,7 +59,7 @@ function CuponContainerHome() {
                   />
                 </div>
               )}
-            </>
+            </div>
           ))}
       </div>
     </div>
