@@ -20,7 +20,7 @@ function AddProductHome() {
   const currentProduct = allProducts.slice(firstBurgerIndex, lastBurgerIndex);
   const mount = useRef(false);
   const [filters, setFilters] = useState({
-    category: category,
+    category,
     order: '',
     search: '',
     isVeggie: '',

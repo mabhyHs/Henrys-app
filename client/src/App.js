@@ -127,31 +127,31 @@ function App() {
         />
 
         <Route
-          path="/admineditburgerbase"
+          path="/adminCreateBurgerBase"
           element={
             isSessionAdmin ? <CreateOrEditBurgerBase /> : <Navigate to="/" />
           }
         />
 
         <Route
-          path="/admineditburger"
+          path="/adminCreateBurger"
           element={
             isSessionAdmin ? <CreateOrEditBurger /> : <Navigate to="/" />
           }
         />
 
         <Route
-          path="/admineditbeverage"
+          path="/adminCreateBeverage"
           element={
             isSessionAdmin ? <CreateOrEditBeverage /> : <Navigate to="/" />
           }
         />
         <Route
-          path="/admineditcombo"
+          path="/adminCreateCombo"
           element={isSessionAdmin ? <CreateOrEditCombo /> : <Navigate to="/" />}
         />
         <Route
-          path="/admineditfries"
+          path="/adminCreateFries"
           element={isSessionAdmin ? <CreateOrEditFries /> : <Navigate to="/" />}
         />
         <Route
@@ -159,7 +159,7 @@ function App() {
           element={isSessionAdmin ? <CouponAdmin /> : <Navigate to="/" />}
         />
         <Route
-          path="/admineditproducts/:id"
+          path="/adminEditProducts/:id"
           element={isSessionAdmin ? <EditProducts /> : <Navigate to="/" />}
         />
 

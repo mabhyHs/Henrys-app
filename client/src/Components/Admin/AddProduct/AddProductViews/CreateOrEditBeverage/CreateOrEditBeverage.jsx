@@ -49,7 +49,7 @@ function CreateOrEditBeverage({ data }) {
       });
       setRestore(true);
     }
-  }, [dispatch, edit, isRestore]);
+  }, [dispatch, edit, isRestore, data]);
 
   const onChange = (e) => {
     setInput({

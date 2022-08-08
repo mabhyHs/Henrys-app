@@ -19,23 +19,23 @@ function AddProductsFilters({ setFilter, filters }) {
   };
 
   const creaBurger = () => {
-    navigate('/admineditburger');
+    navigate('/adminCreateBurger');
   };
 
   const creaCombo = () => {
-    navigate('/admineditcombo');
+    navigate('/adminCreateCombo');
   };
 
   const creaBeverage = () => {
-    navigate('/admineditbeverage');
+    navigate('/adminCreateBeverage');
   };
 
   const creaBurgerBase = () => {
-    navigate('/admineditburgerbase');
+    navigate('/adminCreateBurgerBase');
   };
 
   const creaFries = () => {
-    navigate('/admineditfries');
+    navigate('/adminCreateFries');
   };
 
   return (
@@ -108,6 +108,16 @@ function AddProductsFilters({ setFilter, filters }) {
             }
           >
             Todo
+          </Button>
+          <Button
+            onClick={handleOnChange}
+            name="category"
+            value=""
+            className={
+              filters.category === '' ? 'filter__btn activeBtn' : 'filter__btn'
+            }
+          >
+            Base
           </Button>
           <Button
             onClick={handleOnChange}

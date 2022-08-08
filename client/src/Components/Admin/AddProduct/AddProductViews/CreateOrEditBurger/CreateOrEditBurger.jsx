@@ -45,8 +45,7 @@ function CreateOrEditBurger({ data }) {
       setSelectIngredient(data.ingredient.map((el) => el));
       setRestore(true);
     }
-    console.log(selectIngredient);
-  }, [dispatch, edit, isRestore]);
+  }, [dispatch, edit, isRestore, data]);
 
   const onChange = (e) => {
     setInput({
@@ -56,7 +55,11 @@ function CreateOrEditBurger({ data }) {
   };
 
   const setVeggie = (e) => {
-    onChange(e);
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+      ingredient: []
+    });
     setSelectIngredient([]);
   };
 
@@ -94,7 +97,6 @@ function CreateOrEditBurger({ data }) {
     const ingredientFind = ingredientes.find(
       (el) => el.id === Number(e.target.value)
     );
-    console.log(e.target.value);
     if (ingredientFind) {
       setInput({
         ...input,
@@ -119,7 +121,6 @@ function CreateOrEditBurger({ data }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(input);
     if (edit) {
       dispatch(updateBurger(input));
       Swal.fire({

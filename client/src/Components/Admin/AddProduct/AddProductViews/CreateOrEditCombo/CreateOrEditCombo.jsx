@@ -56,7 +56,7 @@ function CreateOrEditCombo({ data }) {
       // setSelectBeverage(data.beverage.map((el) => el));
       setRestore(true);
     }
-  }, [dispatch, edit, isRestore]);
+  }, [dispatch, edit, isRestore, data]);
 
   const onChange = (e) => {
     console.log(input);

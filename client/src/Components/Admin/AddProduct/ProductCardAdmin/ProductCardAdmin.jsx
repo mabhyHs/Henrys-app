@@ -15,7 +15,7 @@ function ProductCardAdmin({ data, isDeleted }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const isType = () => {
+  const redirect = () => {
     navigate(`/admineditproducts/${data.id}`);
   };
 
@@ -38,7 +38,7 @@ function ProductCardAdmin({ data, isDeleted }) {
         <Card.Title className="adminProductHome__cardTittle">
           {data.name}
         </Card.Title>
-        <Button onClick={isType} variant="secondary">
+        <Button onClick={redirect} variant="secondary">
           <PencilSquare />
         </Button>
         <button onClick={onDelete}>{isDeleted ? 'Borrar' : 'Restaurar'}</button>
