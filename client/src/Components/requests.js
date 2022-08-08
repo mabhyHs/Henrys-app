@@ -20,7 +20,7 @@ import Swal from "sweetalert2";
         'auth-token': JSON.parse(localStorage.getItem('user')).token,
         },
     });
-  }
+}
 
 export async function updateProduct(product, data) {
 
@@ -39,7 +39,7 @@ export async function updateProduct(product, data) {
         'auth-token': JSON.parse(localStorage.getItem('user')).token,
         },
     });
-  }
+}
 
   export function alertCustom(title, text, imageUrl){
     Swal.fire({
@@ -53,4 +53,4 @@ export async function updateProduct(product, data) {
         imageHeight: 150,
         imageAlt: 'Logo henrys',
       });
-  }
+}
