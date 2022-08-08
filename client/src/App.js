@@ -83,7 +83,7 @@ function App() {
           element={isSession ? <UserProfileDashboard /> : <Navigate to="/" />}
         />
         <Route
-          path="/calificanos"
+          path="/calificanos/:purchaseId"
           element={isSession ? <UserReview /> : <Navigate to="/" />}
         />
         <Route
