@@ -1,8 +1,24 @@
 const { BurgerBase } = require("../models");
 
 async function getAll() {
-  const burgersBase = await BurgerBase.findAll();
-  return burgersBase;
+    const burgersBase = await BurgerBase.findAll({order: [
+        ['name', 'ASC'],
+    ]});
+    return burgersBase;
+  }
+  
+  async function getByQuery(queries) {
+    if (!queries) {
+      return await getAll();
+    }
+  
+    const burgersBase = await BurgerBase.findAll({ where: queries });
+    return burgersBase;
+  }
+
+async function getById(id) {
+    const burgerBase = await BurgerBase.findByPk(id);
+    return burgerBase;
 }
 
 async function getFirst() {
@@ -17,6 +33,8 @@ async function update(data) {
 
 module.exports = {
   getAll,
+  getById,
+  getByQuery,
   getFirst,
   update,
 };

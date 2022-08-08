@@ -43,7 +43,9 @@ async function getById(id) {
 }
 
 async function getAll() {
-  const combos = await Combo.findAll({paranoid: false});
+  const combos = await Combo.findAll({paranoid: false}, {order: [
+    ['name', 'ASC'],
+    ]});
   return combos;
 }
 
@@ -52,8 +54,13 @@ async function getByQuery(queries) {
     return await getAll();
   }
 
-  const combos = await Combo.findAll({ where: queries, paranoid: false });
-  return combos;
+  const combos = await Combo.findAll({ 
+        where: queries,
+        paranoid: false, 
+        order: [ ['name', 'ASC'] ]
+    });
+    
+    return combos;
 }
 
 async function getByName(name) {
