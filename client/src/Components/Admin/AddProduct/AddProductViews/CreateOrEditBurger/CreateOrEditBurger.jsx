@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import {
   getIngredients,
 } from '../../../../../Redux/actions/actions';
-import './CreateOrEditBurger.css';
 import { alertCustom, createProduct, updateProduct } from '../../../../requests';
+import './CreateOrEditBurger.css';
 
 function CreateOrEditBurger({ data }) {
   const navigate = useNavigate();
@@ -209,7 +209,7 @@ function CreateOrEditBurger({ data }) {
           </Row>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="isVeggie">
-              <Form.Label>Vegetariano *</Form.Label>
+              <Form.Label>Apto para vegetarianos *</Form.Label>
               <Form.Select
                 onChange={setVeggie}
                 value={input.isVeggie}

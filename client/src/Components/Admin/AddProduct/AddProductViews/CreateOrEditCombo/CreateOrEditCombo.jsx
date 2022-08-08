@@ -6,24 +6,23 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
-import Swal from 'sweetalert2';
 import {
   getBeverages,
   getBurgers,
   getFries,
-  postCombos,
-  updateCombos,
 } from '../../../../../Redux/actions/actions';
-
 import './CreateOrEditCombo.css';
+import { alertCustom, createProduct, updateProduct } from '../../../../requests';
 
 function CreateOrEditCombo({ data }) {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const [selectBeverage, setSelectBeverage] = useState([]);
+
   const burgers = useSelector((state) => state.burgers);
   const fries = useSelector((state) => state.fries);
   const beverages = useSelector((state) => state.beverages);
+
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
   const [input, setInput] = useState({
@@ -41,6 +40,7 @@ function CreateOrEditCombo({ data }) {
     dispatch(getBurgers('burgers'));
     dispatch(getFries('fries'));
     dispatch(getBeverages('beverages'));
+
     if (edit && !isRestore) {
       setInput({
         id: data.id,
@@ -58,11 +58,27 @@ function CreateOrEditCombo({ data }) {
     }
   }, [dispatch, edit, isRestore, data]);
 
+  function isDisabledSubmit(){
+    return (
+        !input.name ||
+        !input.price
+    )
+  }
+
   const onChange = (e) => {
-    console.log(input);
     setInput({
       ...input,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const setVeggie = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+      burger: [],
+      fries: [],
+      beverage: [],
     });
   };
 
@@ -88,8 +104,6 @@ function CreateOrEditCombo({ data }) {
   }
 
   function handleSelectFries(e) {
-    // console.log(input.fries);
-    console.log(e.target.value);
     const value = JSON.parse(e.target.value);
     if (!input.fries.map((e) => e.id).includes(value.id)) {
       setInput({
@@ -123,60 +137,58 @@ function CreateOrEditCombo({ data }) {
     });
   }
 
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = async (e) => {
+    e.preventDefault();
     if (edit) {
-      console.log({
-        ...input,
-        beverages: input.beverage.map((e) => e.id),
-        fries: input.fries.map((e) => e.id),
-        burgers: input.burger.map((e) => e.id),
-      });
-      dispatch(
-        updateCombos({
+
+        try {
+            
+        await updateProduct("combos", {
           ...input,
           beverage: input.beverage.map((e) => e.id),
           fries: input.fries.map((e) => e.id),
           burger: input.burger.map((e) => e.id),
-        })
-      );
-      Swal.fire({
-        customClass: {
-          confirmButton: 'confirmBtnSwal',
-        },
-        title: `${input.name}`,
-        text: 'Actualizada con exito',
-        imageUrl:
-          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
-        imageWidth: 150,
-        imageHeight: 150,
-        imageAlt: 'Logo henrys',
-      });
+        });
+        alertCustom(
+            input.name,
+            "Actualizada con exito!",
+            "https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png"
+        )
+        navigate('/adminproducts');
+
+        } catch (error) {
+            alertCustom(
+                "Oops...",
+                "No se pudo actualizar el producto!",
+                "https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png"
+            )
+        }
+
     } else {
-      dispatch(
-        postCombos({
-          ...input,
-          id: undefined,
-          beverage: input.beverage.map((e) => e.id),
-          fries: input.fries.map((e) => e.id),
-          burger: input.burger.map((e) => e.id),
-        })
-      );
-      Swal.fire({
-        customClass: {
-          confirmButton: 'confirmBtnSwal',
-        },
-        title: `${input.name}`,
-        text: 'Creado con exito',
-        imageUrl:
-          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
-        imageWidth: 150,
-        imageHeight: 150,
-        imageAlt: 'Logo henrys',
-      });
+
+        try {  
+            await createProduct("combos", {
+                ...input,
+                beverage: input.beverage.map((e) => e.id),
+                fries: input.fries.map((e) => e.id),
+                burger: input.burger.map((e) => e.id),
+              });
+            alertCustom(
+                input.name,
+                "Creada con exito!",
+                "https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png"
+            )
+            navigate('/adminproducts');
+        } catch (error) {
+            alertCustom(
+                "Oops...",
+                "No se pudo crear el producto!",
+                "https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png"
+            )
+        }
+
     }
-    navigate('/adminproducts');
-  };
+  };  
 
   return (
     <Container>
@@ -186,8 +198,9 @@ function CreateOrEditCombo({ data }) {
           <hr />
           <Row className="mb-3">
             <Form.Group as={Col} controlId="comboName">
-              <Form.Label>Nombre</Form.Label>
+              <Form.Label>Nombre *</Form.Label>
               <Form.Control
+                placeholder='Nombre *'
                 onChange={onChange}
                 type="text"
                 name="name"
@@ -196,8 +209,9 @@ function CreateOrEditCombo({ data }) {
             </Form.Group>
 
             <Form.Group as={Col} controlId="comboPrice">
-              <Form.Label>Precio</Form.Label>
+              <Form.Label>Precio *</Form.Label>
               <Form.Control
+                placeholder='Precio *'
                 onChange={onChange}
                 type="number"
                 name="price"
@@ -209,6 +223,7 @@ function CreateOrEditCombo({ data }) {
           <Form.Group className="mb-3" controlId="uploadImgCombo">
             <Form.Label>Imagen</Form.Label>
             <Form.Control
+              placeholder='Url de la imagen'
               onChange={onChange}
               type="url"
               name="imgUri"
@@ -222,9 +237,9 @@ function CreateOrEditCombo({ data }) {
               as={Col}
               controlId="beverages"
             >
-              <Form.Label>Bebida</Form.Label>
-              <Form.Select defaultValue="seleccionar">
-                <option>Seleccionar</option>
+              <Form.Label>Bebidas</Form.Label>
+              <Form.Select>
+                <option defaultValue>Seleccionar</option>
                 {beverages &&
                   beverages.map((bev) => (
                     <option value={JSON.stringify(bev)} key={bev.id}>
@@ -253,13 +268,10 @@ function CreateOrEditCombo({ data }) {
               multiple
               onChange={(e) => handleSelectBurgers(e)}
             >
-              <Form.Label>Hamburguesa</Form.Label>
+              <Form.Label>Hamburguesas</Form.Label>
               <Form.Select
-                defaultValue="seleccionar"
-                name="burger"
-                value={input.burger}
               >
-                <option>Seleccionar</option>
+                <option defaultValue>Seleccionar</option>
                 {burgers &&
                   burgers.map((bur) => (
                     <option value={JSON.stringify(bur)} key={bur.id}>
@@ -292,11 +304,8 @@ function CreateOrEditCombo({ data }) {
             >
               <Form.Label>Papas</Form.Label>
               <Form.Select
-                defaultValue="seleccionar"
-                name="fries"
-                value={input.fries}
               >
-                <option>Seleccionar</option>
+                <option defaultValue>Seleccionar</option>
                 {fries &&
                   fries.map((bur) => (
                     <option value={JSON.stringify(bur)} key={bur.id}>
@@ -321,20 +330,19 @@ function CreateOrEditCombo({ data }) {
             </div>
 
             <Form.Group as={Col} controlId="isVeggie">
-              <Form.Label>Vegetariano</Form.Label>
+              <Form.Label>Apto para vegetarianos *</Form.Label>
               <Form.Select
-                onChange={onChange}
-                defaultValue="Es Veggie"
                 name="isVeggie"
+                value={input.isVeggie}
+                onChange={setVeggie}
               >
-                <option>Es Veggie?</option>
+                <option value={false} defaultValue>No</option>
                 <option value={true}>Si</option>
-                <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
           </Row>
 
-          <Button onClick={onSubmit} variant="primary" type="submit">
+          <Button onClick={onSubmit} disabled={isDisabledSubmit()} variant="primary" type="submit">
             Confirmar
           </Button>
           <hr />

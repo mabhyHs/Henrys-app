@@ -20,13 +20,10 @@ function EditProducts() {
 
   useEffect(() => {
     dispatch(getProductById(id));
-    dispatch(getBurgerBase());
     return () => {
       dispatch(clearState());
     };
   }, [dispatch, id]);
-
-  // habria que controlar si no encuentra nada renderizar 404
 
   return (
     <div>

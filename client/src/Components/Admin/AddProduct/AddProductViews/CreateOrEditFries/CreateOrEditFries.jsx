@@ -5,9 +5,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom';
-
-import './CreateOrEditFries.css';
 import { alertCustom, createProduct, updateProduct } from '../../../../requests';
+import './CreateOrEditFries.css';
 
 function CreateOrEditFries({ data }) {
   const navigate = useNavigate();
