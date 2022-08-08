@@ -112,9 +112,9 @@ function AddProductsFilters({ setFilter, filters }) {
           <Button
             onClick={handleOnChange}
             name="category"
-            value=""
+            value="burgerBase"
             className={
-              filters.category === '' ? 'filter__btn activeBtn' : 'filter__btn'
+              filters.category === 'burgerBase' ? 'filter__btn activeBtn' : 'filter__btn'
             }
           >
             Base
