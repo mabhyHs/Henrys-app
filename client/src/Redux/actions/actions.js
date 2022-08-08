@@ -33,6 +33,8 @@ export const POST_BURGER = 'POST_BURGER';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const RESTORE_PRODUCT = 'RESTORE_PRODUCT';
 export const UPDATE_FRIES = 'UPDATE_FRIES';
+export const UPDATE_BEVERAGE = 'UPDATE_BEVERAGE';
+export const POST_BEVERAGE = 'POST_BEVERAGE';
 
 export function getUser(token, query = '/') {
   return async function (dispatch) {
@@ -485,6 +487,40 @@ export function updateFries(data) {
       });
       return dispatch({
         type: UPDATE_FRIES,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function updateBeverage(data) {
+  return async function (dispatch) {
+    try {
+      await axios.put('/beverages', data, {
+        headers: {
+          'auth-token': JSON.parse(localStorage.getItem('user')).token,
+        },
+      });
+      return dispatch({
+        type: UPDATE_BEVERAGE,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function postBeverage(data) {
+  return async function (dispatch) {
+    try {
+      await axios.post('/beverages', data, {
+        headers: {
+          'auth-token': JSON.parse(localStorage.getItem('user')).token,
+        },
+      });
+      return dispatch({
+        type: POST_BEVERAGE,
       });
     } catch (error) {
       console.log(error);

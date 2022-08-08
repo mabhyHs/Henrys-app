@@ -5,19 +5,23 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   getIngredients,
   postBurgers,
   updateBurger,
 } from '../../../../../Redux/actions/actions';
+import Swal from 'sweetalert2';
 import './CreateOrEditBurger.css';
 
 function CreateOrEditBurger({ data }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const ingredientes = useSelector((state) => state.ingredients);
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
   const [selectIngredient, setSelectIngredient] = useState([]);
+  const [ingredientOp, setIngredienOp] = useState([]);
   const [input, setInput] = useState({
     id: '',
     name: '',
@@ -27,8 +31,6 @@ function CreateOrEditBurger({ data }) {
     isVeggie: '',
   });
 
-  console.log(data.ingredient);
-
   useEffect(() => {
     dispatch(getIngredients());
     if (edit && !isRestore) {
@@ -36,13 +38,14 @@ function CreateOrEditBurger({ data }) {
         id: data.id,
         name: data.name,
         price: data.price,
-        ingredient: data.ingredient,
+        ingredient: data.ingredient.map((el) => el.id),
         imgUri: data.imgUri,
         isVeggie: data.isVeggie,
       });
+      setSelectIngredient(data.ingredient.map((el) => el));
       setRestore(true);
     }
-    console.log(input);
+    console.log(selectIngredient);
   }, [dispatch, edit, isRestore]);
 
   const onChange = (e) => {
@@ -52,7 +55,36 @@ function CreateOrEditBurger({ data }) {
     });
   };
 
-  function cargarIngredientes() {}
+  const setVeggie = (e) => {
+    onChange(e);
+    setSelectIngredient([]);
+  };
+
+  function ingredientsNotSelect() {
+    let notSelect = ingredientes.map((e) => e);
+
+    if (input.isVeggie === 'true') {
+      notSelect = notSelect.filter((f) => f.isVeggie === true);
+    }
+
+    if (!selectIngredient || !selectIngredient.length) {
+      return notSelect;
+    }
+
+    for (let j = 0; j < notSelect.length; j++) {
+      const all = notSelect[j];
+
+      for (let i = 0; i < selectIngredient.length; i++) {
+        const add = selectIngredient[i];
+
+        if (all === add) {
+          notSelect.splice(j, 1);
+          j--;
+        }
+      }
+    }
+    return notSelect;
+  }
 
   function isEdit() {
     return data && Object.keys(data).length;
@@ -68,7 +100,7 @@ function CreateOrEditBurger({ data }) {
         ...input,
         ingredient: [...input.ingredient, e.target.value],
       });
-      setSelectIngredient([...selectIngredient, ingredientFind.name]);
+      setSelectIngredient([...selectIngredient, ingredientFind]);
     }
   }
 
@@ -81,7 +113,7 @@ function CreateOrEditBurger({ data }) {
       ingredient: input.ingredient.filter((c) => c !== ingredientFind.id),
     });
     setSelectIngredient([
-      ...selectIngredient.filter((c) => c !== e.target.value),
+      ...selectIngredient.filter((c) => c.name !== e.target.value),
     ]);
   }
 
@@ -90,9 +122,34 @@ function CreateOrEditBurger({ data }) {
     console.log(input);
     if (edit) {
       dispatch(updateBurger(input));
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: `${input.name}`,
+        text: 'Actualizada con exito',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
     } else {
       dispatch(postBurgers({ ...input, id: undefined }));
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: `${input.name}`,
+        text: 'Creada con exito',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
     }
+    navigate('/adminproducts');
   };
 
   return (
@@ -137,12 +194,11 @@ function CreateOrEditBurger({ data }) {
             <Form.Group as={Col} controlId="isVeggie">
               <Form.Label>Vegetariano</Form.Label>
               <Form.Select
-                onChange={onChange}
+                onChange={setVeggie}
                 defaultValue="Es Veggie"
                 value={input.isVeggie}
                 name="isVeggie"
               >
-                <option>Es Veggie?</option>
                 <option value={true}>Si</option>
                 <option value={false}>No</option>
               </Form.Select>
@@ -156,8 +212,8 @@ function CreateOrEditBurger({ data }) {
               <Form.Label>Ingredientes</Form.Label>
               <Form.Select defaultValue="seleccionar">
                 <option>Seleccionar</option>
-                {ingredientes &&
-                  ingredientes?.map((el) => (
+                {ingredientsNotSelect().length > 0 &&
+                  ingredientsNotSelect().map((el) => (
                     <option value={el.id} key={el.id}>
                       {el.name}
                     </option>
@@ -167,10 +223,10 @@ function CreateOrEditBurger({ data }) {
             <div>
               {selectIngredient &&
                 selectIngredient.map((e) => (
-                  <div key={e}>
-                    <p>{e}</p>
+                  <div key={e.id}>
+                    <p>{e.name}</p>
                     <button
-                      value={e}
+                      value={e.name}
                       type="button"
                       onClick={(e) => handleDelete(e)}
                     >

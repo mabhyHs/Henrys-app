@@ -1,4 +1,4 @@
-import  { React, useEffect, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -7,16 +7,20 @@ import Container from 'react-bootstrap/Container';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getProduct,
+  postBeverage,
+  updateBeverage,
 } from '../../../../../Redux/actions/actions';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import './CreateOrEditBeverage.css';
 
 function CreateOrEditBeverage({ data }) {
+  const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
   const bebidas = useSelector((state) => state.products);
-  const [size] = useState(['Chica', 'Mediana', 'Grande']);
+  const [size, setSize] = useState([]);
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
   const [input, setInput] = useState({
@@ -54,30 +58,47 @@ function CreateOrEditBeverage({ data }) {
     });
   };
 
+  const onChangeSize = (e) => {
+    setSize([...size, e.target.value]);
+  };
+
   function isEdit() {
     return data && Object.keys(data).length;
   }
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    let beveragesUpdate = input;
-    beveragesUpdate = {
-      ...input,
-      id: beveragesUpdate.id,
-      name: beveragesUpdate.name,
-      price: beveragesUpdate.price,
-      size: beveragesUpdate.size,
-      isCarbonated: beveragesUpdate.isCarbonated,
-      isSugar: beveragesUpdate.isSugar,
-      imgUri: beveragesUpdate.imgUri,
-      isVeggie: beveragesUpdate.isVeggie,
-    };
-    console.log(beveragesUpdate);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    console.log(input);
     if (edit) {
-      // put
+      dispatch(updateBeverage(input));
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: `${input.name}`,
+        text: 'Actualizada con exito',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
     } else {
-      // post
+      dispatch(postBeverage({ ...input, id: undefined }));
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: `${input.name}`,
+        text: 'Creada con exito',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
     }
+    navigate('/adminproducts');
   };
   return (
     <Container>
@@ -111,7 +132,7 @@ function CreateOrEditBeverage({ data }) {
             <Form.Label>Imagen</Form.Label>
             <Form.Control
               onChange={onChange}
-              type="file"
+              type="url"
               name="imgUri"
               value={input.imgUri}
             ></Form.Control>
@@ -127,8 +148,8 @@ function CreateOrEditBeverage({ data }) {
                 value={input.isCarbonated}
               >
                 <option>Seleccionar</option>
-                <option>Si</option>
-                <option>No</option>
+                <option value={true}>Si</option>
+                <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
 
@@ -141,8 +162,8 @@ function CreateOrEditBeverage({ data }) {
                 value={input.isSugar}
               >
                 <option>Seleccionar</option>
-                <option>Si</option>
-                <option>No</option>
+                <option value={true}>Si</option>
+                <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
           </Row>
@@ -150,10 +171,14 @@ function CreateOrEditBeverage({ data }) {
           <Row className="mb-3">
             <Form.Group as={Col} controlId="size">
               <Form.Label>Tamaño</Form.Label>
-              <Form.Select onChange={onChange} defaultValue="seleccionar">
+              <Form.Select
+                onChange={(e) => onChangeSize(e)}
+                defaultValue="seleccionar"
+              >
                 <option>Seleccionar</option>
-                {size &&
-                  size.map((s) => <option key={s.id}>{s.name || s}</option>)}
+                <option value="Chica">Chica</option>
+                <option value="Mediana">Mediana</option>
+                <option value="Grande">Grande</option>
               </Form.Select>
             </Form.Group>
 
@@ -165,9 +190,8 @@ function CreateOrEditBeverage({ data }) {
                 name="isVeggie"
                 value={input.isVeggie}
               >
-                <option>Es Veggie?</option>
-                <option>Si</option>
-                <option>No</option>
+                <option value={true}>Si</option>
+                <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
           </Row>

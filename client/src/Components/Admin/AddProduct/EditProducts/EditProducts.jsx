@@ -17,6 +17,8 @@ function EditProducts() {
   const { id } = useParams();
   const product = useSelector((state) => state.productDetail);
 
+  console.log(product);
+
   useEffect(() => {
     dispatch(getProductById(id));
     dispatch(getBurgerBase());

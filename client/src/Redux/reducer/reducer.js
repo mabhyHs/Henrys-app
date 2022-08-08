@@ -31,6 +31,8 @@ import {
   DELETE_PRODUCT,
   RESTORE_PRODUCT,
   UPDATE_FRIES,
+  UPDATE_BEVERAGE,
+  POST_BEVERAGE,
 } from '../actions/actions';
 
 import {
@@ -227,6 +229,14 @@ const rootReducer = (state = initialState, action = {}) => {
         products: state.products.filter((item) => item.id !== action.payload),
       };
     case UPDATE_FRIES:
+      return {
+        ...state,
+      };
+    case UPDATE_BEVERAGE:
+      return {
+        ...state,
+      };
+    case POST_BEVERAGE:
       return {
         ...state,
       };
