@@ -130,9 +130,8 @@ function CreateOrEditFries({ data }) {
             <Form.Control
               placeholder='Url de la imagen'
               onChange={onChange}
-              type="url"
+              type="file"
               name="imgUri"
-              value={input.imgUri}
             ></Form.Control>
           </Form.Group>
 
