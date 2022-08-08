@@ -16,8 +16,12 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
       },
       status: {
-        type: DataTypes.ENUM(["Pendiente", "Entregado"]),
+        type: DataTypes.ENUM(["Pendiente", "Listo"]),
         defaultValue: "Pendiente",
+      },
+      review: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     {

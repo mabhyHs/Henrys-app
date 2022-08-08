@@ -952,6 +952,20 @@ async function getById(id) {
   return await Order.findByPk(id);
 }
 
+async function changeReview(id, review) {
+  try {
+    const order = await Order.findByPk(id, {
+      include: {
+        association: "customer",
+        attributes: { exclude: ["password"] },
+      },
+    });
+    return await order.update({ review: true });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   create,
   getAll,
@@ -959,4 +973,5 @@ module.exports = {
   getById,
   getAllByUserId,
   getByPurchaseId,
+  changeReview,
 };
