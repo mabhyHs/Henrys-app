@@ -10,7 +10,6 @@ import './CreateOrEditBeverage.css';
 
 function CreateOrEditBeverage({ data }) {
   const navigate = useNavigate();
-  const [size, setSize] = useState('');
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
   const [input, setInput] = useState({
