@@ -76,7 +76,7 @@ async function notification(req, res, next) {
         const user = await userRepository.getByEmail(info.payer.email);
         await orderRepositories.create(user.id, {
           purchaseId: paymentId,
-        });
+        }, user);
         break;
       // case "merchant_order":
       //   const orderId = req.query.id;
