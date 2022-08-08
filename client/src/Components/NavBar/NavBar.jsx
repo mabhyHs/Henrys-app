@@ -18,6 +18,7 @@ import {
 } from '../../Redux/actions/actions';
 
 import './NavBar.css';
+import EmployeeNavBar from '../employeePanel/EmployeeNavBar/EmployeeNavBar';
 
 function NavBar() {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ function NavBar() {
   const { isAuthenticated, logout } = useAuth0();
   const path = useLocation().pathname;
   const isAdmin = path.includes('admin');
+  const isEmployee = path.includes('employee');
 
   useEffect(() => {
     if (mount.current) {
@@ -93,7 +95,9 @@ function NavBar() {
   return (
     <>
       {isAdmin && <AdminNavBar />}
-      {!isAdmin && (
+      {isEmployee && <EmployeeNavBar />}
+
+      {!isAdmin && !isEmployee && (
         <Navbar className="navBar" expand="lg" variant="dark" sticky="top">
           <Container>
             <Navbar.Brand as={Link} to="/">
