@@ -59,12 +59,8 @@ async function getPaymentById(req, res, next) {
 
 async function notification(req, res, next) {
   try {
-    console.log("entro en notification");
     const topic = req.query.topic || req.query.type;
     let merchantOrder;
-    console.log(req.query);
-    console.log("body ------------------------");
-    console.log(req.body);
     switch (topic) {
       case "payment":
         const paymentId = req.query.id || req.query["data.id"];
@@ -76,7 +72,6 @@ async function notification(req, res, next) {
         const info = await mercadopagoRepository.getByPreference(
           merchantOrder.body.preference_id
         );
-        console.log(info.payer.email);
         const user = await userRepository.getByEmail(info.payer.email);
         await orderRepositories.create(
           {
