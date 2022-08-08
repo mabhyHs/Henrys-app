@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   getFries,
   postFries,
@@ -14,11 +14,11 @@ import {
 } from '../../../../../Redux/actions/actions';
 
 import './CreateOrEditFries.css';
+import { alertCustom, createProduct, updateProduct } from '../../../../requests';
 
 function CreateOrEditFries({ data }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const fries = useSelector((state) => state.fries);
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
   const [input, setInput] = useState({
@@ -59,35 +59,44 @@ function CreateOrEditFries({ data }) {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (edit) {
-      dispatch(updateFries(input));
-      Swal.fire({
-        customClass: {
-          confirmButton: 'confirmBtnSwal',
-        },
-        title: `${input.name}`,
-        text: 'Actualizada con exito',
-        imageUrl:
-          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
-        imageWidth: 150,
-        imageHeight: 150,
-        imageAlt: 'Logo henrys',
-      });
+
+    try {
+            
+        await updateProduct("fries", input);
+        alertCustom(
+            input.name,
+            "Actualizada con exito!",
+            "https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png"
+        )
+        navigate('/adminproducts');
+
+        } catch (error) {
+            alertCustom(
+                "Oops...",
+                "No se pudo actualizar el producto!",
+                "https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png"
+            )
+        }
+
     } else {
-      dispatch(postFries({ ...input, id: undefined }));
-      Swal.fire({
-        customClass: {
-          confirmButton: 'confirmBtnSwal',
-        },
-        title: `${input.name}`,
-        text: 'Creada con exito',
-        imageUrl:
-          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
-        imageWidth: 150,
-        imageHeight: 150,
-        imageAlt: 'Logo henrys',
-      });
+
+        try {  
+            await createProduct("burgers", input);
+            alertCustom(
+                input.name,
+                "Creada con exito!",
+                "https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png"
+            )
+            navigate('/adminproducts');
+        } catch (error) {
+            alertCustom(
+                "Oops...",
+                "No se pudo crear el producto!",
+                "https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png"
+            )
+        }
+
     }
-    navigate('/adminproducts');
   };
 
   return (
@@ -97,8 +106,9 @@ function CreateOrEditFries({ data }) {
         <Form>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridName">
-              <Form.Label>Nombre</Form.Label>
+              <Form.Label>Nombre *</Form.Label>
               <Form.Control
+                placeholder='Nombre *'
                 onChange={onChange}
                 type="text"
                 name="name"
@@ -106,8 +116,9 @@ function CreateOrEditFries({ data }) {
               />
             </Form.Group>
             <Form.Group as={Col} controlId="formGridPrice">
-              <Form.Label>Precio</Form.Label>
+              <Form.Label>Precio *</Form.Label>
               <Form.Control
+                placeholder='Precio *'
                 onChange={onChange}
                 type="number"
                 name="price"
@@ -119,6 +130,7 @@ function CreateOrEditFries({ data }) {
           <Form.Group className="mb-3" controlId="formGridImage">
             <Form.Label>Imagen</Form.Label>
             <Form.Control
+              placeholder='Url de la imagen'
               onChange={onChange}
               type="url"
               name="imgUri"
@@ -131,26 +143,22 @@ function CreateOrEditFries({ data }) {
               <Form.Label>Tamaño</Form.Label>
               <Form.Select
                 onChange={onChange}
-                defaultValue="Tamaño"
                 name="size"
                 value={input.size}
               >
-                <option>Tamaño</option>
-                <option value="Chico">Chico</option>
+                <option value="Chico" defaultValue>Chico</option>
                 <option value="Mediano">Mediano</option>
                 <option value="Grande">Grande</option>
               </Form.Select>
             </Form.Group>
             <Form.Group as={Col} controlId="formGridVegan">
-              <Form.Label>Vegetariano</Form.Label>
+              <Form.Label>Apto para vegetarianos</Form.Label>
               <Form.Select
                 onChange={onChange}
-                defaultValue="Es Veggie"
                 name="isVeggie"
                 value={input.isVeggie}
               >
-                <option>Es Veggie?</option>
-                <option value={true}>Si</option>
+                <option value={true} defaultValue>Si</option>
                 <option value={false}>No</option>
               </Form.Select>
             </Form.Group>

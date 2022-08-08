@@ -188,7 +188,7 @@ function CreateOrEditBeverage({ data }) {
             </Form.Group>
 
             <Form.Group as={Col} controlId="isVeggie">
-              <Form.Label>Vegetariano</Form.Label>
+              <Form.Label>Apto para vegetarianos</Form.Label>
               <Form.Select
                 onChange={onChange}
                 defaultValue="Es Veggie"
