@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
+import Swal from 'sweetalert2';
 import {
   getBeverages,
   getBurgers,
   getFries,
+  postCombos,
   updateCombos,
 } from '../../../../../Redux/actions/actions';
 
 import './CreateOrEditCombo.css';
 
 function CreateOrEditCombo({ data }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   // const [selectBeverage, setSelectBeverage] = useState([]);
   const burgers = useSelector((state) => state.burgers);
@@ -23,6 +27,7 @@ function CreateOrEditCombo({ data }) {
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
   const [input, setInput] = useState({
+    id: '',
     name: '',
     price: '',
     fries: [],
@@ -38,6 +43,7 @@ function CreateOrEditCombo({ data }) {
     dispatch(getBeverages('beverages'));
     if (edit && !isRestore) {
       setInput({
+        id: data.id,
         name: data.name,
         price: data.price,
         fries: data.fries,
@@ -129,15 +135,49 @@ function CreateOrEditCombo({ data }) {
       dispatch(
         updateCombos({
           ...input,
-          beverages: input.beverage.map((e) => e.id),
+          beverage: input.beverage.map((e) => e.id),
           fries: input.fries.map((e) => e.id),
-          burgers: input.burger.map((e) => e.id),
+          burger: input.burger.map((e) => e.id),
         })
       );
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: `${input.name}`,
+        text: 'Actualizada con exito',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
     } else {
-      // post
+      dispatch(
+        postCombos({
+          ...input,
+          id: undefined,
+          beverage: input.beverage.map((e) => e.id),
+          fries: input.fries.map((e) => e.id),
+          burger: input.burger.map((e) => e.id),
+        })
+      );
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: `${input.name}`,
+        text: 'Creado con exito',
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
     }
+    navigate('/adminproducts');
   };
+
   return (
     <Container>
       <div className="editCombo__container">
@@ -169,6 +209,7 @@ function CreateOrEditCombo({ data }) {
           <Form.Group className="mb-3" controlId="uploadImgCombo">
             <Form.Label>Imagen</Form.Label>
             <Form.Control
+              onChange={onChange}
               type="url"
               name="imgUri"
               value={input.imgUri}
@@ -286,6 +327,7 @@ function CreateOrEditCombo({ data }) {
                 defaultValue="Es Veggie"
                 name="isVeggie"
               >
+                <option>Es Veggie?</option>
                 <option value={true}>Si</option>
                 <option value={false}>No</option>
               </Form.Select>

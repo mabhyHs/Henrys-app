@@ -7,7 +7,11 @@ import Container from 'react-bootstrap/Container';
 
 import './CreateOrEditBurgerBase.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBurgerBase } from '../../../../../Redux/actions/actions';
+import {
+  getBurgerBase,
+  postBurgerBase,
+  updateBurgerBase,
+} from '../../../../../Redux/actions/actions';
 
 function CreateOrEditBurgerBase({ data }) {
   const dispatch = useDispatch();
@@ -50,9 +54,9 @@ function CreateOrEditBurgerBase({ data }) {
   const onSubmit = async (event) => {
     event.preventDefault();
     if (edit) {
-      // put
+      dispatch(updateBurgerBase(input));
     } else {
-      // post
+      dispatch(postBurgerBase({ ...input, id: undefined }));
     }
   };
   return (
@@ -85,7 +89,7 @@ function CreateOrEditBurgerBase({ data }) {
             <Form.Label>Imagen</Form.Label>
             <Form.Control
               onChange={onChange}
-              type="file"
+              type="url"
               name="imgUri"
               value={input.imgUri}
             ></Form.Control>
@@ -110,13 +114,13 @@ function CreateOrEditBurgerBase({ data }) {
                 value={input.isVeggie}
               >
                 <option>Es Veggie?</option>
-                <option>Si</option>
-                <option>No</option>
+                <option value={true}>Si</option>
+                <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
           </Row>
 
-          <Button>Confirmar</Button>
+          <Button onClick={onSubmit}>Confirmar</Button>
           <hr />
         </Form>
       </Container>
