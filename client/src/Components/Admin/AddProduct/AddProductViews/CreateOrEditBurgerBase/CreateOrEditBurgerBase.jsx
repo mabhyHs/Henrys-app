@@ -33,7 +33,7 @@ function CreateOrEditBurgerBase({ data }) {
         name: data.name,
         price: data.price,
         description: data.description,
-        imgUri: '',
+        imgUri: data.imgUri ? data.imgUri : "",
         isVeggie: data.isVeggie,
       });
       setRestore(true);

@@ -139,7 +139,7 @@ function CreateOrEditFries({ data }) {
 
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridsize">
-              <Form.Label>Tamaño</Form.Label>
+              <Form.Label>Tamaño *</Form.Label>
               <Form.Select
                 onChange={onChange}
                 name="size"
@@ -151,7 +151,7 @@ function CreateOrEditFries({ data }) {
               </Form.Select>
             </Form.Group>
             <Form.Group as={Col} controlId="formGridVegan">
-              <Form.Label>Apto para vegetarianos</Form.Label>
+              <Form.Label>Apto para vegetarianos *</Form.Label>
               <Form.Select
                 onChange={onChange}
                 name="isVeggie"

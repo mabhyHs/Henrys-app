@@ -209,7 +209,7 @@ function CreateOrEditBurger({ data }) {
           </Row>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="isVeggie">
-              <Form.Label>Vegetariano</Form.Label>
+              <Form.Label>Vegetariano *</Form.Label>
               <Form.Select
                 onChange={setVeggie}
                 value={input.isVeggie}

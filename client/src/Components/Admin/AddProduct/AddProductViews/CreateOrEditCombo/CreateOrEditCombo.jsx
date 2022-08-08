@@ -50,7 +50,7 @@ function CreateOrEditCombo({ data }) {
         beverage: data.beverage,
         // beverage: data.beverage.map((e) => e.id),
         burger: data.burger,
-        imgUri: '',
+        imgUri: data.imgUri ? data.imgUri : "",
         isVeggie: data.isVeggie,
       });
       // setSelectBeverage(data.beverage.map((el) => el));
