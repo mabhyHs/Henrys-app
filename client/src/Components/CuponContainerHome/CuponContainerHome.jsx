@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import CardCupponHome from '../CardCuponHome/CardCuponHome';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCoupons } from '../../Redux/actions/actions';
-import Container from 'react-bootstrap/Container';
 
 import './CuponContainerHome.css';
 
