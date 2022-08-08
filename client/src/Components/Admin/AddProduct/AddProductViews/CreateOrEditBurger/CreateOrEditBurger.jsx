@@ -36,7 +36,7 @@ function CreateOrEditBurger({ data }) {
         name: data.name,
         price: data.price,
         ingredient: data.ingredient.map((el) => el.id),
-        imgUri: data.imgUri,
+        imgUri: data.imgUri ? data.imgUri : "",
         isVeggie: data.isVeggie,
       });
       setSelectIngredient(data.ingredient.map((el) => el));

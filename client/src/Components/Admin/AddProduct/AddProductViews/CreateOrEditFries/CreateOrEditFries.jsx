@@ -4,13 +4,10 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
-import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
   getFries,
-  postFries,
-  updateFries,
 } from '../../../../../Redux/actions/actions';
 
 import './CreateOrEditFries.css';
@@ -38,7 +35,7 @@ function CreateOrEditFries({ data }) {
         name: data.name,
         price: data.price,
         size: data.size,
-        imgUri: '',
+        imgUri: data.imgUri ? data.imgUri : "",
         isVeggie: data.isVeggie,
       });
       setRestore(true);
