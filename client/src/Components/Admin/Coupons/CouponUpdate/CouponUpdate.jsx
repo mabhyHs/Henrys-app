@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import {
-  getProduct,
-  updateCombos,
-  updateCoupons,
-} from '../../../../Redux/actions/actions';
+import { getProduct, updateCoupons } from '../../../../Redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import CardCupponHome from '../../../CardCuponHome/CardCuponHome';
+import Row from 'react-bootstrap/esm/Row';
+import Form from 'react-bootstrap/esm/Form';
+import { postImageToCloudinary } from '../../../methods';
 
 function CouponUpdate({ couponToEdit }) {
   const dispatch = useDispatch();
@@ -234,6 +233,19 @@ function CouponUpdate({ couponToEdit }) {
     }
   }
 
+  async function setImg(e) {
+    const result = await postImageToCloudinary(e);
+
+    if (result) {
+      setCoupon({ ...coupon, imgUri: result });
+    } else {
+      e.target.value = '';
+    }
+    setIsChange(true);
+  }
+
+  console.log(coupon);
+
   return (
     <div>
       <div>
@@ -343,6 +355,17 @@ function CouponUpdate({ couponToEdit }) {
                 ))}
             </div>
           </label>
+          <Row>
+            <Form.Group className="mb-3" controlId="uploadImgBurger">
+              <Form.Label>Imagen</Form.Label>
+              <Form.Control
+                placeholder="Url de la imagen"
+                onChange={setImg}
+                type="file"
+                name="imgUri"
+              ></Form.Control>
+            </Form.Group>
+          </Row>
           <button
             disabled={!isChange || !btnSubmit}
             onClick={handleUpdateCoupon}
