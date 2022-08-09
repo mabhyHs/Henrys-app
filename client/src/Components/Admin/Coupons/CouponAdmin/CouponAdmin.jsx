@@ -76,7 +76,11 @@ function CouponAdmin() {
                 expired={isExpired(currentDate, c.expirationDate)}
               />
             }
-            <Button variant="secondary" onClick={() => editCoupon(c)}>
+            <Button
+              className="couponAdmin__editButton"
+              variant="secondary"
+              onClick={() => editCoupon(c)}
+            >
               <PencilSquare />
             </Button>
           </div>

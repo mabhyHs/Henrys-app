@@ -30,6 +30,16 @@
 
 @media (max-width: 481px) {
   .couponAdmin__CardCupponHome {
-    width: 22.5rem;
+    flex-direction: column;
+    /* width: 20rem; */
+    align-items: inherit;
+    justify-content: inherit;
+    width: 100%;
+  }
+
+  .couponAdmin__editButton {
+    width: 2.5rem;
+    position: relative;
+    margin: 0 auto;
   }
 }
