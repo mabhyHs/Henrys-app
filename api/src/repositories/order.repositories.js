@@ -6,7 +6,9 @@ const { QRCodeGenerator } = require("../utils/QRCodeGenerator");
 
 async function create(data, user) {
   try {
-    const order = await Order.create(data);
+    const receipt = await mercadopagoRepository.getPaymentById(data.purchaseId);
+
+    const order = await Order.create({...data, data: receipt});
     await order.addCustomer(user.id);
     const orderAndUser = await Order.findByPk(order.purchaseId, {
       include: {
@@ -14,9 +16,7 @@ async function create(data, user) {
         attributes: { exclude: ["password"] },
       },
     });
-
-    const receipt = await mercadopagoRepository.getPaymentById(data.purchaseId);
-
+    
     await transporter.sendMail({
       from: '"Recibo de compra" <henrysBurger2022@gmail.com',
       to: user.email,
