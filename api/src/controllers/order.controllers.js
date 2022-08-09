@@ -571,7 +571,7 @@ async function create(req, res, next) {
 
 async function getAll(req, res, next) {
   try {
-    let orders = await orderRepositories.getAll();
+    const orders = await orderRepositories.getAll();
 
     for(let i=0; i<orders.length; i++){
 
