@@ -14,6 +14,7 @@ function CreateOrEditBurgerBase({ data }) {
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
   const [input, setInput] = useState({
+    id: '',
     name: '',
     price: '',
     description: '',
@@ -24,6 +25,7 @@ function CreateOrEditBurgerBase({ data }) {
   useEffect(() => {
     if (edit && !isRestore) {
       setInput({
+        id: data.id,
         name: data.name,
         price: data.price,
         description: data.description,
@@ -71,7 +73,7 @@ function CreateOrEditBurgerBase({ data }) {
     if (edit) {
 
     try {
-            
+                
         await updateProduct("burgerBase", input);
         alertCustom(
             input.name,
