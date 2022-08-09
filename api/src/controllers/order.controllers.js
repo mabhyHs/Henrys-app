@@ -7,10 +7,11 @@ async function create(req, res, next) {
     const receipt = await mercadopagoRepository.getPaymentById(
       req.body.purchaseId
     );
-    const order = await orderRepositories.create(req.body.user.id, {
-      ...req.body,
-      data: receipt,
-    });
+
+    const order = await orderRepositories.create({
+        ...req.body.user.id, 
+        data: receipt
+    }, req.body);
 
     await transporter.sendMail({
       from: '"Recibo de compra" <henrysBurger2022@gmail.com',
