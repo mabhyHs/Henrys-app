@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import './AddProductFilters.css';
 
@@ -89,6 +89,14 @@ function AddProductsFilters({ setFilter, filters }) {
             >
               Papas
             </Button>
+            <Button
+              as={Link}
+              to="/adminCreateIngredient"
+              className="btn__modal__create"
+              variant="secondary"
+            >
+              Ingredientes
+            </Button>
           </div>
         </Modal>
       </div>
@@ -114,7 +122,9 @@ function AddProductsFilters({ setFilter, filters }) {
             name="category"
             value="burgerBase"
             className={
-              filters.category === 'burgerBase' ? 'filter__btn activeBtn' : 'filter__btn'
+              filters.category === 'burgerBase'
+                ? 'filter__btn activeBtn'
+                : 'filter__btn'
             }
           >
             Base
