@@ -101,6 +101,9 @@ function CreateOrEditCombo({ data }) {
   }
 
   function handleSelectBeverages(e) {
+
+    if(e.target.value === "0") return;
+
     const value = JSON.parse(e.target.value);
     if (!input.beverage.map((e) => e.id).includes(value.id)) {
       setInput({
@@ -118,6 +121,8 @@ function CreateOrEditCombo({ data }) {
   }
 
   function handleSelectFries(e) {
+    if(e.target.value === "0") return;
+
     const value = JSON.parse(e.target.value);
     if (!input.fries.map((e) => e.id).includes(value.id)) {
       setInput({
@@ -135,6 +140,8 @@ function CreateOrEditCombo({ data }) {
   }
 
   function handleSelectBurgers(e) {
+    if(e.target.value === "0") return;
+    
     const value = JSON.parse(e.target.value);
     if (!input.burger.map((e) => e.id).includes(value.id)) {
       setInput({
@@ -255,7 +262,7 @@ function CreateOrEditCombo({ data }) {
             >
               <Form.Label>Bebidas</Form.Label>
               <Form.Select>
-                <option defaultValue>Seleccionar</option>
+                <option value="0" defaultValue>Seleccionar</option>
                 {beverages &&
                   beverages.map((bev) => (
                     <option value={JSON.stringify(bev)} key={bev.id}>
@@ -287,7 +294,7 @@ function CreateOrEditCombo({ data }) {
               <Form.Label>Hamburguesas</Form.Label>
               <Form.Select
               >
-                <option defaultValue>Seleccionar</option>
+                <option value="0" defaultValue>Seleccionar</option>
                 {burgers &&
                   burgers.map((bur) => (
                     <option value={JSON.stringify(bur)} key={bur.id}>
@@ -321,7 +328,7 @@ function CreateOrEditCombo({ data }) {
               <Form.Label>Papas</Form.Label>
               <Form.Select
               >
-                <option defaultValue>Seleccionar</option>
+                <option value="0" defaultValue>Seleccionar</option>
                 {fries &&
                   fries.map((bur) => (
                     <option value={JSON.stringify(bur)} key={bur.id}>
