@@ -1,6 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { getProduct, updateCoupons } from '../../../../Redux/actions/actions';
+import {
+  getProduct,
+  updateCoupons,
+  getCoupons,
+} from '../../../../Redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import CardCupponHome from '../../../CardCuponHome/CardCuponHome';
@@ -10,7 +14,7 @@ import { postImageToCloudinary } from '../../../methods';
 import Button from 'react-bootstrap/Button';
 import './CouponUpdate.css';
 
-function CouponUpdate({ couponToEdit }) {
+function CouponUpdate({ couponToEdit, setIsEditing }) {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state);
   const [btnSubmit, setBtnSubmit] = useState(false);
@@ -205,6 +209,8 @@ function CouponUpdate({ couponToEdit }) {
       ).then((res) => {
         console.log(res);
         if (res.status === 201) {
+          dispatch(getCoupons());
+          setIsEditing(false);
           Swal.fire({
             customClass: {
               confirmButton: 'confirmBtnSwal',
