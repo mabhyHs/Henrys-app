@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import imgNavEmp from '../../../Assets/Images/logo-henrys300px.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { BiHome, BiLogOut, BiCheckCircle } from 'react-icons/bi';
 import { MdPendingActions } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
@@ -13,6 +13,7 @@ import './EmployeeNavBar.css';
 function EmployeeNavBar() {
 
     const dispatch = useDispatch();
+    const path = useLocation().pathname;
     
     useEffect(() => {
         const interval = setInterval(() => dispatch(setOrders()), 15000);
@@ -36,16 +37,16 @@ function EmployeeNavBar() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto employee__nav">
-            <Nav.Link as={Link} to="/employeehome">
+            <Nav.Link className={path === "/employeehome" ? "navBar__active" : ""} as={Link} to="/employeehome">
               <BiHome /> INICIO
             </Nav.Link>
 
-            <Nav.Link as={Link} to="/employeependingorders">
+            <Nav.Link className={path === "/employeependingorders" ? "navBar__active" : ""} as={Link} to="/employeependingorders">
               <MdPendingActions />
               PEDIDOS PENDIENTES
             </Nav.Link>
 
-            <Nav.Link as={Link} to="/employeeordersready">
+            <Nav.Link className={path === "/employeeordersready" ? "navBar__active" : ""} as={Link} to="/employeeordersready">
               <BiCheckCircle />
               PEDIDOS LISTOS
             </Nav.Link>

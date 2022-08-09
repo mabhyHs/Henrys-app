@@ -1,5 +1,5 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, Fragment } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
@@ -7,9 +7,11 @@ import Modal from 'react-bootstrap/Modal';
 import { MdPendingActions } from 'react-icons/md';
 import './EmployeePendingOrder.css';
 import { setStateOrder } from '../../requests';
+import { setOrders } from '../../../Redux/actions/actions';
 
 function EmployeePendingOrder() {
 
+  const dispatch = useDispatch();
   const [isSubmited, setSubmited] = useState(false);
   const session = useSelector(state => state.loginState);
   const orders = useSelector(state => state.orders);
@@ -22,6 +24,16 @@ function EmployeePendingOrder() {
         setSubmited(true);
         const data = {status: "Listo", employee: session.firstName + " " + session.lastName}
         await setStateOrder(e.target.id, data);
+
+        let updateData = [];
+
+        for(let i=0; i<orders.length; i++){
+            if(orders[i].id !== e.target.id){
+                updateData.push(orders[i]);
+            }
+        }
+
+        dispatch(setOrders(updateData));
 
     } catch (error) {
         

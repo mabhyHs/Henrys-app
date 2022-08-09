@@ -5,3 +5,7 @@
 .navBar__employee {
   background-color: rgb(206, 206, 206) !important;
 }
+
+.navBar__active {
+    color: var(--brand-color);
+  }
