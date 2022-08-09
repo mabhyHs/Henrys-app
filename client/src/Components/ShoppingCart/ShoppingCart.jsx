@@ -209,14 +209,16 @@ function ShoppingCart() {
     <Container className="py-4 ">
       {itemsToCart && itemsToCart?.length === 0 ? (
         <div className="cartEmpty__container">
-          <h2>El carrito se encuentra vacío</h2>
-          <p>
-            Entrá a nuestro menú y tentate con las hamburguesas más deliciosas
-            del condado.
-          </p>
-          <Link to="/menu">
-            <Button>Ir al Menú</Button>
-          </Link>
+          <div className="cartEmpty__text">
+            <h2>El carrito se encuentra vacío</h2>
+            <p>
+              Entrá a nuestro menú y tentate con las hamburguesas más deliciosas
+              del condado.
+            </p>
+            <Link to="/menu">
+              <Button>Ir al Menú</Button>
+            </Link>
+          </div>
         </div>
       ) : (
         <>

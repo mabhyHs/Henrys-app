@@ -57,6 +57,10 @@
 }
 
 .cartEmpty__container {
+  min-height: 70vh;
+}
+
+.cartEmpty__text {
   background-color: var(--main-color-light);
   border-radius: 20px;
   box-shadow: var(--bs-btn);
@@ -64,7 +68,6 @@
   max-width: 600px;
   display: inline-block;
 }
-
 .cart__discount__container {
   border: #e4e4e4 1px solid;
   border-radius: 15px;
