@@ -30,7 +30,7 @@ function CardCupponHome({ code, title, imgUri, discountPorcentage, expired }) {
   }
 
   return (
-    <section className="couponsHome__disabled">
+    <section className={expired ? 'couponsHome__disabled' : ''}>
       <div className="cardCuponHome__cupon">
         <div className="cardCuponHome__containerImg">
           <img

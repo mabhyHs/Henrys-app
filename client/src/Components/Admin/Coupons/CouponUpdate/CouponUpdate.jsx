@@ -1,15 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { getProduct } from '../../../../Redux/actions/actions';
+import {
+  getProduct,
+  updateCombos,
+  updateCoupons,
+} from '../../../../Redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 import CardCupponHome from '../../../CardCuponHome/CardCuponHome';
 
 function CouponUpdate({ couponToEdit }) {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state);
   const [btnSubmit, setBtnSubmit] = useState(false);
-  const [selectedProducts, setSelectedProducts] = useState([]);
   const [coupon, setCoupon] = useState(couponToEdit);
+  const [isChange, setIsChange] = useState(false);
+  const token = JSON.parse(window.localStorage.getItem('user')).token;
 
   useEffect(() => {
     if (products.length < 1) {
@@ -25,67 +31,54 @@ function CouponUpdate({ couponToEdit }) {
     }
   }, [dispatch, products]);
 
-  // console.log(selectedProducts);
-  // const [coupon, setCoupon] = useState({
-  //   code: 'Codigo del cupon',
-  //   title: 'Titulo del cupon',
-  //   expirationDate: 'Fecha de vencimiento',
-  //   imgUri: null,
-  //   discountPorcentage: 'Descuento',
-  //   products: [],
-  // });
-  // console.log(couponToEdit);
-
   const [couponError, setCouponError] = useState({
-    code: true,
-    title: true,
-    expirationDate: true,
-    imgUri: false, // cambiar a true cuando se implemente la imagen
-    discountPorcentage: true,
-    products: true,
+    code: false,
+    title: false,
+    expirationDate: false,
+    imgUri: false,
+    discountPorcentage: false,
+    products: false,
   });
 
   function validateCode(e) {
-    const value = e.target.value.trim();
+    const { value } = e.target;
+    setIsChange(true);
+    setCoupon({ ...coupon, code: value.toUpperCase() });
 
-    if (value === '') {
+    if (value.trim() === '') {
       setCouponError({ ...couponError, code: true });
-      return setCoupon({ ...coupon, code: 'Codigo del cupon' });
     }
 
-    if (value.length > 9) {
+    if (value.trim().length > 9 || value.trim().length < 1) {
       return setCouponError({ ...couponError, code: true });
     }
 
     setCouponError({ ...couponError, code: false });
-    return setCoupon({ ...coupon, code: value.toUpperCase() });
   }
 
   function validateTitle(e) {
-    const value = e.target.value.trim();
+    const value = e.target.value;
+    setIsChange(true);
+    setCoupon({ ...coupon, title: value });
 
-    if (value === '') {
-      setCouponError({ ...couponError, title: true });
-      return setCoupon({ ...coupon, title: 'Titulo del cupon' });
+    if (value.trim() === '') {
+      return setCouponError({ ...couponError, title: true });
     }
 
-    if (value.length > 25) {
+    if (value.trim().length > 25) {
       return setCouponError({ ...couponError, title: true });
     }
 
     setCouponError({ ...couponError, title: false });
-    return setCoupon({ ...coupon, title: value });
   }
 
   function validateDiscount(e) {
-    const value = e.target.value.trim();
+    const value = e.target.value;
+    setIsChange(true);
+    setCoupon({ ...coupon, discountPorcentage: value });
 
-    if (value === '') {
-      setCouponError({ ...couponError, discountPorcentage: true });
-      return setCoupon({
-        ...coupon,
-        discountPorcentage: 'Codigo de descuento',
-      });
+    if (value.trim() === '') {
+      return setCouponError({ ...couponError, discountPorcentage: true });
     }
 
     if (isNaN(value) || value < 0 || value > 100 || value.length > 5) {
@@ -93,18 +86,15 @@ function CouponUpdate({ couponToEdit }) {
     }
 
     setCouponError({ ...couponError, discountPorcentage: false });
-    return setCoupon({ ...coupon, discountPorcentage: value });
   }
 
   function validateExpirationDate(e) {
     const value = e.target.value.trim();
+    setCoupon({ ...coupon, expirationDate: value });
+    setIsChange(true);
 
     if (value === '' || value.length !== 10) {
-      setCouponError({ ...couponError, expirationDate: true });
-      return setCoupon({
-        ...coupon,
-        expirationDate: 'Fecha de expiracion',
-      });
+      return setCouponError({ ...couponError, expirationDate: true });
     }
 
     const [year, month, day] = value.split('-', 3);
@@ -112,29 +102,22 @@ function CouponUpdate({ couponToEdit }) {
 
     if (!year || !month || !day || !expDate) {
       setCouponError({ ...couponError, expirationDate: true });
-      return setCoupon({
-        ...coupon,
-        expirationDate: 'Fecha de expiracion',
-      });
     }
 
-    const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-    const yyyy = today.getFullYear();
+    // Descomentar para validar la fecha.
 
-    const todayDate = new Date(`${yyyy}-${mm}-${dd}`);
+    // const today = new Date();
+    // const dd = String(today.getDate()).padStart(2, '0');
+    // const mm = String(today.getMonth() + 1).padStart(2, '0');
+    // const yyyy = today.getFullYear();
 
-    if (todayDate.getTime() > expDate.getTime()) {
-      setCouponError({ ...couponError, expirationDate: true });
-      return setCoupon({
-        ...coupon,
-        expirationDate: 'Fecha de expiracion',
-      });
-    }
+    // const todayDate = new Date(`${yyyy}-${mm}-${dd}`);
+
+    // if (todayDate.getTime() > expDate.getTime()) {
+    //   return setCouponError({ ...couponError, expirationDate: true });
+    // }
 
     setCouponError({ ...couponError, expirationDate: false });
-    return setCoupon({ ...coupon, expirationDate: value });
   }
 
   // Validacion del boton
@@ -168,9 +151,8 @@ function CouponUpdate({ couponToEdit }) {
     if (value === '') {
       return null;
     }
-    console.log(value);
-    console.log(product);
 
+    setIsChange(true);
     if (!coupon.productsId?.find((d) => d.name === value)) {
       if (typeof product?.name === 'string') {
         setCouponError({ ...couponError, products: false });
@@ -185,6 +167,7 @@ function CouponUpdate({ couponToEdit }) {
   }
 
   const handleRemoveProduct = (e, productId) => {
+    setIsChange(true);
     e.preventDefault();
 
     setCoupon({
@@ -201,8 +184,54 @@ function CouponUpdate({ couponToEdit }) {
     }
   }, [coupon]);
 
-  function handleCreateNewCoupon(e) {
+  function handleUpdateCoupon(e) {
     e.preventDefault();
+    if (btnSubmit) {
+      let ids = [];
+      coupon.productsId.forEach((e) => {
+        ids.push(e.id);
+      });
+      dispatch(
+        updateCoupons({
+          id: coupon.id,
+          code: coupon.code,
+          title: coupon.title,
+          expirationDate: coupon.expirationDate,
+          imgUri: coupon.imgUri,
+          discountPorcentage: coupon.discountPorcentage,
+          productsId: ids,
+        })
+      ).then((res) => {
+        console.log(res);
+        if (res.status === 201) {
+          Swal.fire({
+            customClass: {
+              confirmButton: 'confirmBtnSwal',
+            },
+            title: `${coupon.title}`,
+            text: 'Actualizada con exito',
+            imageUrl:
+              'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+            imageWidth: 150,
+            imageHeight: 150,
+            imageAlt: 'Logo henrys',
+          });
+        } else {
+          Swal.fire({
+            customClass: {
+              confirmButton: 'confirmBtnSwal',
+            },
+            title: `${coupon.title}`,
+            text: 'Error al actualizar',
+            imageUrl:
+              'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+            imageWidth: 150,
+            imageHeight: 150,
+            imageAlt: 'Logo henrys',
+          });
+        }
+      });
+    }
   }
 
   return (
@@ -282,7 +311,7 @@ function CouponUpdate({ couponToEdit }) {
             </small>
           </label>
           <label htmlFor="productOfCoupon">
-            <div className="expirationDateLabel">
+            <div className="productOfCouponLabel">
               Seleccione los productos aplicados al descuento: &#41;{' '}
               <span>*</span>
             </div>
@@ -314,7 +343,10 @@ function CouponUpdate({ couponToEdit }) {
                 ))}
             </div>
           </label>
-          <button disabled={!btnSubmit} onClick={handleCreateNewCoupon}>
+          <button
+            disabled={!isChange || !btnSubmit}
+            onClick={handleUpdateCoupon}
+          >
             ACTUALIZAR
           </button>
         </form>
