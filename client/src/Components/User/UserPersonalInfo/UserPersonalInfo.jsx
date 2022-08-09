@@ -69,7 +69,6 @@ function UserPersonalInfo() {
         ...input,
       };
 
-
       const updateLocal = {
         ...JSON.parse(window.localStorage.getItem("user")),
         ...input,
