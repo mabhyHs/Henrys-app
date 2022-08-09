@@ -17,14 +17,13 @@ function EmployeePendingOrder() {
   const handleShow = () => setShow(true);
 
   async function handleSubmit(e){
+    handleClose();
     try {
         const data = {status: "Listo", employee: session.firstName + " " + session.lastName}
-        await setStateOrder(e.target.id, data)
+        await setStateOrder(e.target.id, data);
 
     } catch (error) {
         
-    } finally{
-        handleClose();
     }
   }
   console.log(orders)
