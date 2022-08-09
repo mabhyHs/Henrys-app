@@ -463,7 +463,7 @@ export function setOrders() {
               payload: orders.data,
             });
         } catch (error) {
-            
+            console.log(error)
         }
     };
   }
