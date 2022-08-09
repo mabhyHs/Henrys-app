@@ -581,7 +581,7 @@ async function getAll(req, res, next) {
 
         orders[i] = {...orders[i], mp: receipt};        
     }
-
+    console.log(orders)
     res.status(200).json(orders);
   } catch (error) {
     next(error);
