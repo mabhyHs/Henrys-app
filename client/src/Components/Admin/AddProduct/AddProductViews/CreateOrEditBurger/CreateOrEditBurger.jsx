@@ -6,12 +6,17 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getIngredients } from '../../../../../Redux/actions/actions';
 import {
-  getIngredients,
-} from '../../../../../Redux/actions/actions';
-import { alertCustom, createProduct, updateProduct } from '../../../../requests';
-import './CreateOrEditBurger.css';
+  alertCustom,
+  createProduct,
+  updateProduct,
+} from '../../../../requests';
 import { postImageToCloudinary, setImgProductErr } from '../../../../methods';
+import { Trash } from 'react-bootstrap-icons';
+
+import './CreateOrEditBurger.css';
+import '../FormsGlobal.css';
 
 function CreateOrEditBurger({ data }) {
   const navigate = useNavigate();
@@ -37,7 +42,7 @@ function CreateOrEditBurger({ data }) {
         name: data.name,
         price: data.price,
         ingredient: data.ingredient.map((el) => el.id),
-        imgUri: data.imgUri ? data.imgUri : "",
+        imgUri: data.imgUri ? data.imgUri : '',
         isVeggie: data.isVeggie,
       });
       setSelectIngredient(data.ingredient.map((el) => el));
@@ -45,11 +50,8 @@ function CreateOrEditBurger({ data }) {
     }
   }, [dispatch, edit, isRestore, data]);
 
-  function isDisabledSubmit(){
-    return (
-        !input.name ||
-        !input.price
-    )
+  function isDisabledSubmit() {
+    return !input.name || !input.price;
   }
 
   const onChange = (e) => {
@@ -59,16 +61,16 @@ function CreateOrEditBurger({ data }) {
     });
   };
 
-  async function setImg(e){
+  async function setImg(e) {
     const result = await postImageToCloudinary(e);
 
-    if(result){
-        setInput({
-            ...input,
-            imgUri: result,
-        });
+    if (result) {
+      setInput({
+        ...input,
+        imgUri: result,
+      });
     } else {
-        e.target.value = "";
+      e.target.value = '';
     }
   }
 
@@ -76,7 +78,7 @@ function CreateOrEditBurger({ data }) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
-      ingredient: []
+      ingredient: [],
     });
     setSelectIngredient([]);
   };
@@ -140,60 +142,59 @@ function CreateOrEditBurger({ data }) {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (edit) {
-
-        try {
-            
-        await updateProduct("burgers", input);
+      try {
+        await updateProduct('burgers', input);
         alertCustom(
-            input.name,
-            "Actualizada con exito!",
-            "https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png"
-        )
+          input.name,
+          'Actualizada con exito!',
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png'
+        );
         navigate('/adminproducts');
-
-        } catch (error) {
-            alertCustom(
-                "Oops...",
-                "No se pudo actualizar el producto!",
-                "https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png"
-            )
-        }
-
+      } catch (error) {
+        alertCustom(
+          'Oops...',
+          'No se pudo actualizar el producto!',
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png'
+        );
+      }
     } else {
-
-        try {  
-            await createProduct("burgers", input);
-            alertCustom(
-                input.name,
-                "Creada con exito!",
-                "https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png"
-            )
-            navigate('/adminproducts');
-        } catch (error) {
-            alertCustom(
-                "Oops...",
-                "No se pudo crear el producto!",
-                "https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png"
-            )
-        }
-
+      try {
+        await createProduct('burgers', input);
+        alertCustom(
+          input.name,
+          'Creada con exito!',
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png'
+        );
+        navigate('/adminproducts');
+      } catch (error) {
+        alertCustom(
+          'Oops...',
+          'No se pudo crear el producto!',
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png'
+        );
+      }
     }
   };
 
   return (
-    <Container>
+    <Container className="mb-5">
+      <h2>{edit ? 'Editar Hamburguesa' : 'Crear Hamburguesa'}</h2>
+      <hr />
       <div className="editBurger__container">
-        <h2>{edit ? 'Editar Hamburguesa' : 'Crear Hamburguesa'}</h2>
+        <img
+          src={input.imgUri}
+          onError={(e) => setImgProductErr(e)}
+          alt="img not"
+          className="editOrCreate__img"
+        ></img>
 
-        <img src={input.imgUri} onError={(e)=> setImgProductErr(e)} alt="img not"></img>
-
-        <Form>
+        <Form className="editOrCreate__form">
           <hr />
           <Row className="mb-3">
             <Form.Group as={Col} controlId="burgerName">
               <Form.Label>Nombre *</Form.Label>
               <Form.Control
-                placeholder='Nombre *'
+                placeholder="Nombre *"
                 onChange={onChange}
                 type="text"
                 value={input.name}
@@ -204,7 +205,7 @@ function CreateOrEditBurger({ data }) {
             <Form.Group as={Col} controlId="burgerPrice">
               <Form.Label>Precio *</Form.Label>
               <Form.Control
-                placeholder='Precio *'
+                placeholder="Precio *"
                 onChange={onChange}
                 type="number"
                 value={input.price}
@@ -216,7 +217,7 @@ function CreateOrEditBurger({ data }) {
             <Form.Group className="mb-3" controlId="uploadImgBurger">
               <Form.Label>Imagen</Form.Label>
               <Form.Control
-                placeholder='Url de la imagen'
+                placeholder="Url de la imagen"
                 onChange={setImg}
                 type="file"
                 name="imgUri"
@@ -225,13 +226,15 @@ function CreateOrEditBurger({ data }) {
           </Row>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="isVeggie">
-              <Form.Label>Apto para vegetarianos *</Form.Label>
+              <Form.Label>Veggie *</Form.Label>
               <Form.Select
                 onChange={setVeggie}
                 value={input.isVeggie}
                 name="isVeggie"
               >
-                <option value={false} defaultValue>No</option>
+                <option value={false} defaultValue>
+                  No
+                </option>
                 <option value={true}>Si</option>
               </Form.Select>
             </Form.Group>
@@ -245,39 +248,47 @@ function CreateOrEditBurger({ data }) {
               <Form.Select defaultValue="seleccionar">
                 <option>Seleccionar ingredientes</option>
                 {ingredientsNotSelect().length > 0 &&
-                  ingredientsNotSelect()?.map((el) => 
-                  <Fragment key={el.id}>
-                  {!selectIngredient.find(s => s.id === el.id) && 
-                      <option value={el.id}>
-                        {el.name}
-                      </option>}
-                  </Fragment>
-                )}
+                  ingredientsNotSelect()?.map((el) => (
+                    <Fragment key={el.id}>
+                      {!selectIngredient.find((s) => s.id === el.id) && (
+                        <option value={el.id}>{el.name}</option>
+                      )}
+                    </Fragment>
+                  ))}
               </Form.Select>
             </Form.Group>
-            <div>
-              {selectIngredient &&
-                selectIngredient.map((e) => (
-                  <div key={e.id}>
-                    <p>{e.name}</p>
-                    <button
-                      value={e.name}
-                      type="button"
-                      onClick={(e) => handleDelete(e)}
-                    >
-                      X
-                    </button>
-                  </div>
-                ))}
-            </div>
+
+            <Form.Group>
+              <div className="editOrCreate__mainContainer">
+                {selectIngredient &&
+                  selectIngredient.map((e) => (
+                    <div key={e.id} className="editOrCreate__productCard">
+                      <p>{e.name}</p>
+                      <button
+                        className="editOrCreate__btnDelete"
+                        value={e.name}
+                        type="button"
+                        onClick={(e) => handleDelete(e)}
+                      >
+                        <Trash />
+                      </button>
+                    </div>
+                  ))}
+              </div>
+            </Form.Group>
           </Row>
 
-          <Button onClick={onSubmit} variant="primary" type="submit" disabled={isDisabledSubmit()}>
+          <Button
+            onClick={onSubmit}
+            variant="primary"
+            type="submit"
+            disabled={isDisabledSubmit()}
+          >
             Confirmar
           </Button>
-          <hr />
         </Form>
       </div>
+      <hr />
     </Container>
   );
 }
