@@ -15,9 +15,6 @@ async function create(data, user) {
       },
     });
 
-    console.log("data")
-    console.log(data)
-
     const receipt = await mercadopagoRepository.getPaymentById(data.purchaseId);
 
     await transporter.sendMail({

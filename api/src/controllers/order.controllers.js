@@ -4,12 +4,6 @@ const { transporter } = require("../config/emailTransporter");
 
 async function create(req, res, next) {
   try {
-    const receipt = await mercadopagoRepository.getPaymentById(
-      req.body.purchaseId
-    );
-
-    console.log(receipt)
-
     const order = await orderRepositories.create({
         ...req.body.user.id, 
         data: receipt
@@ -578,6 +572,16 @@ async function create(req, res, next) {
 async function getAll(req, res, next) {
   try {
     const orders = await orderRepositories.getAll();
+
+    for(let i=0; i<orders.length; i++){
+
+        const id = orders[i].purchaseId;
+
+        const receipt = await mercadopagoRepository.getPaymentById(id);
+
+        orders[i] = {...orders[i], mp: receipt};        
+    }
+
     res.status(200).json(orders);
   } catch (error) {
     next(error);
