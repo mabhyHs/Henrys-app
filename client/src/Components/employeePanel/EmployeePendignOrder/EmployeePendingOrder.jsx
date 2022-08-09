@@ -36,9 +36,11 @@ function EmployeePendingOrder() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>06/08/2022 - 17:41hs</td>
-              <td>Lara Gomez</td>
+            {orders && orders?.map((ord, i) => 
+                
+                <tr key={i}>
+              <td>{ord.createdAt}</td>
+              <td>{ord.customer[0].firstName + " " + ord.customer[0].lastName}</td>
               <td>
                 <ul className="employee__ul">
                   <li>
@@ -74,6 +76,8 @@ function EmployeePendingOrder() {
                 </Modal>
               </td>
             </tr>
+                
+                )}            
           </tbody>
         </Table>
       </Container>
