@@ -61,7 +61,7 @@ function ContactoForm() {
     let error = {};
 
     if (!input.user_name) {
-      error.user_name = 'Este campo es requerido';
+      error.user_name = '*El nombre es obligatorio';
     } else if (
       !/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u.test(
         input.user_name
@@ -71,17 +71,17 @@ function ContactoForm() {
     }
 
     if (!input.user_surname) {
-      error.user_surname = 'Este campo es requerido';
+      error.user_surname = '*El apellido es obligatorio';
     } else if (
       !/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u.test(
         input.user_surname
       )
     ) {
-      error.user_surname = 'Este apellido inválido';
+      error.user_surname = 'Apellido inválido';
     }
 
     if (!input.email) {
-      error.email = 'Este campo es requerido';
+      error.email = '*El Email es obligatorio';
     }
     // eslint-disable-next-line no-useless-escape
     else if (
@@ -89,13 +89,13 @@ function ContactoForm() {
         input.email
       )
     ) {
-      error.email = 'Este correo es invalido';
+      error.email = 'Este email es inválido';
     }
 
     if (!input.telephone) {
-      error.telephone = 'Este campo es requerido';
+      error.telephone = '* El celular es obligatorio';
     } else if (input.telephone.length < 10 || isNaN(Number(input.telephone))) {
-      error.telephone = 'Escribe un numero valido';
+      error.telephone = 'Escribe un número válido';
     }
 
     if (!input.message) {
@@ -136,7 +136,7 @@ function ContactoForm() {
                 />
                 <div className="contactForm__errContainer">
                   {error.user_name && <p>{error.user_name}</p>}
-                </div>               
+                </div>
                 <input
                   className="contactForm__input"
                   type="text"
@@ -145,9 +145,9 @@ function ContactoForm() {
                   id="surname_input"
                   required
                   onChange={(e) => handleChange(e)}
-                /> 
+                />
                 <div className="contactForm__errContainer">
-                    {error.user_surname && <p>{error.user_surname}</p>}
+                  {error.user_surname && <p>{error.user_surname}</p>}
                 </div>
               </Row>
               <Row>
