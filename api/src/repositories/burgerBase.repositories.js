@@ -1,7 +1,7 @@
 const { BurgerBase } = require("../models");
 
 async function getAll() {
-    const burgersBase = await BurgerBase.findAll({order: [
+    const burgersBase = await BurgerBase.findAll({paranoid: false}, {order: [
         ['name', 'ASC'],
     ]});
     return burgersBase;
@@ -12,12 +12,12 @@ async function getAll() {
       return await getAll();
     }
   
-    const burgersBase = await BurgerBase.findAll({ where: queries });
+    const burgersBase = await BurgerBase.findAll({ where: queries, paranoid: false });
     return burgersBase;
   }
 
 async function getById(id) {
-    const burgerBase = await BurgerBase.findByPk(id);
+    const burgerBase = await BurgerBase.findByPk(id, {paranoid: false});
     return burgerBase;
 }
 
