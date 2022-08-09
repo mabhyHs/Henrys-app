@@ -101,8 +101,8 @@
 
 .couponUpdate__form__producstContainer__itemsContainer {
   margin: 0.5rem;
-  color: var(--main-color-dark);
-  background-color: var(--brand-color);
+  color: #fff;
+  background-color: #6c757d;
   border-radius: 18px;
   width: 14rem;
   height: 3rem;
@@ -150,10 +150,10 @@
     width: 90vw;
   }
 
-  .couponAdmin__CardCupponHome {
+  /* .couponAdmin__CardCupponHome {
     flex-direction: column;
     width: 100%;
-  }
+  } */
   .couponAdmin__CardCupponHome:first-child {
     width: 10rem;
   }
