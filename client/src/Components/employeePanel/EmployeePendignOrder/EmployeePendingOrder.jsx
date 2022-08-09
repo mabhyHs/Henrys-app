@@ -9,7 +9,7 @@ import './EmployeePendingOrder.css';
 
 function EmployeePendingOrder() {
 
-  const orders = useSelector(state => state.orders.rows);
+  const orders = useSelector(state => state.orders);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
