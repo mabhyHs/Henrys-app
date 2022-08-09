@@ -1,3 +1,7 @@
+.couponsHome__disabled {
+  filter: grayscale(100%);
+}
+
 .sectionCupponsHome {
   display: flex;
   margin: 4rem auto 4rem;

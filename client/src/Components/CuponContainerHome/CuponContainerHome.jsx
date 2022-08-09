@@ -38,26 +38,16 @@ function CuponContainerHome() {
           coupons.length > 0 &&
           coupons?.map((c, i) => (
             <div key={c.code}>
-              {!isExpired(currentDate, c.expirationDate) ? (
+              {
                 <CardCupponHome
                   code={c.code}
                   title={c.title}
                   expirationDate={c.expirationDate}
                   imgUri={c.imgUri}
                   discountPorcentage={c.discountPorcentage}
+                  expired={isExpired(currentDate, c.expirationDate)}
                 />
-              ) : (
-                <div className="couponsHome__disabled">
-                  <CardCupponHome
-                    code={c.code}
-                    title={c.title}
-                    expirationDate={c.expirationDate}
-                    imgUri={c.imgUri}
-                    discountPorcentage={c.discountPorcentage}
-                    expired={true}
-                  />
-                </div>
-              )}
+              }
             </div>
           ))}
       </div>

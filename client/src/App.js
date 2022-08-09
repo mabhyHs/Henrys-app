@@ -34,7 +34,7 @@ import CreateOrEditBeverage from './Components/Admin/AddProduct/AddProductViews/
 import CreateOrEditCombo from './Components/Admin/AddProduct/AddProductViews/CreateOrEditCombo/CreateOrEditCombo';
 import CreateOrEditFries from './Components/Admin/AddProduct/AddProductViews/CreateOrEditFries/CreateOrEditFries';
 import EditProducts from './Components/Admin/AddProduct/EditProducts/EditProducts';
-import CouponAdmin from './Components/CouponAdmin/CouponAdmin';
+import CouponAdmin from './Components/Admin/Coupons/CouponAdmin/CouponAdmin';
 import UserPurchaseDetail from './Components/User/UserPurchaseDetail/UserPurchaseDetail';
 
 import EmployeeHome from './Components/employeePanel/employeeHome/EmployeeHome';

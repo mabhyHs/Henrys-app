@@ -275,12 +275,16 @@ export function getCoupons() {
   };
 }
 
-export function updateCoupons(data, token) {
+export function updateCoupons(data) {
   return async function () {
     try {
-      await axios.put('/coupons', data, {
-        headers: { 'auth-token': token },
+      const res = await axios.put('/coupons', data, {
+        headers: {
+          'auth-token': JSON.parse(localStorage.getItem('user')).token,
+        },
       });
+
+      return res;
     } catch (error) {
       console.log(error);
     }

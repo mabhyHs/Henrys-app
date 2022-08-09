@@ -59,7 +59,7 @@ function AdminNavBar() {
                 </Nav.Link>
                 <Nav.Link
                   as={Link}
-                  to={'/admincupons'}
+                  to={'/admincupon'}
                   className="adminNavBar__link"
                 >
                   <FileSpreadsheetFill /> Cupones
