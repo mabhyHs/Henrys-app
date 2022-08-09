@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
@@ -10,6 +10,7 @@ import { setStateOrder } from '../../requests';
 
 function EmployeePendingOrder() {
 
+  const [isSubmited, setSubmited] = useState(false);
   const session = useSelector(state => state.loginState);
   const orders = useSelector(state => state.orders);
   const [show, setShow] = useState(false);
@@ -17,16 +18,18 @@ function EmployeePendingOrder() {
   const handleShow = () => setShow(true);
 
   async function handleSubmit(e){
-    handleClose();
     try {
+        setSubmited(true);
         const data = {status: "Listo", employee: session.firstName + " " + session.lastName}
         await setStateOrder(e.target.id, data);
 
     } catch (error) {
         
+    } finally{
+        setSubmited(false);
+        handleClose();
     }
   }
-  console.log(orders)
 
   return (
     <div className="employee__pending__container mt-5">
@@ -49,8 +52,10 @@ function EmployeePendingOrder() {
           </thead>
           <tbody>
             {orders && orders?.map((ord, i) => 
-                
-                <tr key={i}>
+            
+            <Fragment key={i}>
+            {ord.status === "Pendiente" && 
+            <tr >
               <td>{ord.createdAt}</td>
               <td>{ord.customer[0].firstName + " " + ord.customer[0].lastName}</td>
               <td>
@@ -78,12 +83,12 @@ function EmployeePendingOrder() {
                     ¿Estás seguro de pasar éste pedido se encuentra listo?
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button id={ord.purchaseId} onClick={handleSubmit} variant="primary">Confirmar</Button>
+                    <Button id={ord.purchaseId} onClick={handleSubmit} disabled={isSubmited} variant="primary">Confirmar</Button>
                   </Modal.Footer>
                 </Modal>
               </td>
-            </tr>
-                
+            </tr>}
+            </Fragment>
                 )}            
           </tbody>
         </Table>

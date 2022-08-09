@@ -13,10 +13,12 @@ import './EmployeeNavBar.css';
 function EmployeeNavBar() {
 
     const dispatch = useDispatch();
-
     
     useEffect(() => {
-        dispatch(setOrders());  
+        const interval = setInterval(() => dispatch(setOrders()), 15000);
+        dispatch(setOrders());          
+
+        return () => clearInterval(interval);
     }, [dispatch]);
 
 
@@ -38,14 +40,16 @@ function EmployeeNavBar() {
               <BiHome /> INICIO
             </Nav.Link>
 
-            <Nav.Link as={Link} to="/employeeordersready">
-              <BiCheckCircle />
-              PEDIDOS LISTOS
-            </Nav.Link>
             <Nav.Link as={Link} to="/employeependingorders">
               <MdPendingActions />
               PEDIDOS PENDIENTES
             </Nav.Link>
+
+            <Nav.Link as={Link} to="/employeeordersready">
+              <BiCheckCircle />
+              PEDIDOS LISTOS
+            </Nav.Link>
+
             <Nav.Link as={Link} to="/">
               <BiLogOut /> SALIR
             </Nav.Link>
