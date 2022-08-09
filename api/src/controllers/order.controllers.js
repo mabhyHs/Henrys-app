@@ -571,9 +571,7 @@ async function create(req, res, next) {
 
 async function getAll(req, res, next) {
   try {
-    const pag = parseInt(req.query.pag, 10) || 1;
-    const limit = parseInt(req.query.limit, 10) || 20;
-    const orders = await orderRepositories.getAll(pag, limit);
+    const orders = await orderRepositories.getAll();
     res.status(200).json(orders);
   } catch (error) {
     next(error);

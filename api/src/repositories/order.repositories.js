@@ -580,22 +580,15 @@ async function create(data, user) {
   }
 }
 
-async function getAll(pag, limit) {
-  const { count, rows } = await Order.findAndCountAll({
+async function getAll() {
+  const orders = await Order.findAll({
     include: {
       association: "customer",
       attributes: { exclude: ["password"] },
     },
     order: [["createdAt", "DESC"]],
-    limit: limit,
-    offset: (pag - 1) * limit,
   });
-  return {
-    count,
-    pages: Math.ceil(count / limit),
-    pag,
-    rows,
-  };
+  return orders;
 }
 
 async function getAllByUserId(user_id) {
