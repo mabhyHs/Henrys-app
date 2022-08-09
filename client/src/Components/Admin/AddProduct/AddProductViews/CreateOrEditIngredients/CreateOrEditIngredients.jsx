@@ -14,8 +14,6 @@ function CreateOrEditIngredients() {
       <h2>Editar Ingrediente</h2>
       <hr />
       <div className="editIngredients__container">
-        <img alt="img not" className="editOrCreate__img"></img>
-
         <Form className="editOrCreate__form">
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridName">
