@@ -177,7 +177,7 @@ function CreateOrEditBurger({ data }) {
   };
 
   return (
-    <Container>
+    <Container className="mb-5">
       <h2>{edit ? 'Editar Hamburguesa' : 'Crear Hamburguesa'}</h2>
       <hr />
       <div className="editBurger__container">
