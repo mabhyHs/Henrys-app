@@ -16,7 +16,6 @@ async function create(data, user) {
         attributes: { exclude: ["password"] },
       },
     });
-
     
     await transporter.sendMail({
       from: '"Recibo de compra" <henrysBurger2022@gmail.com',
