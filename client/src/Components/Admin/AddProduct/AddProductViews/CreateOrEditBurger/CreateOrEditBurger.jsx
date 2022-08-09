@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { Fragment, React, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -245,11 +245,14 @@ function CreateOrEditBurger({ data }) {
               <Form.Select defaultValue="seleccionar">
                 <option>Seleccionar ingredientes</option>
                 {ingredientsNotSelect().length > 0 &&
-                  ingredientsNotSelect()?.map((el) => (
-                    <option value={el.id} key={el.id}>
-                      {el.name}
-                    </option>
-                  ))}
+                  ingredientsNotSelect()?.map((el) => 
+                  <Fragment key={el.id}>
+                  {!selectIngredient.find(s => s.id === el.id) && 
+                      <option value={el.id}>
+                        {el.name}
+                      </option>}
+                  </Fragment>
+                )}
               </Form.Select>
             </Form.Group>
             <div>
