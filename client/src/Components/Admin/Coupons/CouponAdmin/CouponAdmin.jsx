@@ -59,13 +59,13 @@ function CouponAdmin() {
   // };
 
   return (
-    <div>
-      <h2>Gestioná tus cupones</h2>
+    <div className="couponAdmin_Container">
+      <h2 className="couponAdmin__MainTitle">Gestioná tus cupones</h2>
       <hr />
       {coupons &&
         coupons.length > 0 &&
         coupons?.map((c, i) => (
-          <div key={c.code}>
+          <div key={c.code} className="couponAdmin__CardCupponHome">
             {
               <CardCupponHome
                 code={c.code}
