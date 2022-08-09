@@ -84,7 +84,11 @@ function CouponAdmin() {
       {/* Este div solo se debe mostrar cuando editar = true */}
       {isEditing && (
         <div>
-          <CouponUpdate key={couponToEdit.code} couponToEdit={couponToEdit} />
+          <CouponUpdate
+            setIsEditing={setIsEditing}
+            key={couponToEdit.code}
+            couponToEdit={couponToEdit}
+          />
         </div>
       )}
     </div>
