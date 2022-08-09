@@ -14,6 +14,7 @@ function CreateOrEditBurgerBase({ data }) {
   const [edit] = useState(isEdit());
   const [isRestore, setRestore] = useState(false);
   const [input, setInput] = useState({
+    id: '',
     name: '',
     price: '',
     description: '',
@@ -24,6 +25,7 @@ function CreateOrEditBurgerBase({ data }) {
   useEffect(() => {
     if (edit && !isRestore) {
       setInput({
+        id: data.id,
         name: data.name,
         price: data.price,
         description: data.description,
@@ -71,7 +73,7 @@ function CreateOrEditBurgerBase({ data }) {
     if (edit) {
 
     try {
-            
+                
         await updateProduct("burgerBase", input);
         alertCustom(
             input.name,
@@ -112,7 +114,7 @@ function CreateOrEditBurgerBase({ data }) {
   return (
     <div>
       <Container className="editBurgerBase__container">
-        <h2>Editar Burger Base</h2>
+        <h2>{edit ? 'Editar Hamburguesa Base' : 'Crear Hamburguesa Base'}</h2>
 
         <img src={input.imgUri} onError={(e)=> setImgProductErr(e)} alt="img not"></img>
 

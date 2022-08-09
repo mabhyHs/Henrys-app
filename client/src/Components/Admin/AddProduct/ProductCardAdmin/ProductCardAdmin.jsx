@@ -44,7 +44,7 @@ function ProductCardAdmin({ data, isDeleted }) {
             <Button onClick={redirect} variant="secondary">
                 <PencilSquare />
             </Button>}
-        <button onClick={onDelete}>{isDeleted ? 'Borrar' : 'Restaurar'}</button>
+        {data.type !== "burgerBase" && <button onClick={onDelete}>{isDeleted ? 'Borrar' : 'Restaurar'}</button>}
       </Card.Body>
     </Card>
   );

@@ -24,6 +24,7 @@ function AddProductHome() {
     search: '',
     isVeggie: '',
     isDeleted: '',
+    isBase: 'true',
   });
 
   function setFilter(name, value) {
@@ -48,7 +49,8 @@ function AddProductHome() {
           filters.order,
           filters.search,
           filters.isVeggie,
-          filters.isDeleted
+          filters.isDeleted,
+          filters.isBase
         )
       );
       mount.current = true;
@@ -60,7 +62,8 @@ function AddProductHome() {
           filters.order,
           filters.search,
           filters.isVeggie,
-          filters.isDeleted
+          filters.isDeleted,
+          filters.isBase
         )
       );
     }
