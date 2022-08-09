@@ -25,16 +25,14 @@
 }
 
 .reviews__mainCard__footer {
-  background-color: #f1f2f3;
-  color: var(--main-color-dark);
-  border-radius: 20px;
-  width: 80%;
-  margin: 0 auto 10px auto;
-  box-shadow: var(--bs-card);
-  -webkit-box-shadow: var(--bs-btn);
-  -moz-box-shadow: var(--bs-btn);
+  color: var(--main-color-light);
+  font-weight: bolder;
+  font-style: italic;
 }
-
+.divider__reviewCard {
+  color: #f1f2f3;
+  font-weight: bold;
+}
 @media (max-width: 481px) {
   .reviews__mainCard {
     width: 18rem;
