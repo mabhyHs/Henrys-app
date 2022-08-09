@@ -569,8 +569,8 @@ async function getAll(req, res, next) {
   try {
     const orders = await orderRepositories.getAll();
 
-    if(!orders || !orders.length){
-        return res.status(404).json({error: "No hay ordenes cargadas!"});
+    if (!orders || !orders.length) {
+      return res.status(404).json({ error: "No hay ordenes cargadas!" });
     }
 
     return res.status(200).json(orders);
@@ -593,7 +593,8 @@ async function changeStatus(req, res, next) {
   try {
     const { id } = req.params;
     const { status } = req.body;
-    const order = await orderRepositories.changeStatus(id, status);
+    const { employee } = req.body;
+    const order = await orderRepositories.changeStatus(id, status, employee);
     res.status(201).json(order);
   } catch (error) {
     next(error);

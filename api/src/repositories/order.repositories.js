@@ -8,7 +8,7 @@ async function create(data, user) {
   try {
     const receipt = await mercadopagoRepository.getPaymentById(data.purchaseId);
 
-    const order = await Order.create({...data, data: receipt});
+    const order = await Order.create({ ...data, data: receipt });
     await order.addCustomer(user.id);
     const orderAndUser = await Order.findByPk(order.purchaseId, {
       include: {
@@ -16,7 +16,7 @@ async function create(data, user) {
         attributes: { exclude: ["password"] },
       },
     });
-    
+
     await transporter.sendMail({
       from: '"Recibo de compra" <henrysBurger2022@gmail.com',
       to: user.email,
@@ -615,7 +615,7 @@ async function getByPurchaseId(purchaseId) {
   return order;
 }
 
-async function changeStatus(id, status) {
+async function changeStatus(id, status, employee) {
   try {
     const order = await Order.findByPk(id, {
       include: {
@@ -1128,7 +1128,7 @@ async function changeStatus(id, status) {
           `,
       });
     }
-    return await order.update({ status });
+    return await order.update({ status, employee });
   } catch (error) {
     console.log(error);
   }

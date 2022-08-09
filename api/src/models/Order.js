@@ -26,6 +26,9 @@ module.exports = (sequelize, DataTypes) => {
       data: {
         type: DataTypes.JSONB,
       },
+      employee: {
+        type: DataTypes.STRING,
+      },
     },
     {
       sequelize,
