@@ -5,9 +5,15 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom';
-import { alertCustom, createProduct, updateProduct } from '../../../../requests';
-import './CreateOrEditBeverage.css';
+import {
+  alertCustom,
+  createProduct,
+  updateProduct,
+} from '../../../../requests';
 import { postImageToCloudinary, setImgProductErr } from '../../../../methods';
+
+import './CreateOrEditBeverage.css';
+import '../FormsGlobal.css';
 
 function CreateOrEditBeverage({ data }) {
   const navigate = useNavigate();
@@ -33,19 +39,15 @@ function CreateOrEditBeverage({ data }) {
         size: data.size,
         isCarbonated: data.isCarbonated,
         isSugar: data.isSugar,
-        imgUri: data.imgUri ? data.imgUri : "",
+        imgUri: data.imgUri ? data.imgUri : '',
         isVeggie: data.isVeggie,
       });
       setRestore(true);
     }
   }, [edit, isRestore, data]);
 
-  function isDisabledSubmit(){
-    return (
-        !input.name ||
-        !input.price ||
-        !input.size
-    )
+  function isDisabledSubmit() {
+    return !input.name || !input.price || !input.size;
   }
 
   const onChange = (e) => {
@@ -55,16 +57,16 @@ function CreateOrEditBeverage({ data }) {
     });
   };
 
-  async function setImg(e){
+  async function setImg(e) {
     const result = await postImageToCloudinary(e);
 
-    if(result){
-        setInput({
-            ...input,
-            imgUri: result,
-        });
+    if (result) {
+      setInput({
+        ...input,
+        imgUri: result,
+      });
     } else {
-        e.target.value = "";
+      e.target.value = '';
     }
   }
 
@@ -75,52 +77,51 @@ function CreateOrEditBeverage({ data }) {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (edit) {
-
-    try {
-            
-        await updateProduct("beverages", input);
+      try {
+        await updateProduct('beverages', input);
         alertCustom(
-            input.name,
-            "Actualizada con exito!",
-            "https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png"
-        )
+          input.name,
+          'Actualizada con exito!',
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png'
+        );
         navigate('/adminproducts');
-
-        } catch (error) {
-            alertCustom(
-                "Oops...",
-                "No se pudo actualizar el producto!",
-                "https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png"
-            )
-        }
-
+      } catch (error) {
+        alertCustom(
+          'Oops...',
+          'No se pudo actualizar el producto!',
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png'
+        );
+      }
     } else {
-
-        try {  
-            await createProduct("beverages", input);
-            alertCustom(
-                input.name,
-                "Creada con exito!",
-                "https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png"
-            )
-            navigate('/adminproducts');
-        } catch (error) {
-            alertCustom(
-                "Oops...",
-                "No se pudo crear el producto!",
-                "https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png"
-            )
-        }
-
+      try {
+        await createProduct('beverages', input);
+        alertCustom(
+          input.name,
+          'Creada con exito!',
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png'
+        );
+        navigate('/adminproducts');
+      } catch (error) {
+        alertCustom(
+          'Oops...',
+          'No se pudo crear el producto!',
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png'
+        );
+      }
     }
   };
-  
-  return (
-    <Container>
-      <div className="editBeverage__container">
-        <h2>{edit ? 'Editar Bebidas' : 'Crear Bebidas'}</h2>
 
-        <img src={input.imgUri} onError={(e)=> setImgProductErr(e)} alt="img not"></img>
+  return (
+    <Container className="mb-5">
+      <h2>{edit ? 'Editar Bebidas' : 'Crear Bebidas'}</h2>
+      <hr />
+      <div className="editBeverage__container">
+        <img
+          src={input.imgUri}
+          onError={(e) => setImgProductErr(e)}
+          alt="img not"
+          className="editOrCreate__img"
+        ></img>
 
         <Form>
           <hr />
@@ -128,7 +129,7 @@ function CreateOrEditBeverage({ data }) {
             <Form.Group as={Col} controlId="beverageName">
               <Form.Label>Nombre *</Form.Label>
               <Form.Control
-                placeholder='Nombre *'
+                placeholder="Nombre *"
                 onChange={onChange}
                 type="text"
                 value={input.name}
@@ -139,7 +140,7 @@ function CreateOrEditBeverage({ data }) {
             <Form.Group as={Col} controlId="beveragePrice">
               <Form.Label>Precio *</Form.Label>
               <Form.Control
-                placeholder='Precio *'
+                placeholder="Precio *"
                 onChange={onChange}
                 type="number"
                 value={input.price}
@@ -151,7 +152,7 @@ function CreateOrEditBeverage({ data }) {
           <Form.Group className="mb-3" controlId="uploadImgBeverage">
             <Form.Label>Imagen *</Form.Label>
             <Form.Control
-              placeholder='Url de la imagen'
+              placeholder="Url de la imagen"
               onChange={setImg}
               type="file"
               name="imgUri"
@@ -166,7 +167,9 @@ function CreateOrEditBeverage({ data }) {
                 name="isCarbonated"
                 value={input.isCarbonated}
               >
-                <option value={true} defaultValue>Si</option>
+                <option value={true} defaultValue>
+                  Si
+                </option>
                 <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
@@ -178,7 +181,9 @@ function CreateOrEditBeverage({ data }) {
                 name="isSugar"
                 value={input.isSugar}
               >
-                <option value={true} defaultValue>Si</option>
+                <option value={true} defaultValue>
+                  Si
+                </option>
                 <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
@@ -192,7 +197,9 @@ function CreateOrEditBeverage({ data }) {
                 value={input.size}
                 onChange={(e) => onChange(e)}
               >
-                <option value="Chico" defaultValue>Chica</option>
+                <option value="Chico" defaultValue>
+                  Chica
+                </option>
                 <option value="Mediano">Mediana</option>
                 <option value="Grande">Grande</option>
               </Form.Select>
@@ -205,18 +212,25 @@ function CreateOrEditBeverage({ data }) {
                 name="isVeggie"
                 value={input.isVeggie}
               >
-                <option value={true} defaultValue>Si</option>
+                <option value={true} defaultValue>
+                  Si
+                </option>
                 <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
           </Row>
 
-          <Button onClick={onSubmit} disabled={isDisabledSubmit()} variant="primary" type="submit">
+          <Button
+            onClick={onSubmit}
+            disabled={isDisabledSubmit()}
+            variant="primary"
+            type="submit"
+          >
             Confirmar
           </Button>
-          <hr />
         </Form>
       </div>
+      <hr />
     </Container>
   );
 }
