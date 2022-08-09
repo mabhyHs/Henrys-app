@@ -33,6 +33,7 @@ import CreateOrEditBurgerBase from './Components/Admin/AddProduct/AddProductView
 import CreateOrEditBeverage from './Components/Admin/AddProduct/AddProductViews/CreateOrEditBeverage/CreateOrEditBeverage';
 import CreateOrEditCombo from './Components/Admin/AddProduct/AddProductViews/CreateOrEditCombo/CreateOrEditCombo';
 import CreateOrEditFries from './Components/Admin/AddProduct/AddProductViews/CreateOrEditFries/CreateOrEditFries';
+import CreateOrEditIngredients from './Components/Admin/AddProduct/AddProductViews/CreateOrEditIngredients/CreateOrEditIngredients';
 import EditProducts from './Components/Admin/AddProduct/EditProducts/EditProducts';
 import CouponAdmin from './Components/Admin/Coupons/CouponAdmin/CouponAdmin';
 import UserPurchaseDetail from './Components/User/UserPurchaseDetail/UserPurchaseDetail';
@@ -153,6 +154,12 @@ function App() {
         <Route
           path="/adminCreateFries"
           element={isSessionAdmin ? <CreateOrEditFries /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/adminCreateIngredient"
+          element={
+            isSessionAdmin ? <CreateOrEditIngredients /> : <Navigate to="/" />
+          }
         />
         <Route
           path="/admincupon"
