@@ -54,11 +54,12 @@ export function getProduct(
   order = '',
   name = '',
   isVeggie = '',
-  isDeleted = ''
+  isDeleted = '',
+  isBase = ''
 ) {
   return async function (dispatch) {
     const json = await axios(
-      `/products?category=${category}&order=${order}&name=${name}&isVeggie=${isVeggie}&isDeleted=${isDeleted}`
+      `/products?category=${category}&order=${order}&name=${name}&isVeggie=${isVeggie}&isDeleted=${isDeleted}&isBase=${isBase}`
     );
     try {
       return dispatch({
