@@ -112,7 +112,7 @@ function CreateOrEditBurgerBase({ data }) {
   return (
     <div>
       <Container className="editBurgerBase__container">
-        <h2>Editar Burger Base</h2>
+        <h2>{edit ? 'Editar Hamburguesa Base' : 'Crear Hamburguesa Base'}</h2>
 
         <img src={input.imgUri} onError={(e)=> setImgProductErr(e)} alt="img not"></img>
 
