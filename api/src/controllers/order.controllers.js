@@ -1,5 +1,4 @@
 const orderRepositories = require("../repositories/order.repositories");
-const mercadopagoRepository = require("../repositories/mercadopago.repositories");
 const { transporter } = require("../config/emailTransporter");
 
 async function create(req, res, next) {
@@ -570,7 +569,7 @@ async function getAll(req, res, next) {
   try {
     const orders = await orderRepositories.getAll();
 
-    if(!orders || orders.length){
+    if(!orders || !orders.length){
         return res.status(404).json({error: "No hay ordenes cargadas!"});
     }
 
