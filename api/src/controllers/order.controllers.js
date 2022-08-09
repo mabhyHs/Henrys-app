@@ -8,6 +8,8 @@ async function create(req, res, next) {
       req.body.purchaseId
     );
 
+    console.log(receipt)
+
     const order = await orderRepositories.create({
         ...req.body.user.id, 
         data: receipt
