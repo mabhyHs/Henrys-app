@@ -952,7 +952,7 @@ async function changeStatus(id, status) {
                             "
                           >
                             <a
-                              href="${"#"}"
+                              href="${`${process.env.HOST}/calificanos/${id}`}"
                               style="
                                 background: #ffbe33;
                                 text-decoration: none !important;
