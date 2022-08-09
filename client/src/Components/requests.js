@@ -54,3 +54,11 @@ export async function updateProduct(product, data) {
         imageAlt: 'Logo henrys',
       });
 }
+
+export async function setStateOrder(id, data){
+    await axios.put(`/orders/${id}`, data, {
+        headers: {
+        'auth-token': JSON.parse(localStorage.getItem('user')).token,
+        },
+    });
+}

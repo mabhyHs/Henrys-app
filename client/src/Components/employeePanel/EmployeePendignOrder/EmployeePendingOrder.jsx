@@ -6,14 +6,27 @@ import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import { MdPendingActions } from 'react-icons/md';
 import './EmployeePendingOrder.css';
+import { setStateOrder } from '../../requests';
 
 function EmployeePendingOrder() {
 
+  const session = useSelector(state => state.loginState);
   const orders = useSelector(state => state.orders);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  async function handleSubmit(e){
+    try {
+        const data = {status: "Listo", employee: session.firstName + " " + session.lastName}
+        await setStateOrder(e.target.id, data)
+
+    } catch (error) {
+        
+    } finally{
+        handleClose();
+    }
+  }
   console.log(orders)
 
   return (
@@ -43,22 +56,17 @@ function EmployeePendingOrder() {
               <td>{ord.customer[0].firstName + " " + ord.customer[0].lastName}</td>
               <td>
                 <ul className="employee__ul">
-                  <li>
-                    <span className="employee__li__span"> Combo Pareja</span>
-                    <br />
-                    Cantidad: 2
-                    <hr />
-                  </li>
-                  <li>
-                    <span className="employee__li__span"> Bacon XL</span>
-                    <br />
-                    Cantidad: 1
-                    <hr />
-                  </li>
+                    {ord.data.additional_info.items && ord.data.additional_info.items.map((item, i)=> 
+                       <li key={i}>
+                       <span className="employee__li__span">{item.title}</span>
+                       <br />
+                       Cantidad: {item.quantity}
+                       <hr />
+                     </li>)}                  
                 </ul>
               </td>
-              <td>Sin ketchup Lorem ipsum dolor sit amet.</td>
-              <td>$ 1200.00</td>
+              <td>{ord.data.metadata.note ? ord.data.metadata.note : ""}</td>
+              <td>$ {ord.data.transaction_details.total_paid_amount}</td>
               <td>
                 <Button variant="primary" onClick={handleShow}>
                   Listo
@@ -71,7 +79,7 @@ function EmployeePendingOrder() {
                     ¿Estás seguro de pasar éste pedido se encuentra listo?
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button variant="primary">Confirmar</Button>
+                    <Button id={ord.purchaseId} onClick={handleSubmit} variant="primary">Confirmar</Button>
                   </Modal.Footer>
                 </Modal>
               </td>
