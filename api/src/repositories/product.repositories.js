@@ -24,12 +24,19 @@ async function getById(id) {
     return undefined;
 }
 
-async function getByQuery(queries) {
+async function getByQuery(queries, isBase) {
     const burgers = await burgerRepository.getByQuery(queries); 
     const combos = await comboRepository.getByQuery(queries);
     const fries = await friesRepository.getByQuery(queries);
     const beverages = await beverageRepository.getByQuery(queries);
-    const all = [...burgers, ...combos, ...fries, ...beverages];
+    let all;
+
+    if(isBase === "true"){
+        const burgerBase = await burgerBaseRepository.getByQuery(queries);
+        all = [...burgers, ...combos, ...fries, ...beverages, ...burgerBase];
+    }else{
+        all = [...burgers, ...combos, ...fries, ...beverages];
+    }
      
     return all;
 }
