@@ -58,7 +58,7 @@ async function getByQuery(req, res, next) {
         products = [...all];
     }
     else if(category === "burgerbase"){
-        if(isDeleted){
+        if(isDeleted === "true"){
             return res.status(200).json([]);
         }
         const burgerBase = await burgerBaseRepository.getByQuery(filters);
