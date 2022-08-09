@@ -28,6 +28,7 @@ import {
   GET_PURCHASE,
   DELETE_PRODUCT,
   RESTORE_PRODUCT,
+  SET_ORDERS
 } from '../actions/actions';
 
 import {
@@ -59,6 +60,7 @@ const initialState = {
   coupons: undefined,
   users: [],
   purchaseInfo: undefined,
+  orders: []
 };
 
 const rootReducer = (state = initialState, action = {}) => {
@@ -216,6 +218,11 @@ const rootReducer = (state = initialState, action = {}) => {
         ...state,
         products: state.products.filter((item) => item.id !== action.payload),
       };    
+    case SET_ORDERS:
+    return {
+        ...state,
+        orders: action.payload,
+    }; 
     default:
       return state;
   }

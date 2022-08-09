@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -6,10 +6,20 @@ import imgNavEmp from '../../../Assets/Images/logo-henrys300px.png';
 import { Link } from 'react-router-dom';
 import { BiHome, BiLogOut, BiCheckCircle } from 'react-icons/bi';
 import { MdPendingActions } from 'react-icons/md';
-
+import { useDispatch } from 'react-redux';
+import { setOrders } from '../../../Redux/actions/actions';
 import './EmployeeNavBar.css';
 
 function EmployeeNavBar() {
+
+    const dispatch = useDispatch();
+
+    
+    useEffect(() => {
+        dispatch(setOrders());  
+    }, [dispatch]);
+
+
   return (
     <Navbar
       collapseOnSelect

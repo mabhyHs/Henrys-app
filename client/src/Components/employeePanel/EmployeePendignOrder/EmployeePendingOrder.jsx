@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
@@ -7,9 +8,13 @@ import { MdPendingActions } from 'react-icons/md';
 import './EmployeePendingOrder.css';
 
 function EmployeePendingOrder() {
+
+  const orders = useSelector(state => state.orders.rows);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  console.log(orders)
 
   return (
     <div className="employee__pending__container mt-5">
