@@ -1,5 +1,15 @@
 const burgerBaseRepository = require("../repositories/burgerBase.repositories");
 
+async function create(req, res, next) {
+    try {
+      const data = req.body;
+      const newBurger = await burgerBaseRepository.create(data);
+      return res.status(201).json(newBurger);
+    } catch (error) {
+      next(error);
+    }
+  }
+
 async function get(req, res, next) {
     try {
       const all = await burgerBaseRepository.getAll();
@@ -39,6 +49,7 @@ async function update(req, res, next) {
 }
 
 module.exports = {
+  create,
   get,
   getFirst,
   update,

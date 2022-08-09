@@ -1,5 +1,10 @@
 const { BurgerBase } = require("../models");
 
+async function create(data) {
+    const burgerBase = await BurgerBase.create(data);
+    return burgerBase;
+  }
+
 async function getAll() {
     const burgersBase = await BurgerBase.findAll({paranoid: false}, {order: [
         ['name', 'ASC'],
@@ -32,6 +37,7 @@ async function update(data) {
 }
 
 module.exports = {
+  create,
   getAll,
   getById,
   getByQuery,

@@ -1,5 +1,5 @@
 const express = require("express");
-const { get, getFirst, update } = require("../controllers/burgerBase.controllers");
+const { get, getFirst, update, create } = require("../controllers/burgerBase.controllers");
 const {
   postValidator,
   roleValidator,
@@ -19,5 +19,6 @@ router.put(
   validationResultHandler,
   update
 );
+router.post("/", create);
 
 module.exports = router;
