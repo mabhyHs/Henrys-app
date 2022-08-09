@@ -30,6 +30,7 @@ export const GET_PURCHASE = 'GET_PURCHASE';
 export const POST_PURCHASE = 'POST_PURCHASE';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const RESTORE_PRODUCT = 'RESTORE_PRODUCT';
+export const SET_ORDERS = 'SET_ORDERS';
 
 export function getUser(token, query = '/') {
   return async function (dispatch) {
@@ -446,3 +447,23 @@ export function restoreProduct(id, producto) {
     }
   };
 }
+
+export function setOrders() {
+    return async function (dispatch) {  
+        
+        try {
+            const orders = await axios.get("/orders", {
+                headers: {
+                'auth-token': JSON.parse(localStorage.getItem('user')).token,
+                },
+            });
+
+            return dispatch({
+              type: SET_ORDERS,
+              payload: orders.data,
+            });
+        } catch (error) {
+            console.log(error)
+        }
+    };
+  }

@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
-import { CardChecklist } from 'react-bootstrap-icons';
 import { BiCheckCircle } from 'react-icons/bi';
-
+import { useSelector } from 'react-redux';
 import './EmployeeOrderReady.css';
 
 function EmployeeOrderReady() {
+
+  const orders = useSelector(state => state.orders);
+
   return (
     <div className="employee__pending__container mt-5">
       <h2>
@@ -25,38 +27,33 @@ function EmployeeOrderReady() {
               <th>Nota</th>
               <th>Total</th>
               <th>Empleado</th>
-
-              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
+          {orders && orders?.map((ord, i) => 
+            
+            <Fragment key={i}>
+            {ord.status === "Listo" &&
             <tr>
-              <td>06/08/2022 - 17:41hs</td>
-              <td>Lara Gomez</td>
+              <td>{ord.createdAt}</td>
+              <td>{ord.customer[0].firstName + " " + ord.customer[0].lastName}</td>
               <td>
                 <ul className="employee__ul">
-                  <li>
-                    <span className="employee__li__span"> Combo Pareja</span>
-                    <br />
-                    Cantidad: 2
-                    <hr />
-                  </li>
-                  <li>
-                    <span className="employee__li__span"> Bacon XL</span>
-                    <br />
-                    Cantidad: 1
-                    <hr />
-                  </li>
+                  {ord.data.additional_info.items && ord.data.additional_info.items.map((item, i)=> 
+                       <li key={i}>
+                       <span className="employee__li__span">{item.title}</span>
+                       <br />
+                       Cantidad: {item.quantity}
+                       <hr />
+                     </li>)} 
                 </ul>
               </td>
-              <td>Sin ketchup Lorem ipsum dolor sit amet.</td>
-              <td>$ 1200.00</td>
-              <td>Roberto</td>
-
-              <td>
-                <Button>Volver a pendiente</Button>
-              </td>
-            </tr>
+              <td>{ord.data.metadata.note ? ord.data.metadata.note : ""}</td>
+              <td>$ {ord.data.transaction_details.total_paid_amount}</td>
+              <td>{ord.employee ? ord.employee : ""}</td>
+            </tr>}
+            </Fragment>
+            )} 
           </tbody>
         </Table>
       </Container>
