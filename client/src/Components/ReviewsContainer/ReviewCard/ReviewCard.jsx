@@ -16,11 +16,12 @@ function ReviewCard({ author, description, rating }) {
         <Card.Body className="reviews__mainCard__body">
           <Card.Text>{description}</Card.Text>
         </Card.Body>
+        <p className="divider__reviewCard">________________________</p>
         <Card.Footer
           className="reviews__mainCard__footer"
           style={{ borderRadius: '18px' }}
         >
-          {author}
+          - {author}
         </Card.Footer>
       </Card>
     </div>

@@ -15,24 +15,17 @@ function DefaultReviewCard() {
         </div>
         <Card.Body className="defaultreviews__mainCard__body">
           <Card.Text>
-            Excelente servicio y productos!!! La comida ríquisima y llegó muy
-            rápido. Además, la página es muy sencilla y expeditiva en su uso.
-            Vovlería a pedir Excelente servicio y productos!!! La comida
-            ríquisima y llegó muy rápido. Además, la página es muy sencilla y
-            expeditiva en su uso. Vovlería a pedir Excelente servicio y
-            productos!!! La comida ríquisima y llegó muy rápido. Además, la
-            página es muy sencilla y expeditiva en su uso. Vovlería a pedir
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni
-            consectetur aperiam quae minus voluptatem illo labore adipisci quo.
-            Vel eos hic ipsam cumque eligendi deserunt accusamus doloribus sit
-            facilis odit.{' '}
+            Excelente servicio y productos!!! La comida ríquisima, la página es
+            muy sencilla y expeditiva en su uso. Volvería a pedir. Excelente
+            servicio y productos!!.
           </Card.Text>
         </Card.Body>
+        <p className="divider__reviewCard">________________________</p>
         <Card.Footer
           className="defaultreviews__mainCard__footer"
           style={{ borderRadius: '18px' }}
         >
-          Washington Gutierrez
+          - Washington Gutierrez
         </Card.Footer>
       </Card>
     </div>
