@@ -41,50 +41,49 @@ function UserRegister() {
     /* del nombre */
 
     if (!input.firstName) {
-      error.firstName = 'Este campo es requerido';
+      error.firstName = '* El nombre es obligatorio';
     } else if (
       !/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u.test(
         input.firstName
       )
     ) {
-      error.firstName = 'Nombre inválido sólo admite letras';
+      error.firstName = '* Nombre inválido sólo admite letras';
     }
 
     /* del apellido */
 
     if (!input.lastName) {
-      error.lastName = 'Este campo es requerido';
+      error.lastName = '* El apellido es obligatorio';
     } else if (
       !/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u.test(
         input.lastName
       )
     ) {
-      error.lastName = 'Este apellido es inválido';
+      error.lastName = '* Apellido inválido';
     }
 
     /* del email */
 
     if (!input.email) {
-      error.email = 'Este campo es requerido';
+      error.email = '* E-mail obligatorio';
     } else if (
       // eslint-disable-next-line no-useless-escape
       !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
         input.email
       )
     ) {
-      error.email = 'Este correo es invalido';
+      error.email = '*E-mail es invalido';
     }
 
     /* del pass */
 
     if (!input.password) {
-      error.password = 'Este campo es requerido';
+      error.password = '* El campo es requerido';
     }
 
     /* del confirm */
     if (input.passwordConfirm !== input.password) {
-      error.passwordConfirm =
-        'Ingrese correctamente la confirmacion de la contraseña';
+      error.passwordConfirm = '* Error al confirmar contraseña';
     }
 
     return error;
@@ -93,7 +92,7 @@ function UserRegister() {
   /* al submitear */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {      
+    try {
       setSubmited(true);
       const res = await axios.post(`/register`, { ...input });
       if (res.status === 201) {
@@ -118,20 +117,23 @@ function UserRegister() {
         });
       }
     } catch (error) {
-        Swal.fire({
-            customClass: {
-              confirmButton: 'confirmBtnSwal',
-            },
-            title: 'Oops...',
-            text: typeof(error.response.data.error) !== "string" ? "Error al registrarse!" : error.response.data.error,
-            imageUrl:
-              'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
-            imageWidth: 150,
-            imageHeight: 150,
-            imageAlt: 'Logo henrys',
-          });
+      Swal.fire({
+        customClass: {
+          confirmButton: 'confirmBtnSwal',
+        },
+        title: 'Oops...',
+        text:
+          typeof error.response.data.error !== 'string'
+            ? 'Error al registrarse!'
+            : error.response.data.error,
+        imageUrl:
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: 'Logo henrys',
+      });
     } finally {
-        setSubmited(false);
+      setSubmited(false);
     }
   };
 
@@ -150,8 +152,8 @@ function UserRegister() {
             }}
           >
             <Row className="mb-3">
-              <Form.Group as={Col} controlId="formGridNombre">
-                <div className="contactForm__errContainer">
+              <Form.Group as={Col} sm={12} lg={6} controlId="formGridNombre">
+                <div className="userRegister__errContainer">
                   {error.firstName && <p>{error.firstName}</p>}
                 </div>
                 <Form.Control
@@ -164,8 +166,8 @@ function UserRegister() {
                 />
               </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridApellido">
-                <div className="contactForm__errContainer">
+              <Form.Group as={Col} sm={12} lg={6} controlId="formGridApellido">
+                <div className="userRegister__errContainer">
                   {error.lastName && <p>{error.lastName}</p>}
                 </div>
                 <Form.Control
@@ -179,7 +181,7 @@ function UserRegister() {
             </Row>
 
             <Form.Group className="mb-3" controlId="formGridEmail">
-              <div className="contactForm__errContainer">
+              <div className="userRegister__errContainer">
                 {error.email && <p>{error.email}</p>}
               </div>
               <Form.Control
@@ -191,8 +193,8 @@ function UserRegister() {
               />
             </Form.Group>
             <Row className="mb-5">
-              <Form.Group as={Col} controlId="formGridPassword">
-                <div className="contactForm__errContainer">
+              <Form.Group as={Col} sm={12} lg={6} controlId="formGridPassword">
+                <div className="userRegister__errContainer">
                   {error.password && <p>{error.password}</p>}
                 </div>
                 <Form.Control
@@ -204,8 +206,13 @@ function UserRegister() {
                 />
               </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridConfirPassword">
-                <div className="contactForm__errContainer">
+              <Form.Group
+                as={Col}
+                sm={12}
+                lg={6}
+                controlId="formGridConfirPassword"
+              >
+                <div className="userRegister__errContainer">
                   {error.passwordConfirm && <p>{error.passwordConfirm}</p>}
                 </div>
                 <Form.Control
@@ -217,14 +224,19 @@ function UserRegister() {
                 />
               </Form.Group>
             </Row>
-            <Button variant="primary" type="submit" disabled={
-              !input.firstName.length ||
-              !input.lastName.length ||
-              !input.email.length ||
-              !input.password.length ||
-              !input.passwordConfirm.length ||
-              Object.keys(error).length ||
-              isSubmited}>
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={
+                !input.firstName.length ||
+                !input.lastName.length ||
+                !input.email.length ||
+                !input.password.length ||
+                !input.passwordConfirm.length ||
+                Object.keys(error).length ||
+                isSubmited
+              }
+            >
               Registrarme
             </Button>
           </Form>
