@@ -15,12 +15,12 @@ const roleValid = body("user")
 
 const userValid = body("user")
   .custom(async (user, { req }) => {
-    const currentUser = await userRepositories.getById(user.id);
-    if (currentUser.role === "admin" && user.id === req.params.id) {
-      throw new Error("El admin no puede desactivar su propia cuenta");
+    const account = await  userRepositories.getById(req.params.id);
+    if (account.role === "admin") {
+      throw new Error("No es posible dasactivar una cuenta de administrador");
     }
   })
-  .withMessage("El admin no puede desactivar su propia cuenta");
+  .withMessage("No es posible dasactivar una cuenta de administrador");
 
 const changeRoleValid = body("user")
   .custom(async (user, { req }) => {
