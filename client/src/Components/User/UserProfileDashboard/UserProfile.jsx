@@ -23,7 +23,18 @@ function UserProfileDashboard() {
         sesionInfo.token,
         sesionInfo.id
       );
-      dispatch(setLoginState({ ...sesionInfo, imgUri }));
+
+      if(imgUri){
+
+        const updateLocal = {
+            ...JSON.parse(window.localStorage.getItem("user")),
+            imgUri,
+          };
+    
+          window.localStorage.setItem("user", JSON.stringify(updateLocal));
+          dispatch(setLoginState({ ...sesionInfo, imgUri }));
+
+      }
     } catch (error) {
       console.log(error);
     } finally {

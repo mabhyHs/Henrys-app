@@ -58,9 +58,8 @@ function UserPersonalInfo() {
       });
       return;
     }
-    const obj = { ...input, id: isSession.id };
     try {
-      await axios.put('/users/', obj, {
+      await axios.put(`/users/${isSession.id}`, {...input}, {
         headers: {
           'auth-token': isSession.token,
         },
@@ -69,6 +68,14 @@ function UserPersonalInfo() {
         ...isSession,
         ...input,
       };
+
+      const updateLocal = {
+        ...JSON.parse(window.localStorage.getItem("user")),
+        ...input,
+      };
+
+      window.localStorage.setItem("user", JSON.stringify(updateLocal));
+
       dispatch(setLoginState(updateSession));
       Swal.fire({
         customClass: {
