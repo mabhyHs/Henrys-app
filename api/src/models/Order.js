@@ -23,6 +23,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      data: {
+        type: DataTypes.JSONB,
+      },
     },
     {
       sequelize,
