@@ -4,10 +4,7 @@ const { transporter } = require("../config/emailTransporter");
 
 async function create(req, res, next) {
   try {
-    const order = await orderRepositories.create({
-        ...req.body.user.id, 
-        data: receipt
-    }, req.body);
+    const order = await orderRepositories.create(req.body.user.id, req.body);
 
     await transporter.sendMail({
       from: '"Recibo de compra" <henrysBurger2022@gmail.com',
@@ -571,18 +568,13 @@ async function create(req, res, next) {
 
 async function getAll(req, res, next) {
   try {
-    let orders = await orderRepositories.getAll();
+    const orders = await orderRepositories.getAll();
 
-    for(let i=0; i<orders.length; i++){
-
-        const id = orders[i].purchaseId;
-
-        const receipt = await mercadopagoRepository.getPaymentById(id);
-
-        orders[i] = {...orders[i], mp: receipt};        
+    if(!orders || orders.length){
+        return res.status(404).json({error: "No hay ordenes cargadas!"});
     }
-    console.log(orders)
-    res.status(200).json(orders);
+
+    return res.status(200).json(orders);
   } catch (error) {
     next(error);
   }
