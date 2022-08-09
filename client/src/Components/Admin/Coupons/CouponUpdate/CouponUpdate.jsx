@@ -7,6 +7,8 @@ import CardCupponHome from '../../../CardCuponHome/CardCuponHome';
 import Row from 'react-bootstrap/esm/Row';
 import Form from 'react-bootstrap/esm/Form';
 import { postImageToCloudinary } from '../../../methods';
+import Button from 'react-bootstrap/Button';
+import './CouponUpdate.css';
 
 function CouponUpdate({ couponToEdit }) {
   const dispatch = useDispatch();
@@ -248,13 +250,14 @@ function CouponUpdate({ couponToEdit }) {
 
   return (
     <div>
-      <div>
+      <div className="couponUpdate__container">
         <form className="couponForm">
           <label htmlFor="code">
             <div className="codeLabel">
               Codigo: <span>*</span>
             </div>
             <input
+              className="couponUpdate__form__inputs"
               value={coupon.code}
               type="text"
               autoComplete="off"
@@ -271,6 +274,7 @@ function CouponUpdate({ couponToEdit }) {
               Titulo: <span>*</span>
             </div>
             <input
+              className="couponUpdate__form__inputs"
               value={coupon.title}
               type="text"
               autoComplete="off"
@@ -287,6 +291,7 @@ function CouponUpdate({ couponToEdit }) {
               Descuento: <span>*</span>
             </div>
             <input
+              className="couponUpdate__form__inputs"
               value={coupon.discountPorcentage}
               type="text"
               autoComplete="off"
@@ -307,6 +312,7 @@ function CouponUpdate({ couponToEdit }) {
               Fecha de vencimiento &#40; inclusive: &#41; <span>*</span>
             </div>
             <input
+              className="couponUpdate__form__inputs"
               value={coupon.expirationDate}
               type="text"
               autoComplete="off"
@@ -328,6 +334,7 @@ function CouponUpdate({ couponToEdit }) {
               <span>*</span>
             </div>
             <select
+              className="couponUpdate__form__select"
               name="productOfCoupon"
               id="productOfCoupon"
               onClick={handleProducts}
@@ -340,17 +347,21 @@ function CouponUpdate({ couponToEdit }) {
               ))}
             </select>
 
-            <div>
+            <div className="couponUpdate__form__producstContainer">
               {coupon.productsId[0]?.id &&
                 coupon.productsId?.map((p) => (
-                  <div key={`${p?.id}coupon`}>
-                    {p?.name}
+                  <div
+                    key={`${p?.id}coupon`}
+                    className="couponUpdate__form__producstContainer__itemsContainer"
+                  >
                     <button
                       type="button"
+                      className="couponUpdate__form__producstContainer__closeButton"
                       onClick={(e) => handleRemoveProduct(e, p?.id)}
                     >
                       X
                     </button>
+                    <p>{p?.name}</p>
                   </div>
                 ))}
             </div>
@@ -366,15 +377,16 @@ function CouponUpdate({ couponToEdit }) {
               ></Form.Control>
             </Form.Group>
           </Row>
-          <button
-            disabled={!isChange || !btnSubmit}
-            onClick={handleUpdateCoupon}
-          >
-            ACTUALIZAR
-          </button>
         </form>
+        <Button
+          disabled={!isChange || !btnSubmit}
+          onClick={handleUpdateCoupon}
+          className="couponUpdate__submitButton"
+        >
+          ACTUALIZAR
+        </Button>
       </div>
-      <div>
+      <div className="couponUpdate__CardCupponHome">
         <CardCupponHome
           key={coupon.code}
           code={coupon.code}
