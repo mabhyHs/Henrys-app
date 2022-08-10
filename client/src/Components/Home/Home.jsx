@@ -37,7 +37,9 @@ function Home() {
             imageHeight: 150,
             imageAlt: 'Logo henrys',
           });
-          setTimeout(() => logout(), 2000);
+          if(isAuthenticated){
+            setTimeout(() => logout(), 2000);
+          }
         }
       };
 
