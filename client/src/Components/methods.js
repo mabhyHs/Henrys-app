@@ -42,7 +42,7 @@ export function isLoggedAdmin() {
   return isSession.role === 'admin';
 }
 
-export function isLoggedAdminEmployee() {
+export function isLoggedAdminEmployee() { 
     const isSession = isLogged();
     if (!isSession) {
       return undefined;

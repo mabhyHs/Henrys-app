@@ -42,7 +42,7 @@ import EmployeeHome from './Components/employeePanel/employeeHome/EmployeeHome';
 import EmployeePendingOrder from './Components/employeePanel/EmployeePendignOrder/EmployeePendingOrder';
 import EmployeeOrderReady from './Components/employeePanel/EmployeeOrderReady/EmployeeOrderReady';
 
-import './App.css';
+import './App.css'; 
 
 function App() {
   const isSession = isLogged();
