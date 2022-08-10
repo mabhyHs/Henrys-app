@@ -64,7 +64,6 @@ async function notification(req, res, next) {
     switch (topic) {
       case "payment":
         const paymentId = req.query.id || req.query["data.id"];
-        console.log(paymentId);
         const payment = await mercadopago.payment.findById(paymentId);
         merchantOrder = await mercadopago.merchant_orders.findById(
           payment.body.order.id
@@ -73,12 +72,14 @@ async function notification(req, res, next) {
           merchantOrder.body.preference_id
         );
         const user = await userRepository.getByEmail(info.payer.email);
-        await orderRepositories.create(
-          {
-            purchaseId: paymentId,
-          },
-          user
-        );
+        if (payment.body.status === "approved") {
+          await orderRepositories.create(
+            {
+              purchaseId: paymentId,
+            },
+            user
+          );
+        }
         break;
       // case "merchant_order":
       //   const orderId = req.query.id;
