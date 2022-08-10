@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import './UserReview.css';
+import Loading from '../../Loading/Loading';
 
 function UserReview() {
   const navigate = useNavigate();
@@ -17,8 +18,11 @@ function UserReview() {
   const [errors, setErrors] = useState({});
   const [isSubmited, setSubmited] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
-    async function validateReviewById(purchaseId) {
+    setIsLoading(true);
+    async function validateReviewById(purchaseId, setIsLoading) {
       try {
         const user = JSON.parse(window.localStorage.getItem('user'));
         const order = (
@@ -32,12 +36,14 @@ function UserReview() {
         if (order.review) {
           navigate('/quedicendenosotros');
         }
+
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
         navigate('/quedicendenosotros');
       }
     }
-    validateReviewById(purchaseId);
+    validateReviewById(purchaseId, setIsLoading);
   }, [dispatch]);
 
   const [input, setInput] = useState({
@@ -102,106 +108,125 @@ function UserReview() {
     navigate('/quedicendenosotros');
   }
 
-  return (
-    <Container className="userReview__mainContainer">
-      <h2 className="userReview__mainTitle">
-        Califica tu experiencia de compra
-      </h2>
-      <hr />
-      <div className="userReview__reviewContainer mb-4">
-        <div>
-          {errors.rating && (
-            <p className="userReview__error">{errors.rating}</p>
-          )}
-        </div>
-        <div className="userReview__starsContainer">
-          <input
-            className="userReview__starsContainer__input"
-            id="radio1"
-            type="radio"
-            name="rating"
-            value={5}
-            onChange={(e) => handleChange(e)}
-          />
-          <label className="userReview__starsContainer__star" htmlFor="radio1">
-            ★
-          </label>
-          <input
-            className="userReview__starsContainer__input"
-            id="radio2"
-            type="radio"
-            name="rating"
-            value={4}
-            onChange={(e) => handleChange(e)}
-          />
-          <label className="userReview__starsContainer__star" htmlFor="radio2">
-            ★
-          </label>
-          <input
-            className="userReview__starsContainer__input"
-            id="radio3"
-            type="radio"
-            name="rating"
-            value={3}
-            onChange={(e) => handleChange(e)}
-          />
-          <label className="userReview__starsContainer__star" htmlFor="radio3">
-            ★
-          </label>
-          <input
-            className="userReview__starsContainer__input"
-            id="radio4"
-            type="radio"
-            name="rating"
-            value={2}
-            onChange={(e) => handleChange(e)}
-          />
-          <label className="userReview__starsContainer__star" htmlFor="radio4">
-            ★
-          </label>
-          <input
-            className="userReview__starsContainer__input"
-            id="radio5"
-            type="radio"
-            name="rating"
-            value={1}
-            onChange={(e) => handleChange(e)}
-          />
-          <label className="userReview__starsContainer__star" htmlFor="radio5">
-            ★
-          </label>
-        </div>
-
-        <div className="userReview__opinionContainer">
-          <p>Deja tu sugerencia o comentario en el siguiente campo:</p>
+  if (isLoading) {
+    return <Loading />;
+  } else {
+    return (
+      <Container className="userReview__mainContainer">
+        <h2 className="userReview__mainTitle">
+          Califica tu experiencia de compra
+        </h2>
+        <hr />
+        <div className="userReview__reviewContainer mb-4">
           <div>
-            {errors.description && (
-              <p className="userReview__error">{errors.description}</p>
+            {errors.rating && (
+              <p className="userReview__error">{errors.rating}</p>
             )}
           </div>
-          <textarea
-            className="userReview__opinionContainer__textArea"
-            placeholder="Escribe tu opinion"
-            onChange={(e) => handleChange(e)}
-            value={input.description}
-            name="description"
-          ></textarea>
+          <div className="userReview__starsContainer">
+            <input
+              className="userReview__starsContainer__input"
+              id="radio1"
+              type="radio"
+              name="rating"
+              value={5}
+              onChange={(e) => handleChange(e)}
+            />
+            <label
+              className="userReview__starsContainer__star"
+              htmlFor="radio1"
+            >
+              ★
+            </label>
+            <input
+              className="userReview__starsContainer__input"
+              id="radio2"
+              type="radio"
+              name="rating"
+              value={4}
+              onChange={(e) => handleChange(e)}
+            />
+            <label
+              className="userReview__starsContainer__star"
+              htmlFor="radio2"
+            >
+              ★
+            </label>
+            <input
+              className="userReview__starsContainer__input"
+              id="radio3"
+              type="radio"
+              name="rating"
+              value={3}
+              onChange={(e) => handleChange(e)}
+            />
+            <label
+              className="userReview__starsContainer__star"
+              htmlFor="radio3"
+            >
+              ★
+            </label>
+            <input
+              className="userReview__starsContainer__input"
+              id="radio4"
+              type="radio"
+              name="rating"
+              value={2}
+              onChange={(e) => handleChange(e)}
+            />
+            <label
+              className="userReview__starsContainer__star"
+              htmlFor="radio4"
+            >
+              ★
+            </label>
+            <input
+              className="userReview__starsContainer__input"
+              id="radio5"
+              type="radio"
+              name="rating"
+              value={1}
+              onChange={(e) => handleChange(e)}
+            />
+            <label
+              className="userReview__starsContainer__star"
+              htmlFor="radio5"
+            >
+              ★
+            </label>
+          </div>
+
+          <div className="userReview__opinionContainer">
+            <p>Deja tu sugerencia o comentario en el siguiente campo:</p>
+            <div>
+              {errors.description && (
+                <p className="userReview__error">{errors.description}</p>
+              )}
+            </div>
+            <textarea
+              className="userReview__opinionContainer__textArea"
+              placeholder="Escribe tu opinion"
+              onChange={(e) => handleChange(e)}
+              value={input.description}
+              name="description"
+            ></textarea>
+          </div>
+          <Button
+            className="userReview__submitButton"
+            disabled={
+              Object.keys(errors).length > 0 ||
+              !input.description ||
+              isSubmited ||
+              input.rating === 0
+            }
+            onClick={(e) => handleSubmit(e)}
+          >
+            Enviar
+          </Button>
         </div>
-        <Button
-          className="userReview__submitButton"
-          disabled={
-            Object.keys(errors).length > 0 ||
-            !input.description ||
-            isSubmited ||
-            input.rating === 0
-          }
-          onClick={(e) => handleSubmit(e)}
-        >
-          Enviar
-        </Button>
-      </div>
-    </Container>
-  );
+      </Container>
+    );
+  }
 }
 
 export default UserReview;
