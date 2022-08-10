@@ -198,94 +198,55 @@ function addDataDB() {
   const beverages = [
     {
       id: "18e7bcf0-0404-4cd6-a96e-3b61f97e8f63",
-      name: "Coca-cola",
-      price: 70,
-      size: "Mediano",
-      isCarbonated: true,
-      isSugar: true,
-      imgUri:
-        "https://cache-backend-mcd.mcdonaldscupones.com/media/image/product$kcX6zxgK/200/200/original?country=ar",
-    },
-    {
-      id: "bd8b584f-58db-42fc-97a2-9910257dc171",
-      name: "Sprite",
-      price: 60,
+      name: "Pepsi 500 ml",
+      price: 170,
       size: "Chico",
       isCarbonated: true,
       isSugar: true,
       imgUri:
-        "https://cache-backend-mcd.mcdonaldscupones.com/media/image/product$kcX6zxgK/200/200/original?country=ar",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368862/bebidas/pepsi_gsy5zj.png",
     },
     {
-      id: "913c864a-938a-4957-95ee-068b9b12776f",
-      name: "Pepsi",
-      price: 65,
-      size: "Mediano",
-      isCarbonated: true,
-      isSugar: true,
-      imgUri:
-        "https://cache-backend-mcd.mcdonaldscupones.com/media/image/product$kcX6zxgK/200/200/original?country=ar",
+        id: "50448dc7-2a51-4e19-8528-33e5789ac83c",
+        name: "SevenUp 500 ml",
+        price: 170,
+        size: "Chico",
+        isCarbonated: true,
+        isSugar: true,
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368862/bebidas/7up_l2zfwx.png",
     },
     {
-      id: "c6ae6398-9a15-4f92-8a08-a0171b4997aa",
-      name: "Fanta",
-      price: 90,
-      size: "Grande",
-      isCarbonated: true,
-      isSugar: true,
-      imgUri:
-        "https://cache-backend-mcd.mcdonaldscupones.com/media/image/product$kcX6zxgK/200/200/original?country=ar",
+        id: "440e7d15-f910-43f2-a7b9-4b3b1fb5d689",
+        name: "Paso de los Toros 500 ml",
+        price: 170,
+        size: "Chico",
+        isCarbonated: true,
+        isSugar: true,
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368862/bebidas/Paso-de-los-Toros-Promelo_hyt19t.png",
     },
     {
-      id: "2cd97823-baa3-4108-8a35-47b4ef7d64d7",
-      name: "Manaos",
-      price: 70,
-      size: "Mediano",
-      isCarbonated: true,
-      isSugar: true,
-      imgUri:
-        "https://cache-backend-mcd.mcdonaldscupones.com/media/image/product$kcX6zxgK/200/200/original?country=ar",
+        id: "2bdea2e5-f994-45aa-9a23-67e44c4910ed",
+        name: "Mirinda 500 ml",
+        price: 170,
+        size: "Chico",
+        isCarbonated: true,
+        isSugar: true,
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368861/bebidas/mirinda_skfmaj.png",
     },
     {
-      id: "e226acae-5a20-4e07-85b5-06b1e6abbd34",
-      name: "Agua Villavicencio",
-      price: 70,
-      size: "Grande",
-      isCarbonated: true,
-      isSugar: true,
-      imgUri:
-        "https://cache-backend-mcd.mcdonaldscupones.com/media/image/product$kcX6zxgK/200/200/original?country=ar",
+        id: "9df67e4d-5a7e-429f-bcf5-8b66fdc3d795",
+        name: "Bonaqua 500 ml",
+        price: 200,
+        size: "Chico",
+        isCarbonated: false,
+        isSugar: false,
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368861/bebidas/Agua_reeive.png",
     },
-    {
-      id: "e0d6d870-8209-4e02-9e8c-08c8b9f3a7de",
-      name: "Agua VillaManaos",
-      price: 70,
-      size: "Chico",
-      isCarbonated: false,
-      isSugar: false,
-      imgUri:
-        "https://cache-backend-mcd.mcdonaldscupones.com/media/image/product$kcX6zxgK/200/200/original?country=ar",
-    },
-    {
-      id: "95fbac13-16c0-4d5f-83d1-881f2143c5d6",
-      name: "Agua con gas",
-      price: 75,
-      size: "Grande",
-      isCarbonated: false,
-      isSugar: false,
-      imgUri:
-        "https://cache-backend-mcd.mcdonaldscupones.com/media/image/product$kcX6zxgK/200/200/original?country=ar",
-    },
-    {
-      id: "a87621de-f0dc-4461-a7ab-c4a3d68c7c15",
-      name: "Agua saborizada pomelo",
-      price: 100,
-      size: "Grande",
-      isCarbonated: false,
-      isSugar: false,
-      imgUri:
-        "https://cache-backend-mcd.mcdonaldscupones.com/media/image/product$kcX6zxgK/200/200/original?country=ar",
-    },
+    
   ];
 
   const combos = [
