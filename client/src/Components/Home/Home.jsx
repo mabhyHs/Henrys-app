@@ -11,8 +11,10 @@ import axios from 'axios';
 
 function Home() {
   const dispatch = useDispatch();
-  const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated, logout } = useAuth0();
+
   useEffect(() => {
+    
     if (isAuthenticated && user && !window.localStorage.getItem('user')) {
       const fetchData = async (payload) => {
         try {
@@ -35,6 +37,7 @@ function Home() {
             imageHeight: 150,
             imageAlt: 'Logo henrys',
           });
+          setTimeout(() => logout(), 2000);
         }
       };
 
