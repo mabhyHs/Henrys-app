@@ -11,17 +11,15 @@ import { setOrders } from '../../../Redux/actions/actions';
 import './EmployeeNavBar.css';
 
 function EmployeeNavBar() {
+  const dispatch = useDispatch();
+  const path = useLocation().pathname;
 
-    const dispatch = useDispatch();
-    const path = useLocation().pathname;
-    
-    useEffect(() => {
-        const interval = setInterval(() => dispatch(setOrders()), 15000);
-        dispatch(setOrders());          
+  useEffect(() => {
+    const interval = setInterval(() => dispatch(setOrders()), 15000);
+    dispatch(setOrders());
 
-        return () => clearInterval(interval);
-    }, [dispatch]);
-
+    return () => clearInterval(interval);
+  }, [dispatch]);
 
   return (
     <Navbar
@@ -37,21 +35,45 @@ function EmployeeNavBar() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto employee__nav">
-            <Nav.Link className={path === "/employeehome" ? "navBar__active" : ""} as={Link} to="/employeehome">
+            <Nav.Link
+              className={
+                path === '/employeehome'
+                  ? 'navEmployee__active'
+                  : 'navBar__employee'
+              }
+              as={Link}
+              to="/employeehome"
+            >
               <BiHome /> INICIO
             </Nav.Link>
 
-            <Nav.Link className={path === "/employeependingorders" ? "navBar__active" : ""} as={Link} to="/employeependingorders">
+            <Nav.Link
+              className={
+                path === '/employeependingorders'
+                  ? 'navEmployee__active'
+                  : 'navBar__employee'
+              }
+              as={Link}
+              to="/employeependingorders"
+            >
               <MdPendingActions />
               PEDIDOS PENDIENTES
             </Nav.Link>
 
-            <Nav.Link className={path === "/employeeordersready" ? "navBar__active" : ""} as={Link} to="/employeeordersready">
+            <Nav.Link
+              className={
+                path === '/employeeordersready'
+                  ? 'navEmployee__active'
+                  : 'navBar__employee'
+              }
+              as={Link}
+              to="/employeeordersready"
+            >
               <BiCheckCircle />
               PEDIDOS LISTOS
             </Nav.Link>
 
-            <Nav.Link as={Link} to="/">
+            <Nav.Link as={Link} to="/" className="navBar__employee">
               <BiLogOut /> SALIR
             </Nav.Link>
           </Nav>
