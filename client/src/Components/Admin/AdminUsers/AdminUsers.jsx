@@ -27,12 +27,14 @@ function AdminUsers() {
   const [filter, setFilter] = useState('');
   function handleClose() {
     setShow(false);
+    setRol("");
   }
   function handleConfirm() {
     setShow(false);
     if (rol !== '') {
       submitRole(id);
     }
+    setRol("");
   }
   function handleShow(id) {
     setShow(true);
@@ -122,11 +124,11 @@ function AdminUsers() {
   function filterUsers(e) {
     const name = e.target.name;
     let query = '?rol=' + name;
-    if (name === '/') query = '';
-    if (name === 'active') {
+    if (name === '') query = '';
+    else if (name === 'active') {
       query = '?active=true';
     }
-    if (name === 'inactive') {
+    else if (name === 'inactive') {
       query = '?active=false';
     }
     setPage(1);
@@ -136,13 +138,23 @@ function AdminUsers() {
 
   async function handleDelete(id) {
     try {
+
+        let query = '?rol=' + filter;
+        if (filter === '') query = '';
+        else if (filter === 'active') {
+          query = '?active=true';
+        }
+        else if (filter === 'inactive') {
+          query = '?active=false';
+        }
+
       await axios.delete('/users/' + id, {
         headers: {
           'auth-token': token,
         },
       });
 
-      dispatch(getUser(token));
+      dispatch(getUser(token, query));
 
       Swal.fire({
         customClass: {
@@ -178,12 +190,22 @@ function AdminUsers() {
   async function handleActive(id) {
     const obj = {};
     try {
+
+        let query = '?rol=' + filter;
+        if (filter === '') query = '';
+        else if (filter === 'active') {
+          query = '?active=true';
+        }
+        else if (filter === 'inactive') {
+          query = '?active=false';
+        }
+
       await axios.post('/users/' + id, obj, {
         headers: {
           'auth-token': token,
         },
       });
-      dispatch(getUser(token));
+      dispatch(getUser(token, query));
       Swal.fire({
         customClass: {
           confirmButton: 'confirmBtnSwal',
@@ -229,8 +251,8 @@ function AdminUsers() {
             size="sm"
           >
             <Button
-              className={`filter__btn ${filter === '/' && 'activeBtn'}`}
-              name="/"
+              className={`filter__btn ${filter === '' && 'activeBtn'}`}
+              name=""
               onClick={(e) => filterUsers(e)}
             >
               Todos
@@ -310,10 +332,9 @@ function AdminUsers() {
                         <Modal.Body>
                           <Form.Select
                             aria-label="selectRol"
-                            defaultValue="Selecionar rol"
                             onChange={(e) => handleRole(e)}
                           >
-                            <option hidden>Selecionar</option>
+                            <option value="" hidden defaultValue>Selecionar</option>
                             <option value="admin">ADMIN</option>
                             <option value="employee">EMPLEADO</option>
                             <option value="customer">USUARIO</option>
@@ -321,6 +342,7 @@ function AdminUsers() {
                         </Modal.Body>
                         <Modal.Footer>
                           <Button
+                            disabled={!rol.length}
                             variant="primary"
                             onClick={() => handleConfirm()}
                           >
@@ -328,23 +350,28 @@ function AdminUsers() {
                           </Button>
                         </Modal.Footer>
                       </Modal>
-                      {user.deletedAt ? (
+
+                      {user.deletedAt && user.role !== "admin" &&
                         <Button
-                          variant="outline-success"
-                          size="sm"
-                          onClick={() => handleActive(user.id)}
-                        >
-                          <PersonCheckFill />
-                        </Button>
-                      ) : (
+                        variant="outline-success"
+                        size="sm"
+                        onClick={() => handleActive(user.id)}
+                      >
+                        <PersonCheckFill />
+                      </Button>                      
+                      }
+
+                      {!user.deletedAt && user.role !== "admin" && 
                         <Button
                           variant="outline-danger"
                           size="sm"
                           onClick={() => handleDelete(user.id)}
                         >
                           <PersonXFill />
-                        </Button>
-                      )}
+                        </Button>                     
+                      }
+
+
                     </td>
                   </tr>
                 );
@@ -352,7 +379,7 @@ function AdminUsers() {
           </tbody>
         </Table>
 
-        <div className="adminUser__pagination__container">
+{/*         <div className="adminUser__pagination__container">
           <p>
             Pag {users.pag} de {users.pages}
           </p>
@@ -372,7 +399,7 @@ function AdminUsers() {
           >
             <CaretRightFill />
           </Button>
-        </div>
+        </div> */}
       </div>
     </Container>
   );
