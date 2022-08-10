@@ -270,7 +270,7 @@ function CreateOrEditBurger({ data }) {
                         type="button"
                         onClick={(e) => handleDelete(e)}
                       >
-                        X
+                        <Trash />
                       </Button>
                     </div>
                   ))}
