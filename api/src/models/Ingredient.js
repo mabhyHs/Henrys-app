@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
+      imgUri: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
       isRepeat: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
