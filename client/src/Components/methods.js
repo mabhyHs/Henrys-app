@@ -42,6 +42,15 @@ export function isLoggedAdmin() {
   return isSession.role === 'admin';
 }
 
+export function isLoggedAdminEmployee() {
+    const isSession = isLogged();
+    if (!isSession) {
+      return undefined;
+    }
+  
+    return isSession.role !== 'customer';
+  }
+
 export async function postImageToCloudinary(e) {
   try {
     const files = e.target.files;
