@@ -53,7 +53,7 @@ function AdminPagination({
   }
 
   return (
-    <div>
+    <div className="mt-5 mb-4">
       {pages && pages.length > 0 && (
         <>
           <Button
