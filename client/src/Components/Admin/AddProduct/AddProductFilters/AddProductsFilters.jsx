@@ -184,14 +184,14 @@ function AddProductsFilters({ setFilter, filters }) {
           <Button
             onClick={handleOnChange}
             name="category"
-            value="ingredients"
+            value="ingredient"
             className={
-              filters.category === 'ingredients'
+              filters.category === 'ingredient'
                 ? 'filter__btn activeBtn'
                 : 'filter__btn'
             }
           >
-            Ingredientes{' '}
+            Ingredientes
           </Button>
 
           <Button
