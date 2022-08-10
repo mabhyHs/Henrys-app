@@ -7,7 +7,7 @@
 }
 
 .navEmployee__active {
-  color: var(--main-color-dark);
+  color: var(--main-color-light);
   font-weight: bolder;
 }
 
@@ -16,5 +16,13 @@
 }
 
 .navEmployee__active:hover {
+  color: var(--main-color-light) !important;
+}
+
+.navBar__employee:focus {
+  color: var(--main-color-light) !important;
+}
+
+.navEmployee__active:focus {
   color: var(--main-color-light) !important;
 }
