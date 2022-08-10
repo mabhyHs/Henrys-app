@@ -11,8 +11,6 @@ import {
   PersonCheckFill,
   PersonXFill,
   PencilSquare,
-  CaretLeftFill,
-  CaretRightFill,
 } from 'react-bootstrap-icons';
 
 import './AdminUsers.css';
@@ -21,7 +19,6 @@ import Swal from 'sweetalert2';
 
 function AdminUsers() {
   const [show, setShow] = useState(false);
-  const [page, setPage] = useState(1);
   const [rol, setRol] = useState('');
   const [id, setId] = useState('');
   const [filter, setFilter] = useState('');
@@ -47,33 +44,6 @@ function AdminUsers() {
   useEffect(() => {
     dispatch(getUser(token));
   }, [dispatch, token]);
-
-  function handlePage(e, page, filter) {
-    let query = '';
-    let role = '';
-    if (filter !== '/') {
-      role = '&rol=' + filter;
-      if (filter === 'active') {
-        role = '&active=true';
-      }
-      if (filter === 'inactive') {
-        role = '&active=false';
-      }
-    }
-    if (e.target.name === 'next') {
-      const newPage = page + 1;
-      if (page === users.pages) return;
-      setPage(newPage);
-      query = '?pag=' + newPage + role;
-      dispatch(getUser(token, query));
-    } else if (e.target.name === 'prev') {
-      const newPage = page - 1;
-      if (page === 1) return;
-      setPage(newPage);
-      query = '?pag=' + newPage + role;
-      dispatch(getUser(token, query));
-    }
-  }
 
   function handleRole(e) {
     setRol(e.target.value);
@@ -131,7 +101,6 @@ function AdminUsers() {
     else if (name === 'inactive') {
       query = '?active=false';
     }
-    setPage(1);
     setFilter(name);
     dispatch(getUser(token, query));
   }
