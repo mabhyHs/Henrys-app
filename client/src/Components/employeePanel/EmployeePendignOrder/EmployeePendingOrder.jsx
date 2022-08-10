@@ -15,7 +15,7 @@ function EmployeePendingOrder() {
   const dispatch = useDispatch();
   const [isSubmited, setSubmited] = useState(false);
   const session = useSelector((state) => state.loginState);
-  const orders = useSelector((state) => state.orders);
+  const orders = useSelector((state) => state.orders.filter(ord => ord.status === "Pendiente"));
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -78,71 +78,67 @@ function EmployeePendingOrder() {
             )}
             {orders &&
               orders?.map((ord, i) => (
-                <Fragment key={i}>
-                  {ord.status === 'Pendiente' && (
-                    <tr>
-                      <td>
-                        {new Date(ord.createdAt)
-                          .toString()
-                          .slice(
-                            0,
-                            new Date(ord.createdAt).toString().indexOf('GMT') -
-                              1
-                          )}
-                      </td>
-                      <td>
-                        {ord.customer[0].firstName +
-                          ' ' +
-                          ord.customer[0].lastName}
-                      </td>
-                      <td>
-                        <ul className="employee__ul">
-                          {ord.data.additional_info.items &&
-                            ord.data.additional_info.items.map((item, i) => (
-                              <li key={i}>
-                                <span className="employee__li__span">
-                                  {item.title}
-                                </span>
-                                <br />
-                                Cantidad: {item.quantity}
-                                <hr />
-                              </li>
-                            ))}
-                        </ul>
-                      </td>
-                      <td>
-                        {ord.data.metadata.note ? ord.data.metadata.note : ''}
-                      </td>
-                      <td>
-                        $ {ord.data.transaction_details.total_paid_amount}
-                      </td>
-                      <td>
-                        <Button variant="primary" onClick={handleShow}>
-                          Listo
+                <tr key={i}>
+                    <td>
+                    {new Date(ord.createdAt)
+                        .toString()
+                        .slice(
+                        0,
+                        new Date(ord.createdAt).toString().indexOf('GMT') -
+                            1
+                        )}
+                    </td>
+                    <td>
+                    {ord.customer[0].firstName +
+                        ' ' +
+                        ord.customer[0].lastName}
+                    </td>
+                    <td>
+                    <ul className="employee__ul">
+                        {ord.data.additional_info.items &&
+                        ord.data.additional_info.items.map((item, i) => (
+                            <li key={i}>
+                            <span className="employee__li__span">
+                                {item.title}
+                            </span>
+                            <br />
+                            Cantidad: {item.quantity}
+                            <hr />
+                            </li>
+                        ))}
+                    </ul>
+                    </td>
+                    <td>
+                    {ord.data.metadata.note ? ord.data.metadata.note : ''}
+                    </td>
+                    <td>
+                    $ {ord.data.transaction_amount}
+                    </td>
+                    <td>
+                    <Button variant="primary" onClick={handleShow}>
+                        Listo
+                    </Button>
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                        <Modal.Title>Confirmar Estado</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                        ¿Estás seguro de pasar éste pedido se encuentra
+                        listo?
+                        </Modal.Body>
+                        <Modal.Footer>
+                        <Button
+                            id={ord.purchaseId}
+                            onClick={handleSubmit}
+                            disabled={isSubmited}
+                            variant="primary"
+                        >
+                            Confirmar
                         </Button>
-                        <Modal show={show} onHide={handleClose}>
-                          <Modal.Header closeButton>
-                            <Modal.Title>Confirmar Estado</Modal.Title>
-                          </Modal.Header>
-                          <Modal.Body>
-                            ¿Estás seguro de pasar éste pedido se encuentra
-                            listo?
-                          </Modal.Body>
-                          <Modal.Footer>
-                            <Button
-                              id={ord.purchaseId}
-                              onClick={handleSubmit}
-                              disabled={isSubmited}
-                              variant="primary"
-                            >
-                              Confirmar
-                            </Button>
-                          </Modal.Footer>
-                        </Modal>
-                      </td>
-                    </tr>
-                  )}
-                </Fragment>
+                        </Modal.Footer>
+                    </Modal>
+                    </td>
+                </tr>
               ))}
           </tbody>
         </Table>
