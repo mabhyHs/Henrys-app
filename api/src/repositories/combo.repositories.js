@@ -1,5 +1,6 @@
 const { Combo } = require("../models");
 const { Op } = require("sequelize");
+const { isUUIDV4 } = require("../utils/utils");
 
 async function create(data) {
   const combo = await Combo.create(data);
@@ -12,6 +13,9 @@ async function create(data) {
 }
 
 async function getById(id) {
+
+  if(!isUUIDV4(id)) return;
+
   const combo = await Combo.findByPk(id, {
     paranoid: false,
     include: [
