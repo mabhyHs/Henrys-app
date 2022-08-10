@@ -21,6 +21,10 @@ export function setImgIngredientErr(e) {
     setImgError(e, "https://res.cloudinary.com/henrysburgers/image/upload/v1660149793/notfound/ingredientsNotFound_m28xnn.png");
 }
 
+export function setImgUserErr(e) {
+    setImgError(e, imgProductErr);
+}
+
 export function isLogged() {
   const { isAuthenticated } = useAuth0();
 
