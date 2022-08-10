@@ -57,10 +57,11 @@ function AdminPagination({
       {pages && pages.length > 0 && (
         <>
           <Button
+            variant="secondary"
             className={
               !isItemFirst()
-                ? 'btn__round__effect'
-                : 'btn__round__effect disablePag'
+                ? 'btn__admin__effect '
+                : 'btn__admin__effect  disablePagAdmin'
             }
             type="button"
             onClick={prevPage}
@@ -73,6 +74,7 @@ function AdminPagination({
       {pages &&
         pages.map((page) => (
           <Button
+            variant="secondary"
             type="button"
             id={page}
             value={page}
@@ -80,8 +82,8 @@ function AdminPagination({
             onClick={(e) => changePaginate(e.target.id)}
             className={
               isItemSelect(page)
-                ? 'btn__round__effect currentPag'
-                : 'btn__round__effect '
+                ? 'btn__admin__effect  currentPag'
+                : 'btn__admin__effect  '
             }
           >
             {page}
@@ -91,10 +93,11 @@ function AdminPagination({
       {pages && pages.length > 0 && (
         <>
           <Button
+            variant="secondary"
             className={
               !isItemLast()
-                ? 'btn__round__effect'
-                : 'btn__round__effect disablePag'
+                ? 'btn__admin__effect '
+                : 'btn__admin__effect  disablePagAdmin'
             }
             type="button"
             onClick={nextPage}

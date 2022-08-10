@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { PencilSquare } from 'react-bootstrap-icons';
+import { PencilSquare, Trash, ArrowClockwise } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
@@ -34,17 +34,24 @@ function ProductCardAdmin({ data, isDeleted }) {
         variant="top"
         src={data.imgUri}
         className="adminProductHome__card__img"
-        onError={(e)=> setImgProductHomeErr(e)}
+        onError={(e) => setImgProductHomeErr(e)}
       />
       <Card.Body className="adminProductHome__cardBody">
         <Card.Title className="adminProductHome__cardTittle">
           {data.name}
         </Card.Title>
-        {isDeleted &&    
+        <div className="productCard__buttons">
+          {isDeleted && (
             <Button onClick={redirect} variant="secondary">
-                <PencilSquare />
-            </Button>}
-        {data.type !== "burgerBase" && <button onClick={onDelete}>{isDeleted ? 'Borrar' : 'Restaurar'}</button>}
+              <PencilSquare />
+            </Button>
+          )}
+          {data.type !== 'burgerBase' && (
+            <Button onClick={onDelete} variant="secondary">
+              {isDeleted ? <Trash /> : <ArrowClockwise />}
+            </Button>
+          )}
+        </div>
       </Card.Body>
     </Card>
   );
