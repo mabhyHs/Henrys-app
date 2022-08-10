@@ -7,6 +7,7 @@ import AdminPagination from '../AdminPagination/AdminPagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProduct } from '../../../../Redux/actions/actions';
 import './AddProductHome.css';
+import ErrorNoResults from '../../../ErrorNoResults/ErrorNoResults';
 
 function AddProductHome() {
   const dispatch = useDispatch();
@@ -75,10 +76,14 @@ function AddProductHome() {
         <h2>Gestioná tus productos</h2>
         <AddProductsFilters setFilter={setFilter} filters={filters} />
         <AdminSearchBarProduct setFilter={setFilter} />
-        <ProductsCardAdminContainer
-          currentProduct={currentProduct}
-          isDeleted={!filters.isDeleted.length}
-        />
+        {!currentProduct.length && <ErrorNoResults />}
+        {currentProduct.length > 0 && (
+          <ProductsCardAdminContainer
+            currentProduct={currentProduct}
+            isDeleted={!filters.isDeleted.length}
+          />
+        )}
+
         <AdminPagination
           burgersPerPage={burgersPerPage}
           allProducts={allProducts.length}

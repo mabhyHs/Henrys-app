@@ -195,7 +195,7 @@ export function getIngredients() {
     }
   };
 }
-export function getProductById(id) {
+export function getProductById(id, setloading) {
   return async function (dispatch) {
     const json = await axios('/products/' + id);
     try {
@@ -205,6 +205,8 @@ export function getProductById(id) {
       });
     } catch (error) {
       console.log(error);
+    } finally {
+      setloading(false);
     }
   };
 }
@@ -449,21 +451,20 @@ export function restoreProduct(id, producto) {
 }
 
 export function setOrders() {
-    return async function (dispatch) {  
-        
-        try {
-            const orders = await axios.get("/orders", {
-                headers: {
-                'auth-token': JSON.parse(localStorage.getItem('user')).token,
-                },
-            });
+  return async function (dispatch) {
+    try {
+      const orders = await axios.get('/orders', {
+        headers: {
+          'auth-token': JSON.parse(localStorage.getItem('user')).token,
+        },
+      });
 
-            return dispatch({
-              type: SET_ORDERS,
-              payload: orders.data,
-            });
-        } catch (error) {
-            console.log(error)
-        }
-    };
-  }
+      return dispatch({
+        type: SET_ORDERS,
+        payload: orders.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}

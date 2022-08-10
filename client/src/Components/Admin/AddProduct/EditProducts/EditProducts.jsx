@@ -1,11 +1,9 @@
-import { React, useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import {
-  clearState,
-  getProductById,
-} from '../../../../Redux/actions/actions';
+import { clearState, getProductById } from '../../../../Redux/actions/actions';
 import NotFound from '../../../NotFound/NotFound';
+import Loading from '../../../Loading/Loading';
 import CreateOrEditBeverage from '../AddProductViews/CreateOrEditBeverage/CreateOrEditBeverage';
 import CreateOrEditBurger from '../AddProductViews/CreateOrEditBurger/CreateOrEditBurger';
 import CreateOrEditBurgerBase from '../AddProductViews/CreateOrEditBurgerBase/CreateOrEditBurgerBase';
@@ -16,15 +14,20 @@ function EditProducts() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const product = useSelector((state) => state.productDetail);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getProductById(id));
+    dispatch(getProductById(id, setLoading));
     return () => {
       dispatch(clearState());
     };
   }, [dispatch, id]);
 
-  if(!product.type || product.deletedAt){
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (!product.type || product.deletedAt) {
     return <NotFound />;
   }
 
@@ -34,7 +37,9 @@ function EditProducts() {
       {product.type === 'fries' && <CreateOrEditFries data={product} />}
       {product.type === 'beverages' && <CreateOrEditBeverage data={product} />}
       {product.type === 'combos' && <CreateOrEditCombo data={product} />}
-      {product.type === 'burgerBase' && <CreateOrEditBurgerBase data={product} />}
+      {product.type === 'burgerBase' && (
+        <CreateOrEditBurgerBase data={product} />
+      )}
     </div>
   );
 }
