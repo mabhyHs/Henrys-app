@@ -8,7 +8,7 @@ import {
   deleteProduct,
   restoreProduct,
 } from '../../../../Redux/actions/actions';
-import { setImgProductHomeErr } from '../../../methods';
+import { setImgIngredientErr, setImgProductHomeErr } from '../../../methods';
 
 import './ProductCardAdmin.css';
 
@@ -34,7 +34,7 @@ function ProductCardAdmin({ data, isDeleted }) {
         variant="top"
         src={data.imgUri}
         className="adminProductHome__card__img"
-        onError={(e) => setImgProductHomeErr(e)}
+        onError={data.type === "ingredients" ? (e) => setImgIngredientErr(e) : (e) => setImgProductHomeErr(e)}
       />
       <Card.Body className="adminProductHome__cardBody">
         <Card.Title className="adminProductHome__cardTittle">
