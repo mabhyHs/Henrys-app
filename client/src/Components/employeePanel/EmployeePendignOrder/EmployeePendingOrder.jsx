@@ -81,7 +81,15 @@ function EmployeePendingOrder() {
                 <Fragment key={i}>
                   {ord.status === 'Pendiente' && (
                     <tr>
-                      <td>{ord.createdAt}</td>
+                      <td>
+                        {new Date(ord.createdAt)
+                          .toString()
+                          .slice(
+                            0,
+                            new Date(ord.createdAt).toString().indexOf('GMT') -
+                              1
+                          )}
+                      </td>
                       <td>
                         {ord.customer[0].firstName +
                           ' ' +

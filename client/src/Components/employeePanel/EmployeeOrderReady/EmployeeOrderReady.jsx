@@ -46,7 +46,15 @@ function EmployeeOrderReady() {
                 <Fragment key={i}>
                   {ord.status === 'Listo' && (
                     <tr>
-                      <td>{ord.createdAt}</td>
+                      <td>
+                        {new Date(ord.createdAt)
+                          .toString()
+                          .slice(
+                            0,
+                            new Date(ord.createdAt).toString().indexOf('GMT') -
+                              1
+                          )}
+                      </td>
                       <td>
                         {ord.customer[0].firstName +
                           ' ' +
