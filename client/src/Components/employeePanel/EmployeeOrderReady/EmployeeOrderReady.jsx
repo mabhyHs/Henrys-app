@@ -8,7 +8,8 @@ import { GiPartyPopper } from 'react-icons/gi';
 import './EmployeeOrderReady.css';
 
 function EmployeeOrderReady() {
-  const orders = useSelector((state) => state.orders);
+
+  const orders = useSelector((state) => state.orders.filter(ord => ord.status === "Listo"));
 
   return (
     <div className="employee__pending__container mt-5">
@@ -43,48 +44,44 @@ function EmployeeOrderReady() {
             )}
             {orders &&
               orders?.map((ord, i) => (
-                <Fragment key={i}>
-                  {ord.status === 'Listo' && (
-                    <tr>
-                      <td>
-                        {new Date(ord.createdAt)
-                          .toString()
-                          .slice(
-                            0,
-                            new Date(ord.createdAt).toString().indexOf('GMT') -
-                              1
-                          )}
-                      </td>
-                      <td>
-                        {ord.customer[0].firstName +
-                          ' ' +
-                          ord.customer[0].lastName}
-                      </td>
-                      <td>
-                        <ul className="employee__ul">
-                          {ord.data.additional_info.items &&
-                            ord.data.additional_info.items.map((item, i) => (
-                              <li key={i}>
-                                <span className="employee__li__span">
-                                  {item.title}
-                                </span>
-                                <br />
-                                Cantidad: {item.quantity}
-                                <hr />
-                              </li>
-                            ))}
-                        </ul>
-                      </td>
-                      <td>
-                        {ord.data.metadata.note ? ord.data.metadata.note : ''}
-                      </td>
-                      <td>
-                        $ {ord.data.transaction_details.total_paid_amount}
-                      </td>
-                      <td>{ord.employee ? ord.employee : ''}</td>
-                    </tr>
-                  )}
-                </Fragment>
+                <tr key={i}>
+                    <td>
+                    {new Date(ord.createdAt)
+                        .toString()
+                        .slice(
+                        0,
+                        new Date(ord.createdAt).toString().indexOf('GMT') -
+                            1
+                        )}
+                    </td>
+                    <td>
+                    {ord.customer[0].firstName +
+                        ' ' +
+                        ord.customer[0].lastName}
+                    </td>
+                    <td>
+                    <ul className="employee__ul">
+                        {ord.data.additional_info.items &&
+                        ord.data.additional_info.items.map((item, i) => (
+                            <li key={i}>
+                            <span className="employee__li__span">
+                                {item.title}
+                            </span>
+                            <br />
+                            Cantidad: {item.quantity}
+                            <hr />
+                            </li>
+                        ))}
+                    </ul>
+                    </td>
+                    <td>
+                    {ord.data.metadata.note ? ord.data.metadata.note : ''}
+                    </td>
+                    <td>
+                    $ {ord.data.transaction_amount}
+                    </td>
+                    <td>{ord.employee ? ord.employee : ''}</td>
+                </tr>
               ))}
           </tbody>
         </Table>

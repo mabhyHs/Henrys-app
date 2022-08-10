@@ -264,14 +264,14 @@ function CreateOrEditBurger({ data }) {
                   selectIngredient.map((e) => (
                     <div key={e.id} className="editOrCreate__productCard">
                       <p>{e.name}</p>
-                      <button
+                      <Button
                         className="editOrCreate__btnDelete"
                         value={e.name}
                         type="button"
                         onClick={(e) => handleDelete(e)}
                       >
-                        <Trash />
-                      </button>
+                        X
+                      </Button>
                     </div>
                   ))}
               </div>

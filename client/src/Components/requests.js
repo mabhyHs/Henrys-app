@@ -8,7 +8,8 @@ import Swal from "sweetalert2";
         !product === "fries" || 
         !product === "combos" || 
         !product === "beverages" || 
-        !product === "burgerBase"
+        !product === "burgerBase" ||
+        !product === "ingredients"
     ){
         throw new Error("Error al crear el producto!")
     }
@@ -28,8 +29,8 @@ export async function updateProduct(product, data) {
         !product === "burgers" || 
         !product === "fries" || 
         !product === "combos" || 
-        !product === "beverages" || 
-        !product === "burgerBase"
+        !product === "beverages" ||
+        !product === "ingredients"
     ){
         throw new Error("Error al modificar el producto!")
     }
