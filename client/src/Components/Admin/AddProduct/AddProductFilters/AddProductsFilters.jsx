@@ -38,6 +38,10 @@ function AddProductsFilters({ setFilter, filters }) {
     navigate('/adminCreateFries');
   };
 
+  const creaIngredient = () => {
+    navigate('/adminCreateIngredient');
+  };
+
   return (
     <Container>
       <div className="m-3 order__container">
@@ -90,8 +94,7 @@ function AddProductsFilters({ setFilter, filters }) {
               Papas
             </Button>
             <Button
-              as={Link}
-              to="/adminCreateIngredient"
+              onClick={creaIngredient}
               className="btn__modal__create"
               variant="secondary"
             >

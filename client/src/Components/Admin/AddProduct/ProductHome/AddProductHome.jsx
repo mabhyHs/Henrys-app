@@ -25,7 +25,8 @@ function AddProductHome() {
     search: '',
     isVeggie: '',
     isDeleted: '',
-    isBase: 'true',
+    addBase: 'true',
+    addIngredient: 'true',
   });
 
   function setFilter(name, value) {
@@ -51,7 +52,8 @@ function AddProductHome() {
           filters.search,
           filters.isVeggie,
           filters.isDeleted,
-          filters.isBase
+          filters.addBase,
+          filters.addIngredient
         )
       );
       mount.current = true;
@@ -64,7 +66,8 @@ function AddProductHome() {
           filters.search,
           filters.isVeggie,
           filters.isDeleted,
-          filters.isBase
+          filters.addBase,
+          filters.addIngredient
         )
       );
     }
