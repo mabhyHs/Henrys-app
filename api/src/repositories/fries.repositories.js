@@ -8,17 +8,17 @@ async function create(data) {
 }
 
 async function getById(id) {
+  if (!isUUIDV4(id)) return;
 
-  if(!isUUIDV4(id)) return;
-
-  const fries = await Fries.findByPk(id, {paranoid: false});
+  const fries = await Fries.findByPk(id, { paranoid: false });
   return fries;
 }
 
 async function getAll() {
-  const fries = await Fries.findAll({paranoid: false}, {order: [
-    ['name', 'ASC'],
-]});
+  const fries = await Fries.findAll(
+    { paranoid: false },
+    { order: [["name", "ASC"]] }
+  );
   return fries;
 }
 
@@ -27,13 +27,13 @@ async function getByQuery(queries) {
     return await getAll();
   }
 
-  const fries = await Fries.findAll({ 
-        where: queries,
-        paranoid: false, 
-        order: [ ['name', 'ASC'] ]
-    });
-    
-    return fries;
+  const fries = await Fries.findAll({
+    where: queries,
+    paranoid: false,
+    order: [["name", "ASC"]],
+  });
+
+  return fries;
 }
 
 async function getByName(name) {
@@ -64,6 +64,15 @@ async function restore(id) {
   return fries;
 }
 
+async function getAssociations(id) {
+  const fries = await Fries.findByPk(id, {
+    include: {
+      association: "combo",
+    },
+  });
+  return fries;
+}
+
 module.exports = {
   create,
   getById,
@@ -73,4 +82,5 @@ module.exports = {
   destroy,
   update,
   restore,
+  getAssociations,
 };

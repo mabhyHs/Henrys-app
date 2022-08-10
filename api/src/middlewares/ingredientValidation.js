@@ -53,10 +53,14 @@ const idValid = param("id")
     const result = await ingredientRepository.getAssociations(id);
     // console.log(result.burger.length);
     if (result.burger.length) {
-      throw new Error("ingredient has burgers associated");
+      throw new Error(
+        "No se puede eliminar porque hay un producto que lo está usando!"
+      );
     }
   })
-  .withMessage("ingredient has burgers associated");
+  .withMessage(
+    "No se puede eliminar porque hay un producto que lo está usando!"
+  );
 
 const roleValid = body("user")
   .custom(async (user) => {

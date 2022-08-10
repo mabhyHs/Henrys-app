@@ -5,7 +5,7 @@ const { friesRoles, authRoute } = require("../utils/routesRoles");
 
 const nameValid = body("name")
   .notEmpty()
-  .withMessage("name is required")  
+  .withMessage("name is required")
   .custom(async (name, { req }) => {
     const result = await friesRepository.getByName(name);
 
@@ -57,6 +57,29 @@ const roleValid = body("user")
   })
   .withMessage("This user is unauthorized");
 
+const idValid = param("id")
+  .notEmpty()
+  .withMessage("id required")
+  .custom(async (id) => {
+    const result = await friesRepository.getById(id);
+    if (!result) {
+      throw new Error("id invalid");
+    }
+  })
+  .withMessage("id invalid")
+  .custom(async (id) => {
+    const result = await friesRepository.getAssociations(id);
+    // console.log(result.burger.length);
+    if (result.combo.length) {
+      throw new Error(
+        "No se puede eliminar porque hay un producto que lo está usando!"
+      );
+    }
+  })
+  .withMessage(
+    "No se puede eliminar porque hay un producto que lo está usando!"
+  );
+
 const postValidator = [
   nameValid,
   priceValid,
@@ -73,10 +96,13 @@ const putValidator = [
   sizeValid,
 ];
 
+deleteValidator = [idValid];
+
 const roleValidator = [roleValid];
 
 module.exports = {
   postValidator,
   putValidator,
   roleValidator,
+  deleteValidator,
 };

@@ -8,28 +8,31 @@ async function create(data) {
 }
 
 async function getById(id) {
-
-  if(isUUIDV4(id)) return;
+  if (isUUIDV4(id)) return;
 
   const ingredient = await Ingredient.findByPk(id);
   return ingredient;
 }
 
 async function getAll() {
-  const ingredient = await Ingredient.findAll({paranoid: false}, {order: [
-    ['name', 'ASC'],
-    ]});
-  return ingredient ;
+  const ingredient = await Ingredient.findAll(
+    { paranoid: false },
+    { order: [["name", "ASC"]] }
+  );
+  return ingredient;
 }
 
 async function getByQuery(queries) {
-    if (!queries) {
-      return await getAll();
-    }
-  
-    const ingredient = await Ingredient.findAll({ where: queries, paranoid: false });
-    return ingredient;
+  if (!queries) {
+    return await getAll();
   }
+
+  const ingredient = await Ingredient.findAll({
+    where: queries,
+    paranoid: false,
+  });
+  return ingredient;
+}
 
 async function getByName(name) {
   const ingredient = await Ingredient.findOne({
@@ -44,7 +47,6 @@ async function getAssociations(id) {
       association: "burger",
     },
   });
-  console.log(ingredient);
   return ingredient;
 }
 

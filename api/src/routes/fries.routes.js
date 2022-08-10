@@ -9,6 +9,7 @@ const {
   postValidator,
   putValidator,
   roleValidator,
+  deleteValidator,
 } = require("../middlewares/friesValidation");
 const validationResultHandler = require("../middlewares/validationResultHandler");
 const verifyToken = require("../middlewares/tokenValidation");
@@ -23,7 +24,14 @@ router.post(
   validationResultHandler,
   create
 );
-router.delete("/:id", verifyToken, roleValidator, destroy);
+router.delete(
+  "/:id",
+  verifyToken,
+  roleValidator,
+  deleteValidator,
+  validationResultHandler,
+  destroy
+);
 router.post("/:id", verifyToken, roleValidator, restore);
 router.put(
   "/",
