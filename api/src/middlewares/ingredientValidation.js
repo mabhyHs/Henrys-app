@@ -19,14 +19,6 @@ const nameValid = body("name")
   })
   .withMessage("ingredient already exists");
 
-// .custom(async (name) => {
-//   const result = await ingredientRepository.getByName(name);
-//   if (result) {
-//     throw new Error("ingredient already exists");
-//   }
-// })
-// .withMessage("ingredient already exists");
-
 const priceValid = body("price")
   .notEmpty()
   .withMessage("price is required")
@@ -47,16 +39,15 @@ const idValid = param("id")
     if (!result) {
       throw new Error("id invalid");
     }
-  })
+  })/* 
   .withMessage("id invalid")
   .custom(async (id) => {
     const result = await ingredientRepository.getAssociations(id);
-    // console.log(result.burger.length);
     if (result.burger.length) {
       throw new Error("ingredient has burgers associated");
     }
   })
-  .withMessage("ingredient has burgers associated");
+  .withMessage("ingredient has burgers associated"); */
 
 const roleValid = body("user")
   .custom(async (user) => {
