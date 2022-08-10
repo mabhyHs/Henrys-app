@@ -59,8 +59,8 @@ async function getAllAdmin(pag, rol, confirmed, active) {
   let { count, rows } = await User.findAndCountAll({
     where,
     paranoid: false,
-    limit: 10,
-    offset: (pag - 1) * 10,
+    // limit: 10,
+    // offset: (pag - 1) * 10,
   });
   rows = rows.map((e) => {
     e.password = undefined;
