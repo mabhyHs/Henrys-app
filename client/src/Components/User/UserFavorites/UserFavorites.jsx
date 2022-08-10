@@ -17,6 +17,7 @@ function UserFavorites() {
   const favoritosId = useSelector((state) => state.favorites);
 
   useEffect(() => {
+    setScrollToTop();
     const user = JSON.parse(window.localStorage.getItem('user'));
     if (user) {
       setLoading(true);
@@ -24,6 +25,10 @@ function UserFavorites() {
     }
   }, [dispatch]);
 
+  function setScrollToTop() {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }
+  
   return (
     <Container>
       <div className="userFav__container mb-5">

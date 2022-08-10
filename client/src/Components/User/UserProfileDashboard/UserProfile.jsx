@@ -8,11 +8,20 @@ import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import './UserProfile.css';
+import { useEffect } from 'react';
 
 function UserProfileDashboard() {
   const dispatch = useDispatch();
   const sesionInfo = useSelector((state) => state.loginState);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setScrollToTop();
+  }, []);
+
+  function setScrollToTop() {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }
 
   async function uploadImage(e) {
     try {
