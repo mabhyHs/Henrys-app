@@ -10,10 +10,18 @@ export function setImgError(e, img) {
 }
 
 export function setImgProductErr(e) {
-    setImgError(e, imgProductErr);
+    setImgError(e, "https://res.cloudinary.com/henrysburgers/image/upload/v1660149792/notfound/producImgNotfound_hcjo02.png");
 }
 
 export function setImgProductHomeErr(e) {
+    setImgError(e, "https://res.cloudinary.com/henrysburgers/image/upload/v1660149792/notfound/producImgNotfound_hcjo02.png");
+}
+
+export function setImgIngredientErr(e) {
+    setImgError(e, "https://res.cloudinary.com/henrysburgers/image/upload/v1660149793/notfound/ingredientsNotFound_m28xnn.png");
+}
+
+export function setImgUserErr(e) {
     setImgError(e, imgProductErr);
 }
 

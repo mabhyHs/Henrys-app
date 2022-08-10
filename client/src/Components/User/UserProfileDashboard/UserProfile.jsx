@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLoginState } from '../../../Redux/actions/actions';
-import { postAndUpdateImg } from '../../methods';
+import { postAndUpdateImg, setImgUserErr } from '../../methods';
 import { ArrowRightCircleFill, EmojiSunglasses } from 'react-bootstrap-icons';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import './UserProfile.css';
-import { useEffect } from 'react';
 
 function UserProfileDashboard() {
   const dispatch = useDispatch();
@@ -66,6 +65,7 @@ function UserProfileDashboard() {
               {sesionInfo.imgUri ? (
                 <img
                   src={sesionInfo.imgUri}
+                  onError={setImgUserErr}
                   alt="foto de perfil"
                   className="profile__mainCard__userPicture"
                 />
