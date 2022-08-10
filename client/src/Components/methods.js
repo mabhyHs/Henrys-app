@@ -48,7 +48,7 @@ export function isLoggedAdminEmployee() {
       return undefined;
     }
   
-    return isSession.role !== 'customer';
+    return isSession.role !== 'customer'; 
   }
 
 export async function postImageToCloudinary(e) {
