@@ -105,7 +105,7 @@ function CreateOrEditIngredients({ data }) {
 
   return (
     <Container className="mb-5">
-      <h2>Editar Ingrediente</h2>
+      <h2>{edit ? 'Editar Ingrediente' : 'Crear Ingrediente'}</h2>
       <hr />
       <div className="editIngredients__container">
         <img
@@ -152,10 +152,8 @@ function CreateOrEditIngredients({ data }) {
             <Form.Group as={Col} controlId="formGridsize">
               <Form.Label>¿Se puede repetir? *</Form.Label>
               <Form.Select onChange={onChange} name="isRepeat" value={input.isRepeat}>
-                <option value={false} defaultValue>
-                  No
-                </option>
-                <option value={true}>Si</option>
+                <option value={true} defaultValue>Si</option>
+                <option value={false}>No</option>
               </Form.Select>
             </Form.Group>
             <Form.Group as={Col} controlId="formGridVegan">
