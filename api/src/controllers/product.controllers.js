@@ -4,6 +4,7 @@ const friesRepository = require("../repositories/fries.repositories");
 const beverageRepository = require("../repositories/beverage.repositories");
 const productRepository = require("../repositories/product.repositories");
 const burgerBaseRepository = require("../repositories/burgerBase.repositories");
+const ingredientRepository = require("../repositories/ingredient.repositories");
 const utils = require("../utils/utils");
 
 async function getById(req, res, next) {
@@ -30,12 +31,13 @@ async function getByQuery(req, res, next) {
     const isVeggie = req.query.isVeggie ? req.query.isVeggie.toLowerCase() : req.query.isVeggie;
     const order = req.query.order ? req.query.order.toLowerCase() : req.query.order;
     const isDeleted = req.query.isDeleted ? "true" : "false";
-    const isBase = req.query.isBase ? "true" : "false";
+    const addBase = req.query.addBase ? "true" : "false";
+    const addIngredient = req.query.addIngredient ? "true" : "false";
     const filters = utils.setFilters({isVeggie, name, isDeleted});
     let products = [];
 
     if(!category){
-        const all = await productRepository.getByQuery(filters, isBase);     
+        const all = await productRepository.getByQuery(filters, addBase, addIngredient);     
         products = [...all];
     }    
     else if(category === "burgers"){
@@ -61,6 +63,10 @@ async function getByQuery(req, res, next) {
     else if(category === "burgerbase"){
         const burgerBase = await burgerBaseRepository.getByQuery(filters);
         products = [...burgerBase];
+    }
+    else if(category === "ingredient"){
+        const ingredient = await ingredientRepository.getByQuery(filters);
+        products = [...ingredient];
     }
 
         if(order){

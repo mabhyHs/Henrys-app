@@ -1,5 +1,6 @@
 const { Burger } = require("../models");
 const { Op } = require("sequelize");
+const { isUUIDV4 } = require("../utils/utils");
 
 async function create(data) {
   const burger = await Burger.create(data);
@@ -10,6 +11,9 @@ async function create(data) {
 }
 
 async function getById(id) {
+
+  if(!isUUIDV4(id)) return;
+
   const burger = await Burger.findByPk(id, {
     paranoid: false,
     include: [
