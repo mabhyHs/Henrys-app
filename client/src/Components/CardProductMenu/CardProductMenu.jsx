@@ -1,3 +1,4 @@
+/* eslint-disable no-unneeded-ternary */
 import React from 'react';
 import { addFavorites, removeFavorites } from '../../Redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +10,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
 import './CardProductMenu.css';
+import { setImgProductHomeErr } from '../methods';
 
 function CardProductMenu({ id, name, price, imgUri, addToCart }) {
   const navigate = useNavigate();
@@ -57,7 +59,12 @@ function CardProductMenu({ id, name, price, imgUri, addToCart }) {
           <HeartFill className="cardMenu__favorite__Svg " />
         )}
       </Button>
-      <Card.Img variant="top" src={imgUri} className="card__img__menu" />
+      <Card.Img
+        variant="top"
+        src={imgUri ? imgUri : ''}
+        onError={setImgProductHomeErr}
+        className="card__img__menu"
+      />
       <Card.Body className="card__menu__body">
         <Card.Title>
           <p>{name}</p>
