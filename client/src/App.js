@@ -23,7 +23,7 @@ import UserPurchase from './Components/User/UserPurchase/UserPurchase';
 import AdminDashboard from './Components/Admin/Dashboard/AdminDashboard';
 import SendNewsletter from './Components/Admin/SendNewsletter/SendNewsletter';
 
-import { isLogged, isLoggedAdmin } from './Components/methods';
+import { isLogged, isLoggedAdmin, isLoggedAdminEmployee } from './Components/methods';
 import MercadoPago from './Components/ShoppingCart/mercadoPago/MercadoPago';
 import AddProductHome from './Components/Admin/AddProduct/ProductHome/AddProductHome';
 import ReviewsContainer from './Components/ReviewsContainer/ReviewsContainer';
@@ -47,6 +47,7 @@ import './App.css';
 function App() {
   const isSession = isLogged();
   const isSessionAdmin = isLoggedAdmin();
+  const isSessionAdminEmployee = isLoggedAdminEmployee();
 
   return (
     <div className="App">
@@ -171,12 +172,13 @@ function App() {
         />
 
         {/* EMPLOYEE ROUTES */}
-        <Route path="/employeehome" element={<EmployeeHome />} />
+        <Route path="/employeehome" element={isSessionAdminEmployee ? <EmployeeHome /> : <Navigate to="/" />} />
         <Route
           path="/employeependingorders"
-          element={<EmployeePendingOrder />}
+          element={isSessionAdminEmployee ? <EmployeePendingOrder /> : <Navigate to="/" />}
         />
-        <Route path="/employeeordersready" element={<EmployeeOrderReady />} />
+        <Route path="/employeeordersready" element={isSessionAdminEmployee ? <EmployeeOrderReady /> : <Navigate to="/" />} />
+
       </Routes>
       <Footer />
     </div>
