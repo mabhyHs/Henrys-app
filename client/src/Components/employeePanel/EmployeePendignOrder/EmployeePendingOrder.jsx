@@ -5,41 +5,43 @@ import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import { MdPendingActions } from 'react-icons/md';
-import './EmployeePendingOrder.css';
+import { GiPartyPopper } from 'react-icons/gi';
 import { setStateOrder } from '../../requests';
 import { setOrders } from '../../../Redux/actions/actions';
 
-function EmployeePendingOrder() {
+import './EmployeePendingOrder.css';
 
+function EmployeePendingOrder() {
   const dispatch = useDispatch();
   const [isSubmited, setSubmited] = useState(false);
-  const session = useSelector(state => state.loginState);
-  const orders = useSelector(state => state.orders);
+  const session = useSelector((state) => state.loginState);
+  const orders = useSelector((state) => state.orders);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  async function handleSubmit(e){
+  async function handleSubmit(e) {
     try {
-        setSubmited(true);
-        const data = {status: "Listo", employee: session.firstName + " " + session.lastName}
-        await setStateOrder(e.target.id, data);
+      setSubmited(true);
+      const data = {
+        status: 'Listo',
+        employee: session.firstName + ' ' + session.lastName,
+      };
+      await setStateOrder(e.target.id, data);
 
-        let updateData = [];
+      let updateData = [];
 
-        for(let i=0; i<orders.length; i++){
-            if(orders[i].id !== e.target.id){
-                updateData.push(orders[i]);
-            }
+      for (let i = 0; i < orders.length; i++) {
+        if (orders[i].id !== e.target.id) {
+          updateData.push(orders[i]);
         }
+      }
 
-        dispatch(setOrders(updateData));
-
+      dispatch(setOrders(updateData));
     } catch (error) {
-        
-    } finally{
-        setSubmited(false);
-        handleClose();
+    } finally {
+      setSubmited(false);
+      handleClose();
     }
   }
 
@@ -63,45 +65,77 @@ function EmployeePendingOrder() {
             </tr>
           </thead>
           <tbody>
-            {orders && orders?.map((ord, i) => 
-            
-            <Fragment key={i}>
-            {ord.status === "Pendiente" && 
-            <tr >
-              <td>{ord.createdAt}</td>
-              <td>{ord.customer[0].firstName + " " + ord.customer[0].lastName}</td>
-              <td>
-                <ul className="employee__ul">
-                    {ord.data.additional_info.items && ord.data.additional_info.items.map((item, i)=> 
-                       <li key={i}>
-                       <span className="employee__li__span">{item.title}</span>
-                       <br />
-                       Cantidad: {item.quantity}
-                       <hr />
-                     </li>)}                  
-                </ul>
-              </td>
-              <td>{ord.data.metadata.note ? ord.data.metadata.note : ""}</td>
-              <td>$ {ord.data.transaction_details.total_paid_amount}</td>
-              <td>
-                <Button variant="primary" onClick={handleShow}>
-                  Listo
-                </Button>
-                <Modal show={show} onHide={handleClose}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Confirmar Estado</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    ¿Estás seguro de pasar éste pedido se encuentra listo?
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button id={ord.purchaseId} onClick={handleSubmit} disabled={isSubmited} variant="primary">Confirmar</Button>
-                  </Modal.Footer>
-                </Modal>
-              </td>
-            </tr>}
-            </Fragment>
-                )}            
+            {!orders.length && (
+              <tr>
+                <td colSpan={6} className="pt-5 pb-5">
+                  <h2>
+                    <GiPartyPopper className="giPartyPopper" /> ¡Felicitaciones!
+                    <GiPartyPopper className="giPartyPopper" />
+                  </h2>
+                  <p>No hay órdenes pendientes para preparar.</p>
+                </td>
+              </tr>
+            )}
+            {orders &&
+              orders?.map((ord, i) => (
+                <Fragment key={i}>
+                  {ord.status === 'Pendiente' && (
+                    <tr>
+                      <td>{ord.createdAt}</td>
+                      <td>
+                        {ord.customer[0].firstName +
+                          ' ' +
+                          ord.customer[0].lastName}
+                      </td>
+                      <td>
+                        <ul className="employee__ul">
+                          {ord.data.additional_info.items &&
+                            ord.data.additional_info.items.map((item, i) => (
+                              <li key={i}>
+                                <span className="employee__li__span">
+                                  {item.title}
+                                </span>
+                                <br />
+                                Cantidad: {item.quantity}
+                                <hr />
+                              </li>
+                            ))}
+                        </ul>
+                      </td>
+                      <td>
+                        {ord.data.metadata.note ? ord.data.metadata.note : ''}
+                      </td>
+                      <td>
+                        $ {ord.data.transaction_details.total_paid_amount}
+                      </td>
+                      <td>
+                        <Button variant="primary" onClick={handleShow}>
+                          Listo
+                        </Button>
+                        <Modal show={show} onHide={handleClose}>
+                          <Modal.Header closeButton>
+                            <Modal.Title>Confirmar Estado</Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            ¿Estás seguro de pasar éste pedido se encuentra
+                            listo?
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <Button
+                              id={ord.purchaseId}
+                              onClick={handleSubmit}
+                              disabled={isSubmited}
+                              variant="primary"
+                            >
+                              Confirmar
+                            </Button>
+                          </Modal.Footer>
+                        </Modal>
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
+              ))}
           </tbody>
         </Table>
       </Container>
