@@ -12,6 +12,8 @@ import Row from 'react-bootstrap/esm/Row';
 import Form from 'react-bootstrap/esm/Form';
 import { postImageToCloudinary } from '../../../methods';
 import Button from 'react-bootstrap/Button';
+import { Trash } from 'react-bootstrap-icons';
+
 import './CouponUpdate.css';
 
 function CouponUpdate({ couponToEdit, setIsEditing }) {
@@ -360,13 +362,14 @@ function CouponUpdate({ couponToEdit, setIsEditing }) {
                     key={`${p?.id}coupon`}
                     className="couponUpdate__form__producstContainer__itemsContainer"
                   >
-                    <button
+                    <Button
+                      variant="secondary"
                       type="button"
                       className="couponUpdate__form__producstContainer__closeButton"
                       onClick={(e) => handleRemoveProduct(e, p?.id)}
                     >
-                      X
-                    </button>
+                      <Trash />
+                    </Button>
                     <p>{p?.name}</p>
                   </div>
                 ))}

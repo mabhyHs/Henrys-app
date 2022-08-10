@@ -12,13 +12,14 @@ import {
 import CardProductCart from '../CardProductCart/CardProductCart';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import { PlusLg, DashLg } from 'react-bootstrap-icons';
+import { PlusLg, DashLg, Trash } from 'react-bootstrap-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import imgDefault from '../../Assets/Images/Hamburguesas/Hamburguesa-con-Queso.png';
 
-import './ShoppingCart.css';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+
+import './ShoppingCart.css';
 
 function ShoppingCart() {
   const dispatch = useDispatch();
@@ -291,16 +292,18 @@ function ShoppingCart() {
                   Ingresá tu cupon de descuento
                 </h2>
                 <input type="text" onKeyDown={handleAddCoupon} />
-                <div>
+                <div className="discount__shoppingCart">
                   {coupons?.map((c) => (
-                    <div key={c?.code}>
+                    <div key={c?.code} className="discount__card">
                       {c?.code}
-                      <button
+                      <Button
+                        className="ms-4 btn__discountCupon"
+                        variant="secondary"
                         type="button"
                         onClick={(e) => handleDeleteCoupon(e, c.code)}
                       >
-                        x
-                      </button>
+                        <Trash />
+                      </Button>
                     </div>
                   ))}
                 </div>

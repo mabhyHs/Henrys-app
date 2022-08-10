@@ -76,7 +76,7 @@
 }
 
 .statusWrong {
-  color: var(--brand-color);
+  color: red;
   font-size: smaller;
   padding-top: 10px;
 }
@@ -100,28 +100,32 @@
 }
 
 .couponUpdate__form__producstContainer__itemsContainer {
+  display: flex;
+  text-align: center;
+  flex-direction: row-reverse;
   margin: 0.5rem;
-  color: #fff;
-  background-color: #6c757d;
-  border-radius: 18px;
+  color: #6c757d;
+  background-color: var(--main-color-light);
+  border-radius: 10px;
+  border: 1px solid #6c757d;
   width: 14rem;
   height: 3rem;
   box-shadow: var(--bs-card);
   -webkit-box-shadow: var(--bs-card);
   -moz-box-shadow: var(--bs-card);
-  text-align: center;
 }
 
+.couponUpdate__form__producstContainer__itemsContainer svg {
+  color: var(--main-color-light);
+  font-size: 16px;
+}
 .couponUpdate__form__producstContainer__itemsContainer p {
   margin: auto;
+  font-size: 0.9rem;
 }
 
 .couponUpdate__form__producstContainer__closeButton {
-  background-color: transparent;
-  float: right;
-  border: none;
-  position: relative;
-  color: var(--main-color-dark);
+  margin: 5px;
 }
 
 .couponUpdate__form__producstContainer__closeButton:hover {

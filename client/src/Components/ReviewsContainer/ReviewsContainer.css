@@ -1,5 +1,3 @@
-/* .carousel-indicators {
-  border: 1px solid #222831;
-  border-radius: 18px;
-  background-color: #222831;
-} */
+.reviews__container {
+  min-height: 60vh;
+}
