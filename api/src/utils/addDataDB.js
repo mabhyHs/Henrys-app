@@ -159,40 +159,89 @@ function addDataDB() {
   const fries = [
     {
       id: "f3a181c0-1f95-4788-bbb4-fd38d4c6634a",
-      name: "Papas fritas",
-      price: 65,
+      name: "Papas fritas (chicas)",
+      price: 420,
       imgUri:
-        "https://cache-backend-mcd.mcdonaldscupones.com/media/image/product$kcXmVCCk/200/200/original?country=ar",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368859/Hamburguesas/PAPAS-KING_dknxtf.png",
       size: "Chico",
       isVeggie: true,
     },
     {
-      id: "9718ab58-b7e6-4fbb-917a-f7f1d7172111",
-      name: "Papas fritas con chedar",
-      price: 150,
-      imgUri:
-        "https://cache-backend-mcd.mcdonaldscupones.com/media/image/product$kcXmVCCk/200/200/original?country=ar",
-      size: "Grande",
-      isVeggie: true,
+        id: "7e33e6b9-23bb-464b-8d61-2c7dd869b569",
+        name: "Papas chedar (chicas)",
+        price: 430,
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368860/Hamburguesas/Papas-Cheddar_s1f5ac.png",
+        size: "Chico",
+        isVeggie: true,
     },
     {
-      id: "ba97e928-7602-4141-a8c9-57195802eaad",
-      name: "Papas fritas con chedar y bacon",
-      price: 170,
-      imgUri:
-        "https://cache-backend-mcd.mcdonaldscupones.com/media/image/product$kcXmVCCk/200/200/original?country=ar",
-      size: "Grande",
-      isVeggie: false,
+        id: "43dd3750-1ee6-489f-baeb-b7431eba6ae7",
+        name: "Papas chedar bacon (chicas)",
+        price: 520,
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368858/Hamburguesas/Papas-Cheddar-y-Bacon_yi7xn6.png",
+        size: "Chico",
+        isVeggie: false,
     },
+
     {
-      id: "9718ab58-b7e6-4fbb-917a-f7f1d7172111",
-      name: "Papas fritas con bacon",
-      price: 160,
-      imgUri:
-        "https://cache-backend-mcd.mcdonaldscupones.com/media/image/product$kcXmVCCk/200/200/original?country=ar",
-      size: "Grande",
-      isVeggie: false,
-    },
+        id: "08f6fa50-90b8-4f23-acc3-4572b833f71c",
+        name: "Papas fritas (medianas)",
+        price: 520,
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368859/Hamburguesas/PAPAS-KING_dknxtf.png",
+        size: "Mediano",
+        isVeggie: true,
+      },
+      {
+          id: "563e6890-1bee-43cd-8ec7-f4ef37b7c2fd",
+          name: "Papas chedar (medianas)",
+          price: 530,
+          imgUri:
+            "https://res.cloudinary.com/henrysburgers/image/upload/v1659368860/Hamburguesas/Papas-Cheddar_s1f5ac.png",
+          size: "Mediano",
+          isVeggie: true,
+      },
+      {
+          id: "1b1261d0-22f9-4164-b6c2-3aef28f94ed7",
+          name: "Papas chedar bacon (medianas)",
+          price: 620,
+          imgUri:
+            "https://res.cloudinary.com/henrysburgers/image/upload/v1659368858/Hamburguesas/Papas-Cheddar-y-Bacon_yi7xn6.png",
+          size: "Mediano",
+          isVeggie: false,
+        },
+
+
+        {
+        id: "f456331d-5058-4a78-bb3b-97daa0c9daa4",
+        name: "Papas fritas (grandes)",
+        price: 620,
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368859/Hamburguesas/PAPAS-KING_dknxtf.png",
+        size: "Grande",
+        isVeggie: true,
+      },
+      {
+          id: "9bb64175-7658-4874-896c-8feec9557ead",
+          name: "Papas chedar (grandes)",
+          price: 630,
+          imgUri:
+            "https://res.cloudinary.com/henrysburgers/image/upload/v1659368860/Hamburguesas/Papas-Cheddar_s1f5ac.png",
+          size: "Grande",
+          isVeggie: true,
+      },
+      {
+          id: "645e2ac4-c4b3-4e2b-9479-304e6b5d0c95",
+          name: "Papas chedar bacon (grandes)",
+          price: 720,
+          imgUri:
+            "https://res.cloudinary.com/henrysburgers/image/upload/v1659368858/Hamburguesas/Papas-Cheddar-y-Bacon_yi7xn6.png",
+          size: "Grande",
+          isVeggie: false,
+        },
+    
   ];
 
   const beverages = [
