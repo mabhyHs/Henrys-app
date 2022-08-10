@@ -65,7 +65,7 @@ function UserReview() {
   function validate(input) {
     let errors = {};
     if (input.rating === 0) {
-      errors.rating = 'Debes ingresar una calificacion';
+      errors.rating = 'Debes ingresar una calificación';
     }
     if (!input.description) {
       errors.description = 'Debes enviar un comentario';

@@ -26,7 +26,7 @@ function ReviewsContainer() {
   console.log(allReviews);
 
   return (
-    <Container className="mt-5 mb-5">
+    <Container className="mt-5 mb-5 reviews__container">
       <h2>Los clientes andan diciendo...</h2>
       <hr />
       <Carousel variant="dark" activeIndex={index} onSelect={handleSelect}>
