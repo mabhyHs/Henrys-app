@@ -118,7 +118,7 @@ function UserReview() {
         </h2>
         <hr />
         <div className="userReview__reviewContainer mb-4">
-          <div>
+          <div className="userReview__error__container">
             {errors.rating && (
               <p className="userReview__error">{errors.rating}</p>
             )}
@@ -198,7 +198,7 @@ function UserReview() {
 
           <div className="userReview__opinionContainer">
             <p>Deja tu sugerencia o comentario en el siguiente campo:</p>
-            <div>
+            <div className="userReview__error__container">
               {errors.description && (
                 <p className="userReview__error">{errors.description}</p>
               )}

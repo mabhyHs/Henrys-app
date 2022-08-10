@@ -18,15 +18,19 @@
   flex-wrap: wrap;
   box-shadow: var(--bs-card);
   padding: 2rem;
+  margin: 0 auto;
+  position: relative;
 }
 .userReview__opinionContainer {
   padding: 1rem;
 }
 .userReview__opinionContainer__textArea {
   width: 16rem;
+  height: 10rem;
   border-radius: 10px;
   border: var(--bc-inputs);
   padding: 0.4rem;
+  position: relative;
 }
 
 .userReview__opinionContainer__textArea:focus {
@@ -82,8 +86,13 @@ input[type='radio'] {
   color: orange;
 }
 
+.userReview__error__container {
+  height: 15px;
+  margin-bottom: 1rem;
+}
+
 .userReview__error {
-  color: var(--brand-color);
+  color: red;
   font-size: smaller;
   /* padding-top: 10px; */
 }
