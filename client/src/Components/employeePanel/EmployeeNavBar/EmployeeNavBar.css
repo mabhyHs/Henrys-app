@@ -6,6 +6,15 @@
   background-color: rgb(206, 206, 206) !important;
 }
 
-.navBar__active {
-    color: var(--brand-color);
-  }
+.navEmployee__active {
+  color: var(--main-color-dark);
+  font-weight: bolder;
+}
+
+.navBar__employee:hover {
+  color: var(--main-color-light) !important;
+}
+
+.navEmployee__active:hover {
+  color: var(--main-color-light) !important;
+}

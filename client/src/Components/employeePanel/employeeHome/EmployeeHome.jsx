@@ -19,22 +19,6 @@ function EmployeeHome() {
           <Card style={{ width: '18rem' }} className="employee__card">
             <Card.Img
               variant="top"
-              src={orderReady}
-              className="employee__card__img"
-            />
-            <Card.Body className="employee__cardBody">
-              <Card.Title>
-                <h3>Pedidos Listos</h3>
-              </Card.Title>
-              <Button variant="secondary" as={Link} to="/employeeordersready">
-                Ingresar
-              </Button>
-            </Card.Body>
-          </Card>
-
-          <Card style={{ width: '18rem' }} className="employee__card">
-            <Card.Img
-              variant="top"
               src={pendingdOrder}
               className="employee__card__img"
             />
@@ -43,6 +27,22 @@ function EmployeeHome() {
                 <h3>Pedidos Pendientes</h3>
               </Card.Title>
               <Button variant="secondary" as={Link} to="/employeependingorders">
+                Ingresar
+              </Button>
+            </Card.Body>
+          </Card>
+
+          <Card style={{ width: '18rem' }} className="employee__card">
+            <Card.Img
+              variant="top"
+              src={orderReady}
+              className="employee__card__img"
+            />
+            <Card.Body className="employee__cardBody">
+              <Card.Title>
+                <h3>Pedidos Listos</h3>
+              </Card.Title>
+              <Button variant="secondary" as={Link} to="/employeeordersready">
                 Ingresar
               </Button>
             </Card.Body>
