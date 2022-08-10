@@ -1,4 +1,4 @@
-import  { React, useState } from 'react';
+import { React, useState } from 'react';
 import { Search } from 'react-bootstrap-icons';
 
 function AdminSearchBarProduct({ setFilter }) {
@@ -13,7 +13,7 @@ function AdminSearchBarProduct({ setFilter }) {
     setFilter('search', input);
   }
   return (
-    <div className="pt-4">
+    <div className="pt-4 mb-4">
       <input
         className="search__input ps-2"
         type="text"

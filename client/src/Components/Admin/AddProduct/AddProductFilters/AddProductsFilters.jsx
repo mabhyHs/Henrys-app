@@ -177,6 +177,20 @@ function AddProductsFilters({ setFilter, filters }) {
           >
             Papas
           </Button>
+
+          <Button
+            onClick={handleOnChange}
+            name="category"
+            value="ingredients"
+            className={
+              filters.category === 'ingredients'
+                ? 'filter__btn activeBtn'
+                : 'filter__btn'
+            }
+          >
+            Ingredientes{' '}
+          </Button>
+
           <Button
             onClick={handleOnChange}
             name="isVeggie"
