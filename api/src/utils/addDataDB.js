@@ -3,16 +3,18 @@ function addDataDB() {
     {
       id: 1,
       name: "Tomate",
-      price: 15,
-      isRepeat: true,
+      price: 90,
+      isRepeat: false,
       isVeggie: true,
+      imgUri: "https://res.cloudinary.com/henrysburgers/image/upload/v1660148971/ingredientes/tomate_swr9n3.png"
     },
     {
       id: 2,
       name: "Lechuga",
-      price: 20,
-      isRepeat: true,
+      price: 70,
+      isRepeat: false,
       isVeggie: true,
+      imgUri: "https://res.cloudinary.com/henrysburgers/image/upload/v1660148970/ingredientes/lechuga_ecpcdd.png"
     },
     {
       id: 3,
@@ -20,6 +22,7 @@ function addDataDB() {
       price: 30,
       isRepeat: false,
       isVeggie: false,
+      imgUri: "https://res.cloudinary.com/henrysburgers/image/upload/v1660148971/ingredientes/mayonesa_vz13y6.png"  
     },
     {
       id: 4,
@@ -27,55 +30,63 @@ function addDataDB() {
       price: 35,
       isRepeat: false,
       isVeggie: true,
+      imgUri: "https://res.cloudinary.com/henrysburgers/image/upload/v1660148971/ingredientes/mostaza_tebarl.png"
     },
     {
       id: 5,
       name: "Cebolla",
-      price: 35,
-      isRepeat: true,
+      price: 45,
+      isRepeat: false,
       isVeggie: true,
+      imgUri: "https://res.cloudinary.com/henrysburgers/image/upload/v1660148969/ingredientes/cebolla_nv13lg.png"
     },
     {
       id: 6,
       name: "Chedar",
-      price: 35,
+      price: 110,
       isRepeat: true,
       isVeggie: true,
+      imgUri: "https://res.cloudinary.com/henrysburgers/image/upload/v1660148970/ingredientes/cheddar_dt12zq.png"
     },
     {
       id: 7,
       name: "Morrón",
-      price: 30,
-      isRepeat: true,
+      price: 120,
+      isRepeat: false,
       isVeggie: true,
+      imgUri: "https://res.cloudinary.com/henrysburgers/image/upload/v1660148972/ingredientes/morron_o36ant.png"
     },
     {
       id: 8,
       name: "Bacon",
-      price: 30,
+      price: 120,
       isRepeat: true,
       isVeggie: false,
+      imgUri: "https://res.cloudinary.com/henrysburgers/image/upload/v1660148969/ingredientes/bacon_grqyyd.png"
     },
     {
       id: 9,
       name: "Medallón de carne",
-      price: 80,
+      price: 190,
       isRepeat: true,
       isVeggie: false,
+      imgUri: "https://res.cloudinary.com/henrysburgers/image/upload/v1660148970/ingredientes/medallondecarne_uyc4hz.png"
     },
     {
       id: 10,
       name: "Medallón vegetal",
-      price: 50,
+      price: 110,
       isRepeat: true,
       isVeggie: true,
+      imgUri: "https://res.cloudinary.com/henrysburgers/image/upload/v1660148971/ingredientes/medallonvegetal_odveao.png"
     },
     {
       id: 11,
       name: "Ketchup",
-      price: 50,
+      price: 40,
       isRepeat: false,
       isVeggie: true,
+      imgUri: "https://res.cloudinary.com/henrysburgers/image/upload/v1660148969/ingredientes/ketchup_ewhgl6.png"
     },
   ];
 
