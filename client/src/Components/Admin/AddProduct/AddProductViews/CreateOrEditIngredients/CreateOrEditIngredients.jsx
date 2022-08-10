@@ -14,6 +14,12 @@ function CreateOrEditIngredients() {
       <h2>Editar Ingrediente</h2>
       <hr />
       <div className="editIngredients__container">
+        <img
+          src="{input.imgUri}"
+          onError="{(e) => setImgProductErr(e)}"
+          alt="img not"
+          className="editOrCreate__img"
+        ></img>
         <Form className="editOrCreate__form">
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridName">
@@ -35,7 +41,17 @@ function CreateOrEditIngredients() {
               />
             </Form.Group>
           </Row>
-
+          <Row>
+            <Form.Group className="mb-3" controlId="uploadImgBurger">
+              <Form.Label>Imagen</Form.Label>
+              <Form.Control
+                placeholder="Url de la imagen"
+                onChange="{setImg}"
+                type="file"
+                name="imgUri"
+              ></Form.Control>
+            </Form.Group>
+          </Row>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridsize">
               <Form.Label>Se repite? *</Form.Label>
