@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -9,6 +10,7 @@ import CreateOrEditBurger from '../AddProductViews/CreateOrEditBurger/CreateOrEd
 import CreateOrEditBurgerBase from '../AddProductViews/CreateOrEditBurgerBase/CreateOrEditBurgerBase';
 import CreateOrEditCombo from '../AddProductViews/CreateOrEditCombo/CreateOrEditCombo';
 import CreateOrEditFries from '../AddProductViews/CreateOrEditFries/CreateOrEditFries';
+import CreateOrEditIngredients from '../AddProductViews/CreateOrEditIngredients/CreateOrEditIngredients';
 
 function EditProducts() {
   const dispatch = useDispatch();
@@ -37,9 +39,8 @@ function EditProducts() {
       {product.type === 'fries' && <CreateOrEditFries data={product} />}
       {product.type === 'beverages' && <CreateOrEditBeverage data={product} />}
       {product.type === 'combos' && <CreateOrEditCombo data={product} />}
-      {product.type === 'burgerBase' && (
-        <CreateOrEditBurgerBase data={product} />
-      )}
+      {product.type === 'burgerBase' && <CreateOrEditBurgerBase data={product} />}
+      {product.type === 'ingredient' && <CreateOrEditIngredients data={product} />}
     </div>
   );
 }
