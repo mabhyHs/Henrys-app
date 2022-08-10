@@ -27,6 +27,9 @@ function AdminUsers() {
   const [filter, setFilter] = useState('');
   function handleClose() {
     setShow(false);
+  }
+  function handleConfirm() {
+    setShow(false);
     if (rol !== '') {
       submitRole(id);
     }
@@ -77,11 +80,12 @@ function AdminUsers() {
   async function submitRole(id) {
     const obj = { id, role: rol };
     try {
-      const json = await axios.put('/users/', obj, {
+      await axios.put('/users/', obj, {
         headers: {
           'auth-token': token,
         },
       });
+      dispatch(getUser(token));
       setRol('');
       setId('');
       Swal.fire({
@@ -96,16 +100,16 @@ function AdminUsers() {
         imageHeight: 150,
         imageAlt: 'Logo henrys',
       });
-      setTimeout(function () {
-        window.location.reload();
-      }, 3000);
+      // setTimeout(function () {
+      //   window.location.reload();
+      // }, 3000);
     } catch (error) {
       Swal.fire({
         customClass: {
           confirmButton: 'confirmBtnSwal',
         },
         title: 'Error',
-        text: 'Algo salio mal..',
+        text: error.response.data.error[0].msg || 'Algo salio mal..',
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
         imageWidth: 150,
@@ -138,6 +142,8 @@ function AdminUsers() {
         },
       });
 
+      dispatch(getUser(token));
+
       Swal.fire({
         customClass: {
           confirmButton: 'confirmBtnSwal',
@@ -150,16 +156,16 @@ function AdminUsers() {
         imageHeight: 150,
         imageAlt: 'Logo henrys',
       });
-      setTimeout(function () {
-        window.location.reload();
-      }, 3000);
+      // setTimeout(function () {
+      //   window.location.reload();
+      // }, 3000);
     } catch (error) {
       Swal.fire({
         customClass: {
           confirmButton: 'confirmBtnSwal',
         },
         title: 'Error',
-        text: 'Algo salio mal..',
+        text: error.response.data.error[0].msg || 'Algo salio mal..',
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
         imageWidth: 150,
@@ -177,7 +183,7 @@ function AdminUsers() {
           'auth-token': token,
         },
       });
-
+      dispatch(getUser(token));
       Swal.fire({
         customClass: {
           confirmButton: 'confirmBtnSwal',
@@ -190,16 +196,16 @@ function AdminUsers() {
         imageHeight: 150,
         imageAlt: 'Logo henrys',
       });
-      setTimeout(function () {
-        window.location.reload();
-      }, 3000);
+      // setTimeout(function () {
+      //   window.location.reload();
+      // }, 3000);
     } catch (error) {
       Swal.fire({
         customClass: {
           confirmButton: 'confirmBtnSwal',
         },
         title: 'Error',
-        text: 'Algo salio mal..',
+        text: error.response.data.error[0].msg || 'Algo salio mal..',
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
         imageWidth: 150,
@@ -216,14 +222,14 @@ function AdminUsers() {
         <hr />
         <div className="filters__btn__container mb-3">
           <p>Filtrar Usuarios:</p>
-          <h3>{rol}</h3>
+          {/* <h3>{rol}</h3> */}
           <ButtonGroup
             aria-label="Filter Buttons"
             className="me-2 filter__btn"
             size="sm"
           >
             <Button
-              className="filter__btn"
+              className={`filter__btn ${filter === '/' && 'activeBtn'}`}
               name="/"
               onClick={(e) => filterUsers(e)}
             >
@@ -231,35 +237,35 @@ function AdminUsers() {
             </Button>
 
             <Button
-              className="filter__btn"
+              className={`filter__btn ${filter === 'active' && 'activeBtn'}`}
               name="active"
               onClick={(e) => filterUsers(e)}
             >
               Activos
             </Button>
             <Button
-              className="filter__btn"
+              className={`filter__btn ${filter === 'inactive' && 'activeBtn'}`}
               name="inactive"
               onClick={(e) => filterUsers(e)}
             >
               Inactivos
             </Button>
             <Button
-              className="filter__btn"
+              className={`filter__btn ${filter === 'admin' && 'activeBtn'}`}
               name="admin"
               onClick={(e) => filterUsers(e)}
             >
               Administradores
             </Button>
             <Button
-              className="filter__btn"
+              className={`filter__btn ${filter === 'customer' && 'activeBtn'}`}
               name="customer"
               onClick={(e) => filterUsers(e)}
             >
               Usuarios
             </Button>
             <Button
-              className="filter__btn"
+              className={`filter__btn ${filter === 'employee' && 'activeBtn'}`}
               name="employee"
               onClick={(e) => filterUsers(e)}
             >
@@ -287,13 +293,15 @@ function AdminUsers() {
                     <td>{user.email}</td>
                     <td>{user.role}</td>
                     <td className="adminUser__td__btns">
-                      <Button
-                        variant="outline-secondary"
-                        size="sm"
-                        onClick={() => handleShow(user.id)}
-                      >
-                        <PencilSquare />
-                      </Button>
+                      {!user.deletedAt && (
+                        <Button
+                          variant="outline-secondary"
+                          size="sm"
+                          onClick={() => handleShow(user.id)}
+                        >
+                          <PencilSquare />
+                        </Button>
+                      )}
 
                       <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
@@ -314,7 +322,7 @@ function AdminUsers() {
                         <Modal.Footer>
                           <Button
                             variant="primary"
-                            onClick={() => handleClose()}
+                            onClick={() => handleConfirm()}
                           >
                             Confirmar
                           </Button>
