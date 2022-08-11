@@ -38,7 +38,7 @@ function Home() {
             imageAlt: 'Logo henrys',
           });
           if(isAuthenticated){
-            setTimeout(() => logout(), 2000);
+            setTimeout(() => logout({ returnTo: window.location.origin }), 2000);
           }
         }
       };
@@ -50,7 +50,7 @@ function Home() {
         imgUri: user.picture,
       });
     }
-  }, [dispatch, isAuthenticated, user]);
+  }, [dispatch, isAuthenticated, user, logout]);
 
   return (
     <div>
