@@ -276,6 +276,7 @@ function AdminUsers() {
           <tbody>
             {users.rows &&
               users.rows.map((user) => {
+                return (
                   <tr key={user.id}>
                     <td>
                       {user.firstName} {user.lastName}
@@ -316,6 +317,7 @@ function AdminUsers() {
 
                     </td>
                   </tr>
+                );
               })}
           </tbody>
         </Table>
