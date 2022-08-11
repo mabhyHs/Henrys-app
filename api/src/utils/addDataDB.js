@@ -94,7 +94,7 @@ function addDataDB() {
       isRepeat: false,
       isVeggie: false,
       imgUri:
-        "https://res.cloudinary.com/henrysburgers/image/upload/v1660148971/ingredientes/medallonvegetal_odveao.png",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1660176516/ingredientes/jamon_dz0lvh.png",
     },
   ];
 
@@ -162,7 +162,7 @@ function addDataDB() {
       imgUri:
         "https://res.cloudinary.com/henrysburgers/image/upload/v1659368858/Hamburguesas/Cuarto-XL_phvrct.png",
     },
-    
+
     {
         id: "f49d5058-505a-4128-988f-529e57bb922e",
         name: "Crispy Vegetal",
