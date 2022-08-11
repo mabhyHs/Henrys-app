@@ -23,7 +23,6 @@ function ReviewsContainer() {
   useEffect(() => {
     dispatch(getReviews());
   }, [dispatch]);
-  console.log(allReviews);
 
   return (
     <Container className="mt-5 mb-5 reviews__container">

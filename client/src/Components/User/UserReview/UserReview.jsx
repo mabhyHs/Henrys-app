@@ -39,7 +39,6 @@ function UserReview() {
 
         setIsLoading(false);
       } catch (error) {
-        console.log(error);
         navigate('/quedicendenosotros');
       }
     }
