@@ -28,7 +28,7 @@ async function check(req, res, next) {
         email: user.email,
       },
       notification_url:
-        (process.env.NGROK || process.env.HOST) +
+        (process.env.NGROK || process.env.BACKEND) +
         "/pay/mercadopago/notification",
       payment_methods: {
         installments: 3,
