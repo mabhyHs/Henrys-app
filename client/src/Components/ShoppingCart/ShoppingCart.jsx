@@ -68,7 +68,7 @@ function ShoppingCart() {
   const handleMPago = async () => {
     try {
       const json = await axios.post(
-        'http://localhost:3001/pay/mercadopago',
+        '/pay/mercadopago',
         {
           cart: JSON.parse(window.localStorage.getItem('carrito')),
           coupons: coupons.map((c) => c.code),
