@@ -131,10 +131,10 @@ async function precharge() {
         },
         {
           code: "RTTAS87",
-          title: "CheckPoint Day",
+          title: "Bacon Day",
           expirationDate: "2022-08-04",
           imgUri:
-            "https://cache-backend-mcd.mcdonaldscupones.com/media/image/product$kcXmVCCk/200/200/original?country=ar",
+            "https://res.cloudinary.com/henrysburgers/image/upload/v1659368860/Hamburguesas/Stacker-Triple_viitjb.png",
           discountPorcentage: 20,
           productsId: [
             "1ff1a612-2b75-47ad-a3dd-cd0fe0797967",
