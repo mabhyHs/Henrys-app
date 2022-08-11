@@ -6,7 +6,6 @@
 
 .CardProductCart__img {
   max-width: 160px;
-  background-color: var(--main-color-light);
   border-color: var(--main-color-light);
 }
 
