@@ -29,16 +29,16 @@ function EmployeePendingOrder() {
         employee: session.firstName + ' ' + session.lastName,
       };
       await setStateOrder(id, data);
-
-      let updateData = [];
+      dispatch(setOrders());
+/*       let updateData = [];
 
       for (let i = 0; i < orders.length; i++) {
-        if (orders[i].purchaseId !== id) {
+        if (orders[i].status === "Pendiente" && orders[i].purchaseId !== id) {
           updateData.push(orders[i]);
         }
       }
 
-      dispatch(setOrders(updateData));
+      dispatch(setOrders(updateData)); */
     } catch (error) {
     } finally {
       setSubmited(false);
