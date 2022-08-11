@@ -43,7 +43,7 @@ function UserReview() {
       }
     }
     validateReviewById(purchaseId, setIsLoading);
-  }, [dispatch]);
+  }, [dispatch, navigate, purchaseId]);
 
   const [input, setInput] = useState({
     rating: 0,

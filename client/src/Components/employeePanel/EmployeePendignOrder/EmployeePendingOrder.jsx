@@ -17,23 +17,25 @@ function EmployeePendingOrder() {
   const session = useSelector((state) => state.loginState);
   const orders = useSelector((state) => state.orders.filter(ord => ord.status === "Pendiente"));
   const [show, setShow] = useState(false);
+  const [orderId, setOrderId] = useState("");
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  function handleShow(e){
+    setOrderId(e.target.value);
+    setShow(true);
+  }
 
   async function handleSubmit(e) {
     try {
-      const id = Number(e.target.id);
       setSubmited(true);
       const data = {
         status: 'Listo',
         employee: session.firstName + ' ' + session.lastName,
       };
-      await setStateOrder(id, data);
-
+      await setStateOrder(orderId, data);
       let updateData = [];
 
       for (let i = 0; i < orders.length; i++) {
-        if (orders[i].purchaseId !== id) {
+        if (orders[i].purchaseId !== orderId) {
           updateData.push(orders[i]);
         }
       }
@@ -116,33 +118,33 @@ function EmployeePendingOrder() {
                     $ {ord.data.transaction_amount}
                     </td>
                     <td>
-                    <Button variant="primary" onClick={handleShow}>
+                    <Button value={ord.purchaseId} variant="primary" onClick={(e) => handleShow(e)}>
                         Listo
-                    </Button>
-                    <Modal show={show} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                        <Modal.Title>Confirmar Estado</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                        ¿Estás seguro de pasar éste pedido se encuentra
-                        listo?
-                        </Modal.Body>
-                        <Modal.Footer>
-                        <Button
-                            id={ord.purchaseId}
-                            onClick={handleSubmit}
-                            disabled={isSubmited}
-                            variant="primary"
-                        >
-                            Confirmar
-                        </Button>
-                        </Modal.Footer>
-                    </Modal>
+                    </Button>                    
                     </td>
                 </tr>
               ))}
           </tbody>
         </Table>
+        <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                <Modal.Title>Confirmar Estado</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                ¿Estás seguro de pasar éste pedido se encuentra
+                listo?
+                </Modal.Body>
+                <Modal.Footer>
+                <Button
+                    id={orderId}
+                    onClick={handleSubmit}
+                    disabled={isSubmited}
+                    variant="primary"
+                >
+                    Confirmar
+                </Button>
+                </Modal.Footer>
+            </Modal>
       </Container>
     </div>
   );
