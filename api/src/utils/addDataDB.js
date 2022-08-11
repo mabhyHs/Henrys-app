@@ -104,7 +104,7 @@ function addDataDB() {
       name: "Whopper Doble",
       price: 950,
       isVeggie: false,
-      ingredients: [2, 4, 5, 6, 10, 10],
+      ingredients: [2, 4, 5, 6, 10],
       imgUri:
         "https://res.cloudinary.com/henrysburgers/image/upload/v1659368861/Hamburguesas/whopper-doble_qxp7af.png",
     },
@@ -368,6 +368,8 @@ function addDataDB() {
     
   ];
 
+  //const combos = [];
+
   const combos = [
     {
       id: "98d662ca-64bc-4994-a137-432694d07ed4",
@@ -408,32 +410,16 @@ function addDataDB() {
       burgers: [
         "34edc4b8-d942-4ff4-878c-dbb33ab7ad41",
       ],
-      fries: ["ba97e928-7602-4141-a8c9-57195802eaad"],
+      fries: ["f3a181c0-1f95-4788-bbb4-fd38d4c6634a"],
       beverages: [
         "18e7bcf0-0404-4cd6-a96e-3b61f97e8f63",
         "2bdea2e5-f994-45aa-9a23-67e44c4910ed"
       ],
     },
 
-    {
-        id: "2c2230b9-f61f-4b3c-a928-6d24c2b5ba06",
-        name: "Combo Clásicas",
-        price: 900,
-        isVeggie: false,
-        imgUri:
-          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368851/combos/combo2-dobles_ieyiul.png",
-        burgers: [
-          "34edc4b8-d942-4ff4-878c-dbb33ab7ad41",
-        ],
-        fries: ["ba97e928-7602-4141-a8c9-57195802eaad"],
-        beverages: [
-          "18e7bcf0-0404-4cd6-a96e-3b61f97e8f63"
-        ],
-      },
-
       {
-        id: "ed3db3c3-572d-4b6b-923f-54631b171960",
-        name: "Cajita mágica con hamburguesa con queso",
+        id: "c086f2a0-2e41-4b66-82ef-b7f70378286c",
+        name: "Cajita mágica con queso",
         price: 1150,
         isVeggie: false,
         imgUri:
@@ -446,21 +432,6 @@ function addDataDB() {
           "440e7d15-f910-43f2-a7b9-4b3b1fb5d689",
         ],
       },
-
-      {
-        id: "ed3db3c3-572d-4b6b-923f-54631b171960",
-        name: "Cajita mágica con hamburguesa con queso",
-        price: 2350,
-        isVeggie: false,
-        imgUri:
-          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368850/combos/cajita-nuggetshamb-con-queso_xf27np.png",
-        burgers: [
-          "9553b94c-85ef-4252-ad2f-44f96ca2296b",
-        ],
-        fries: ["f456331d-5058-4a78-bb3b-97daa0c9daa4"],
-        beverages: [],
-      },
-
     
     {
       id: "a666ed45-45fd-47a8-8196-4670f4e87b60",
@@ -476,7 +447,7 @@ function addDataDB() {
       beverages: [
         "18e7bcf0-0404-4cd6-a96e-3b61f97e8f63"
       ],
-    },
+    }, 
   ];
 
   const data = {
