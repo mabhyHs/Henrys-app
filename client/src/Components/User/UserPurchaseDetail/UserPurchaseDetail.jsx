@@ -97,7 +97,7 @@ function UserPurchaseDetail() {
                         </li>
 
                         <li>
-                          Precio unitario:<span> ${i.unit_price.toFixed(2)}</span>
+                          Precio unitario:<span> ${i.unit_price ? Number(i.unit_price).toFixed(2) : ""}</span>
                         </li>
                         <li>
                           Cantidad:
