@@ -35,7 +35,7 @@ export const SET_ORDERS = 'SET_ORDERS';
 export function getUser(token, query = '/') {
   return async function (dispatch) {
     try {
-      const json = await axios('http://localhost:3001/users/admin' + query, {
+      const json = await axios('/users/admin' + query, {
         headers: {
           'auth-token': token,
         },
@@ -368,7 +368,7 @@ export function setLoginState(payload) {
 export function postMP(data, token) {
   return async function (dispatch) {
     const json = await axios.post(
-      'http://localhost:3001/pay/mercadopago',
+      '/pay/mercadopago',
       {
         cart: data,
       },
