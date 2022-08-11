@@ -382,43 +382,57 @@ function addDataDB() {
       ],
       beverages: [],
     },
-    
+
     {
       id: "4f8e3c46-fcef-42ab-9218-263a55526737",
-      name: "Combo 2",
-      price: 600,
+      name: "Mix & Match",
+      price: 2600,
       isVeggie: false,
       imgUri:
-        "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Big-Mac-1:product-header-desktop?wid=830&hei=456&dpr=off",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368851/combos/como4-dosydos_dtl08f.png",
       burgers: [
-        "9ff3ad73-b27e-4de4-ae91-2e54068398ac",
-        "30046cf2-85ba-48e9-bcde-cb51c0fe3fa8",
+        "ed4973b0-3664-4a4b-9ccb-c5c9a05c9020",
       ],
-      fries: ["ba97e928-7602-4141-a8c9-57195802eaad"],
+      fries: ["f3a181c0-1f95-4788-bbb4-fd38d4c6634a"],
       beverages: [
-        "bd8b584f-58db-42fc-97a2-9910257dc171",
-        // "bd8b584f-58db-42fc-97a2-9910257dc171",
       ],
     },
+
     {
       id: "93f820c9-c616-4263-86fc-4b1d1b1c0800",
-      name: "Combo Loco",
-      price: 1300,
+      name: "Combo Clásicas",
+      price: 900,
       isVeggie: false,
       imgUri:
-        "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Big-Mac-1:product-header-desktop?wid=830&hei=456&dpr=off",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368851/combos/combo2-dobles_ieyiul.png",
       burgers: [
-        "1ff1a612-2b75-47ad-a3dd-cd0fe0797967",
-        // "1ff1a612-2b75-47ad-a3dd-cd0fe0797967",
-        "9ff3ad73-b27e-4de4-ae91-2e54068398ac",
+        "34edc4b8-d942-4ff4-878c-dbb33ab7ad41",
       ],
       fries: ["ba97e928-7602-4141-a8c9-57195802eaad"],
       beverages: [
-        "e0d6d870-8209-4e02-9e8c-08c8b9f3a7de",
-        "95fbac13-16c0-4d5f-83d1-881f2143c5d6",
-        "a87621de-f0dc-4461-a7ab-c4a3d68c7c15",
+        "18e7bcf0-0404-4cd6-a96e-3b61f97e8f63",
+        "2bdea2e5-f994-45aa-9a23-67e44c4910ed"
       ],
     },
+
+    {
+        id: "2c2230b9-f61f-4b3c-a928-6d24c2b5ba06",
+        name: "Combo Simple",
+        price: 1500,
+        isVeggie: true,
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368850/combos/Combo1_zpm4ha.png",
+        burgers: [
+          "ca03dd5b-9d64-42b4-81e8-fd53aa6904c6",
+        ],
+        fries: ["9718ab58-b7e6-4fbb-917a-f7f1d7172111"],
+        beverages: [
+          "e0d6d870-8209-4e02-9e8c-08c8b9f3a7de",
+          "95fbac13-16c0-4d5f-83d1-881f2143c5d6",
+          "a87621de-f0dc-4461-a7ab-c4a3d68c7c15",
+        ],
+      },
+    
     {
       id: "a666ed45-45fd-47a8-8196-4670f4e87b60",
       name: "Combo Vegano",
@@ -428,8 +442,6 @@ function addDataDB() {
         "https://res.cloudinary.com/henrysburgers/image/upload/v1659368850/combos/Combo1_zpm4ha.png",
       burgers: [
         "ca03dd5b-9d64-42b4-81e8-fd53aa6904c6",
-        // "ca03dd5b-9d64-42b4-81e8-fd53aa6904c6",
-        // "ca03dd5b-9d64-42b4-81e8-fd53aa6904c6",
       ],
       fries: ["9718ab58-b7e6-4fbb-917a-f7f1d7172111"],
       beverages: [
