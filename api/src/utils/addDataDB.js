@@ -443,7 +443,7 @@ function addDataDB() {
       burgers: [
         "f49d5058-505a-4128-988f-529e57bb922e",
       ],
-      fries: ["9718ab58-b7e6-4fbb-917a-f7f1d7172111"],
+      fries: ["f3a181c0-1f95-4788-bbb4-fd38d4c6634a"],
       beverages: [
         "18e7bcf0-0404-4cd6-a96e-3b61f97e8f63"
       ],
