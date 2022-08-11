@@ -88,71 +88,141 @@ function addDataDB() {
       imgUri:
         "https://res.cloudinary.com/henrysburgers/image/upload/v1660148971/ingredientes/medallonvegetal_odveao.png",
     },
+    {
+      name: "Jamón",
+      price: 70,
+      isRepeat: false,
+      isVeggie: false,
+      imgUri:
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1660148971/ingredientes/medallonvegetal_odveao.png",
+    },
   ];
 
   const burgers = [
     {
       id: "30046cf2-85ba-48e9-bcde-cb51c0fe3fa8",
-      name: "BigMc",
-      price: 150,
+      name: "Whopper Doble",
+      price: 950,
       isVeggie: false,
-      ingredients: [1, 2, 3],
+      ingredients: [2, 4, 5, 6, 10, 10],
       imgUri:
-        "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Big-Mac-1:product-header-desktop?wid=830&hei=456&dpr=off",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368861/Hamburguesas/whopper-doble_qxp7af.png",
     },
     {
       id: "9ff3ad73-b27e-4de4-ae91-2e54068398ac",
-      name: "DobleCuarto",
-      price: 350,
-      isVeggie: false,
-      ingredients: [4, 5, 6, 7],
+      name: "Whopper Vegetal",
+      price: 970,
+      isVeggie: true,
+      ingredients: [1, 3, 6, 5, 11],
       imgUri:
-        "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Quarter-Pounder-with-Cheese-1:product-header-desktop?wid=829&hei=455&dpr=off",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368861/Hamburguesas/WhopperVegetal_2604_k1rtdy.png",
     },
     {
       id: "9553b94c-85ef-4252-ad2f-44f96ca2296b",
-      name: "DobleCuarto con queso",
-      price: 430,
+      name: "Stacker Triple",
+      price: 1070,
       isVeggie: false,
-      ingredients: [2, 3],
+      ingredients: [10, 7, 9, 2, 1, 3],
       imgUri:
-        "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Double-Quarter-Pounder-with-Cheese-1:product-header-desktop?wid=829&hei=455&dpr=off",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368860/Hamburguesas/Stacker-Triple_viitjb.png",
     },
     {
       id: "e335faa7-10d6-49b1-844e-426033d063e3",
-      name: "McChicken",
-      price: 400,
-      isVeggie: false,
-      ingredients: [1, 6, 7],
+      name: "King Vegetal",
+      price: 990,
+      isVeggie: true,
+      ingredients: [11, 5, 7, 1, 2],
       imgUri:
-        "https://www.salomon-foodworld.com/media/pages/sortiment/giant-burger/67991a2a99-1648132074/giant-burger-72dpi-freisteller-e2-800x.jpg",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368859/Hamburguesas/King-de-vegetal_ljh5ot.png",
     },
     {
       id: "ca03dd5b-9d64-42b4-81e8-fd53aa6904c6",
-      name: "Burger vegana",
-      price: 330,
-      isVeggie: true,
-      ingredients: [4, 5],
+      name: "King de Pollo Frances",
+      price: 970,
+      isVeggie: false,
+      ingredients: [10, 1, 2, 7, 12],
       imgUri:
-        "https://www.salomon-foodworld.com/media/pages/sortiment/giant-burger/67991a2a99-1648132074/giant-burger-72dpi-freisteller-e2-800x.jpg",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368859/Hamburguesas/king-de-pollo-frances_oezpta.png",
     },
     {
       id: "1ff1a612-2b75-47ad-a3dd-cd0fe0797967",
-      name: "McDoble",
-      price: 300,
+      name: "DOBLE BBQ Bacon XL",
+      price: 1210,
       isVeggie: false,
-      ingredients: [6, 7, 1],
+      ingredients: [3, 10, 7],
       imgUri:
-        "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-McDouble-1:product-header-desktop?wid=829&hei=455&dpr=off",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368858/Hamburguesas/DOBLE-BBQ-Bacon-xl_ovoapa.png",
     },
     {
       id: "ed4973b0-3664-4a4b-9ccb-c5c9a05c9020",
-      name: "CheeseBurger",
-      price: 230,
+      name: "Cuarto XL",
+      price: 882,
       isVeggie: false,
-      ingredients: [6, 7, 1],
+      ingredients: [2, 3, 7, 6, 10],
       imgUri:
-        "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Cheeseburger-1:product-header-desktop?wid=829&hei=455&dpr=off",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368858/Hamburguesas/Cuarto-XL_phvrct.png",
+    },
+    
+    {
+        id: "f49d5058-505a-4128-988f-529e57bb922e",
+        name: "Crispy Vegetal",
+        price: 810,
+        isVeggie: true,
+        ingredients: [11, 8, 6, 3, 2],
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368858/Hamburguesas/Cuarto-XL_phvrct.png",
+    },
+
+    {
+        id: "34edc4b8-d942-4ff4-878c-dbb33ab7ad41",
+        name: "Clásica",
+        price: 700,
+        isVeggie: false,
+        ingredients: [1, 4, 5, 10],
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368857/Hamburguesas/hamburguesa-clasica_g7jpl4.png",
+    },
+
+
+    {
+        id: "2f6f03da-41b4-4f0d-abcb-18b48cb98025",
+        name: "BBQ Bacon XL",
+        price: 890,
+        isVeggie: false,
+        ingredients: [1, 3, 7, 9, 10],
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368856/Hamburguesas/BBQ-Bacon-xl_y5y8jp.png",
+    },
+
+    {
+        id: "c5c3428e-f885-47f5-af5d-d35be513d53e",
+        name: "Doble Jamón y Queso XL",
+        price: 890,
+        isVeggie: false,
+        ingredients: [1, 7, 10, 12],
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368856/Hamburguesas/Doble-Jamon-y-Queso-XL_yetuv9.png",
+    },
+
+
+    {
+        id: "21da7040-d6fe-4c7e-b5da-b895de31a438",
+        name: "Doble Napolitano XL",
+        price: 1100,
+        isVeggie: false,
+        ingredients: [1, 4, 7, 10, 12],
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368855/Hamburguesas/DobleNapolitano-XL-1_snhzrl.png",
+    },
+
+    {
+        id: "3b433072-2279-4138-b056-a661720b37d3",
+        name: "Hamburguesa con Queso",
+        price: 750,
+        isVeggie: false,
+        ingredients: [10, 1, 7, 3],
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368855/Hamburguesas/Hamburguesa-con-Queso_nhyhcd.png",
     },
   ];
 
