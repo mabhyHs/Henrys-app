@@ -22,7 +22,7 @@ function UserFavoritesCard({ id, favoritosId }) {
       setProduct(res.data);
     }
     getProductById();
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   const delFav = (id) => {
     const userId = JSON.parse(window.localStorage.getItem('user')).id;
