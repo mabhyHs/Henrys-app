@@ -57,7 +57,7 @@ export function getProduct(
   isVeggie = '',
   isDeleted = '',
   addBase = '',
-  addIngredient = 'true'
+  addIngredient = ''
 ) {
   return async function (dispatch) {
     const json = await axios(
