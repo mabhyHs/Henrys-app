@@ -378,7 +378,7 @@ function addDataDB() {
         "https://res.cloudinary.com/henrysburgers/image/upload/v1659368853/combos/combo4Iguales_jjmbyc.png",
       burgers: ["3b433072-2279-4138-b056-a661720b37d3"],
       fries: [
-        "f3a181c0-1f95-4788-bbb4-fd38d4c6634a",
+        "7e33e6b9-23bb-464b-8d61-2c7dd869b569",
       ],
       beverages: [],
     },
@@ -447,22 +447,34 @@ function addDataDB() {
         ],
       },
 
+      {
+        id: "ed3db3c3-572d-4b6b-923f-54631b171960",
+        name: "Cajita mágica con hamburguesa con queso",
+        price: 2350,
+        isVeggie: false,
+        imgUri:
+          "https://res.cloudinary.com/henrysburgers/image/upload/v1659368850/combos/cajita-nuggetshamb-con-queso_xf27np.png",
+        burgers: [
+          "9553b94c-85ef-4252-ad2f-44f96ca2296b",
+        ],
+        fries: ["f456331d-5058-4a78-bb3b-97daa0c9daa4"],
+        beverages: [],
+      },
+
     
     {
       id: "a666ed45-45fd-47a8-8196-4670f4e87b60",
-      name: "Combo Vegetal",
-      price: 1500,
+      name: "Combo Crispy Vegetal",
+      price: 920,
       isVeggie: true,
       imgUri:
-        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368850/combos/Combo1_zpm4ha.png",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1660177679/combos/Crispy-vegan_nh7lnp.png",
       burgers: [
-        "ca03dd5b-9d64-42b4-81e8-fd53aa6904c6",
+        "f49d5058-505a-4128-988f-529e57bb922e",
       ],
       fries: ["9718ab58-b7e6-4fbb-917a-f7f1d7172111"],
       beverages: [
-        "e0d6d870-8209-4e02-9e8c-08c8b9f3a7de",
-        "95fbac13-16c0-4d5f-83d1-881f2143c5d6",
-        "a87621de-f0dc-4461-a7ab-c4a3d68c7c15",
+        "18e7bcf0-0404-4cd6-a96e-3b61f97e8f63"
       ],
     },
   ];
