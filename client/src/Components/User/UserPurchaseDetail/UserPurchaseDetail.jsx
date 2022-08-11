@@ -75,7 +75,7 @@ function UserPurchaseDetail() {
                     {/* Verifica si hay cuotas */}
                     {installments && installments > 1 && (
                       <div>
-                        <p>Subtotal: $ {transaction_amount || ''}</p>
+                        <p>Subtotal: $ {(transaction_amount).toFixed(2) || ''}</p>
                         <p>
                           En {installments} cuotas de $
                           {transaction_details.installment_amount}
@@ -83,7 +83,7 @@ function UserPurchaseDetail() {
                       </div>
                     )}
                     <p className="purchaseDetail__total">
-                      Total: ${transaction_details.total_paid_amount || ''}
+                      Total: ${(transaction_details.total_paid_amount).toFixed(2) || ''}
                     </p>
                   </div>
 
@@ -97,7 +97,7 @@ function UserPurchaseDetail() {
                         </li>
 
                         <li>
-                          Precio unitario:<span> ${i.unit_price}</span>
+                          Precio unitario:<span> ${(i.unit_price).toFixed(2)}</span>
                         </li>
                         <li>
                           Cantidad:
