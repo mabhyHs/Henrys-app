@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { User } = require("../models");
 
 async function create(data) {
@@ -10,13 +11,62 @@ async function getByEmail(email) {
   return user;
 }
 
+async function getById(id) {
+  const user = await User.findByPk(id, {
+    include: { all: true, nested: true },
+  });
+  return user;
+}
+
 async function getAllSecure() {
-    let user = await User.findAll();
-    user = user.map(e => {
-        e.password = undefined
-        return e;        
-    });
-    return user;
+  let user = await User.findAll();
+  user = user.map((e) => {
+    e.password = undefined;
+    return e;
+  });
+  return user;
+}
+
+async function getAllAdmin(pag, rol, confirmed, active) {
+  const where = {};
+  if (rol) {
+    where.role = {
+      [Op.eq]: rol,
+    };
+  }
+
+  if (confirmed === "true") {
+    where.isConfirmed = {
+      [Op.eq]: true,
+    };
+  } else if (confirmed === "false") {
+    where.isConfirmed = {
+      [Op.eq]: false,
+    };
+  }
+
+  if (active === "true") {
+    console.log(active);
+    where.deletedAt = {
+      [Op.is]: null,
+    };
+  } else if (active === "false") {
+    where.deletedAt = {
+      [Op.not]: null,
+    };
+  }
+
+  let { count, rows } = await User.findAndCountAll({
+    where,
+    paranoid: false,
+    // limit: 10,
+    // offset: (pag - 1) * 10,
+  });
+  rows = rows.map((e) => {
+    e.password = undefined;
+    return e;
+  });
+  return { count, pages: Math.ceil(count / 10), pag, rows };
 }
 
 async function getById(id) {
@@ -72,6 +122,14 @@ async function update(data) {
   return updatedUser;
 }
 
+async function setFavorites(favoritesList, id) {
+  const user = await User.findByPk(id);
+  user.update({
+    favoritesList: favoritesList,
+  });
+  return user;
+}
+
 module.exports = {
   create,
   getByEmail,
@@ -82,5 +140,8 @@ module.exports = {
   destroy,
   restore,
   update,
-  getAllSecure
+  getAllSecure,
+  getById,
+  setFavorites,
+  getAllAdmin,
 };

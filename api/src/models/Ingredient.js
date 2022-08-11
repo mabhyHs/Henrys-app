@@ -21,13 +21,28 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.TEXT,
         allowNull: false,
+        unique: true,
       },
       price: {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
+      imgUri: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      isRepeat: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        allowNull: false,
+      },
       isVeggie: {
         type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      type: {
+        type: DataTypes.STRING,
+        defaultValue: "ingredients",
         allowNull: false,
       },
     },

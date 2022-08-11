@@ -1,8 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class BurgerBase extends Model {
-  }
+  class BurgerBase extends Model {}
   BurgerBase.init(
     {
       id: {
@@ -13,17 +12,36 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "Burger base 1",
-        unique: true
+        unique: true,
       },
       price: {
         type: DataTypes.FLOAT,
+        allowNull: false,
+      },
+      imgUri: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      isVeggie: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      type: {
+        type: DataTypes.STRING,
+        defaultValue: "burgerBase",
         allowNull: false,
       },
     },
     {
       sequelize,
       modelName: "BurgerBase",
+      paranoid: true,
+      timestamps: true,
     }
   );
   return BurgerBase;

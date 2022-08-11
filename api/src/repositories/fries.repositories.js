@@ -1,5 +1,6 @@
 const { Fries } = require("../models");
 const { Op } = require("sequelize");
+const { isUUIDV4 } = require("../utils/utils");
 
 async function create(data) {
   const fries = await Fries.create(data);
@@ -7,12 +8,17 @@ async function create(data) {
 }
 
 async function getById(id) {
-  const fries = await Fries.findByPk(id);
+
+  if(!isUUIDV4(id)) return;
+
+  const fries = await Fries.findByPk(id, {paranoid: false});
   return fries;
 }
 
 async function getAll() {
-  const fries = await Fries.findAll();
+  const fries = await Fries.findAll({paranoid: false}, {order: [
+    ['name', 'ASC'],
+]});
   return fries;
 }
 
@@ -21,8 +27,13 @@ async function getByQuery(queries) {
     return await getAll();
   }
 
-  const fries = await Fries.findAll({ where: queries });
-  return fries;
+  const fries = await Fries.findAll({ 
+        where: queries,
+        paranoid: false, 
+        order: [ ['name', 'ASC'] ]
+    });
+    
+    return fries;
 }
 
 async function getByName(name) {

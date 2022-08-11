@@ -38,11 +38,16 @@ module.exports = (sequelize, DataTypes) => {
       },
       imgUri: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       isVeggie: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
+        allowNull: false,
+      },
+      type: {
+        type: DataTypes.STRING,
+        defaultValue: "beverages",
         allowNull: false,
       },
     },

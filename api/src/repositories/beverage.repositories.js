@@ -1,5 +1,6 @@
 const { Beverage } = require("../models");
 const { Op } = require("sequelize");
+const { isUUIDV4 } = require("../utils/utils");
 
 async function create(data) {
   const beverage = await Beverage.create(data);
@@ -7,12 +8,17 @@ async function create(data) {
 }
 
 async function getById(id) {
-  const beverage = await Beverage.findByPk(id);
+
+  if(!isUUIDV4(id)) return;
+
+  const beverage = await Beverage.findByPk(id, {paranoid: false});
   return beverage;
 }
 
 async function getAll() {
-  const beverages = await Beverage.findAll();
+  const beverages = await Beverage.findAll({paranoid: false}, {order: [
+    ['name', 'ASC'],
+    ]});
   return beverages;
 }
 
@@ -21,8 +27,13 @@ async function getByQuery(queries) {
     return await getAll();
   }
 
-  const beverages = await Beverage.findAll({ where: queries });
-  return beverages;
+  const beverages = await Beverage.findAll({ 
+        where: queries,
+        paranoid: false, 
+        order: [ ['name', 'ASC'] ]
+    });
+    
+    return beverages;
 }
 
 async function getByName(name) {

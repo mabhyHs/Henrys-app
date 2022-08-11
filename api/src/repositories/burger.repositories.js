@@ -1,5 +1,6 @@
 const { Burger } = require("../models");
 const { Op } = require("sequelize");
+const { isUUIDV4 } = require("../utils/utils");
 
 async function create(data) {
   const burger = await Burger.create(data);
@@ -10,11 +11,15 @@ async function create(data) {
 }
 
 async function getById(id) {
+
+  if(!isUUIDV4(id)) return;
+
   const burger = await Burger.findByPk(id, {
+    paranoid: false,
     include: [
       {
         association: "ingredient",
-        attributes: ["name"],
+        attributes: ["name", "id"],
         through: {
           attributes: [],
         },
@@ -26,7 +31,9 @@ async function getById(id) {
 }
 
 async function getAll() {
-  const burgers = await Burger.findAll();
+  const burgers = await Burger.findAll({paranoid: false}, {order: [
+        ['name', 'ASC'],
+    ]});
   return burgers;
 }
 
@@ -35,8 +42,13 @@ async function getByQuery(queries) {
     return await getAll();
   }
 
-  const burgers = await Burger.findAll({ where: queries });
-  return burgers;
+  const burgers = await Burger.findAll({ 
+        where: queries,
+        paranoid: false, 
+        order: [ ['name', 'ASC'] ]
+    });
+    
+    return burgers;
 }
 
 async function getByName(name) {
@@ -67,8 +79,28 @@ async function restore(id) {
 }
 
 async function update(data) {
-  const updatedBurger = await Burger.update(data, { where: { id: data.id } });
-  return updatedBurger;
+    
+  // actualizo la data
+  await Burger.update(data, { where: { id: data.id } });
+  // lo busco
+  const updateado = await Burger.findByPk(data.id);
+        
+  // lo relaciono
+  await updateado.setIngredient(data.ingredient ? data.ingredient : []); // set, que pise todo y lo reemplace
+  const withRelation = await Burger.findByPk(updateado.id, {
+    paranoid: false,
+    include: [
+      {
+        association: "ingredient",
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+  });
+
+  return withRelation;
 }
 
 module.exports = {
