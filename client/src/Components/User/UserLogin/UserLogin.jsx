@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -31,6 +31,8 @@ function UserLogin() {
   });
 
   const [recoveryInput, setRecoveryInput] = useState('');
+  const [isSubmitedLogin, setSubmitedLogin] = useState(false);
+  const [isSubmitedRecovery, setSubmitedRecovery] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -45,15 +47,14 @@ function UserLogin() {
     e.preventDefault();
 
     try {
+      setSubmitedLogin(true);
       const res = await axios.post(`/login`, { ...input });
 
       if (res.status === 200) {
-        if (!isSession) {
-          window.localStorage.setItem(
-            'user',
-            JSON.stringify({ ...res.data.user, token: res.data.data.token })
-          );
-          dispatch(setLoginState(true));
+        if (!isSession) {            
+          const data = { ...res.data.user, token: res.data.data.token };
+          window.localStorage.setItem('user', JSON.stringify(data));
+          dispatch(setLoginState(data));
           navigate('/');
         }
       }
@@ -62,33 +63,36 @@ function UserLogin() {
         customClass: {
           confirmButton: 'confirmBtnSwal',
         },
-        title: 'Algo salió mal...',
-        text: 'Email o contraseña inválida!',
+        title: 'Oops...',
+        text: typeof(error.response.data.error) !== "string" ? "Credenciales inválidas!" : error.response.data.error,
         imageUrl:
           'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
         imageWidth: 170,
         imageHeight: 170,
         imageAlt: 'Logo henrys',
       });
+    } finally {
+        setSubmitedLogin(false);
     }
   };
 
   const handleSubmitRecoveryPass = async (e) => {
-    e.preventDefault();
     try {
+      e.preventDefault();
+      setSubmitedRecovery(true);
       const res = await axios.post('/passwordRecovery', {
         email: recoveryInput,
       });
-      console.log(res.status);
+
       if (res.status === 200) {
         Swal.fire({
           customClass: {
             confirmButton: 'confirmBtnSwal',
           },
-          title: 'Mensaje enviado exitosamente!',
-          text: 'Revise el correo para recuperar su cuenta',
+          title: 'Mensaje enviado correctamente',
+          text: 'Revise el correo para recuperar su cuenta!',
           imageUrl:
-            'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+            'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
           imageWidth: 150,
           imageHeight: 150,
           imageAlt: 'Logo henrys',
@@ -99,27 +103,22 @@ function UserLogin() {
         customClass: {
           confirmButton: 'confirmBtnSwal',
         },
-        title: 'Error',
-        text: 'Error al enviar el correo intente nuevamente.',
+        title: 'Opss...',
+        text: typeof(error.response.data.error) !== "string" ? "Correo inválido!" : error.response.data.error,
         imageUrl:
-          'https://res.cloudinary.com/henrysburgers/image/upload/v1659288361/logo-henrys-20x20_ftnamq.png',
+          'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
         imageWidth: 150,
         imageHeight: 150,
         imageAlt: 'Logo henrys',
       });
+    } finally {
+        setSubmitedRecovery(false);
     }
     handleClose();
   };
 
-  if (isSession) {
-    navigate('/');
-  }
-
   return (
     <div>
-      {isSession && <div></div>}
-
-      {!isSession && (
         <Row className="userLogin__container m-3">
           <Col lg={6} sm={12}>
             <h1 className="userLogin__tittle">Ingresá a tu cuenta</h1>
@@ -187,6 +186,7 @@ function UserLogin() {
                 <Modal.Footer>
                   <Button
                     variant="primary"
+                    disabled={!recoveryInput || isSubmitedRecovery}
                     onClick={(e) => handleSubmitRecoveryPass(e)}
                   >
                     Enviar
@@ -198,6 +198,10 @@ function UserLogin() {
                 // to="/userprofiledashboard"
                 variant="primary"
                 type="submit"
+                disabled={
+                    !input.email.length ||
+                    !input.password.length ||
+                    isSubmitedLogin}
               >
                 Ingresar
               </Button>
@@ -215,7 +219,6 @@ function UserLogin() {
             />
           </Col>
         </Row>
-      )}
     </div>
   );
 }

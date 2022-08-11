@@ -1,9 +1,10 @@
 .userPersonalInfo__container {
-  height: 70vh;
+  min-height: 70vh;
   margin-top: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .userInfo__btn {
@@ -11,4 +12,38 @@
   background: var(--main-color-light);
   box-shadow: var(--bs-btn);
   border-radius: var(--br-btn);
+}
+
+.userInfo__row {
+  display: flex;
+  justify-content: center;
+  background-color: var(--main-color-light);
+  padding: 20px;
+  border-radius: 10px;
+  margin: 10px;
+  box-shadow: var(--bs-card);
+  text-align: left;
+}
+.userInfo__row .form-control {
+  margin-bottom: 15px;
+}
+
+.userInfo__btn__pass {
+  width: 14rem;
+}
+
+.userInfo__error {
+  font-size: small;
+  color: red;
+  font-style: italic;
+  width: 300px;
+}
+
+.formGrid__errContainer {
+  height: 10px;
+}
+
+.formGrid__errContainer p {
+  color: red;
+  font-size: smaller;
 }

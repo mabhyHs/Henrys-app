@@ -6,6 +6,15 @@ import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import logo from '../../../Assets/Images/logo-henrys300px.png';
 import { Link } from 'react-router-dom';
+import {
+  HouseFill,
+  PeopleFill,
+  EnvelopePaperFill,
+  BoxArrowLeft,
+  ClipboardDataFill,
+  FileSpreadsheetFill,
+} from 'react-bootstrap-icons';
+
 import './AdminNavBar.css';
 
 function AdminNavBar() {
@@ -13,8 +22,8 @@ function AdminNavBar() {
     <>
       <Navbar bg="light" expand={false} className="mb-3 adminNavBar">
         <Container>
-          <Navbar.Brand href="#">
-            <img src={logo} alt="logo henrys" className="adminNavBar__logo" />
+          <Navbar.Brand as={Link} to="/adminhome">
+            <img src={logo} alt="logo henrys" className="adminNavBar__logo" />{' '}
           </Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${false}`} />
           <Navbar.Offcanvas
@@ -31,30 +40,39 @@ function AdminNavBar() {
                   to={'/adminhome'}
                   className="adminNavBar__link"
                 >
+                  <HouseFill />
                   Home
                 </Nav.Link>
                 <Nav.Link
                   as={Link}
-                  to={'/empleados'}
+                  to={'/adminusers'}
                   className="adminNavBar__link"
                 >
-                  Empleados
-                </Nav.Link>
-                <Nav.Link as={Link} to={'/users'} className="adminNavBar__link">
-                  Usuarios
+                  <PeopleFill /> Usuarios
                 </Nav.Link>
                 <Nav.Link
                   as={Link}
-                  to={'/productos'}
+                  to={'/adminproducts'}
                   className="adminNavBar__link"
                 >
-                  Productos
+                  <ClipboardDataFill /> Productos
                 </Nav.Link>
                 <Nav.Link
                   as={Link}
-                  to={'/logoutadmin'}
+                  to={'/admincupon'}
                   className="adminNavBar__link"
                 >
+                  <FileSpreadsheetFill /> Cupones
+                </Nav.Link>
+                <Nav.Link
+                  as={Link}
+                  to={'/adminnewsletter'}
+                  className="adminNavBar__link"
+                >
+                  <EnvelopePaperFill /> Newsletter
+                </Nav.Link>
+                <Nav.Link as={Link} to={'/'} className="adminNavBar__link">
+                  <BoxArrowLeft />
                   Salir
                 </Nav.Link>
               </Nav>

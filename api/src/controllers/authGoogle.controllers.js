@@ -8,7 +8,7 @@ async function auth(req, res, next) {
     if (!user) {
       user = await userRepositories.createGoogleAccount(data);
       if (!user)
-        return res.status(400).json({ error: "Account was not created" });
+        return res.status(400).json({ error: "Error al crear la cuenta!" });
     }
 
     const token = jwt.sign(

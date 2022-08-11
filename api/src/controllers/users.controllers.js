@@ -1,32 +1,54 @@
 const userRepositories = require("../repositories/user.repositories");
+const productRepositories = require("../repositories/product.repositories");
 const bcrypt = require("bcrypt");
 const { transporter } = require("../config/emailTransporter");
 
 async function getAllSecure(req, res, next) {
-    try {
-      /* hay que validar que tenga el rol de admin */
-      const all = await userRepositories.getAllSecure();
-  
-      if (!all){
-        return res.status(404).json("There are no users loaded!");
-      }   
+  try {
+    const all = await userRepositories.getAllSecure();
 
-      return res.status(200).json(all);
-
-    } catch (error) {
-      next(error);
+    if (!all) {
+      return res
+        .status(404)
+        .json("No se pudo enviar el newsletter, no hay usuarios cargados!");
     }
+
+    return res.status(200).json(all);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getAllAdmin(req, res, next) {
+  try {
+    let { pag, rol, confirmed, active } = req.query;
+    pag = parseInt(pag, 10) || 1;
+    rol = rol || "";
+    confirmed = confirmed || "";
+    active = active || "";
+    const users = await userRepositories.getAllAdmin(
+      pag,
+      rol,
+      confirmed,
+      active
+    );
+
+    return res.status(200).json(users);
+  } catch (error) {
+    next(error);
+  }
 }
 
 /* las cuentas que crea el admin */
 async function create(req, res, next) {
   try {
-    /* hay que validar que tenga el rol de admin */
     const data = req.body;
     const findUser = await userRepositories.getByEmail(data.email);
 
-    if(findUser){
-        return res.status(400).json({ error: "A user with this email already exists" });
+    if (findUser) {
+      return res
+        .status(400)
+        .json({ error: "Ya existe un usuario con este correo electrónico!" });
     }
 
     data.password = await bcrypt.hash(data.password, 10);
@@ -47,7 +69,7 @@ async function register(req, res, next) {
     if (findUser)
       return res
         .status(400)
-        .json({ error: "A user with this email already exists" });
+        .json({ error: "Ya existe un usuario con este correo electrónico!" });
 
     data.password = await bcrypt.hash(data.password, 10);
     const newUser = await userRepositories.create(data);
@@ -235,11 +257,13 @@ async function destroy(req, res, next) {
     const deletedUser = await userRepositories.destroy(id);
 
     if (deletedUser)
-      return res.status(200).json({ message: "User deleted successfully" });
+      return res
+        .status(200)
+        .json({ message: "Usuario desactivado correctamente!" });
 
-    return res
-      .status(404)
-      .json({ error: "There is no User to be deleted with this id" });
+    return res.status(404).json({
+      error: `No hay ningún usuario para ser desactivado con id ${id}!`,
+    });
   } catch (error) {
     next(error);
   }
@@ -251,11 +275,13 @@ async function restore(req, res, next) {
     const restoredUser = await userRepositories.restore(id);
 
     if (restoredUser)
-      return res.status(200).json({ message: "User restored successfully" });
+      return res
+        .status(200)
+        .json({ message: "Usuario activado corretamente!" });
 
     return res
       .status(404)
-      .json({ error: "There is no User deleted with this id" });
+      .json({ error: `No hay ningún usuario para ser activado con id ${id}!` });
   } catch (error) {
     next(error);
   }
@@ -265,7 +291,66 @@ async function update(req, res, next) {
   try {
     const data = req.body;
     const updatedUser = await userRepositories.update(data);
-    return res.status(200).json({ message: "User updated" });
+    return res.status(200).json({ message: "Info de usuario actualizada!" });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function updateProfileData(req, res, next) {
+  const { firstName, lastName, password, imgUri } = req.body;
+  try {
+    let data = {};
+    data.id = req.params.id;
+    if (firstName) {
+      data.firstName = firstName;
+    }
+    if (lastName) {
+      data.lastName = lastName;
+    }
+    if (password) {
+      data.password = await bcrypt.hash(password, 10);
+    }
+    if (imgUri) {
+      data.imgUri = imgUri;
+    }
+    const updatedUser = await userRepositories.update(data);
+    return res.status(200).json({ message: "Info de usuario actualizada!" });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getById(req, res, next) {
+  try {
+    const user = await userRepositories.getById(req.params.id);
+    return user
+      ? res.status(200).json(user)
+      : res.status(400).json({ message: "Usuario no encontrado!" });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function setFavorites(req, res, next) {
+  try {
+    let favorites = [];
+    for (id of req.body.favoritesList) {
+      const product = await productRepositories.getById(id);
+      if (product && !favorites.includes(id)) favorites.push(id);
+    }
+    const user = await userRepositories.setFavorites(favorites, req.params.id);
+    res.status(201).json(user.favoritesList);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getFavoritesByUserId(req, res, next) {
+  try {
+    const favorites = (await userRepositories.getById(req.params.id))
+      .favoritesList;
+    res.status(200).json(favorites);
   } catch (error) {
     next(error);
   }
@@ -278,4 +363,9 @@ module.exports = {
   destroy,
   restore,
   update,
+  updateProfileData,
+  getById,
+  setFavorites,
+  getFavoritesByUserId,
+  getAllAdmin,
 };

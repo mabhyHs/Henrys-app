@@ -30,8 +30,17 @@ function toDBQuery(filters) {
 
     filters.forEach(filter => {
         const property = Object.keys(filter)[0];
+        console.log(property)
+        if(property === "isDeleted"){
 
-        if(property === "isVeggie"){
+            if(filter["isDeleted"] === "true"){      
+                queries[Op.and].push({ deletedAt: {[Op.not]: null} });
+            } else {
+                queries[Op.and].push({ deletedAt: { [Op.is]: null} });                
+            }
+        } 
+
+        else if(property === "isVeggie"){
             queries[Op.and].push(filter);
         } else {
             const format = {...filter}
@@ -64,7 +73,17 @@ function sortMajor(a, b){
     return sortMinor(b, a);
 }
 
+/* 
+Los UUIDV4 tiene el formato xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
+donde "x" es cualquier dígito hexadecimal 
+e "y" es uno de 8, 9, A o B. */
+function isUUIDV4(id){
+    // rango y cant, ascii
+    return /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(id);
+}
+
 module.exports = {
     setFilters,
-    sort
+    sort,
+    isUUIDV4
 };

@@ -1,5 +1,6 @@
 .page_404 {
   padding: 40px 0;
+  min-height: 70vh;
 }
 
 .page_404 img {

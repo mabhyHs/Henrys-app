@@ -23,3 +23,15 @@
   flex-direction: row-reverse;
   align-items: center;
 }
+
+.userRegister__errContainer {
+  height: 30px;
+}
+
+.userRegister__errContainer p {
+  text-align: left;
+  font-style: italic;
+  color: red;
+  font-size: smaller;
+  margin-bottom: 0px;
+}

@@ -1,41 +1,72 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable import/named */
 /* eslint-disable no-useless-escape */
 
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
-import { suscriptionNewsLetterEmail } from '../../Redux/actions/actions';
 import { Facebook, Instagram, Linkedin } from 'react-bootstrap-icons';
 import imgFooter from '../../Assets/Images/logo-henrys300px.png';
-
+import axios from 'axios';
 import './Footer.css';
 
 function Footer() {
   const [errors, setErrors] = useState({});
   const [input, setInput] = useState({});
-  const dispatch = useDispatch();
+  const [isSubmited, setSubmited] = useState(false);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    dispatch(suscriptionNewsLetterEmail(input));
-    Swal.fire({
-      customClass: {
-        confirmButton: 'confirmBtnSwal',
-      },
-      title: 'Suscripción Exitosa',
-      text: 'A partir de ahora recibirás todas nuestras novedades',
-      imageUrl:
-        'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
-      imageWidth: 150,
-      imageHeight: 150,
-      imageAlt: 'Logo henrys',
-    });
-    setInput({ email: '' });
+
+    try {
+        setSubmited(true);
+        await axios.post(`/newsletter`, input);
+        
+        Swal.fire({
+            customClass: {
+              confirmButton: 'confirmBtnSwal',
+            },
+            title: 'Suscripción Exitosa',
+            text: 'A partir de ahora recibirás todas nuestras novedades',
+            imageUrl:
+              'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
+            imageWidth: 150,
+            imageHeight: 150,
+            imageAlt: 'Logo henrys',
+          });
+          setErrors({ email: '' });
+
+    } catch (error) {
+
+        let imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png";
+        const msg = error.response.data.error;
+        let title = "Oops..."
+        
+        if(typeof(msg) === "string" && msg === "El email ya está suscripto!"){
+            imgUrl = "https://res.cloudinary.com/henrysburgers/image/upload/v1659800373/warning-henrys_saeddx.png";
+            title = "";
+        }
+
+        Swal.fire({
+            customClass: {
+              confirmButton: 'confirmBtnSwal',
+            },
+            title,
+            text: typeof(msg) !== "string" ? "Error al enviar el newsletter!" : msg,
+            imageUrl: imgUrl,
+            imageWidth: 150,
+            imageHeight: 150,
+            imageAlt: 'Logo henrys',
+          });
+    } finally {
+        setInput({ email: '' });
+        setSubmited(false);
+    }
+    
   }
 
   function handleChange(e) {
@@ -47,13 +78,13 @@ function Footer() {
     let errors = {};
 
     if (!input.email) {
-      errors.email = '* El email es obligatorio.';
+      errors.email = '* El email es obligatorio!';
     } else if (
       !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
         input.email
       )
     ) {
-      errors.email = '* Dirección de mail inválida.';
+      errors.email = '* Dirección de email inválida!';
     }
 
     return errors;
@@ -95,7 +126,7 @@ function Footer() {
                 type="submit"
                 value="Suscribirme"
                 className="footer__btn__suscribe"
-                disabled={Object.keys(errors).length > 0 || !input.email}
+                disabled={Object.keys(errors).length > 0 || !input.email || isSubmited}
               />
               <div>
                 {errors.email && (
@@ -112,7 +143,7 @@ function Footer() {
                 alt="Henrys burguer logo"
               />
             </Link>
-            <h3>Hamburguesas que se ajustan a tu estilo de vida</h3>
+            <h4>"Hamburguesas que se ajustan a tu estilo de vida"</h4>
           </Col>
           <Col sm={12} lg={4} className="p-3">
             <p>Seguinos:</p>

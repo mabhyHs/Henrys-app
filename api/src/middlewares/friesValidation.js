@@ -1,30 +1,11 @@
-const { body, param } = require("express-validator");
+const { body } = require("express-validator");
 const friesRepository = require("../repositories/fries.repositories");
 const userRepositories = require("../repositories/user.repositories");
 const { friesRoles, authRoute } = require("../utils/routesRoles");
 
-// const nameValid = body("name")
-//   .notEmpty()
-//   .withMessage("name is required")
-//   .isLength({ min: 2 })
-//   .withMessage("min lenght 2")
-//   .isLength({ max: 40 })
-//   .withMessage("max lenght 40")
-//   .custom(async (name) => {
-//     const result = await friesRepository.getByName(name);
-//     if (result) {
-//       throw new Error("fries already exists");
-//     }
-//   })
-//   .withMessage("fries already exists");
-
 const nameValid = body("name")
   .notEmpty()
-  .withMessage("name is required")
-  .isLength({ min: 2 })
-  .withMessage("min lenght 2")
-  .isLength({ max: 40 })
-  .withMessage("max lenght 40")
+  .withMessage("name is required")  
   .custom(async (name, { req }) => {
     const result = await friesRepository.getByName(name);
 
@@ -50,11 +31,11 @@ const isVeggieValid = body("isVeggie")
   .isBoolean()
   .withMessage("invalid value");
 
-const imgUrlValid = body("imgUri")
-  .notEmpty()
-  .withMessage("img required")
-  .isURL()
-  .withMessage("img invalid");
+// const imgUrlValid = body("imgUri")
+//   .notEmpty()
+//   .withMessage("img required")
+//   .isURL()
+//   .withMessage("img invalid");
 
 const sizeValid = body("size")
   .notEmpty()
@@ -80,7 +61,7 @@ const postValidator = [
   nameValid,
   priceValid,
   isVeggieValid,
-  imgUrlValid,
+  // imgUrlValid,
   sizeValid,
 ];
 
@@ -88,7 +69,7 @@ const putValidator = [
   nameValid,
   priceValid,
   isVeggieValid,
-  imgUrlValid,
+  // imgUrlValid,
   sizeValid,
 ];
 

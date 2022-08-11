@@ -30,10 +30,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       imgUri: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       isVeggie: {
         type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      type: {
+        type: DataTypes.STRING,
+        defaultValue: "fries",
         allowNull: false,
       },
     },

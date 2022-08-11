@@ -1,57 +1,60 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import Swal from 'sweetalert2';
 import './CardCuponHome.css';
-import hambCupon from '../../Assets/Images/Hamburguesas/whopper-doble.png';
-import friesCupon from '../../Assets/Images/Hamburguesas/PAPAS-KING-copia.png';
 
-function CardCupponHome() {
+function CardCupponHome({ code, title, imgUri, discountPorcentage, expired }) {
+  function copyCode() {
+    navigator.clipboard.writeText(code);
+  }
+
+  function openSwal() {
+    Swal.fire({
+      customClass: {
+        confirmButton: 'confirmBtnSwal',
+      },
+      title: 'Cupón de descuento',
+      text: 'Copiado al portapapeles con éxito!',
+      imageUrl:
+        'https://res.cloudinary.com/henrysburgers/image/upload/v1659301858/success-henrys_nlrgo0.png',
+      imageWidth: 150,
+      imageHeight: 150,
+      imageAlt: 'Logo henrys',
+    });
+  }
+
+  function handle() {
+    if (expired) return;
+    copyCode();
+    openSwal();
+  }
+
   return (
-    <section className="sectionCupponsHome">
+    <section className={expired ? 'couponsHome__disabled' : ''}>
       <div className="cardCuponHome__cupon">
         <div className="cardCuponHome__containerImg">
           <img
             className="cardCuponHome__img img-fluid"
-            src={hambCupon}
+            src={
+              imgUri ||
+              'https://assets.stickpng.com/images/5a4613eed099a2ad03f9c996.png'
+            }
             alt="cupon de hamburguesa"
           />
         </div>
         <div className="cardCuponHome__text">
-          <h2>CheckPoint Day</h2>
-          <p>20%off</p>
+          <h2>{title}</h2>
+          <p>{discountPorcentage + '% OFF'}</p>
           <Button
-            onClick={() => {
-              navigator.clipboard.writeText('RTTAS87');
-              alert('Código copiado al portapapeles con éxito');
-            }}
+            onClick={handle}
             variant="primary"
-            className="cupponCardHome__cupponButton"
+            className={
+              expired
+                ? 'cupponCardHome__cupponButton disCursor'
+                : 'cupponCardHome__cupponButton'
+            }
           >
-            RTTAS87
-          </Button>
-        </div>
-      </div>
-
-      <div className="cardCuponHome__cupon">
-        <div className="cardCuponHome__containerImg">
-          <img
-            src={friesCupon}
-            alt="cupon de hamburguesa"
-            className="cardCuponHome__img img-fluid"
-          />
-        </div>
-        <div className="cardCuponHome__text">
-          <h2>Fries Day</h2>
-          <p>15%off</p>
-          <Button
-            onClick={() => {
-              navigator.clipboard.writeText('XLXR567');
-              alert('Código copiado al portapapeles con éxito');
-            }}
-            variant="primary"
-            className="cupponCardHome__cupponButton"
-          >
-            XLXR567
+            {code}
           </Button>
         </div>
       </div>

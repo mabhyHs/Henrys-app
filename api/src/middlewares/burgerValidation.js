@@ -20,10 +20,6 @@ const ingredientsValid = body("ingredients")
 const nameValid = body("name")
   .notEmpty()
   .withMessage("name is required")
-  .isLength({ min: 2 })
-  .withMessage("min lenght 2")
-  .isLength({ max: 40 })
-  .withMessage("max lenght 40")
   .custom(async (name, { req }) => {
     const result = await burgerRepository.getByName(name);
 
@@ -49,11 +45,11 @@ const isVeggieValid = body("isVeggie")
   .isBoolean()
   .withMessage("invalid value");
 
-const imgUriValid = body("imgUri")
-  .notEmpty()
-  .withMessage("img required")
-  .isURL()
-  .withMessage("img invalid");
+// const imgUriValid = body("imgUri")
+//   .notEmpty()
+//   .withMessage("img required")
+//   .isURL()
+//   .withMessage("img invalid");
 
 const roleValid = body("user")
   .custom(async (user) => {
@@ -71,7 +67,7 @@ const postValidator = [
   nameValid,
   priceValid,
   isVeggieValid,
-  imgUriValid,
+  // imgUriValid,
 ];
 
 const roleValidator = [roleValid];

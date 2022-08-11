@@ -17,14 +17,16 @@
   color: var(--brand-color);
 }
 
-.nav-link {
+.navBar__users__link {
   color: var(--main-color-light);
   font-family: 'Open Sans', sans-serif;
   text-transform: uppercase;
 }
 
 .linkActive {
-    color: var(--brand-color);
+  color: var(--brand-color);
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
 }
 
 .nav-link:hover {
@@ -87,4 +89,15 @@
 
 .CartCheckFill {
   color: var(--brand-color);
+}
+
+.cart__fill__items {
+  border-radius: 50%;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
+  width: 1.2rem;
+  height: 1.2rem;
+  background-color: red;
+  color: white;
 }

@@ -4,13 +4,13 @@ const { transporter } = require("../config/emailTransporter");
 
 async function get(req, res, next) {
   try {
-    /* hay que validar que tenga el rol de admin */
+
     const all = await newsletterRepositories.get();
 
     if (!all || !all.length) {
       return res
         .status(404)
-        .json({ error: "There are no users loaded in newsletter!" });
+        .json({ error: "Error al enviar novedades, no hay usuarios suscriptos!" });
     }
 
     return res.status(200).json(all);
@@ -22,11 +22,11 @@ async function get(req, res, next) {
 /* las cuentas que crea el admin */
 async function create(req, res, next) {
   try {
-    /* hay que validar que tenga el rol de admin */
+    
     const data = req.body;
 
     if (!req.body.email) {
-      return res.status(400).json({ error: "The email cannot be empty!" });
+      return res.status(400).json({ error: "El email no puede estar vacio!" });
     }
 
     const find = await newsletterRepositories.getByEmail(data.email);
@@ -34,7 +34,7 @@ async function create(req, res, next) {
     if (find) {
       return res
         .status(400)
-        .json({ error: "The email already exists in the newsletter" });
+        .json({ error: "El email ya está suscripto!" });
     }
 
     const add = await newsletterRepositories.create(data);
@@ -53,7 +53,7 @@ async function sendEmails(req, res, next) {
     if (!description) {
       return res
         .status(400)
-        .json({ error: "The body description cannot be empty!" });
+        .json({ error: "La descripción no puede estar vacia!" });
     }
 
     const all = await newsletterRepositories.get();
@@ -61,7 +61,7 @@ async function sendEmails(req, res, next) {
     if (!all || !all.length) {
       return res
         .status(404)
-        .json({ error: "There are no users loaded in newsletter!" });
+        .json({ error: "No se pudo enviar novedades, no hay usuarios suscriptos!" });
     }
 
     const emails = all.map((e) => e.email);
@@ -244,11 +244,11 @@ async function destroy(req, res, next) {
     const deleted = await newsletterRepositories.destroy(id);
 
     if (deleted)
-      return res.status(200).json({ message: "User deleted successfully" });
+      return res.status(200).json({ message: "Usuario suscripto desactivado correctamente!" });
 
     return res
       .status(404)
-      .json({ error: "There is no User to be deleted with this id" });
+      .json({ error: `No hay ningún usuario suscripto para ser desactivado con id ${id}!` });
   } catch (error) {
     next(error);
   }
@@ -260,11 +260,11 @@ async function restore(req, res, next) {
     const restore = await newsletterRepositories.restore(id);
 
     if (restore)
-      return res.status(200).json({ message: "User restored successfully" });
+      return res.status(200).json({ message: "Usuario suscripto activado correctamente!" });
 
     return res
       .status(404)
-      .json({ error: "There is no User deleted with this id" });
+      .json({ error: `No hay ningún usuario suscripto para ser activado con id ${id}!` });
   } catch (error) {
     next(error);
   }
