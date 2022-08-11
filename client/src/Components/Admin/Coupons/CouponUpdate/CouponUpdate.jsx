@@ -209,7 +209,6 @@ function CouponUpdate({ couponToEdit, setIsEditing }) {
           productsId: ids,
         })
       ).then((res) => {
-        console.log(res);
         if (res.status === 201) {
           dispatch(getCoupons());
           setIsEditing(false);
@@ -253,8 +252,6 @@ function CouponUpdate({ couponToEdit, setIsEditing }) {
     }
     setIsChange(true);
   }
-
-  console.log(coupon);
 
   return (
     <div>
