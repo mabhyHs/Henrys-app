@@ -276,7 +276,6 @@ function AdminUsers() {
           <tbody>
             {users.rows &&
               users.rows.map((user) => {
-                return (
                   <tr key={user.id}>
                     <td>
                       {user.firstName} {user.lastName}
@@ -292,33 +291,7 @@ function AdminUsers() {
                         >
                           <PencilSquare />
                         </Button>
-                      )}
-
-                      <Modal show={show} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                          <Modal.Title>Modificar Rol</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <Form.Select
-                            aria-label="selectRol"
-                            onChange={(e) => handleRole(e)}
-                          >
-                            <option value="" hidden defaultValue>Selecionar</option>
-                            <option value="admin">ADMIN</option>
-                            <option value="employee">EMPLEADO</option>
-                            <option value="customer">USUARIO</option>
-                          </Form.Select>
-                        </Modal.Body>
-                        <Modal.Footer>
-                          <Button
-                            disabled={!rol.length}
-                            variant="primary"
-                            onClick={() => handleConfirm()}
-                          >
-                            Confirmar
-                          </Button>
-                        </Modal.Footer>
-                      </Modal>
+                      )}                      
 
                       {user.deletedAt && user.role !== "admin" &&
                         <Button
@@ -343,33 +316,35 @@ function AdminUsers() {
 
                     </td>
                   </tr>
-                );
               })}
           </tbody>
         </Table>
-
-{/*         <div className="adminUser__pagination__container">
-          <p>
-            Pag {users.pag} de {users.pages}
-          </p>
-          <Button
-            variant="secondary"
-            className="adminUsers__pagination__btn"
-            name="prev"
-            onClick={(e) => handlePage(e, page, filter)}
-          >
-            <CaretLeftFill />
-          </Button>
-          <Button
-            variant="secondary"
-            className="adminUsers__pagination__btn"
-            name="next"
-            onClick={(e) => handlePage(e, page, filter)}
-          >
-            <CaretRightFill />
-          </Button>
-        </div> */}
       </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+            <Modal.Title>Modificar Rol</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <Form.Select
+            aria-label="selectRol"
+            onChange={(e) => handleRole(e)}
+            >
+            <option value="" hidden defaultValue>Selecionar</option>
+            <option value="admin">ADMIN</option>
+            <option value="employee">EMPLEADO</option>
+            <option value="customer">USUARIO</option>
+            </Form.Select>
+        </Modal.Body>
+        <Modal.Footer>
+            <Button
+            disabled={!rol.length}
+            variant="primary"
+            onClick={() => handleConfirm()}
+            >
+            Confirmar
+            </Button>
+        </Modal.Footer>
+        </Modal>
     </Container>
   );
 }
