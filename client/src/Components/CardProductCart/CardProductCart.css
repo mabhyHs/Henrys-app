@@ -5,9 +5,7 @@
 }
 
 .CardProductCart__img {
-  max-width: 200px;
-  background-color: var(--main-color-light);
-  border-radius: 18px 18px 0px 45px;
+  max-width: 160px;
   border-color: var(--main-color-light);
 }
 

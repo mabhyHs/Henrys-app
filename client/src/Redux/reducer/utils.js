@@ -1,4 +1,4 @@
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 /* payload es el id, array de products, y el array de carrito */
 export const addItem = (id, allProducts, cart) => {
@@ -37,13 +37,12 @@ export const deleteAllItem = (cart, id) => {
 };
 
 export const addItemCustom = (cart, burgerCustom) => {
+  if (!burgerCustom) {
+    return [...cart];
+  }
 
-    if(!burgerCustom){
-        return [...cart];
-    }
-
-    return [...cart, burgerCustom];
-  };
+  return [...cart, burgerCustom];
+};
 
 export const addFav = (id, allProducts, favorites) => {
   const newFavorite = allProducts.find((p) => p.id === id);
@@ -54,11 +53,17 @@ export const addFav = (id, allProducts, favorites) => {
   }
 
   if (favorites.map((item) => item.id).includes(id)) {
-    swal.fire({
+    Swal.fire({
+      customClass: {
+        confirmButton: 'confirmBtnSwal',
+      },
+      title: 'Oops...',
       text: `${newFavorite.name} ya existe en tus favoritos`,
-      icon: 'warning',
-      button: 'Aceptar',
-      timer: '3000',
+      imageUrl:
+        'https://res.cloudinary.com/henrysburgers/image/upload/v1659301854/error-henrys_zoxhtl.png',
+      imageWidth: 150,
+      imageHeight: 150,
+      imageAlt: 'Logo henrys',
     });
   }
 

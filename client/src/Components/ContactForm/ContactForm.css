@@ -6,14 +6,14 @@
   text-align: left;
 }
 .contactForm__input {
-  border-radius: 20px;
+  border-radius: 10px;
   margin: 7px;
   border: var(--bc-inputs);
   padding: 0.5rem;
-  margin-bottom: 15px;
+  margin-top: 10px;
 }
 .contactForm__errContainer {
-  height: 20px;
+  height: 10px;
 }
 
 .contactForm__errContainer p {
@@ -30,4 +30,5 @@ fieldset:disabled .btn {
   color: gray;
   border: var(--btn-hover);
   cursor: default;
+  margin-top: 15px;
 }

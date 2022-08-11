@@ -1,21 +1,18 @@
 .addBurger__motherContainer {
   text-align: center;
-  box-sizing: border-box;
 }
 .addBurger__mainTitle {
   margin: 3rem auto;
 }
 .addBurger__mainContainer {
-  margin-top: 8rem;
+  margin-top: 2rem;
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: flex-start;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1rem;
 }
 .addBurger__select {
   width: 100%;
-  min-width: 35vw;
   border: var(--bc-inputs);
   border-radius: 18px;
   padding: 0.25em 0.5em;
@@ -25,6 +22,7 @@
   background-color: #fff;
   color: #999999;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .addBurger__select::-ms-expand {
@@ -41,12 +39,6 @@
 
 .addBurger__image {
   width: 500px;
-  height: 290px;
-  background-image: url('../../Assets/Images/Hamburguesas/Hamburguesa-con-Queso.png');
-  background-repeat: no-repeat;
-  z-index: 1;
-  background-size: cover;
-  background-position: center;
 }
 
 .addBurger__ul {
@@ -141,6 +133,28 @@
   box-shadow: var(--bs-btn);
 }
 
+.addBurger__selectContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.addBurger__option {
+  text-align: left;
+}
+.burgerBase__select,
+.ingredients__select {
+  width: 20rem;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+.addBurger__descriptionText {
+  font-size: smaller;
+  font-style: italic;
+  color: gray;
+  padding: 0.5rem;
+}
 @media (max-width: 1024px) {
   .addBurger__mainContainer {
     flex-direction: column-reverse;
@@ -154,11 +168,6 @@
 }
 
 @media (max-width: 481px) {
-  .addBurger__image {
-    width: 350px;
-    height: 200px;
-  }
-
   .addBurger__select {
     width: 95%;
   }
@@ -167,5 +176,11 @@
     grid-template-columns: repeat(1, 1fr);
     justify-items: center;
     margin: 0 auto;
+  }
+}
+
+@media (min-width: 600px) {
+  .addBurger__selectContainer {
+    flex-wrap: unset;
   }
 }

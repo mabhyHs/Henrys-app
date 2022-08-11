@@ -1,3 +1,7 @@
+.couponsHome__disabled {
+  filter: grayscale(100%);
+}
+
 .sectionCupponsHome {
   display: flex;
   margin: 4rem auto 4rem;
@@ -8,12 +12,11 @@
 .cardCuponHome__containerImg {
   margin-right: 20px;
   border: 2px solid var(--brand-color);
-  border-radius: 50%;
+  border-radius: 20px;
 }
 .cardCuponHome__img {
   max-width: 130px;
   height: 130px;
-  border-radius: 50%;
 }
 .cardCuponHome__cupon {
   display: flex;
@@ -24,7 +27,6 @@
   border-radius: 20px;
   padding: 1rem;
   margin: 1rem;
-  width: 30rem;
   background-color: var(--main-color-dark);
   color: var(--main-color-light);
 }
@@ -34,4 +36,8 @@
   justify-content: center;
   align-content: center;
   min-width: 10rem;
+}
+
+.disCursor:hover {
+  cursor: default;
 }

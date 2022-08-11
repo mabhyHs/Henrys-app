@@ -61,7 +61,7 @@ function ContactoForm() {
     let error = {};
 
     if (!input.user_name) {
-      error.user_name = 'Este campo es requerido';
+      error.user_name = '*El nombre es obligatorio';
     } else if (
       !/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u.test(
         input.user_name
@@ -71,17 +71,17 @@ function ContactoForm() {
     }
 
     if (!input.user_surname) {
-      error.user_surname = 'Este campo es requerido';
+      error.user_surname = '*El apellido es obligatorio';
     } else if (
       !/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u.test(
         input.user_surname
       )
     ) {
-      error.user_surname = 'Este apellido inválido';
+      error.user_surname = 'Apellido inválido';
     }
 
     if (!input.email) {
-      error.email = 'Este campo es requerido';
+      error.email = '*El Email es obligatorio';
     }
     // eslint-disable-next-line no-useless-escape
     else if (
@@ -89,13 +89,13 @@ function ContactoForm() {
         input.email
       )
     ) {
-      error.email = 'Este correo es invalido';
+      error.email = 'Este email es inválido';
     }
 
     if (!input.telephone) {
-      error.telephone = 'Este campo es requerido';
+      error.telephone = '* El celular es obligatorio';
     } else if (input.telephone.length < 10 || isNaN(Number(input.telephone))) {
-      error.telephone = 'Escribe un numero valido';
+      error.telephone = 'Escribe un número válido';
     }
 
     if (!input.message) {
@@ -125,9 +125,6 @@ function ContactoForm() {
               id="contact_form"
             >
               <Row>
-                <div className="contactForm__errContainer">
-                  {error.user_name && <p>{error.user_name}</p>}
-                </div>
                 <input
                   className="contactForm__input"
                   type="text"
@@ -138,7 +135,7 @@ function ContactoForm() {
                   onChange={(e) => handleChange(e)}
                 />
                 <div className="contactForm__errContainer">
-                  {error.user_surname && <p>{error.user_surname}</p>}
+                  {error.user_name && <p>{error.user_name}</p>}
                 </div>
                 <input
                   className="contactForm__input"
@@ -149,11 +146,11 @@ function ContactoForm() {
                   required
                   onChange={(e) => handleChange(e)}
                 />
+                <div className="contactForm__errContainer">
+                  {error.user_surname && <p>{error.user_surname}</p>}
+                </div>
               </Row>
               <Row>
-                <div className="contactForm__errContainer">
-                  {error.email && <p>{error.email}</p>}
-                </div>
                 <input
                   className="contactForm__input"
                   type="email"
@@ -164,7 +161,7 @@ function ContactoForm() {
                   onChange={(e) => handleChange(e)}
                 />
                 <div className="contactForm__errContainer">
-                  {error.telephone && <p>{error.telephone}</p>}
+                  {error.email && <p>{error.email}</p>}
                 </div>
                 <input
                   className="contactForm__input"
@@ -175,13 +172,11 @@ function ContactoForm() {
                   required
                   onChange={(e) => handleChange(e)}
                 />
+                <div className="contactForm__errContainer">
+                  {error.telephone && <p>{error.telephone}</p>}
+                </div>
               </Row>
               <Row>
-                <div className="contactForm__errContainer">
-                  {Object.keys(error).length > 0 && !input.subject && (
-                    <p>Por favor seleccione una opción</p>
-                  )}
-                </div>
                 <select
                   className="contactForm__input"
                   placeholder="Tipo de consulta"
@@ -198,10 +193,12 @@ function ContactoForm() {
                   <option value="3">Felicitaciones</option>
                   <option value="4">Reclamos</option>
                 </select>
-
                 <div className="contactForm__errContainer">
-                  {error.message && <p>{error.message}</p>}
+                  {Object.keys(error).length > 0 && !input.subject && (
+                    <p>Por favor seleccione una opción</p>
+                  )}
                 </div>
+
                 <textarea
                   className="contactForm__input"
                   name="message"
@@ -212,6 +209,9 @@ function ContactoForm() {
                   required
                   onChange={(e) => handleChange(e)}
                 />
+                <div className="contactForm__errContainer">
+                  {error.message && <p>{error.message}</p>}
+                </div>
               </Row>
               <Button
                 type="submit"

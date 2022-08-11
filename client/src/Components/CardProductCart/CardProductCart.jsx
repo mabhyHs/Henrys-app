@@ -8,7 +8,7 @@ import './CardProductCart.css';
 function CardProductCart({ name, price, imgUri, cantidad }) {
   return (
     <Container>
-      <Row className="cardProductCart__Container py-2">
+      <Row className="cardProductCart__Container py-2 mb-3">
         <Col lg={4} sx={4}>
           <img
             src={imgUri}
