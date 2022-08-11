@@ -48,7 +48,6 @@ export const addFav = (id, allProducts, favorites) => {
   const newFavorite = allProducts.find((p) => p.id === id);
 
   if (!favorites.map((item) => item.id).includes(newFavorite.id)) {
-    console.log(favorites);
     return [...favorites, newFavorite];
   }
 

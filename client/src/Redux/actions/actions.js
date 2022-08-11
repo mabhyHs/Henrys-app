@@ -344,7 +344,6 @@ export function createBeverage(payload) {
 export function createUser(payload) {
   return async function () {
     const json = await axios.post(`/register`, payload);
-    console.log(json.data);
     return { json };
   };
 }
