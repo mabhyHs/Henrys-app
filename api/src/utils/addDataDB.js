@@ -371,21 +371,18 @@ function addDataDB() {
   const combos = [
     {
       id: "98d662ca-64bc-4994-a137-432694d07ed4",
-      name: "Combo 1",
-      price: 700,
+      name: "Combo 4 burgers con queso + 4 papas",
+      price: 2800,
       isVeggie: false,
       imgUri:
-        "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Big-Mac-1:product-header-desktop?wid=830&hei=456&dpr=off",
-      burgers: ["9553b94c-85ef-4252-ad2f-44f96ca2296b"],
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368853/combos/combo4Iguales_jjmbyc.png",
+      burgers: ["3b433072-2279-4138-b056-a661720b37d3"],
       fries: [
-        "9718ab58-b7e6-4fbb-917a-f7f1d7172111",
-        // "9718ab58-b7e6-4fbb-917a-f7f1d7172111",
+        "f3a181c0-1f95-4788-bbb4-fd38d4c6634a",
       ],
-      beverages: [
-        "bd8b584f-58db-42fc-97a2-9910257dc171",
-        // "bd8b584f-58db-42fc-97a2-9910257dc171",
-      ],
+      beverages: [],
     },
+    
     {
       id: "4f8e3c46-fcef-42ab-9218-263a55526737",
       name: "Combo 2",
