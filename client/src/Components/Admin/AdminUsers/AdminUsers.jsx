@@ -275,8 +275,7 @@ function AdminUsers() {
           </thead>
           <tbody>
             {users.rows &&
-              users.rows.map((user) => {
-                return (
+              users.rows.map((user) => 
                   <tr key={user.id}>
                     <td>
                       {user.firstName} {user.lastName}
@@ -313,12 +312,9 @@ function AdminUsers() {
                           <PersonXFill />
                         </Button>                     
                       }
-
-
                     </td>
-                  </tr>
-                );
-              })}
+                  </tr>                
+              )}
           </tbody>
         </Table>
       </div>
