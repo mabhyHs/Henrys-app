@@ -22,17 +22,18 @@ function EmployeePendingOrder() {
 
   async function handleSubmit(e) {
     try {
+      const id = Number(e.target.id);
       setSubmited(true);
       const data = {
         status: 'Listo',
         employee: session.firstName + ' ' + session.lastName,
       };
-      await setStateOrder(e.target.id, data);
+      await setStateOrder(id, data);
 
       let updateData = [];
 
       for (let i = 0; i < orders.length; i++) {
-        if (orders[i].id !== e.target.id) {
+        if (orders[i].purchaseId !== id) {
           updateData.push(orders[i]);
         }
       }
