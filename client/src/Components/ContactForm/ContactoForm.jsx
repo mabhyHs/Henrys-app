@@ -41,15 +41,9 @@ function ContactoForm() {
         form.current,
         '-zW9oJ2EERInnxlyT'
       )
-      .then(
-        (result) => {
-          console.log(result.text);
-          setDone(true);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
+      .then((result) => {
+        setDone(true);
+      });
     e.target.reset();
     setInput({ subject: undefined });
   };
