@@ -319,7 +319,7 @@ function addDataDB() {
       isCarbonated: true,
       isSugar: true,
       imgUri:
-        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368862/bebidas/pepsi_gsy5zj.png",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1660181086/bebidas/nuevasBebidas/pepsi_nhasup.png",
     },
     {
       id: "50448dc7-2a51-4e19-8528-33e5789ac83c",
@@ -329,7 +329,7 @@ function addDataDB() {
       isCarbonated: true,
       isSugar: true,
       imgUri:
-        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368862/bebidas/7up_l2zfwx.png",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1660181668/bebidas/nuevasBebidas/7up_wzgdkh.png",
     },
     {
       id: "440e7d15-f910-43f2-a7b9-4b3b1fb5d689",
@@ -339,7 +339,7 @@ function addDataDB() {
       isCarbonated: true,
       isSugar: true,
       imgUri:
-        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368862/bebidas/Paso-de-los-Toros-Promelo_hyt19t.png",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1660181664/bebidas/nuevasBebidas/Paso-de-los-Toros-Promelo_mgr3w3.png",
     },
     {
       id: "2bdea2e5-f994-45aa-9a23-67e44c4910ed",
@@ -349,7 +349,7 @@ function addDataDB() {
       isCarbonated: true,
       isSugar: true,
       imgUri:
-        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368861/bebidas/mirinda_skfmaj.png",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1660181662/bebidas/nuevasBebidas/mirinda_hzrftc.png",
     },
     {
       id: "9df67e4d-5a7e-429f-bcf5-8b66fdc3d795",
@@ -359,7 +359,7 @@ function addDataDB() {
       isCarbonated: false,
       isSugar: false,
       imgUri:
-        "https://res.cloudinary.com/henrysburgers/image/upload/v1659368861/bebidas/Agua_reeive.png",
+        "https://res.cloudinary.com/henrysburgers/image/upload/v1660181666/bebidas/nuevasBebidas/Agua_kjaf9f.png",
     },
   ];
 
