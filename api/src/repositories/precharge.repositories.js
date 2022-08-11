@@ -113,7 +113,7 @@ async function precharge() {
         {
           code: "XLXR567",
           title: "Fries Day",
-          expirationDate: "2023-21-04",
+          expirationDate: "2023-04-21",
           imgUri:
             "https://res.cloudinary.com/henrysburgers/image/upload/v1659368859/Hamburguesas/PAPAS-KING_dknxtf.png",
           discountPorcentage: 15,
