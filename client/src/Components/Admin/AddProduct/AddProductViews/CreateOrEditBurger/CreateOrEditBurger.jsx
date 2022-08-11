@@ -13,7 +13,6 @@ import {
   updateProduct,
 } from '../../../../requests';
 import { postImageToCloudinary, setImgProductErr } from '../../../../methods';
-import { Trash } from 'react-bootstrap-icons';
 
 import './CreateOrEditBurger.css';
 import '../FormsGlobal.css';
@@ -270,7 +269,7 @@ function CreateOrEditBurger({ data }) {
                         type="button"
                         onClick={(e) => handleDelete(e)}
                       >
-                        <Trash />
+                        &#10008;
                       </Button>
                     </div>
                   ))}
